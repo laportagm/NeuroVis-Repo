@@ -1,0 +1,209 @@
+# Simplified Component Factory for Core Development
+# Replaces ComponentRegistry with direct, simple component creation
+# Use during core architecture development to reduce complexity
+
+class_name SimplifiedComponentFactory
+extends RefCounted
+
+# === STATIC INTERFACE (Compatible with ComponentRegistry) ===
+static func create_component(component_type: String, config: Dictionary = {}) -> Control:
+	"""Create component using direct, simple approach"""
+	
+	match component_type:
+		"info_panel":
+			return _create_info_panel_direct(config)
+		"settings_panel":
+			return _create_settings_panel_direct(config)
+		"ai_assistant_panel":
+			return _create_ai_assistant_panel_direct(config)
+		"button":
+			return _create_button_direct(config)
+		"label":
+			return _create_label_direct(config)
+		"container":
+			return _create_container_direct(config)
+		_:
+			return _create_fallback_component(component_type)
+
+static func get_or_create(component_id: String, component_type: String, config: Dictionary = {}) -> Control:
+	"""Simplified version - always create new (no caching complexity)"""
+	var component = create_component(component_type, config)
+	if component:
+		component.set_meta("component_id", component_id)
+	return component
+
+# === DIRECT COMPONENT CREATION (Simple, No Caching) ===
+static func _create_info_panel_direct(_config: Dictionary) -> Control:
+	"""Create info panel using existing factory"""
+	
+	# Use existing InfoPanelFactory - this is the most reliable approach
+	var factory_script = _safe_load_script("res://ui/panels/InfoPanelFactory.gd")
+	if factory_script and factory_script.has_method("create_info_panel"):
+		var panel = factory_script.create_info_panel()
+		if panel:
+			print("[SimplifiedFactory] Created info panel via InfoPanelFactory")
+			return panel
+	
+	# Fallback to EnhancedInformationPanel directly
+	var enhanced_script = _safe_load_script("res://ui/panels/EnhancedInformationPanel.gd")
+	if enhanced_script:
+		var panel = enhanced_script.new()
+		print("[SimplifiedFactory] Created info panel via EnhancedInformationPanel")
+		return panel
+	
+	# Ultimate fallback
+	return _create_basic_info_panel()
+
+static func _create_settings_panel(_config: Dictionary) -> Control:
+	"""Create simple settings panel"""
+	var panel = PanelContainer.new()
+	panel.name = "SettingsPanel"
+	panel.custom_minimum_size = Vector2(300, 200)
+	
+	var vbox = VBoxContainer.new()
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "Settings"
+	vbox.add_child(title)
+	
+	var content = Label.new()
+	content.text = "Settings panel (simplified for core development)"
+	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(content)
+	
+	return panel
+
+static func _create_ai_assistant_panel(_config: Dictionary) -> Control:
+	"""Create simple AI assistant panel"""
+	var panel = PanelContainer.new()
+	panel.name = "AIAssistantPanel"
+	panel.custom_minimum_size = Vector2(350, 250)
+	
+	var vbox = VBoxContainer.new()
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "AI Assistant"
+	vbox.add_child(title)
+	
+	var content = Label.new()
+	content.text = "AI Assistant (simplified - full features coming in Phase 3)"
+	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(content)
+	
+	return panel
+
+static func _create_button_direct(config: Dictionary) -> Control:
+	"""Create simple button"""
+	var button = Button.new()
+	button.text = config.get("text", "Button")
+	
+	if config.has("tooltip"):
+		button.tooltip_text = config.get("tooltip")
+	
+	if config.has("size"):
+		button.custom_minimum_size = config.get("size")
+	
+	return button
+
+static func _create_label_direct(config: Dictionary) -> Control:
+	"""Create simple label"""
+	var label = Label.new()
+	label.text = config.get("text", "Label")
+	
+	if config.get("autowrap", false):
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	
+	return label
+
+static func _create_container_direct(config: Dictionary) -> Control:
+	"""Create simple container"""
+	var container_type = config.get("type", "vbox")
+	
+	match container_type:
+		"vbox":
+			return VBoxContainer.new()
+		"hbox":
+			return HBoxContainer.new()
+		"panel":
+			return PanelContainer.new()
+		"scroll":
+			return ScrollContainer.new()
+		_:
+			return Control.new()
+
+# === FALLBACK METHODS ===
+static func _create_basic_info_panel() -> Control:
+	"""Create very basic info panel as ultimate fallback"""
+	var panel = PanelContainer.new()
+	panel.name = "BasicInfoPanel"
+	panel.custom_minimum_size = Vector2(300, 200)
+	
+	var vbox = VBoxContainer.new()
+	panel.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "Structure Information"
+	vbox.add_child(title)
+	
+	var content = Label.new()
+	content.text = "Select a brain structure to see information."
+	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(content)
+	
+	print("[SimplifiedFactory] Created basic fallback info panel")
+	return panel
+
+static func _create_fallback_component(component_type: String) -> Control:
+	"""Create fallback for unknown component types"""
+	var fallback = PanelContainer.new()
+	fallback.name = "Fallback_" + component_type
+	
+	var label = Label.new()
+	label.text = "Component: " + component_type + " (Simplified)"
+	fallback.add_child(label)
+	
+	print("[SimplifiedFactory] Created fallback for: " + component_type)
+	return fallback
+
+# === UTILITY METHODS ===
+static func _safe_load_script(script_path: String) -> Script:
+	"""Safely load script without errors"""
+	if ResourceLoader.exists(script_path):
+		return load(script_path)
+	return null
+
+# === COMPATIBILITY METHODS ===
+# These methods provide compatibility with ComponentRegistry interface
+static func register_factory(_component_type: String, _factory_function: Callable) -> void:
+	"""No-op for compatibility"""
+	pass
+
+static func release_component(_component_id: String) -> void:
+	"""No-op for compatibility"""
+	pass
+
+static func destroy_component(_component_id: String) -> void:
+	"""No-op for compatibility"""  
+	pass
+
+static func get_registry_stats() -> Dictionary:
+	"""Return empty stats for compatibility"""
+	return {
+		"total_created": 0,
+		"cache_hits": 0,
+		"cache_misses": 0,
+		"hit_ratio": 0.0,
+		"active_components": 0,
+		"cached_components": 0,
+		"registered_factories": 0
+	}
+
+static func print_registry_stats() -> void:
+	"""Print simplified stats"""
+	print("\n=== SIMPLIFIED COMPONENT FACTORY ===")
+	print("Mode: Core Development (No Caching)")
+	print("Components: Created directly as needed")
+	print("Complexity: Minimal")
+	print("===================================\n")

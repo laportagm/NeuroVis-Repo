@@ -1,0 +1,225 @@
+{
+  "component": "MinimalInfoPanel",
+  "version": "3.0",
+  "philosophy": "Simplicity, clarity, and purposeful design",
+  "designSystem": {
+    "colors": {
+      "neutral": {
+        "black": "#000000",
+        "gray900": "#0a0a0a",
+        "gray800": "rgba(255, 255, 255, 0.04)",
+        "gray700": "rgba(255, 255, 255, 0.06)",
+        "gray600": "rgba(255, 255, 255, 0.08)",
+        "gray500": "rgba(255, 255, 255, 0.1)",
+        "gray400": "rgba(255, 255, 255, 0.3)",
+        "gray300": "rgba(255, 255, 255, 0.5)",
+        "gray200": "rgba(255, 255, 255, 0.6)",
+        "gray100": "rgba(255, 255, 255, 0.85)",
+        "white": "#ffffff"
+      },
+      "semantic": {
+        "text": {
+          "primary": "#ffffff",
+          "secondary": "rgba(255, 255, 255, 0.85)",
+          "tertiary": "rgba(255, 255, 255, 0.6)",
+          "muted": "rgba(255, 255, 255, 0.3)"
+        },
+        "interactive": {
+          "default": "rgba(255, 255, 255, 0.4)",
+          "hover": "rgba(255, 255, 255, 0.8)",
+          "active": "#ffffff",
+          "disabled": "rgba(255, 255, 255, 0.2)"
+        },
+        "surface": {
+          "background": "rgba(255, 255, 255, 0.04)",
+          "border": "rgba(255, 255, 255, 0.08)",
+          "hover": "rgba(255, 255, 255, 0.06)"
+        }
+      }
+    },
+    "typography": {
+      "fontFamily": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif",
+      "scale": {
+        "display": {
+          "fontSize": 28,
+          "fontWeight": 600,
+          "letterSpacing": -0.02,
+          "lineHeight": 1.2
+        },
+        "body": {
+          "fontSize": 15,
+          "fontWeight": 400,
+          "letterSpacing": 0,
+          "lineHeight": 1.6
+        },
+        "caption": {
+          "fontSize": 13,
+          "fontWeight": 500,
+          "letterSpacing": 0.04,
+          "lineHeight": 1.4,
+          "textTransform": "uppercase"
+        },
+        "small": {
+          "fontSize": 14,
+          "fontWeight": 400,
+          "letterSpacing": 0,
+          "lineHeight": 1.5
+        },
+        "micro": {
+          "fontSize": 12,
+          "fontWeight": 400,
+          "letterSpacing": 0,
+          "lineHeight": 1.4
+        }
+      }
+    },
+    "spacing": {
+      "unit": 4,
+      "scale": {
+        "xs": 4,
+        "sm": 8,
+        "md": 16,
+        "lg": 24,
+        "xl": 32,
+        "xxl": 40,
+        "xxxl": 60
+      },
+      "component": {
+        "panelPadding": 32,
+        "sectionGap": 32,
+        "itemGap": 2,
+        "tagGap": 8
+      }
+    },
+    "radius": {
+      "none": 0,
+      "sm": 4,
+      "md": 6,
+      "lg": 8,
+      "xl": 12,
+      "pill": 16,
+      "circle": 9999
+    },
+    "effects": {
+      "blur": {
+        "none": 0,
+        "sm": 20,
+        "md": 40,
+        "lg": 80
+      },
+      "shadow": {
+        "none": "none",
+        "sm": "0 1px 2px rgba(0, 0, 0, 0.05)",
+        "md": "0 4px 6px rgba(0, 0, 0, 0.1)",
+        "lg": "0 10px 15px rgba(0, 0, 0, 0.15)"
+      }
+    },
+    "animation": {
+      "duration": {
+        "instant": 0,
+        "fast": 0.2,
+        "normal": 0.3,
+        "slow": 0.5
+      },
+      "easing": {
+        "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+        "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+        "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+      }
+    }
+  },
+  "components": {
+    "panel": {
+      "width": 380,
+      "background": "colors.neutral.gray800",
+      "backdropFilter": "blur(40px) saturate(180%)",
+      "border": "1px solid colors.neutral.gray600",
+      "borderRadius": "radius.xl",
+      "padding": "spacing.xl"
+    },
+    "button": {
+      "size": {
+        "default": 36,
+        "small": 28
+      },
+      "borderRadius": "radius.lg",
+      "transition": "all duration.fast easing.default"
+    },
+    "tag": {
+      "padding": "6px 12px",
+      "borderRadius": "radius.pill",
+      "fontSize": "typography.scale.micro.fontSize"
+    },
+    "section": {
+      "borderBottom": "1px solid colors.neutral.gray700",
+      "paddingBottom": "spacing.lg",
+      "gap": "spacing.md"
+    }
+  },
+  "layout": {
+    "responsive": {
+      "breakpoints": {
+        "mobile": 768,
+        "tablet": 1024,
+        "desktop": 1400
+      },
+      "panel": {
+        "mobile": {
+          "width": "100%",
+          "padding": "spacing.lg"
+        },
+        "tablet": {
+          "maxWidth": 420
+        },
+        "desktop": {
+          "width": 380
+        }
+      }
+    }
+  },
+  "interactions": {
+    "hover": {
+      "button": {
+        "background": "colors.neutral.gray700",
+        "color": "colors.semantic.interactive.hover"
+      },
+      "tag": {
+        "background": "colors.neutral.gray600",
+        "borderColor": "colors.neutral.gray500",
+        "color": "colors.semantic.text.secondary"
+      },
+      "listItem": {
+        "background": "colors.neutral.gray800",
+        "color": "colors.semantic.text.primary"
+      }
+    },
+    "active": {
+      "button": {
+        "transform": "scale(0.95)"
+      }
+    },
+    "focus": {
+      "outline": "2px solid colors.neutral.gray300",
+      "outlineOffset": "2px"
+    }
+  },
+  "accessibility": {
+    "reducedMotion": {
+      "animations": "none",
+      "transitions": "opacity only"
+    },
+    "highContrast": {
+      "borders": "increase opacity by 2x",
+      "text": "increase contrast ratios"
+    },
+    "keyboard": {
+      "tabOrder": "logical flow",
+      "shortcuts": {
+        "close": "Escape",
+        "bookmark": "Cmd+B",
+        "expand": "Space"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+--- a/scenes/main/node_3d.gd
++++ b/scenes/main/node_3d.gd
+@@ -8,8 +8,11 @@ const CameraBehaviorControllerScript = preload("res://core/interaction/CameraBeh
+ const ModelCoordinatorScene = preload("res://core/models/ModelRegistry.gd")
+ const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
+ 
+-# New UI Component System
++# New UI Component System - Load base classes first to ensure proper dependency resolution
++const BaseUIComponent = preload("res://ui/components/core/BaseUIComponent.gd")
++const ResponsiveComponent = preload("res://ui/components/core/ResponsiveComponent.gd")
+ const UIComponentFactory = preload("res://ui/components/core/UIComponentFactory.gd")
+ const ModularInfoPanel = preload("res://ui/components/panels/ModularInfoPanel.gd")
+ const AIAssistantPanel = preload("res://ui/components/panels/AIAssistantPanel.gd")
+ const AccessibilityManager = preload("res://ui/components/controls/AccessibilityManager.gd")

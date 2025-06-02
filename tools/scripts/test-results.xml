@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="NeuroVis Tests" tests="11" failures="6" time="0.080">
+    <testcase name="tests/knowledge_base_test.gd" time="0.000">
+      <failure message="Test returned false" />
+    </testcase>
+    <testcase name="tests/ui_info_panel_test.gd" time="0.000">
+      <failure message="Test returned false" />
+    </testcase>
+    <testcase name="tests/camera_controls_test.gd" time="0.000">
+      <failure message="Test returned false" />
+    </testcase>
+    <testcase name="tests/structure_selection_test.gd" time="0.000">
+      <failure message="Test returned false" />
+    </testcase>
+    <testcase name="tests/unit/ExampleFrameworkTest.gd" time="0.000">
+    </testcase>
+    <testcase name="tests/unit/ModelSwitcherTest.gd" time="0.000">
+      <failure message="Test returned false" />
+    </testcase>
+    <testcase name="tests/unit/KnowledgeBaseTest.gd" time="0.001">
+    </testcase>
+    <testcase name="tests/unit/CameraControllerTest.gd" time="0.001">
+    </testcase>
+    <testcase name="tests/integration/EndToEndWorkflowTest.gd" time="0.000">
+      <failure message="Test returned false" />
+    </testcase>
+    <testcase name="tests/integration/PerformanceRegressionTest.gd" time="0.017">
+    </testcase>
+  </testsuite>
+</testsuites>

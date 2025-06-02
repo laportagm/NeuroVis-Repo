@@ -1,0 +1,29 @@
+Current Autoload Paths (Pre-Migration):
+==========================================
+
+KB="*res://scripts/core/AnatomicalKnowledgeDatabase.gd"
+ModelSwitcherGlobal="*res://scripts/models/ModelVisibilityManager.gd"
+DebugCmd="*res://scripts/core/DebugCommands.gd"
+
+Commented Out (Disabled):
+========================
+ProjectProfiler="*res://scripts/dev_utils/ProjectProfiler.gd"
+DevConsole="*res://scripts/dev_utils/DevConsole.gd"
+TestRunner="*res://scripts/tests/TestRunner.gd"
+ErrorTracker="*res://scripts/dev_utils/ErrorTracker.gd"
+HealthMonitor="*res://scripts/dev_utils/HealthMonitor.gd"
+TestFramework="*res://scripts/dev_utils/TestFramework.gd"
+BrainVisDebugger="*res://scripts/dev_utils/BrainVisDebugger.gd"
+ResourceDebugger="*res://scripts/dev_utils/ResourceDebugger.gd"
+ResourceLoadTracer="*res://scripts/dev_utils/ResourceLoadTracer.gd"
+
+New Paths (Post-Migration):
+===========================
+KB="*res://core/knowledge/AnatomicalKnowledgeDatabase.gd"
+ModelSwitcherGlobal="*res://core/models/ModelVisibilityManager.gd"
+DebugCmd="*res://core/systems/DebugCommands.gd"
+
+Main Scene Path:
+================
+Current: res://scenes/node_3d.tscn
+New: res://scenes/main/node_3d.tscn

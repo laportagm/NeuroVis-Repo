@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "figma-integration": {
+      "command": "node",
+      "args": [".claude/figma-mcp-server.js"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "your-figma-token-here"
+      }
+    }
+  }
+}

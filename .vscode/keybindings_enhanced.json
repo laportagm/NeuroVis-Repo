@@ -1,0 +1,212 @@
+[
+    {
+        "key": "ctrl+shift+u",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🚀 Optimized Claude Request"
+    },
+    {
+        "key": "ctrl+shift+i",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧠 Smart Context Update"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🔍 Smart Error Analysis"
+    },
+    {
+        "key": "ctrl+shift+q",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🔧 Code Quality Enforcer"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎯 Code Review & Linting"
+    },
+    {
+        "key": "ctrl+shift+p",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎨 Educational Design Assistant"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🛡️ Standards Wrapper"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎓 Educational Context Guard"
+    },
+    {
+        "key": "ctrl+shift+r",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🏗️ Architecture Enforcer"
+    },
+    {
+        "key": "ctrl+shift+s",
+        "command": "workbench.action.tasks.runTask",
+        "args": "📚 Educational Standards Check"
+    },
+    {
+        "key": "ctrl+shift+o",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🏗️ Auto-Organize Project"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "workbench.action.tasks.runTask", 
+        "args": "🎯 Develop Educational Feature"
+    },
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.tasks.runTask",
+        "args": "⚡ Quick Test Suite"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🚀 Quick Launch A1-NeuroVis"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧹 Clean Godot Cache"
+    },
+    {
+        "key": "ctrl+shift+h",
+        "command": "workbench.action.tasks.runTask",
+        "args": "📊 Check Project Health"
+    },
+    {
+        "key": "ctrl+shift+a",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧠 Educational Content Audit"
+    },
+    {
+        "// === ENHANCED SHORTCUTS ===": "",
+        "key": "f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🚀 Quick Launch A1-NeuroVis"
+    },
+    {
+        "key": "ctrl+f5", 
+        "command": "workbench.action.tasks.runTask",
+        "args": "📊 Real-time Performance Monitor"
+    },
+    {
+        "key": "shift+f5",
+        "command": "workbench.action.tasks.runTask", 
+        "args": "🎓 Complete Educational Development Cycle"
+    },
+    {
+        "key": "ctrl+shift+m",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🏥 Medical Content Accuracy Check"
+    },
+    {
+        "key": "ctrl+shift+b",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🚀 Trigger GitHub Actions Build"
+    },
+    {
+        "key": "ctrl+shift+n",
+        "command": "workbench.action.tasks.runTask", 
+        "args": "📊 Download Performance Reports"
+    },
+    {
+        "key": "ctrl+shift+j",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧠 Check Educational Content CI"
+    },
+    {
+        "// === GODOT SPECIFIC SHORTCUTS ===": "",
+        "key": "ctrl+shift+x",
+        "command": "godot-tools.open_editor"
+    },
+    {
+        "key": "ctrl+shift+z",
+        "command": "godot-tools.run_project"
+    },
+    {
+        "// === DEBUGGING SHORTCUTS ===": "",
+        "key": "f9",
+        "command": "editor.debug.action.toggleBreakpoint"
+    },
+    {
+        "key": "f10",
+        "command": "workbench.action.debug.stepOver"
+    },
+    {
+        "key": "f11",
+        "command": "workbench.action.debug.stepInto"
+    },
+    {
+        "key": "shift+f11",
+        "command": "workbench.action.debug.stepOut"
+    },
+    {
+        "// === GITHUB ACTIONS SHORTCUTS ===": "",
+        "key": "ctrl+alt+g",
+        "command": "githubActions.workflow.run",
+        "when": "githubActions.available"
+    },
+    {
+        "key": "ctrl+alt+s",
+        "command": "githubActions.workflow.stop",
+        "when": "githubActions.available"  
+    },
+    {
+        "// === ACCESSIBILITY SHORTCUTS ===": "",
+        "key": "ctrl+alt+a",
+        "command": "workbench.action.toggleScreenReaderMode"
+    },
+    {
+        "// === PRODUCTIVITY SHORTCUTS ===": "",
+        "key": "ctrl+k ctrl+t",
+        "command": "workbench.action.selectTheme"
+    },
+    {
+        "key": "ctrl+shift+`",
+        "command": "workbench.action.terminal.new"
+    },
+    {
+        "key": "ctrl+shift+k",
+        "command": "editor.action.deleteLines"
+    },
+    {
+        "key": "alt+up",
+        "command": "editor.action.moveLinesUpAction"
+    },
+    {
+        "key": "alt+down",
+        "command": "editor.action.moveLinesDownAction"
+    },
+    {
+        "// === SEARCH & NAVIGATION ===": "",
+        "key": "ctrl+shift+.",
+        "command": "workbench.action.quickOpenNavigateNext"
+    },
+    {
+        "key": "ctrl+shift+,",
+        "command": "workbench.action.quickOpenNavigatePrevious"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "// === PANEL MANAGEMENT ===": "",
+        "key": "ctrl+j",
+        "command": "workbench.action.togglePanel"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "workbench.view.explorer"
+    },
+    {
+        "key": "ctrl+shift+y",
+        "command": "workbench.view.debug"
+    }
+]

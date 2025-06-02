@@ -1,0 +1,58 @@
+name: Automated Testing
+
+on:
+  push:
+    branches: [ main, develop, TheDefaultBranch ]
+  pull_request:
+    branches: [ main, develop, TheDefaultBranch ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        godot-version: ['4.4.1']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v2
+      with:
+        version: ${{ matrix.godot-version }}
+        include-templates: true
+        
+    - name: Cache Godot import
+      uses: actions/cache@v4
+      with:
+        path: .godot/
+        key: godot-${{ matrix.os }}-${{ matrix.godot-version }}-${{ hashFiles('**/*.gd', '**/*.tscn', '**/*.tres') }}
+        restore-keys: |
+          godot-${{ matrix.os }}-${{ matrix.godot-version }}-
+          
+    - name: Import project
+      run: godot --headless --import --quit-after 10
+      
+    - name: Run tests
+      run: godot --headless --script scripts/ci/TestRunnerCLI.gd --quit-after 60
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.os }}
+        path: |
+          test-results.xml
+          test-coverage.json
+          test-logs/
+        retention-days: 7
+        
+    - name: Publish test results
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: Tests (${{ matrix.os }})
+        path: test-results.xml
+        reporter: java-junit

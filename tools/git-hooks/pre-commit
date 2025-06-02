@@ -1,0 +1,197 @@
+#!/bin/bash
+# NeuroVis Pre-commit Hook
+# Runs quality checks before allowing commits
+
+set -e
+
+echo "🔍 Running NeuroVis pre-commit checks..."
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+# Project root
+PROJECT_ROOT="$(git rev-parse --show-toplevel)"
+TOOLS_DIR="$PROJECT_ROOT/tools"
+
+# Track if any checks fail
+CHECKS_FAILED=0
+
+# Function to print colored output
+print_status() {
+    local color=$1
+    local message=$2
+    echo -e "${color}${message}${NC}"
+}
+
+# Function to check if file exists and is executable
+check_tool() {
+    local tool_path=$1
+    local tool_name=$2
+    
+    if [[ -f "$tool_path" && -x "$tool_path" ]]; then
+        return 0
+    else
+        print_status $YELLOW "⚠️  $tool_name not found or not executable: $tool_path"
+        return 1
+    fi
+}
+
+# Check 1: GDScript Syntax Validation
+echo "📝 Checking GDScript syntax..."
+gdscript_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(gd|cs)$' || true)
+
+if [[ -n "$gdscript_files" ]]; then
+    for file in $gdscript_files; do
+        if [[ "$file" == *.gd ]]; then
+            # Check if godot is available for syntax checking
+            if command -v godot >/dev/null 2>&1; then
+                if ! godot --check-only --script "$file" >/dev/null 2>&1; then
+                    print_status $RED "❌ GDScript syntax error in: $file"
+                    CHECKS_FAILED=1
+                fi
+            else
+                print_status $YELLOW "⚠️  Godot not found in PATH, skipping syntax check"
+            fi
+        fi
+    done
+    
+    if [[ $CHECKS_FAILED -eq 0 ]]; then
+        print_status $GREEN "✅ GDScript syntax check passed"
+    fi
+else
+    print_status $GREEN "✅ No GDScript files to check"
+fi
+
+# Check 2: Naming Convention Validation
+echo "📋 Checking naming conventions..."
+violated_files=""
+
+for file in $gdscript_files; do
+    filename=$(basename "$file")
+    
+    # Check if GDScript files follow PascalCase.gd or snake_case.gd
+    if [[ "$file" == *.gd ]]; then
+        if [[ ! "$filename" =~ ^[A-Z][a-zA-Z0-9]*\.gd$ ]] && [[ ! "$filename" =~ ^[a-z][a-z0-9_]*\.gd$ ]]; then
+            violated_files="$violated_files $file"
+            CHECKS_FAILED=1
+        fi
+    fi
+done
+
+if [[ -n "$violated_files" ]]; then
+    print_status $RED "❌ Naming convention violations:"
+    for file in $violated_files; do
+        echo "   - $file"
+    done
+    echo "   Expected: PascalCase.gd or snake_case.gd"
+else
+    print_status $GREEN "✅ Naming conventions check passed"
+fi
+
+# Check 3: Debug Statement Detection
+echo "🐛 Checking for debug statements..."
+debug_statements=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(gd|cs)$' | xargs git diff --cached | grep -E '^\+.*print\(|^\+.*print_rich\(' || true)
+
+if [[ -n "$debug_statements" ]]; then
+    print_status $YELLOW "⚠️  Debug print statements found:"
+    echo "$debug_statements"
+    echo "   Consider removing debug prints before committing"
+    # Not failing the commit for this, just warning
+fi
+
+# Check 4: Secret Detection
+echo "🔐 Checking for potential secrets..."
+secret_patterns=(
+    "password\s*[:=]\s*['\"][^'\"]*['\"]"
+    "api_key\s*[:=]\s*['\"][^'\"]*['\"]"
+    "secret\s*[:=]\s*['\"][^'\"]*['\"]"
+    "token\s*[:=]\s*['\"][^'\"]*['\"]"
+    "figd_[A-Za-z0-9]+"
+)
+
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
+    for pattern in "${secret_patterns[@]}"; do
+        if git diff --cached "$file" | grep -iE "$pattern" >/dev/null 2>&1; then
+            print_status $RED "❌ Potential secret found in: $file"
+            print_status $RED "   Pattern: $pattern"
+            CHECKS_FAILED=1
+        fi
+    done
+done
+
+if [[ $CHECKS_FAILED -eq 0 ]]; then
+    print_status $GREEN "✅ No secrets detected"
+fi
+
+# Check 5: Large File Detection
+echo "📦 Checking for large files..."
+large_files=$(git diff --cached --name-only --diff-filter=ACM | xargs -I {} sh -c 'if [ -f "{}" ] && [ $(stat -f%z "{}" 2>/dev/null || stat -c%s "{}" 2>/dev/null || echo 0) -gt 5242880 ]; then echo "{}"; fi' || true)
+
+if [[ -n "$large_files" ]]; then
+    print_status $YELLOW "⚠️  Large files detected (>5MB):"
+    for file in $large_files; do
+        size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null || echo "unknown")
+        echo "   - $file ($(numfmt --to=iec "$size" 2>/dev/null || echo "$size bytes"))"
+    done
+    echo "   Consider using Git LFS for large assets"
+fi
+
+# Check 6: Documentation Requirements
+echo "📚 Checking documentation requirements..."
+undocumented_classes=""
+
+for file in $gdscript_files; do
+    if [[ "$file" == *.gd ]] && [[ -f "$file" ]]; then
+        # Check if file has class_name but no class documentation
+        if grep -q "^class_name" "$file" && ! grep -q "^##" "$file"; then
+            undocumented_classes="$undocumented_classes $file"
+        fi
+    fi
+done
+
+if [[ -n "$undocumented_classes" ]]; then
+    print_status $YELLOW "⚠️  Classes without documentation:"
+    for file in $undocumented_classes; do
+        echo "   - $file"
+    done
+    echo "   Consider adding class documentation with ## comments"
+fi
+
+# Check 7: TODO/FIXME Detection
+echo "📝 Checking for TODO/FIXME comments..."
+todo_comments=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(gd|cs|md)$' | xargs git diff --cached | grep -E '^\+.*TODO|^\+.*FIXME|^\+.*XXX' || true)
+
+if [[ -n "$todo_comments" ]]; then
+    print_status $YELLOW "📋 TODO/FIXME comments found:"
+    echo "$todo_comments"
+    echo "   These will be tracked for future work"
+fi
+
+# Run custom linting if available
+if check_tool "$TOOLS_DIR/quality/lint-gdscript.sh" "GDScript linter"; then
+    echo "🔧 Running custom GDScript linting..."
+    if ! "$TOOLS_DIR/quality/lint-gdscript.sh" --staged; then
+        print_status $RED "❌ Custom linting failed"
+        CHECKS_FAILED=1
+    else
+        print_status $GREEN "✅ Custom linting passed"
+    fi
+fi
+
+# Final result
+echo ""
+if [[ $CHECKS_FAILED -eq 0 ]]; then
+    print_status $GREEN "🎉 All pre-commit checks passed!"
+    echo ""
+    exit 0
+else
+    print_status $RED "❌ Pre-commit checks failed!"
+    echo ""
+    echo "Fix the issues above and try committing again."
+    echo "To bypass these checks (not recommended), use: git commit --no-verify"
+    echo ""
+    exit 1
+fi

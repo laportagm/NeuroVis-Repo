@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8xqb2y6fhpqr"]
+
+[ext_resource type="Script" path="res://scenes/ui_info_panel_enhanced.gd" id="1_enhanced"]
+
+[node name="EnhancedStructureInfoPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(450, 600)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -470.0
+offset_top = -620.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("1_enhanced")
+metadata/_edit_use_anchors_ = true

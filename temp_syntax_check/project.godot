@@ -1,0 +1,6 @@
+[application]
+config/name="Syntax Check"
+config/features=PackedStringArray("4.4", "Mobile")
+
+[rendering]
+renderer/rendering_method="mobile"
