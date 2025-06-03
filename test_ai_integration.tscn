@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvs1ygj0d28bh"]
+
+[ext_resource type="Script" path="res://test_ai_integration.gd" id="1_1lwu6"]
+
+[node name="TestAIIntegration" type="Node"]
+script = ExtResource("1_1lwu6")

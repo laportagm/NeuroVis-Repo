@@ -736,8 +736,8 @@ func _generate_statistical_summary() -> String:
     mean_difficulty /= difficulty_scores.size()
     
     # Calculate median
-    var median_success = success_rates[success_rates.size() / 2]
-    var median_difficulty = difficulty_scores[difficulty_scores.size() / 2]
+    var median_success = success_rates[int(success_rates.size() / 2)]
+    var median_difficulty = difficulty_scores[int(difficulty_scores.size() / 2)]
     
     # Calculate standard deviation
     var variance_success = 0.0

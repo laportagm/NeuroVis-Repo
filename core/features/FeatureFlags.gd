@@ -8,6 +8,7 @@ const UI_MODULAR_COMPONENTS = "ui_modular_components"
 const UI_LEGACY_PANELS = "ui_legacy_panels"
 const UI_COMPONENT_POOLING = "ui_component_pooling"
 const UI_STATE_PERSISTENCE = "ui_state_persistence"
+const MULTI_STRUCTURE_SELECTION = "multi_structure_selection"
 
 # Advanced features
 const ADVANCED_ANIMATIONS = "advanced_animations"

@@ -76,7 +76,7 @@ func _setup_ui() -> void:
     relationship_label.add_theme_font_size_override("font_size", 16)
     relationship_container.add_child(relationship_label)
 
-func _create_structure_card(index: int) -> Control:
+func _create_structure_card(_index: int) -> Control:
     """Create a structure information card"""
     var card = PanelContainer.new()
     card.custom_minimum_size = Vector2(0, STRUCTURE_CARD_HEIGHT)
@@ -342,9 +342,9 @@ func _find_relationships() -> Array[String]:
         var system_structures = systems[system_name]
         var matches = 0
         
-        for name in structure_names:
+        for struct_name in structure_names:
             for system_struct in system_structures:
-                if system_struct in name:
+                if system_struct in struct_name:
                     matches += 1
                     break
         

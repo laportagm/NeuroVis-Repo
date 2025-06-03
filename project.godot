@@ -28,6 +28,9 @@ AccessibilityManager="*res://core/systems/AccessibilityManager.gd"
 ModelSwitcherGlobal="*res://core/models/ModelVisibilityManager.gd"
 DebugCmd="*res://core/systems/DebugCommands.gd"
 FeatureFlags="*res://core/features/FeatureFlags.gd"
+AIConfig="*res://core/ai/config/AIConfigurationManager.gd"
+AIRegistry="*res://core/ai/AIProviderRegistry.gd"
+AIIntegration="*res://core/ai/AIIntegrationManager.gd"
 
 [debug]
 

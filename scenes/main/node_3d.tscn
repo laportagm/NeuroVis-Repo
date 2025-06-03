@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cemay1pov5rbh"]
 
-[ext_resource type="Script" path="res://scenes/main/node_3d.gd" id="1_u5lga"]
-[ext_resource type="PackedScene" uid="uid://chrbwl4afpb3c" path="res://scenes/ui_info_panel.tscn" id="2_vkjps"]
+[ext_resource type="Script" uid="uid://cpk3gmcgngu63" path="res://scenes/main/node_3d.gd" id="1_u5lga"]
+[ext_resource type="PackedScene" uid="uid://chrbwl4afpb3c" path="res://scenes/ui_info_panel_backup.tscn" id="2_vkjps"]
 [ext_resource type="PackedScene" uid="uid://cboa3wer31o8i" path="res://scenes/model_control_panel.tscn" id="3_x84oi"]
 
 [node name="MainScene" type="Node3D"]
@@ -16,7 +16,6 @@ transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -
 shadow_enabled = true
 
 [node name="BrainModel" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 
@@ -35,20 +34,12 @@ horizontal_alignment = 1
 [node name="StructureInfoPanel" parent="UI_Layer" instance=ExtResource("2_vkjps")]
 visible = false
 anchors_preset = 6
-anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -400.0
 offset_top = -250.0
 offset_right = 0.0
 offset_bottom = 250.0
-grow_horizontal = 0
 grow_vertical = 2
 
 [node name="ModelControlPanel" parent="UI_Layer" instance=ExtResource("3_x84oi")]
-anchors_preset = 2
-offset_top = -185.0
-offset_right = 300.0
-offset_bottom = 0.0
-grow_vertical = 0

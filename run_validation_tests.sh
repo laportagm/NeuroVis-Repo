@@ -4,25 +4,25 @@
 echo "=== Running API Key Validation and Auto-Save Tests ==="
 echo ""
 
-# Set project path
-PROJECT_PATH="/Users/gagelaporta/1NeuroPro/NeuroVisProject/1/(4)NeuroVis copy"
+# Set project path to current directory
+PROJECT_PATH="$(pwd)"
 
 # Run validation and auto-save test
 echo "1. Running API validation and auto-save test..."
 echo "---------------------------------------------"
-godot --headless --path "$PROJECT_PATH" --script "res://test_api_validation_autosave.gd"
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path "$PROJECT_PATH" --script "res://test_api_validation_autosave.gd"
 echo ""
 
 # Run loading states test
 echo "2. Running validation loading states test..."
 echo "------------------------------------------"
-godot --headless --path "$PROJECT_PATH" --script "res://test_validation_loading_states.gd"
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path "$PROJECT_PATH" --script "res://test_validation_loading_states.gd"
 echo ""
 
 # Run updated full flow test
 echo "3. Running updated full flow test with validation..."
 echo "---------------------------------------------------"
-godot --headless --path "$PROJECT_PATH" --script "res://test_full_flow.gd"
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path "$PROJECT_PATH" --script "res://test_full_flow.gd"
 echo ""
 
 echo "=== All Validation Tests Complete ==="

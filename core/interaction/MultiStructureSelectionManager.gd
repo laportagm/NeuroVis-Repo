@@ -308,7 +308,7 @@ func _clear_selection_visual(mesh: MeshInstance3D) -> void:
     
     _remove_hierarchical_outline(mesh)
 
-func _add_hierarchical_outline(mesh: MeshInstance3D, thickness: float) -> void:
+func _add_hierarchical_outline(_mesh: MeshInstance3D, _thickness: float) -> void:
     """Add outline effect with thickness based on selection hierarchy"""
     # TODO: Implement proper outline shader or technique
     # For now, using enhanced rim lighting as indicator
@@ -340,9 +340,9 @@ func _check_anatomical_relationships() -> void:
                     relationship_detected.emit(name1, name2, relationships[key])
                     print("[MultiSelection] Relationship detected: %s" % relationships[key])
 
-func _normalize_structure_name(name: String) -> String:
+func _normalize_structure_name(structure_name: String) -> String:
     """Normalize structure name for comparison"""
-    return name.to_lower().replace(" ", "_").replace("(good)", "").strip_edges()
+    return structure_name.to_lower().replace(" ", "_").replace("(good)", "").strip_edges()
 
 func _update_relationship_lines() -> void:
     """Update visual indicators showing relationships between structures"""

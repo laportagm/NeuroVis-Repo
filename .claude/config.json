@@ -1,46 +1,11 @@
 {
-  "mcpServers": {
+  "mcp": {
     "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/gagelaporta/1NeuroPro/NeuroVisProject/1/(4)NeuroVis copy"],
-      "env": {
-        "ALLOWED_EXTENSIONS": ".gd,.tscn,.tres,.cs,.md,.json,.txt,.sh"
-      }
-    },
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
-      }
-    },
-    "sqlite": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sqlite", "--db-path", "/Users/gagelaporta/1NeuroPro/NeuroVisProject/1/(4)NeuroVis copy/neurovis.db"]
-    },
-    "godot": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-godot"],
-      "env": {
-        "GODOT_PROJECT_PATH": "/Users/gagelaporta/1NeuroPro/NeuroVisProject/1/(4)NeuroVis copy",
-        "GODOT_EXECUTABLE": "/Applications/Godot.app/Contents/MacOS/Godot"
-      }
-    },
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    },
-    "puppeteer": {
-      "command": "npx", 
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+      "allowedDirectories": [
+        "/Users/gagelaporta/Desktop/NeuroVis-Repo",
+        "/Users/gagelaporta/Documents",
+        "/Users/gagelaporta/Downloads"
+      ]
     }
   }
 }

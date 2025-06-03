@@ -3,7 +3,7 @@
 echo "Setting up Godot MCP for NeuroVis project..."
 
 # Navigate to project directory
-cd "/Users/gagelaporta/1NeuroPro/NeuroVisProject/1/(4)NeuroVis copy"
+cd "$(pwd)"
 
 # Clone the Godot MCP server if it doesn't exist
 if [ ! -d "godot-mcp" ]; then

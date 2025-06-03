@@ -1,4 +1,4 @@
-# NeuroVis Current Project State - Sun Jun  1 15:38:31 EDT 2025
+# NeuroVis Current Project State - Tue Jun  3 10:22:29 EDT 2025
 ## ALWAYS REFERENCE THIS FOR MAXIMUM CLAUDE EFFECTIVENESS
 
 ## 🎯 PROJECT OVERVIEW
@@ -9,14 +9,13 @@
 
 ## 📊 CURRENT CODEBASE ANALYSIS
 ### File Statistics:
-- GDScript files: 236
-- Scene files: 27
+- GDScript files: 281
+- Scene files: 36
 - Educational components: 0
-- Total lines of code: 69621
+- Total lines of code: 85988
 
 ## 🏗️ ARCHITECTURE OVERVIEW
 ### Directory Structure:
-- .anima
 - .claude
 - .git
 - .github
@@ -24,12 +23,11 @@
 - .vscode
 - assets
 - config
-- copy3
 - core
 - data
 - docs
+- godot-mcp
 - patches
-- path_fix_backup
 - scenes
 - scripts
 - shaders
@@ -46,13 +44,13 @@
 - core/visualization/RenderingOptimizer.gd
 - core/visualization/PerformanceDebugger.gd
 - core/visualization/VisualDebugger.gd
+- core/visualization/MaterialOptimizer.gd
 - core/visualization/DebugVisualizer.gd
+- core/visualization/LODSystemEnhanced.gd
 - core/visualization/MeshDiagnostic.gd
 - core/visualization/MedicalLighting.gd
 - core/visualization/SelectionVisualizer.gd
 - core/visualization/EducationalVisualFeedback.gd
-- core/resources/ResourceManager.gd
-- core/features/FeatureFlags.gd
 
 ### UI Components:
 - ui/core/ComponentRegistryCompat.gd
@@ -68,16 +66,7 @@
 
 ## 📈 RECENT DEVELOPMENT
 ### Git History (Last 10 commits):
-- 9fa8b08 feat(ui): comprehensive UI transformation and code quality improvements
-- 39ff7c1 fix: Remove duplicate BrainStructureSelectionManager class_name to resolve conflict
-- 5b5c3a2 fix(ai): Fix Gemini integration service references and type issues
-- 0bf0f0b feat(ai): Implement Gemini integration for enhanced educational AI
-- 0928340 fix(ai): Add GeminiService to core_development autoload config
-- bbbacb0 fix(ai): Add missing generate_content method to GeminiAIService
-- d9f0e61 fix(ai): Add missing GeminiModel enum and API methods
-- 078812c feat(ai): Implement Gemini integration for enhanced educational AI
-- 87c0dbe feat(core): Complete migration to component-based architecture
-- 2eed3df docs: Document rapid development success with template framework
+- 2c10ad0 Initial commit of NeuroVis educational neuroscience platform
 
 ## 🔧 ACTIVE FEATURES
 ### Educational Components:
@@ -89,6 +78,10 @@
 - AdvancedInteractionSystem
 - AIAssistantPanel
 - AIAssistantService
+- AIConfigurationManager
+- AIIntegrationManager
+- AIProviderInterface
+- AIProviderRegistry
 - AnatomicalKnowledgeDatabase
 - AppState
 - AutoloadDebugTest
@@ -98,6 +91,7 @@
 - BrainAnalysisPanel
 - BrainStructureInfoPanel
 - BrainStructureSelectionManager
+- BrainSystemSwitcher
 - BrainVisualizationCore
 - BrainVisualizer
 - CameraBehaviorController
@@ -105,6 +99,7 @@
 - CameraControlPanel
 - CameraControlsTest
 - CameraSystem
+- ComparativeAnatomyService
 - ComponentBase
 - ComponentRegistry
 - ComponentRegistryCompat
@@ -116,6 +111,7 @@
 - DebugController
 - DebugVisualizer
 - DesignSystem
+- EducationalModuleCoordinator
 - EducationalNotificationSystem
 - EducationalTooltipManager
 - EducationalVisualFeedback
@@ -130,6 +126,7 @@
 - ErrorNotification
 - EventBus
 - ExampleFrameworkTest
+- GeminiAIProvider
 - GeminiAIService
 - GeminiModelSelector
 - GeminiSetupDialog
@@ -148,19 +145,23 @@
 - KeyInputHandler
 - KnowledgeBaseTest
 - KnowledgeBaseUnitTest
+- LearningPathwayManager
 - LoadingOverlay
 - LoadingStateManager
 - LODManager
+- LODSystemEnhanced
 - MainScene
 - MainSceneComponents
 - MainSceneHybrid
 - MainSceneRobust
 - MainSceneSimple
 - MaterialLibrary
+- MaterialOptimizer
 - MedicalCameraController
 - MedicalLighting
 - MeshDiagnostic
 - MinimalInfoPanel
+- MockAIProvider
 - ModelControlPanel
 - ModelLoader
 - ModelRegistry
@@ -181,8 +182,9 @@
 - NavItem
 - NeuroVisDarkTheme
 - NeuroVisEnhancedScene
-- NeuroVisMainScene
+- NeuroVisMainSceneUpdated
 - OnboardingManager
+- OptimizedNeuroVisRoot
 - or node.is_class(class_name):
 - PerformanceComparer
 - PerformanceDebugger
@@ -197,6 +199,7 @@
 - ResponsiveComponentSafe
 - SafeUIComponentTest
 - SceneLoadingDebugTest
+- SceneManager
 - SectionComponent
 - SelectionDebugVisualizer
 - SelectionPerformanceValidator
@@ -210,16 +213,19 @@
 - StateManager
 - StructureInfoPanel
 - StructureLabeler
+- StructureManager
 - StructureSelectionTest
 - StyleEngine
 - SystemBootstrap
 - SystemBootstrapTest
+- SystemIntegrationManager
 - TestFramework
 - TestPlayer
 - TestRunnerCLI
 - ThemeToggle
 - to avoid autoload conflicts - accessed via autoload name "ResourceDebugger"
 - UIComponentFactory
+- UIComponentPool
 - UIDiagnostic
 - UIInfoPanelTest
 - UIManager
@@ -249,8 +255,8 @@
 ## 📊 PERFORMANCE INDICATORS
 ### Code Quality Metrics:
 - Classes with educational documentation: 0
-- Functions with type hints: 3129
-- Signal declarations: 427
+- Functions with type hints: 3675
+- Signal declarations: 523
 
 ## 🛡️ CLAUDE OPTIMIZATION NOTES
 ### For Maximum Effectiveness:
