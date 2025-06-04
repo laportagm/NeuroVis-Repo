@@ -1,8 +1,14 @@
 ## KnowledgeService.gd
-## Centralized knowledge base and anatomical data management service
+## Centralized knowledge base and anatomical data management service for educational platform
 ##
 ## This autoload singleton provides unified access to anatomical data,
 ## structure information, and educational content throughout NeuroVis.
+##
+## Educational Context:
+## - Handles inconsistent 3D model naming (e.g., "Thalami (good)" → "thalamus")
+## - Provides fuzzy search for educational queries across multiple languages
+## - Caches search results to maintain 60fps during interactive learning sessions
+## - Normalizes medical terminology for consistent educational content delivery
 ##
 ## Access via: KnowledgeService.method_name()
 ## @autoload: KnowledgeService
@@ -16,15 +22,18 @@ const DATA_FILE_PATH: String = "res://assets/data/anatomical_data.json"
 
 # === SIGNALS ===
 ## Emitted when the singleton is fully initialized
-signal initialized
+signal initialized()
 
 ## Emitted when data is successfully loaded
+## @param structure_count: Number of educational structures loaded
 signal data_loaded(structure_count: int)
 
-## Emitted when a structure is requested
+## Emitted when a structure is requested for educational display
+## @param structure_id: Identifier of the requested anatomical structure
 signal structure_requested(structure_id: String)
 
 ## Emitted when critical error occurs
+## @param error_message: Human-readable error description for debugging
 signal error_occurred(error_message: String)
 
 # === CONFIGURATION ===
@@ -40,9 +49,13 @@ var _initialization_time: float = 0.0
 var _error_count: int = 0
 
 # === DATA STORAGE ===
+## Medical structure data indexed by ID
 var _anatomical_data: Dictionary = {}
+## Fast lookup index for structure names (lowercase) -> structure data
 var _structure_index: Dictionary = {}
+## Cache for search results to maintain 60fps during educational interactions
 var _search_cache: Dictionary = {}
+## Configuration settings for educational features
 var _settings: Dictionary = {}
 
 # === LIFECYCLE METHODS ===
@@ -74,7 +87,7 @@ func _initialize_singleton() -> void:
 	_is_initialized = true
 	_initialization_time = (Time.get_ticks_msec() - start_time) / 1000.0
 
-	emit_signal("initialized")
+	initialized.emit()
 	_log_debug(SINGLETON_NAME + " initialized in " + str(_initialization_time) + "s")
 
 func _load_configuration() -> void:
@@ -135,12 +148,12 @@ func _load_anatomical_data() -> void:
 		_handle_error("Failed to parse anatomical data JSON")
 		return
 
-	var raw_data = json.data
+	var raw_json_data: Variant = json.data
 
 	# Convert structures array to dictionary indexed by ID
 	_anatomical_data.clear()
-	if raw_data.has("structures") and raw_data["structures"] is Array:
-		for structure in raw_data["structures"]:
+	if raw_json_data.has("structures") and raw_json_data["structures"] is Array:
+		for structure: Variant in raw_json_data["structures"]:
 			if structure is Dictionary and structure.has("id"):
 				_anatomical_data[structure["id"]] = structure
 
@@ -148,21 +161,38 @@ func _load_anatomical_data() -> void:
 	_log_debug("Loaded " + str(_anatomical_data.size()) + " anatomical structures")
 
 func _build_structure_index() -> void:
-	"""Build searchable index of anatomical structures"""
+	"""Build searchable index of anatomical structures for educational lookup
+	
+	Educational Context:
+	- Creates dual index: by ID and by display name (lowercase)
+	- Enables O(1) lookup performance for interactive educational queries
+	- Supports case-insensitive search for better educational UX
+	"""
 
 	_structure_index.clear()
 
-	for structure_id in _anatomical_data.keys():
-		var structure = _anatomical_data[structure_id]
-		if typeof(structure) == TYPE_DICTIONARY and structure.has("displayName"):
+	for structure_id: String in _anatomical_data.keys():
+		var structure_data: Dictionary = _anatomical_data[structure_id]
+		if typeof(structure_data) == TYPE_DICTIONARY and structure_data.has("displayName"):
 			# Index by ID and name for fast lookup
-			_structure_index[structure_id] = structure
-			_structure_index[structure["displayName"].to_lower()] = structure
+			_structure_index[structure_id] = structure_data
+			_structure_index[structure_data["displayName"].to_lower()] = structure_data
 
 # === PUBLIC API ===
 ## Get structure data by ID or name
 func get_structure(identifier: String) -> Dictionary:
-	"""Get anatomical structure data by ID or display name"""
+	"""Get anatomical structure data by ID or display name
+	
+	Educational Context - Search Priority:
+	1. Direct ID match (exact match for internal references)
+	2. Case-insensitive name match (user-friendly lookup)
+	3. Normalized name match (handles 3D model naming inconsistencies)
+	
+	Examples:
+	- "hippocampus" → returns hippocampus data
+	- "Hippocampus" → returns hippocampus data
+	- "Hipp and Others (good)" → normalizes to "hippocampus"
+	"""
 
 	# Input validation
 	if identifier == null or identifier.is_empty():
@@ -181,13 +211,13 @@ func get_structure(identifier: String) -> Dictionary:
 		return _structure_index[lower_id]
 
 	# Try normalized name lookup (remove suffixes like "(good)", "(solid)", etc.)
-	var normalized_name = _normalize_structure_name(identifier)
+	var normalized_name: String = _normalize_structure_name(identifier)
 	if normalized_name != identifier:
 		# Try normalized name
 		if _anatomical_data.has(normalized_name):
 			return _anatomical_data[normalized_name]
 
-		var normalized_lower = normalized_name.to_lower()
+		var normalized_lower: String = normalized_name.to_lower()
 		if _structure_index.has(normalized_lower):
 			return _structure_index[normalized_lower]
 
@@ -195,8 +225,19 @@ func get_structure(identifier: String) -> Dictionary:
 	return {}
 
 ## Search structures by keyword
-func search_structures(query: String, limit: int = 10) -> Array:
-	"""Search anatomical structures by keyword"""
+func search_structures(query: String, limit: int = 10) -> Array[Dictionary]:
+	"""Search anatomical structures by keyword
+	
+	Educational Context - Search Algorithm:
+	1. Exact match in display name (highest priority)
+	2. Fuzzy match in descriptions (educational content)
+	3. Partial match in functions (medical relevance)
+	
+	Cache Strategy:
+	- Results cached to maintain 60fps during rapid educational queries
+	- Cache key combines query + limit for precision
+	- Cache cleared on data updates or manual clear
+	"""
 
 	# Input validation
 	if query == null or query.is_empty():
@@ -208,16 +249,16 @@ func search_structures(query: String, limit: int = 10) -> Array:
 		limit = 10
 
 	# Check cache first
-	var cache_key = query.to_lower() + "_" + str(limit)
+	var cache_key: String = query.to_lower() + "_" + str(limit)
 	if _search_cache.has(cache_key):
 		return _search_cache[cache_key]
 
-	var results = []
-	var query_lower = query.to_lower()
-	var normalized_query = _normalize_structure_name(query).to_lower()
+	var results: Array[Dictionary] = []
+	var query_lower: String = query.to_lower()
+	var normalized_query: String = _normalize_structure_name(query).to_lower()
 
 	# Optimize search with early termination
-	for structure in _anatomical_data.values():
+	for structure: Dictionary in _anatomical_data.values():
 		# Early termination check
 		if results.size() >= limit:
 			break
@@ -230,7 +271,7 @@ func search_structures(query: String, limit: int = 10) -> Array:
 	return results
 
 ## Get all structure IDs
-func get_all_structure_ids() -> Array:
+func get_all_structure_ids() -> Array[String]:
 	"""Get array of all available structure IDs"""
 	return _anatomical_data.keys()
 
@@ -255,19 +296,28 @@ func _matches_search(structure: Dictionary, query: String) -> bool:
 
 	# Check functions
 	if structure.has("functions"):
-		for func_item in structure["functions"]:
-			if func_item.to_lower().contains(query):
+		for function_item: String in structure["functions"]:
+			if function_item.to_lower().contains(query):
 				return true
 
 	return false
 
 func _normalize_structure_name(structure_name: String) -> String:
-	"""Normalize structure name by removing common suffixes and parenthetical additions"""
+	"""Normalize structure name by removing common suffixes and parenthetical additions
+	
+	Educational Context:
+	Medical 3D models often have inconsistent naming due to:
+	- Export suffixes: "(good)", "(solid)", "(separated)"
+	- Artist annotations: "Hipp and Others", "Brain model"
+	- Plural/singular forms: "Thalami" vs "Thalamus"
+	
+	This normalization ensures educational content matches regardless of model source.
+	"""
 
-	var normalized = structure_name.to_lower()
+	var normalized: String = structure_name.to_lower()
 
 	# Special mapping for common 3D model naming patterns
-	var name_mappings = {
+	var name_mappings: Dictionary = {
 		"brain model": "cerebellum", # "Brain model (separated cerebellum...)" -> Cerebellum
 		"thalami": "thalamus", # "Thalami (good)" -> Thalamus
 		"hipp and others": "hippocampus", # "Hipp and Others (good)" -> Hippocampus
@@ -278,18 +328,18 @@ func _normalize_structure_name(structure_name: String) -> String:
 	}
 
 	# Check for exact mapping first
-	for pattern in name_mappings:
+	for pattern: String in name_mappings:
 		if normalized.contains(pattern):
 			return name_mappings[pattern]
 
 	# Remove parenthetical suffixes like "(good)", "(solid)", "(separated)", etc.
-	var regex = RegEx.new()
-	regex.compile("\\s*\\([^)]*\\)\\s*$")
-	normalized = regex.sub(normalized, "", true)
+	var parenthetical_regex: RegEx = RegEx.new()
+	parenthetical_regex.compile("\\s*\\([^)]*\\)\\s*$")
+	normalized = parenthetical_regex.sub(normalized, "", true)
 
 	# Remove common prefixes and suffixes
-	var prefixes_to_remove = ["brain ", "model "]
-	var suffixes_to_remove = [
+	var prefixes_to_remove: Array[String] = ["brain ", "model "]
+	var suffixes_to_remove: Array[String] = [
 		" model",
 		" structure",
 		" region",
@@ -298,11 +348,11 @@ func _normalize_structure_name(structure_name: String) -> String:
 		" nucleus"
 	]
 
-	for prefix in prefixes_to_remove:
+	for prefix: String in prefixes_to_remove:
 		if normalized.begins_with(prefix):
 			normalized = normalized.substr(prefix.length())
 
-	for suffix in suffixes_to_remove:
+	for suffix: String in suffixes_to_remove:
 		if normalized.ends_with(suffix):
 			normalized = normalized.substr(0, normalized.length() - suffix.length())
 

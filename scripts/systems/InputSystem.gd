@@ -48,31 +48,31 @@ func _handle_keyboard_input(event: InputEventKey) -> bool:
 		KEY_F:
 			# Focus on bounds
 			print("[INPUT_SYSTEM] Camera focus requested")
-			emit_signal("camera_focus_requested")
+			camera_focus_requested.emit()
 			return true
 		
 		KEY_1, KEY_KP_1:
 			# Front view
 			print("[INPUT_SYSTEM] Front view requested")
-			emit_signal("camera_view_preset_requested", "front")
+			camera_view_preset_requested.emit("front")
 			return true
 		
 		KEY_3, KEY_KP_3:
 			# Right view
 			print("[INPUT_SYSTEM] Right view requested")
-			emit_signal("camera_view_preset_requested", "right")
+			camera_view_preset_requested.emit("right")
 			return true
 		
 		KEY_7, KEY_KP_7:
 			# Top view
 			print("[INPUT_SYSTEM] Top view requested")
-			emit_signal("camera_view_preset_requested", "top")
+			camera_view_preset_requested.emit("top")
 			return true
 		
 		KEY_R:
 			# Reset view
 			print("[INPUT_SYSTEM] Camera reset requested")
-			emit_signal("camera_reset_requested")
+			camera_reset_requested.emit()
 			return true
 		
 		_:
@@ -83,7 +83,7 @@ func _handle_mouse_input(event: InputEventMouseButton) -> bool:
 	# Handle right mouse click for selection (left is used by camera controller for orbiting)
 	if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		print("[INPUT_SYSTEM] Structure selection requested at: ", event.position)
-		emit_signal("structure_select_requested", event.position)
+		structure_select_requested.emit(event.position)
 		return true
 	
 	return false

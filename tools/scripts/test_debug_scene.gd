@@ -92,7 +92,7 @@ func test_signal_connections():
     test_signal_emitter.test_signal.connect(_on_test_signal)
     
     # Emit the signal
-    test_signal_emitter.emit_signal("test_signal")
+    test_signal_emitter.test_signal.emit()
     await get_tree().process_frame
     
     performance_debugger.end_function_timing("test_signal_connections")

@@ -187,7 +187,7 @@ static func create_enhanced_glass_style(opacity_override: float = -1.0) -> Style
 	
 	# Enhanced shadow
 	if current_mode == ThemeMode.ENHANCED:
-		style.shadow_size = effects.get("shadow_blur", 32) / 2  # Godot uses different scale
+		style.shadow_size = effects.get("shadow_blur", 32) / 2.0  # Godot uses different scale
 		style.shadow_color = effects.get("shadow_color", COLORS.enhanced.panel_bg)
 		style.shadow_offset = Vector2(0, effects.get("shadow_y", 8))
 	else:

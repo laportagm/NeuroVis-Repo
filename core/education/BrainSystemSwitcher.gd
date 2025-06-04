@@ -115,7 +115,7 @@ func switch_to_system(target_system: BrainSystem, transition_style: TransitionSt
         current_selection = _selection_manager.get_current_selection()
     
     # Emit start signal
-    emit_signal("transition_started", _get_system_name(_current_system), _get_system_name(target_system))
+    transition_started.emit(_get_system_name(_current_system), _get_system_name(target_system))
     
     # Perform appropriate transition based on style
     match transition_style:
@@ -199,7 +199,7 @@ func _setup_connections() -> void:
     transition_timer.name = "TransitionTimer"
     transition_timer.one_shot = true
     add_child(transition_timer)
-    transition_timer.connect("timeout", _on_transition_completed)
+    transition_timer.timeout.connect(_on_transition_completed)
 
 func _apply_initial_state() -> void:
     """Apply initial state and configuration"""
@@ -246,7 +246,7 @@ func _perform_educational_transition(target_system: BrainSystem) -> void:
     
     # Step 2: Show educational context if available
     if show_educational_context and not _educational_context.is_empty():
-        emit_signal("educational_context_available", _educational_context)
+        educational_context_available.emit(_educational_context)
         await get_tree().create_timer(EDUCATIONAL_PAUSE_DURATION).timeout
     
     # Step 3: Show target system
@@ -384,7 +384,7 @@ func _on_transition_completed() -> void:
     _update_educational_content()
     
     # Emit completion signal
-    emit_signal("transition_completed", _get_system_name(_current_system))
+    transition_completed.emit(_get_system_name(_current_system))
 
 # === CLEANUP ===
 func _exit_tree() -> void:

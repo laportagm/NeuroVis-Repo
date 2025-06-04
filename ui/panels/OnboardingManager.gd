@@ -86,7 +86,7 @@ func show_step(index: int):
     # Position tooltip in center
     await get_tree().process_frame
     var viewport_size = Vector2(get_viewport().size)
-    tooltip.position = (viewport_size - tooltip.size) / 2
+    tooltip.position = (viewport_size - tooltip.size) / 2.0
     
     # Animate entrance
     _animate_entrance(tooltip)
@@ -285,7 +285,7 @@ func complete_onboarding():
     if overlay:
         tween.tween_property(overlay, "modulate:a", 0.0, 0.7)
     tween.tween_callback(func():
-        emit_signal("onboarding_completed")
+        onboarding_completed.emit()
         queue_free()
     )
 

@@ -187,7 +187,7 @@ func check_structure_selection_flow() -> void:
 		printerr("UIDiagnostic Error: MainScene doesn't have structure_selected signal in check_structure_selection_flow()")
 	else:
 		# Emit test signal
-		main_scene.emit_signal("structure_selected", "test_structure")
+		main_scene.structure_selected.emit("test_structure")
 		
 		# Wait a moment
 		await get_tree().create_timer(0.5).timeout

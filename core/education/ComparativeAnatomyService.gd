@@ -140,7 +140,7 @@ func start_comparison(structure_ids: Array, comparison_type: ComparisonType = -1
         _generate_educational_report()
     
     # Emit comparison started signal
-    emit_signal("comparison_started", _get_comparison_type_name(comparison_type), structure_ids)
+    comparison_started.emit(_get_comparison_type_name(comparison_type), structure_ids)
     
     return true
 
@@ -226,7 +226,7 @@ func _setup_connections() -> void:
     # Connect to selection manager if available
     if _selection_manager != null:
         if _selection_manager.has_signal("structure_selected"):
-            _selection_manager.connect("structure_selected", _on_structure_selected)
+            _selection_manager.structure_selected.connect(_on_structure_selected)
 
 func _get_structure_data(structure_id: String) -> Dictionary:
     """Get educational data for a specific structure"""
@@ -269,7 +269,7 @@ func _generate_annotations(comparison_type: ComparisonType, annotation_style: An
     _current_annotations = annotations
     
     # Emit annotations available signal
-    emit_signal("annotations_available", annotations)
+    annotations_available.emit(annotations)
 
 func _generate_functional_comparison_annotations(annotations: Dictionary) -> void:
     """Generate annotations for functional comparison"""
@@ -430,7 +430,7 @@ func _generate_educational_report() -> Dictionary:
     report.clinical_relevance = _generate_clinical_relevance(_active_comparison.type)
     
     # Emit report generated signal
-    emit_signal("report_generated", report)
+    report_generated.emit(report)
     
     return report
 

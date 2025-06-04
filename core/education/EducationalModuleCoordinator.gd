@@ -112,7 +112,7 @@ func start_educational_session(mode: int, options: Dictionary = {}) -> bool:
             # Would initialize assessment mode
     
     # Emit session started signal
-    emit_signal("session_started", session_id, session_type)
+    session_started.emit(session_id, session_type)
     
     return true
 
@@ -148,7 +148,7 @@ func end_educational_session() -> Dictionary:
                 _learning_pathway.end_current_pathway()
     
     # Emit session ended signal
-    emit_signal("session_ended", _current_session.id, duration)
+    session_ended.emit(_current_session.id, duration)
     
     # Save analytics if enabled
     if collect_analytics:
@@ -274,7 +274,7 @@ func get_educational_content(structure_id: String, detail_level: int = 2) -> Dic
     var educational_content = _enhance_educational_content(structure_data, detail_level)
     
     # Emit content ready signal
-    emit_signal("educational_content_ready", educational_content)
+    educational_content_ready.emit(educational_content)
     
     return educational_content
 
@@ -389,24 +389,24 @@ func _setup_connections() -> void:
     # Connect to selection manager if available
     if _selection_manager != null:
         if _selection_manager.has_signal("structure_selected"):
-            _selection_manager.connect("structure_selected", _on_structure_selected)
+            _selection_manager.structure_selected.connect(_on_structure_selected)
         if _selection_manager.has_signal("selection_cleared"):
-            _selection_manager.connect("selection_cleared", _on_selection_cleared)
+            _selection_manager.selection_cleared.connect(_on_selection_cleared)
     
     # Connect to brain system switcher if available
     if _brain_system_switcher != null:
         if _brain_system_switcher.has_signal("transition_completed"):
-            _brain_system_switcher.connect("transition_completed", _on_brain_system_changed)
+            _brain_system_switcher.transition_completed.connect(_on_brain_system_changed)
     
     # Connect to comparative anatomy service if available
     if _comparative_anatomy != null:
         if _comparative_anatomy.has_signal("comparison_started"):
-            _comparative_anatomy.connect("comparison_started", _on_comparison_started)
+            _comparative_anatomy.comparison_started.connect(_on_comparison_started)
     
     # Connect to learning pathway manager if available
     if _learning_pathway != null:
         if _learning_pathway.has_signal("pathway_completed"):
-            _learning_pathway.connect("pathway_completed", _on_pathway_completed)
+            _learning_pathway.pathway_completed.connect(_on_pathway_completed)
 
 func _enhance_educational_content(base_content: Dictionary, detail_level: int) -> Dictionary:
     """Enhance structure data with educational metadata"""
@@ -570,7 +570,7 @@ func _get_recommended_system_for_structure(structure_id: String) -> int:
     if structure_id in surface_structures:
         return _brain_system_switcher.BrainSystem.WHOLE_BRAIN
     
-    return -1  # No specific recommendation
+    return _brain_system_switcher.BrainSystem.WHOLE_BRAIN  # Default recommendation
 
 func _save_session_analytics(session: Dictionary) -> void:
     """Save session analytics data"""

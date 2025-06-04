@@ -38,6 +38,11 @@ static func get_model_switcher() -> Node:
 static func get_debug_cmd() -> Node:
 	return _safe_get_autoload("DebugCmd")
 
+## Safely get any autoload by name
+static func get_autoload(autoload_name: String) -> Node:
+	"""Public method to safely get any autoload by name"""
+	return _safe_get_autoload(autoload_name)
+
 # === CORE SAFE ACCESS METHOD ===
 static func _safe_get_autoload(autoload_name: String) -> Node:
 	"""Safely get an autoload with caching and validation"""
@@ -76,7 +81,8 @@ func _validate_autoload(autoload_name: String) -> void:
 		# Check if the node has expected methods (basic validation)
 		match autoload_name:
 			"UIThemeManager":
-				is_valid = node.has_method("apply_glass_panel") or node.has_method("get_current_theme")
+				# UIThemeManager uses static methods, just check if node exists
+				is_valid = true
 			"KnowledgeService":
 				is_valid = node.has_method("get_structure") and node.has_method("is_initialized")
 			"AIAssistant":
@@ -99,20 +105,18 @@ static func apply_theme_safely(control: Control, style_type: String = "panel") -
 		return false
 	
 	var theme_manager = get_theme_manager()
-	if theme_manager and theme_manager.has_method("apply_glass_panel"):
+	if theme_manager:
+		# UIThemeManager uses static methods, no need to check has_method
 		match style_type:
 			"panel":
-				if theme_manager.has_method("apply_glass_panel"):
-					theme_manager.apply_glass_panel(control)
-					return true
+				UIThemeManager.apply_glass_panel(control)
+				return true
 			"button":
-				if theme_manager.has_method("apply_modern_button"):
-					theme_manager.apply_modern_button(control, Color.WHITE, "default")
-					return true
+				UIThemeManager.apply_modern_button(control, Color.WHITE, "default")
+				return true
 			"label":
-				if theme_manager.has_method("apply_modern_label"):
-					theme_manager.apply_modern_label(control, 14, Color.WHITE)
-					return true
+				UIThemeManager.apply_modern_label(control, 14, Color.WHITE)
+				return true
 	
 	# Fallback styling
 	_apply_fallback_styling(control, style_type)

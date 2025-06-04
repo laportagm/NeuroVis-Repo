@@ -223,6 +223,43 @@ func _register_mock_provider() -> void:
         
         print("[AIRegistry] Registered mock provider")
         provider_registered.emit(DEFAULT_PROVIDER_ID)
+    
+    # Also register Gemini provider if available
+    _register_gemini_provider()
+
+func _register_gemini_provider() -> void:
+    """Register the Gemini AI provider"""
+    # Check if already registered
+    if _providers.has("gemini"):
+        return
+    
+    # Try to load the Gemini provider
+    var GeminiProvider = load("res://core/ai/providers/GeminiAIProvider.gd")
+    if not GeminiProvider:
+        print("[AIRegistry] GeminiAIProvider not found")
+        return
+    
+    # Create and register Gemini provider
+    var gemini_provider = GeminiProvider.new()
+    gemini_provider.name = "GeminiAI"
+    add_child(gemini_provider)
+    
+    # Initialize the provider
+    if gemini_provider.has_method("initialize"):
+        gemini_provider.initialize()
+    
+    # Register without calling register_provider to avoid recursion
+    _providers["gemini"] = gemini_provider
+    
+    # Register with configuration manager if available
+    var config = {}
+    if gemini_provider.has_method("get_configuration"):
+        config = gemini_provider.get_configuration()
+    if _config_manager:
+        _config_manager.register_provider("gemini", config)
+    
+    print("[AIRegistry] Registered Gemini provider")
+    provider_registered.emit("gemini")
 
 func _create_mock_provider() -> AIProviderInterface:
     """Create a basic mock provider implementation"""

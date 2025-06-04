@@ -77,21 +77,36 @@ func load_brain_models() -> void:
 
 ## Setup default model definitions if none provided
 func _setup_default_model_definitions() -> void:
-	print("ModelCoordinator: Setting up default model definitions")
+	print("ModelCoordinator: Setting up professional anatomical model definitions")
 	
-	# Define the default models to load - explicitly typed as Array[Dictionary]
+	# Define the default models to load with professional medical standards
 	var default_models: Array[Dictionary] = [
 		{
 			"path": "res://assets/models/Half_Brain.glb",
 			"position": Vector3(0, 0, 0),
-			"rotation": Vector3(0, 180, 0),  # Rotate 180 degrees to face camera
-			"scale": Vector3(0.03, 0.03, 0.03)  # Scale to 3% (reduced by half again)
+			"rotation": Vector3(0, 0, 0),  # Let AnatomicalModelManager handle medical orientation
+			"scale": Vector3(1.0, 1.0, 1.0),  # Let AnatomicalModelManager handle professional scaling
+			"use_professional_loader": true,
+			"enable_medical_materials": true,
+			"enable_lod": true
 		},
 		{
 			"path": "res://assets/models/Internal_Structures.glb",
 			"position": Vector3(0, 0, 0),
-			"rotation": Vector3(0, 180, 0),
-			"scale": Vector3(0.03, 0.03, 0.03)  # Scale to 3% (reduced by half again)
+			"rotation": Vector3(0, 0, 0),
+			"scale": Vector3(1.0, 1.0, 1.0),
+			"use_professional_loader": true,
+			"enable_medical_materials": true,
+			"enable_lod": true
+		},
+		{
+			"path": "res://assets/models/Brainstem(Solid).glb",
+			"position": Vector3(0, 0, 0),
+			"rotation": Vector3(0, 0, 0),
+			"scale": Vector3(1.0, 1.0, 1.0),
+			"use_professional_loader": true,
+			"enable_medical_materials": true,
+			"enable_lod": true
 		}
 	]
 	
@@ -108,6 +123,50 @@ func _load_single_model(model_info: Dictionary) -> Dictionary:
 		return {"success": false, "error": error}
 	
 	print("ModelCoordinator: Model file found: " + model_info.path)
+	
+	# Check if we should use professional loader
+	if model_info.get("use_professional_loader", false):
+		return _load_professional_model(model_info)
+	else:
+		return _load_standard_model(model_info)
+
+## Load model using professional AnatomicalModelManager
+func _load_professional_model(model_info: Dictionary) -> Dictionary:
+	print("ModelCoordinator: Using professional anatomical model loader")
+	
+	# Create or get AnatomicalModelManager
+	var anatomical_manager = _get_or_create_anatomical_manager()
+	if not anatomical_manager:
+		var error = "Failed to create AnatomicalModelManager"
+		print("ERROR: " + error)
+		return {"success": false, "error": error}
+	
+	# Load using professional system
+	var model_instance = anatomical_manager.load_anatomical_model(model_info.path, model_parent)
+	if not model_instance:
+		var error = "Professional model loading failed: " + model_info.path
+		print("ERROR: " + error)
+		return {"success": false, "error": error}
+	
+	# Create friendly model name
+	var model_name = model_info.path.get_file().replace(".glb", "").replace("(Solid)", "")
+	model_instance.name = model_name
+	
+	print("ModelCoordinator: Professional model loaded successfully")
+	_debug_model_structure(model_instance)
+	
+	# Register with ModelSwitcher
+	register_model_with_switcher(model_instance, model_name)
+	
+	# Track the loaded model
+	loaded_models[model_name] = model_instance
+	
+	print("ModelCoordinator: Professional anatomical model configured: " + model_name)
+	return {"success": true, "model_name": model_name, "instance": model_instance}
+
+## Load model using standard system (fallback)
+func _load_standard_model(model_info: Dictionary) -> Dictionary:
+	print("ModelCoordinator: Using standard model loader")
 	
 	# Load the scene
 	var model_scene = load(model_info.path)
@@ -150,6 +209,25 @@ func _load_single_model(model_info: Dictionary) -> Dictionary:
 	loaded_models[model_name] = model_instance
 	
 	return {"success": true, "model_name": model_name, "instance": model_instance}
+
+## Get or create the AnatomicalModelManager
+func _get_or_create_anatomical_manager() -> AnatomicalModelManager:
+	var manager = get_node_or_null("AnatomicalModelManager")
+	if not manager:
+		# Create the manager
+		manager = AnatomicalModelManager.new()
+		manager.name = "AnatomicalModelManager"
+		add_child(manager)
+		
+		# Configure for medical education
+		manager.enable_material_enhancement = true
+		manager.enable_lod_system = true
+		manager.default_model_scale = 1.0  # Professional scaling will be handled internally
+		manager.enable_subsurface_scattering = true
+		
+		print("ModelCoordinator: Created professional AnatomicalModelManager")
+	
+	return manager
 
 ## Setup collision shapes for all MeshInstance3D nodes in a model
 func setup_model_collisions(node: Node) -> void:

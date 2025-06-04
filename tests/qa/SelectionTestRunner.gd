@@ -11,7 +11,7 @@ class_name SelectionTestRunner
 extends Node
 
 # === PRELOADS ===
-const SelectionReliabilityTest = preload("res://tests/qa/SelectionReliabilityTest.gd")
+const ReliabilityTestClass = preload("res://tests/qa/SelectionReliabilityTest.gd")
 
 # === PRIVATE VARIABLES ===
 var _test_instance: SelectionReliabilityTest
@@ -50,7 +50,7 @@ func run_selection_test(mode: String = "full", target_structure: String = "") ->
         return
     
     # Create test instance
-    _test_instance = SelectionReliabilityTest.new()
+    _test_instance = ReliabilityTestClass.new()
     _main_scene.add_child(_test_instance)
     
     # Initialize test system

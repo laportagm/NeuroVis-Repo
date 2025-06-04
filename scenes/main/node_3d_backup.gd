@@ -1,5 +1,8 @@
 extends Node3D
 
+# Import SafeAutoloadAccess for safer autoload handling
+const SafeAutoloadAccess = preload("res://ui/components/core/SafeAutoloadAccess.gd")
+
 # Preload custom classes
 const CameraControllerScene = preload("res://core/interaction/CameraBehaviorController.gd")
 const ModelCoordinatorScene = preload("res://core/models/ModelRegistry.gd")
@@ -165,7 +168,7 @@ func _setup_model_coordinator() -> void:
 func _on_models_loaded(model_names: Array) -> void:
 	print("Models loaded successfully: " + str(model_names))
 	# Emit the legacy signal for compatibility
-	emit_signal("models_loaded", model_names)
+	models_loaded.emit(model_names)
 
 # Handle model load failure from ModelCoordinator
 func _on_model_load_failed(model_path: String, error: String) -> void:
@@ -220,16 +223,18 @@ func _register_debug_commands() -> void:
 	if not OS.is_debug_build():
 		return
 	
-	# Check if DebugCmd autoload is available
-	if not is_instance_valid(DebugCmd):
+	# Check if DebugCmd autoload is available with safe access
+	var debug_cmd = SafeAutoloadAccess.get_autoload("DebugCmd")
+	if not debug_cmd:
 		print("Warning: DebugCmd autoload not available")
 		return
 	
 	# Register scene-specific debug commands
-	DebugCmd.register_command("reset_camera", _debug_reset_camera, "Reset camera to default position")
-	DebugCmd.register_command("toggle_debug_ray", _debug_toggle_ray, "Toggle debug ray visualization")
-	DebugCmd.register_command("list_models", _debug_list_models, "List all registered brain models")
-	DebugCmd.register_command("test_selection", _debug_test_selection, "Test structure selection system")
+	if debug_cmd.has_method("register_command"):
+		debug_cmd.register_command("reset_camera", _debug_reset_camera, "Reset camera to default position")
+		debug_cmd.register_command("toggle_debug_ray", _debug_toggle_ray, "Toggle debug ray visualization")
+		debug_cmd.register_command("list_models", _debug_list_models, "List all registered brain models")
+		debug_cmd.register_command("test_selection", _debug_test_selection, "Test structure selection system")
 	print("Brain scene debug commands registered")
 
 # Debug command implementations
@@ -254,7 +259,7 @@ func _debug_list_models() -> void:
 
 func _debug_test_selection() -> void:
 	print("Testing selection system...")
-	var test_position = get_viewport().get_visible_rect().size / 2
+	var test_position = get_viewport().get_visible_rect().size / 2.0
 	if selection_manager:
 		selection_manager.handle_selection_at_position(test_position)
 	else:
@@ -296,7 +301,7 @@ func _on_structure_selected(structure_name: String, _mesh: MeshInstance3D) -> vo
 	print("Selected structure: " + structure_name)
 	
 	# Emit signal for other systems that might need it
-	emit_signal("structure_selected", structure_name)
+	structure_selected.emit(structure_name)
 	
 	# Display structure information if available
 	_display_structure_info(structure_name)
@@ -306,7 +311,7 @@ func _on_structure_deselected() -> void:
 	object_name_label.text = "Selected: None"
 	if info_panel:
 		info_panel.visible = false
-	emit_signal("structure_deselected")
+	structure_deselected.emit()
 
 # Handle model selected from the UI
 func _on_model_selected(model_name: String) -> void:
@@ -432,7 +437,7 @@ func _on_model_visibility_changed(model_name: String, model_is_visible: bool) ->
 #	print("DEBUG: Successfully loaded " + str(successful_loads) + " of " + str(models_to_load.size()) + " models")
 #	
 #	# Emit signal that models are loaded
-#	emit_signal("models_loaded", model_names)
+#	models_loaded.emit(model_names)
 
 # Set up collision bodies for mesh instances (DEPRECATED - now handled by ModelCoordinator)
 # func _setup_mesh_collisions(node: Node) -> void:
@@ -565,7 +570,7 @@ func _on_info_panel_closed() -> void:
 #			print("Selected structure: " + structure_name)
 #			
 #			# Emit signal
-#			emit_signal("structure_selected", structure_name)
+#			structure_selected.emit(structure_name)
 #			
 #			# Display structure information if available
 #			_display_structure_info(structure_name)
@@ -575,7 +580,7 @@ func _on_info_panel_closed() -> void:
 #	object_name_label.text = "Selected: None"
 #	if info_panel:
 #		info_panel.visible = false
-#	emit_signal("structure_deselected")
+#	structure_deselected.emit()
 
 # Display structure information in the info panel
 func _display_structure_info(structure_name: String) -> void:

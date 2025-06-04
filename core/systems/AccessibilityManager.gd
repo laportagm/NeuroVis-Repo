@@ -91,7 +91,7 @@ func set_font_size(size: float) -> void:
     save_settings()
 
 ## Get colorblind-safe color
-func get_safe_color(original_color: Color, color_type: String = "default") -> Color:
+func get_safe_color(original_color: Color, _color_type: String = "default") -> Color:
     """Convert color to colorblind-safe equivalent"""
     match colorblind_mode:
         "deuteranope":

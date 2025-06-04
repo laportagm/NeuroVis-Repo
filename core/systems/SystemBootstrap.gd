@@ -49,7 +49,7 @@ func initialize_all_systems(main_scene: Node3D) -> bool:
 	if success:
 		initialization_complete = true
 		print("[BOOTSTRAP] All systems initialized successfully")
-		emit_signal("all_systems_initialized")
+		all_systems_initialized.emit()
 	else:
 		print("[BOOTSTRAP] System initialization failed")
 	
@@ -72,7 +72,7 @@ func _initialize_debug_systems() -> bool:
 		if resource_debugger and resource_debugger.has_method("initialize"):
 			resource_debugger.initialize()
 			systems_initialized["ResourceDebugger"] = true
-			emit_signal("system_initialized", "ResourceDebugger")
+			system_initialized.emit("ResourceDebugger")
 		
 		# Initialize resource load tracer
 		var resource_tracer = get_node_or_null("/root/ResourceLoadTracer")
@@ -81,7 +81,7 @@ func _initialize_debug_systems() -> bool:
 			if resource_tracer.has_method("diagnose_common_issues"):
 				resource_tracer.diagnose_common_issues()
 			systems_initialized["ResourceLoadTracer"] = true
-			emit_signal("system_initialized", "ResourceLoadTracer")
+			system_initialized.emit("ResourceLoadTracer")
 	
 	systems_initialized["debug_systems"] = true
 	await get_tree().process_frame
@@ -166,7 +166,7 @@ func _initialize_knowledge_base(main_scene: Node3D) -> bool:
 	knowledge_base = script_resource.new()
 	if knowledge_base == null:
 		push_error("[BOOTSTRAP] Failed to create knowledge base instance")
-		emit_signal("initialization_failed", "knowledge_base", "Instance creation failed")
+		initialization_failed.emit("knowledge_base", "Instance creation failed")
 		return false
 	
 	main_scene.add_child(knowledge_base)
@@ -174,7 +174,7 @@ func _initialize_knowledge_base(main_scene: Node3D) -> bool:
 		knowledge_base.load_knowledge_base()
 	
 	systems_initialized["knowledge_base"] = true
-	emit_signal("system_initialized", "knowledge_base")
+	system_initialized.emit("knowledge_base")
 	print("[BOOTSTRAP] Knowledge base initialized successfully")
 	return true
 
@@ -188,13 +188,13 @@ func _initialize_neural_net(main_scene: Node3D) -> bool:
 	neural_net = script_resource.new()
 	if neural_net == null:
 		push_error("[BOOTSTRAP] Failed to create neural net instance")
-		emit_signal("initialization_failed", "neural_net", "Instance creation failed")
+		initialization_failed.emit("neural_net", "Instance creation failed")
 		return false
 	
 	main_scene.add_child(neural_net)
 	
 	systems_initialized["neural_net"] = true
-	emit_signal("system_initialized", "neural_net")
+	system_initialized.emit("neural_net")
 	print("[BOOTSTRAP] Neural network module initialized successfully")
 	return true
 
@@ -208,13 +208,13 @@ func _initialize_model_switcher(main_scene: Node3D) -> bool:
 	model_switcher = script_resource.new()
 	if model_switcher == null:
 		push_error("[BOOTSTRAP] Failed to create model switcher instance")
-		emit_signal("initialization_failed", "model_switcher", "Instance creation failed")
+		initialization_failed.emit("model_switcher", "Instance creation failed")
 		return false
 	
 	main_scene.add_child(model_switcher)
 	
 	systems_initialized["model_switcher"] = true
-	emit_signal("system_initialized", "model_switcher")
+	system_initialized.emit("model_switcher")
 	print("[BOOTSTRAP] Model switcher initialized successfully")
 	return true
 
@@ -228,7 +228,7 @@ func _initialize_model_coordinator(main_scene: Node3D) -> bool:
 	model_coordinator = script_resource.new()
 	if model_coordinator == null:
 		push_error("[BOOTSTRAP] Failed to create model coordinator instance")
-		emit_signal("initialization_failed", "model_coordinator", "Instance creation failed")
+		initialization_failed.emit("model_coordinator", "Instance creation failed")
 		return false
 	
 	main_scene.add_child(model_coordinator)
@@ -239,7 +239,7 @@ func _initialize_model_coordinator(main_scene: Node3D) -> bool:
 		model_coordinator.set_model_parent(brain_parent)
 	
 	systems_initialized["model_coordinator"] = true
-	emit_signal("system_initialized", "model_coordinator")
+	system_initialized.emit("model_coordinator")
 	print("[BOOTSTRAP] Model coordinator initialized successfully")
 	return true
 
@@ -253,13 +253,13 @@ func _initialize_selection_manager(main_scene: Node3D) -> bool:
 	selection_manager = script_resource.new()
 	if selection_manager == null:
 		push_error("[BOOTSTRAP] Failed to create selection manager instance")
-		emit_signal("initialization_failed", "selection_manager", "Instance creation failed")
+		initialization_failed.emit("selection_manager", "Instance creation failed")
 		return false
 	
 	main_scene.add_child(selection_manager)
 	
 	systems_initialized["selection_manager"] = true
-	emit_signal("system_initialized", "selection_manager")
+	system_initialized.emit("selection_manager")
 	print("[BOOTSTRAP] Selection manager initialized successfully")
 	return true
 
@@ -273,7 +273,7 @@ func _initialize_camera_controller(main_scene: Node3D) -> bool:
 	camera_controller = script_resource.new()
 	if camera_controller == null:
 		push_error("[BOOTSTRAP] Failed to create camera controller instance")
-		emit_signal("initialization_failed", "camera_controller", "Instance creation failed")
+		initialization_failed.emit("camera_controller", "Instance creation failed")
 		return false
 	
 	main_scene.add_child(camera_controller)
@@ -288,7 +288,7 @@ func _initialize_camera_controller(main_scene: Node3D) -> bool:
 		push_warning("[BOOTSTRAP] No camera found for camera controller")
 	
 	systems_initialized["camera_controller"] = true
-	emit_signal("system_initialized", "camera_controller")
+	system_initialized.emit("camera_controller")
 	print("[BOOTSTRAP] Camera controller initialized successfully")
 	return true
 
@@ -296,12 +296,12 @@ func _initialize_camera_controller(main_scene: Node3D) -> bool:
 func _load_script(script_path: String):
 	"""Load a script resource"""
 	if not ResourceLoader.exists(script_path):
-		print("[BOOTSTRAP] ERROR: Script not found: ", script_path)
+		push_error("[BOOTSTRAP] Script loading failed: Script not found at path " + script_path)
 		return null
 	
 	var script_resource = load(script_path)
 	if not script_resource:
-		print("[BOOTSTRAP] ERROR: Failed to load script: ", script_path)
+		push_error("[BOOTSTRAP] Script loading failed: Could not load script from " + script_path)
 		return null
 	
 	return script_resource
@@ -311,7 +311,7 @@ func _create_loading_overlay(main_scene: Node3D):
 	var script_path = "res://ui/panels/LoadingOverlay.gd"
 	var script_resource = _load_script(script_path)
 	if not script_resource:
-		print("[BOOTSTRAP] LoadingOverlay not available, continuing without loading screen")
+		push_warning("[BOOTSTRAP] UI component missing: LoadingOverlay not available, continuing without loading screen")
 		return null
 	
 	var loading_overlay = script_resource.new()

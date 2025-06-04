@@ -217,7 +217,7 @@ func _animate_exit() -> void:
     # Set animation complete and emit signal after delay
     get_tree().create_timer(0.2).timeout.connect(func(): 
         is_animating = false
-        emit_signal("panel_closed")
+        panel_closed.emit()
     )
 
 # Content update methods

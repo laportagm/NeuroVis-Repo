@@ -206,7 +206,7 @@ func select_item(section_id: String, item_id: String) -> bool:
         _save_state()
     
     # Emit signal
-    emit_signal("item_selected", section_id, item_id)
+    item_selected.emit(section_id, item_id)
     
     return true
 
@@ -231,7 +231,7 @@ func set_expanded(expanded: bool) -> void:
         _save_state()
     
     # Emit signal
-    emit_signal("sidebar_expanded_changed", expanded)
+    sidebar_expanded_changed.emit(expanded)
 
 ## Get whether the sidebar is expanded
 ## @returns: Boolean indicating expanded state
@@ -389,9 +389,9 @@ func _create_section_ui(section_id: String) -> void:
 
 func _apply_styling() -> void:
     """Apply styling to the sidebar"""
-    # Use theme manager if available
-    if _theme_manager and _theme_manager.has_method("apply_glass_panel"):
-        _theme_manager.apply_glass_panel(self)
+    # Use theme manager if available (with static call)
+    if _theme_manager:
+        UIThemeManager.apply_glass_panel(self)
         return
     
     # Fallback styling
@@ -556,7 +556,7 @@ func _on_section_toggled(expanded: bool, section_id: String) -> void:
         _save_state()
     
     # Emit signal
-    emit_signal("section_toggled", section_id, expanded)
+    section_toggled.emit(section_id, expanded)
 
 func _on_item_selected(item_id: String, section_id: String) -> void:
     """Handle item selection"""

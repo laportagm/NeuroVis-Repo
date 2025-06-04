@@ -51,7 +51,7 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	"""Clean up when scene is removed"""
-	emit_signal("scene_closing")
+	scene_closing.emit()
 	_cleanup_scene()
 
 # === PUBLIC METHODS ===
@@ -107,7 +107,7 @@ func _initialize_scene() -> bool:
 	_connect_signals()
 	
 	_is_initialized = true
-	emit_signal("scene_ready")
+	scene_ready.emit()
 	_log_debug("Scene initialized successfully")
 	
 	return true

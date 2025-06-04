@@ -72,7 +72,7 @@ func toggle_model_visibility(model_name: String) -> void:
 	print("ModelSwitcher: Set '" + model_name + "' visibility to " + str(new_visibility))
 	
 	# Emit signal
-	emit_signal("model_visibility_changed", model_name, new_visibility)
+	model_visibility_changed.emit(model_name, new_visibility)
 
 # Set specific model visibility
 func set_model_visibility(model_name: String, visibility: bool) -> void:
@@ -89,7 +89,7 @@ func set_model_visibility(model_name: String, visibility: bool) -> void:
 	print("ModelSwitcher: Set '" + model_name + "' visibility to " + str(visibility))
 	
 	# Emit signal
-	emit_signal("model_visibility_changed", model_name, visibility)
+	model_visibility_changed.emit(model_name, visibility)
 
 # Show only one model, hide all others
 func show_only_model(model_name: String) -> void:
@@ -104,6 +104,6 @@ func show_only_model(model_name: String) -> void:
 		model_info.visible = (model_key == model_name)
 		
 		# Emit signal for each changed model
-		emit_signal("model_visibility_changed", model_key, model_info.visible)
+		model_visibility_changed.emit(model_key, model_info.visible)
 		
 	print("ModelSwitcher: Now showing only '" + model_name + "'")

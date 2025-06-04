@@ -461,8 +461,8 @@ func _get_group_for_key(key: String) -> String:
 
 func _format_duration(seconds: float) -> String:
 	"""Format duration in seconds to human-readable string"""
-	var hours = int(seconds) / 3600
-	var minutes = (int(seconds) % 3600) / 60
+	var hours = int(seconds) / 3600.0
+	var minutes = (int(seconds) % 3600) / 60.0
 	var secs = int(seconds) % 60
 	
 	if hours > 0:

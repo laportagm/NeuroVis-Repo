@@ -177,7 +177,7 @@ func show_achievement(achievement_id: String, custom_data: Dictionary = {}) -> v
 	}
 	
 	_queue_notification(NotificationType.ACHIEVEMENT, title, message, ACHIEVEMENT_DURATION, notification_data)
-	emit_signal("achievement_unlocked", achievement_id)
+	achievement_unlocked.emit(achievement_id)
 
 func show_progress_update(milestone_type: String, current_value: int, target_value: int = 0) -> void:
 	"""Show learning progress update"""
@@ -199,7 +199,7 @@ func show_progress_update(milestone_type: String, current_value: int, target_val
 			message = "You've made progress in %s: %d" % [milestone_type, current_value]
 	
 	_queue_notification(NotificationType.PROGRESS_UPDATE, title, message, DEFAULT_DURATION)
-	emit_signal("learning_milestone_reached", milestone_type, current_value)
+	learning_milestone_reached.emit(milestone_type, current_value)
 
 func show_discovery(structure_name: String, interesting_fact: String = "") -> void:
 	"""Show discovery notification when user finds something new"""
@@ -431,7 +431,7 @@ func _on_notification_clicked(data: Dictionary, event: InputEvent) -> void:
 	"""Handle notification click"""
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		print("[NOTIFICATION_SYSTEM] Notification clicked: " + data["id"])
-		emit_signal("notification_clicked", data["id"], data)
+		notification_clicked.emit(data["id"], data)
 
 # Achievement tracking helpers
 func track_structure_viewed(structure_id: String) -> void:

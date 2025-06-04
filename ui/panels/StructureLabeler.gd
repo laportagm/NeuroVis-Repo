@@ -102,7 +102,7 @@ func toggle_labels_visibility() -> void:
 			label.visible = labels_visible
 			
 	# Emit signal for UI updates
-	emit_signal("labels_visibility_changed", labels_visible)
+	labels_visibility_changed.emit(labels_visible)
 	print("Structure labels visibility: " + str(labels_visible))
 
 # Set labels visibility state
@@ -116,7 +116,7 @@ func set_labels_visibility(visible_state: bool) -> void:
 				label.visible = visible_state
 				
 		# Emit signal for UI updates
-		emit_signal("labels_visibility_changed", visible_state)
+		labels_visibility_changed.emit(visible_state)
 		print("Structure labels visibility set to: " + str(visible_state))
 
 # Label all structures in a mesh node and its children

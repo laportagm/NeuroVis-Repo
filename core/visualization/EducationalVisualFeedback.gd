@@ -221,7 +221,7 @@ func _load_color_scheme(scheme_name: String) -> void:
                 color.v = min(color.v * 1.2, 1.0)
                 _current_colors[key] = color
 
-func _get_or_create_hover_material(mesh: MeshInstance3D, base_material: Material) -> Material:
+func _get_or_create_hover_material(mesh: MeshInstance3D, _base_material: Material) -> Material:
     """Create or retrieve cached hover material"""
     var cache_key = "hover_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
     
@@ -258,7 +258,7 @@ func _get_or_create_hover_material(mesh: MeshInstance3D, base_material: Material
     _material_cache[cache_key] = hover_mat
     return hover_mat
 
-func _get_or_create_selection_material(mesh: MeshInstance3D, base_material: Material) -> Material:
+func _get_or_create_selection_material(mesh: MeshInstance3D, _base_material: Material) -> Material:
     """Create or retrieve cached selection material"""
     var cache_key = "select_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
     
@@ -288,7 +288,7 @@ func _get_or_create_selection_material(mesh: MeshInstance3D, base_material: Mate
     _material_cache[cache_key] = select_mat
     return select_mat
 
-func _get_or_create_related_material(mesh: MeshInstance3D, base_material: Material) -> Material:
+func _get_or_create_related_material(mesh: MeshInstance3D, _base_material: Material) -> Material:
     """Create material for related structures"""
     var cache_key = "related_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
     
@@ -312,17 +312,17 @@ func _get_or_create_related_material(mesh: MeshInstance3D, base_material: Materi
     _material_cache[cache_key] = related_mat
     return related_mat
 
-func _add_outline_effect(mesh: MeshInstance3D, color: Color, thickness: float = OUTLINE_THICKNESS) -> void:
+func _add_outline_effect(_mesh: MeshInstance3D, _color: Color, _thickness: float = OUTLINE_THICKNESS) -> void:
     """Add outline effect using shader or duplicate mesh method"""
     # Implementation depends on Godot version and performance requirements
     # For now, using rim lighting as outline approximation
     pass
 
-func _remove_outline_effect(mesh: MeshInstance3D) -> void:
+func _remove_outline_effect(_mesh: MeshInstance3D) -> void:
     """Remove outline effect from mesh"""
     pass
 
-func _animate_material_transition(mesh: MeshInstance3D, target_material: Material, duration: float) -> void:
+func _animate_material_transition(mesh: MeshInstance3D, target_material: Material, _duration: float) -> void:
     """Smoothly transition between materials"""
     # For now, apply instantly to avoid tween errors
     # TODO: Implement proper material transition animation

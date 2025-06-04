@@ -202,7 +202,7 @@ class SpinnerRing extends Control:
         queue_redraw()
 
     func _draw() -> void:
-        var center = size / 2
+        var center = size / 2.0
         var start_angle = rotation_angle
         var end_angle = start_angle + PI * 1.5  # 3/4 circle
         

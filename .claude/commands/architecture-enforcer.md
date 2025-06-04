@@ -1,12 +1,19 @@
 # NeuroVis Architecture Pattern Enforcer
 
-## Purpose
-Prevents Claude from violating NeuroVis educational platform architecture.
+**Purpose**: Prevents architectural violations in NeuroVis educational platform development using comprehensive MCP validation.
+
+**MCPs Used**: `filesystem`, `memory`, `sequential-thinking`, `sqlite`
 
 ## Usage
 ```bash
 claude -f .claude/commands/architecture-enforcer.md "Your development request"
 ```
+
+## MCP-Enhanced Validation Process
+1. **Use MCP `filesystem`** to analyze current project structure
+2. **Use MCP `memory`** to store and retrieve architectural patterns
+3. **Use MCP `sequential-thinking`** for systematic architecture validation
+4. **Use MCP `sqlite`** to log architectural compliance metrics
 
 ## Architecture Enforcement Rules
 ```

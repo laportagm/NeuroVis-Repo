@@ -222,7 +222,7 @@ func _finalize_setup() -> void:
 func _on_models_loaded(model_names: Array) -> void:
 	print("[BRAIN VISUALIZER] Models loaded: ", model_names)
 	current_state["models_loaded"] = true
-	emit_signal("models_loaded", model_names)
+	models_loaded.emit(model_names)
 
 func _on_model_load_failed(model_path: String, error: String) -> void:
 	print("[BRAIN VISUALIZER] ERROR: Failed to load ", model_path, ": ", error)
@@ -238,7 +238,7 @@ func _on_structure_selected(structure_name: String, _mesh: MeshInstance3D) -> vo
 		tween.tween_callback(func(): label.text = "Selected: " + structure_name)
 		tween.tween_property(label, "modulate:a", 1.0, 0.1)
 	
-	emit_signal("structure_selected", structure_name)
+	structure_selected.emit(structure_name)
 	_display_structure_info(structure_name)
 
 func _on_structure_deselected() -> void:
@@ -250,7 +250,7 @@ func _on_structure_deselected() -> void:
 	if "info" in ui_panels:
 		ui_panels["info"].visible = false
 	
-	emit_signal("structure_deselected")
+	structure_deselected.emit()
 
 func _on_structure_hovered(structure_name: String, _mesh: MeshInstance3D) -> void:
 	if current_state["selected_structure"].is_empty() and "object_label" in ui_panels:

@@ -11,17 +11,17 @@ var ComparativeInfoPanelScript = load("res://ui/panels/ComparativeInfoPanel.gd")
 
 # === NEW FOUNDATION LAYER ===
 var FeatureFlags = load("res://core/features/FeatureFlags.gd")
-var ComponentRegistry = load("res://ui/core/ComponentRegistry.gd")
-var ComponentStateManager = load("res://ui/state/ComponentStateManager.gd")
+var ComponentRegistryScript = load("res://ui/core/ComponentRegistry.gd")
+var ComponentStateManagerScript = load("res://ui/state/ComponentStateManager.gd")
 
 # UI Component System preloads - PROGRESSIVE ENABLEMENT
 var SafeAutoloadAccess = load("res://ui/components/core/SafeAutoloadAccess.gd")
-var BaseUIComponent = load("res://ui/components/core/BaseUIComponent.gd")
+var BaseUIComponentScript = load("res://ui/components/core/BaseUIComponent.gd")
 var UIComponentFactoryScript = load("res://ui/components/core/UIComponentFactory.gd")
-var ResponsiveComponent = load("res://ui/components/core/ResponsiveComponent_Safe.gd")
+var ResponsiveComponentScript = load("res://ui/components/core/ResponsiveComponent_Safe.gd")
 
 # Legacy support (will be migrated)
-var InfoPanelFactory = load("res://ui/panels/InfoPanelFactory.gd")
+var InfoPanelFactoryScript = load("res://ui/panels/InfoPanelFactory.gd")
 
 # QA Testing integration
 var SelectionTestRunnerScript = load("res://tests/qa/SelectionTestRunner.gd")
@@ -144,24 +144,24 @@ func _initialize_foundation_layer() -> void:
         print("[INIT] ⚠ FeatureFlags initialization failed")
 
     # Initialize component registry
-    var test_component = ComponentRegistry.create_component("button", {"text": "Test"})
+    var test_component = ComponentRegistryScript.create_component("button", {"text": "Test"})
     if test_component:
         print("[INIT] ✓ ComponentRegistry initialized")
         test_component.queue_free()
 
         # Show registry stats in debug mode
         if FeatureFlags.is_enabled(FeatureFlags.DEBUG_COMPONENT_INSPECTOR):
-            ComponentRegistry.print_registry_stats()
+            ComponentRegistryScript.print_registry_stats()
     else:
         print("[INIT] ⚠ ComponentRegistry initialization failed")
 
     # Initialize state manager
     if FeatureFlags.is_enabled(FeatureFlags.UI_STATE_PERSISTENCE):
-        ComponentStateManager.save_component_state("test", {"test": true})
-        var restored = ComponentStateManager.restore_component_state("test")
+        ComponentStateManagerScript.save_component_state("test", {"test": true})
+        var restored = ComponentStateManagerScript.restore_component_state("test")
         if not restored.is_empty():
             print("[INIT] ✓ ComponentStateManager initialized")
-            ComponentStateManager.remove_component_state("test")
+            ComponentStateManagerScript.remove_component_state("test")
         else:
             print("[INIT] ⚠ ComponentStateManager not working")
     else:
@@ -353,14 +353,18 @@ func _initialize_model_system() -> bool:
     model_coordinator.name = "ModelCoordinator"
     add_child(model_coordinator)
 
-    # Initialize model coordinator
-    if model_coordinator.has_method("initialize"):
-        var success = model_coordinator.initialize(brain_model_parent)
-        if not success:
-            push_error("[INIT] Failed to initialize model coordinator")
-            return false
+    # Set the model parent
+    if model_coordinator.has_method("set_model_parent"):
+        model_coordinator.set_model_parent(brain_model_parent)
     else:
-        push_error("[INIT] Model coordinator missing initialize method")
+        push_error("[INIT] Model coordinator missing set_model_parent method")
+        return false
+
+    # Load brain models
+    if model_coordinator.has_method("load_brain_models"):
+        model_coordinator.load_brain_models()
+    else:
+        push_error("[INIT] Model coordinator missing load_brain_models method")
         return false
 
     # Pass references to model control panel
@@ -722,9 +726,9 @@ func _debug_test_foundation(args: Array = []) -> void:
         print("✗ FeatureFlags: Not available")
 
     # Test component registry
-    if ComponentRegistry and ComponentRegistry.has_method("create_component"):
+    if ComponentRegistryScript and ComponentRegistryScript.has_method("create_component"):
         print("✓ ComponentRegistry: Available")
-        var test_btn = ComponentRegistry.create_component("button", {"text": "Test"})
+        var test_btn = ComponentRegistryScript.create_component("button", {"text": "Test"})
         if test_btn:
             print("  - Component creation: Working")
             test_btn.queue_free()
@@ -734,15 +738,15 @@ func _debug_test_foundation(args: Array = []) -> void:
         print("✗ ComponentRegistry: Not available")
 
     # Test state manager
-    if ComponentStateManager and ComponentStateManager.has_method("save_component_state"):
+    if ComponentStateManagerScript and ComponentStateManagerScript.has_method("save_component_state"):
         print("✓ ComponentStateManager: Available")
-        ComponentStateManager.save_component_state("test_key", {"test": true})
-        var data = ComponentStateManager.restore_component_state("test_key")
+        ComponentStateManagerScript.save_component_state("test_key", {"test": true})
+        var data = ComponentStateManagerScript.restore_component_state("test_key")
         if data and data.has("test"):
             print("  - State save/restore: Working")
         else:
             print("  - State save/restore: Failed")
-        ComponentStateManager.remove_component_state("test_key")
+        ComponentStateManagerScript.remove_component_state("test_key")
     else:
         print("✗ ComponentStateManager: Not available")
 
@@ -782,7 +786,7 @@ func _debug_test_components(args: Array = []) -> void:
         "subtitle": "Test Subtitle",
         "icon": "info"
     }
-    var header = ComponentRegistry.create_component("header", header_config)
+    var header = ComponentRegistryScript.create_component("header", header_config)
     if header:
         print("✓ Header fragment created")
         header.queue_free()
@@ -793,7 +797,7 @@ func _debug_test_components(args: Array = []) -> void:
     var content_config = {
         "sections": ["description", "functions", "clinical_relevance"]
     }
-    var content = ComponentRegistry.create_component("content", content_config)
+    var content = ComponentRegistryScript.create_component("content", content_config)
     if content:
         print("✓ Content fragment created")
         content.queue_free()
@@ -808,7 +812,7 @@ func _debug_test_components(args: Array = []) -> void:
             {"text": "Bookmark", "action": "bookmark"}
         ]
     }
-    var actions = ComponentRegistry.create_component("actions", actions_config)
+    var actions = ComponentRegistryScript.create_component("actions", actions_config)
     if actions:
         print("✓ Actions fragment created")
         actions.queue_free()
@@ -822,7 +826,7 @@ func _debug_test_components(args: Array = []) -> void:
         "collapsible": true,
         "expanded": true
     }
-    var section = ComponentRegistry.create_component("section", section_config)
+    var section = ComponentRegistryScript.create_component("section", section_config)
     if section:
         print("✓ Section fragment created")
         section.queue_free()

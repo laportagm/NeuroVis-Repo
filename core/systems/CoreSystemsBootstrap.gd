@@ -91,7 +91,8 @@ func initialize_systems(registry: CoreSystemsRegistry = null) -> bool:
         push_warning("[Bootstrap] Initialization already completed")
         return true
     
-    print("[Bootstrap] Starting core educational systems initialization")
+    if OS.is_debug_build():
+        print("[Bootstrap] Debug: Starting core educational systems initialization")
     _initialization_in_progress = true
     
     # Use provided registry or the one created in _ready
@@ -199,7 +200,8 @@ func _check_dependencies(system_name: String) -> bool:
 
 func _initialize_system(system_name: String) -> bool:
     """Initialize a specific system"""
-    print("[Bootstrap] Initializing: %s" % system_name)
+    if OS.is_debug_build():
+        print("[Bootstrap] Debug: Initializing system %s" % system_name)
     
     # Create system instance
     var system = _create_system_instance(system_name)
@@ -228,7 +230,8 @@ func _initialize_system(system_name: String) -> bool:
     
     if init_success:
         _initialized_systems[system_name] = system
-        print("[Bootstrap] ✓ Initialized: %s" % system_name)
+        if OS.is_debug_build():
+            print("[Bootstrap] Debug: ✓ Successfully initialized %s" % system_name)
         system_initialized.emit(system_name)
         return true
     else:
@@ -370,11 +373,13 @@ func _complete_initialization() -> void:
     var total_count = _initialization_sequence.size()
     var failed_count = _failed_systems.size()
     
-    print("[Bootstrap] Initialization completed in %.2f seconds" % duration)
-    print("[Bootstrap] Systems initialized: %d/%d" % [success_count, total_count])
+    if OS.is_debug_build():
+        print("[Bootstrap] Debug: Initialization completed in %.2f seconds" % duration)
+    if OS.is_debug_build():
+        print("[Bootstrap] Debug: Systems initialized: %d/%d" % [success_count, total_count])
     
     if failed_count > 0:
-        print("[Bootstrap] Failed systems: %s" % _failed_systems)
+        push_error("[Bootstrap] Initialization errors: Failed systems: %s" % _failed_systems)
     
     # Update state
     _initialization_in_progress = false

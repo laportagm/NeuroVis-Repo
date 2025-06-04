@@ -8,7 +8,7 @@
 ## @tutorial: Advanced selection techniques for educational 3D applications
 ## @version: 3.0
 
-class_name BrainStructureSelectionManager
+class_name BrainStructureSelectionManagerEnhanced
 extends Node
 
 # === CONSTANTS ===
@@ -202,7 +202,7 @@ func _cast_multi_ray_selection(screen_position: Vector2, use_tolerance: bool) ->
     return _process_selection_candidates(candidates, screen_position, tolerance)
 
 ## Process selection candidates with intelligent prioritization
-func _process_selection_candidates(candidates: Array, click_position: Vector2, tolerance: float) -> Dictionary:
+func _process_selection_candidates(candidates: Array, _click_position: Vector2, tolerance: float) -> Dictionary:
     """Process multi-ray candidates to determine best selection"""
     if candidates.is_empty():
         return {}

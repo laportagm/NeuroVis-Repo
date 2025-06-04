@@ -610,7 +610,7 @@ func _create_structure_chip(structure_name: String) -> Button:
 	UIThemeManager.apply_modern_button(chip, UIThemeManager.ACCENT_TEAL, "small")
 	
 	# Connect navigation
-	chip.pressed.connect(func(): emit_signal("related_structure_selected", structure_name))
+	chip.pressed.connect(func(): related_structure_selected.emit(structure_name))
 	
 	return chip
 
@@ -759,7 +759,7 @@ func _on_close_pressed() -> void:
 	"""Handle close with enhanced animation"""
 	UIThemeManager.animate_exit(self, UIThemeManager.ANIM_DURATION_FAST, "slide_right")
 	get_tree().create_timer(UIThemeManager.ANIM_DURATION_FAST).timeout.connect(func():
-		emit_signal("panel_closed")
+		panel_closed.emit()
 	)
 
 func _on_bookmark_pressed() -> void:
@@ -774,7 +774,7 @@ func _on_bookmark_pressed() -> void:
 	# Update learning progress
 	_update_learning_progress()
 	
-	emit_signal("structure_bookmarked", current_structure_id, is_bookmarked)
+	structure_bookmarked.emit(current_structure_id, is_bookmarked)
 
 func _on_share_pressed() -> void:
 	"""Handle share/export functionality"""
@@ -784,18 +784,18 @@ func _on_share_pressed() -> void:
 func _on_quiz_pressed() -> void:
 	"""Handle quiz request with educational feedback"""
 	UIThemeManager.animate_button_press(quiz_button, UIThemeManager.ACCENT_GREEN)
-	emit_signal("quiz_requested", current_structure_id)
+	quiz_requested.emit(current_structure_id)
 
 func _on_notes_pressed() -> void:
 	"""Handle notes request"""
 	UIThemeManager.animate_button_press(notes_button, UIThemeManager.ACCENT_PURPLE)
 	learning_progress["notes_taken"] = true
 	_update_learning_progress()
-	emit_signal("notes_requested", current_structure_id)
+	notes_requested.emit(current_structure_id)
 
 func _on_search_submitted(text: String) -> void:
 	"""Handle search submission"""
-	emit_signal("search_performed", text)
+	search_performed.emit(text)
 
 func _on_search_text_changed(text: String) -> void:
 	"""Handle real-time search updates"""

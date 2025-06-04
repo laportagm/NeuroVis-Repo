@@ -1,15 +1,20 @@
-# /performance-profile
-**Purpose**: Comprehensive performance analysis and optimization
+# NeuroVis Performance Profiling & Optimization System
 
-**Usage**: `/performance-profile "scene_or_function"`
+**Purpose**: Comprehensive performance analysis and optimization for NeuroVis educational platform using advanced MCP integration to ensure optimal learning experience.
 
-**Integration**: sequential-thinking + godot + sqlite + memory
+**MCPs Used**: `sequential-thinking`, `filesystem`, `sqlite`, `godot-mcp`, `memory`
 
-**Prompt**:
+**Usage**: 
+```bash
+claude -f .claude/commands/performance-profile.md "scene_or_function"
 ```
-Role: Performance Optimization Expert
-Context: NeuroVis 3D neuron rendering optimization
-Project: /Users/gagelaporta/11A-NeuroVis copy3
+
+## MCP-Enhanced Performance Pipeline
+
+**Context**: 
+- **Role**: Performance Optimization Expert specializing in educational 3D platforms
+- **Project**: NeuroVis educational neuroscience visualization platform
+- **Focus**: Educational experience optimization + technical excellence
 
 Performance analysis protocol:
 1. Use sequential-thinking for systematic bottleneck analysis

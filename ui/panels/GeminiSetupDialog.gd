@@ -8,8 +8,10 @@
 ## @tutorial: Gemini Integration Guide
 ## @version: 2.0
 
-class_name GeminiSetupDialog
 extends Control
+
+# Import SafeAutoloadAccess for safer autoload handling
+const SafeAutoloadAccess = preload("res://ui/components/core/SafeAutoloadAccess.gd")
 
 # === SIGNALS ===
 signal setup_completed(successful: bool, api_key: String)
@@ -136,9 +138,10 @@ func _setup_dialog() -> void:
 	# Set accessible description for screen readers
 	dialog_panel.set_meta("_accessible_description", "Gemini AI setup dialog")
 	
-	# Apply NeuroVis theme styling using UIThemeManager
-	if UIThemeManager:
-		UIThemeManager.apply_enhanced_panel_style(dialog_panel, "elevated")
+	# Apply NeuroVis theme styling using UIThemeManager with safe access
+	var theme_manager = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager and theme_manager.has_method("apply_enhanced_panel_style"):
+		theme_manager.apply_enhanced_panel_style(dialog_panel, "elevated")
 	
 	add_child(dialog_panel)
 	
@@ -226,11 +229,10 @@ func _create_initial_state_ui(container: Control) -> void:
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
 	# Ensure font size meets accessibility standards (minimum 16px)
-	if UIThemeManager:
-		var min_font_size = 16
-		var current_size = description.get_theme_font_size("font_size")
-		if current_size < min_font_size:
-			description.add_theme_font_size_override("font_size", min_font_size)
+	var min_font_size = 16
+	var current_size = description.get_theme_font_size("font_size")
+	if current_size < min_font_size:
+		description.add_theme_font_size_override("font_size", min_font_size)
 	
 	container.add_child(description)
 	
@@ -354,11 +356,13 @@ func _create_return_with_key_state_ui(container: Control) -> void:
 	# Enable keyboard navigation
 	api_key_input.focus_mode = Control.FOCUS_ALL
 	
-	if UIThemeManager:
-		UIThemeManager.apply_search_field_styling(api_key_input)
+	var theme_manager = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager:
+		if theme_manager.has_method("apply_search_field_styling"):
+			theme_manager.apply_search_field_styling(api_key_input)
 		
 		# Ensure contrast meets WCAG AA standard (4.5:1 ratio)
-		var contrast_color = UIThemeManager.get_color("text_primary")
+		var contrast_color = theme_manager.get_color("text_primary") if theme_manager.has_method("get_color") else Color.WHITE
 		if contrast_color.get_luminance() < 0.5:
 			# If dark text on light background, darken text further
 			api_key_input.add_theme_color_override("font_color", contrast_color.darkened(0.2))
@@ -393,7 +397,8 @@ func _create_return_with_key_state_ui(container: Control) -> void:
 	educational_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
 	# Ensure minimum font size
-	if UIThemeManager:
+	var theme_manager2 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager2:
 		var min_font_size = 16
 		var current_size = educational_note.get_theme_font_size("font_size")
 		if current_size < min_font_size:
@@ -476,14 +481,16 @@ func _create_success_state_ui(container: Control) -> void:
 	success_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
 	# Ensure minimum font size and proper contrast
-	if UIThemeManager:
+	var theme_manager3 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager3:
 		var min_font_size = 16
 		var current_size = success_message.get_theme_font_size("font_size")
 		if current_size < min_font_size:
 			success_message.add_theme_font_size_override("font_size", min_font_size)
 		
 		# Ensure high contrast for readability
-		success_message.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+		if theme_manager3.has_method("get_color"):
+			success_message.add_theme_color_override("font_color", theme_manager3.get_color("text_primary"))
 	
 	container.add_child(success_message)
 	
@@ -510,8 +517,9 @@ func _create_success_state_ui(container: Control) -> void:
 		example_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		
 		# Make captions more readable with proper contrast
-		if UIThemeManager:
-			example_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+		var theme_manager10 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager10:
+			example_label.add_theme_color_override("font_color", theme_manager10.get_color("text_secondary") if theme_manager10.has_method("get_color") else Color.WHITE)
 		
 		example_label.set_meta("_accessible_description", "Example question " + str(i+1))
 		examples_container.add_child(example_label)
@@ -552,13 +560,15 @@ func _create_step_label(step_number: String, text: String) -> Control:
 	var number = Label.new()
 	number.text = step_number
 	number.add_theme_color_override("font_color", Color(0, 0.84, 1)) # Cyan
-	if UIThemeManager:
+	var theme_manager11 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager11:
 		number.add_theme_font_size_override("font_size", 18)
 	
 	var content = Label.new()
 	content.text = text
 	content.size_flags_horizontal = SIZE_EXPAND_FILL
-	if UIThemeManager:
+	var theme_manager12 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager12:
 		content.add_theme_font_size_override("font_size", 14)
 	
 	container.add_child(number)
@@ -657,8 +667,9 @@ func _validate_api_key() -> void:
 	# Set validating state
 	is_validating = true
 	status_label.text = "Validating..."
-	if UIThemeManager:
-		status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	var theme_manager13 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager13:
+		status_label.add_theme_color_override("font_color", theme_manager13.get_color("text_secondary") if theme_manager13.has_method("get_color") else Color.WHITE)
 	
 	# Call validation service
 	if gemini_service:
@@ -671,8 +682,8 @@ func _validate_api_key() -> void:
 func _center_dialog() -> void:
 	"""Center dialog in window"""
 	var root_rect = get_viewport().get_visible_rect()
-	position.x = (root_rect.size.x - size.x) / 2
-	position.y = (root_rect.size.y - size.y) / 2
+	position.x = (root_rect.size.x - size.x) / 2.0
+	position.y = (root_rect.size.y - size.y) / 2.0
 
 func _save_configuration() -> void:
 	"""Save configuration with educational defaults"""
@@ -763,12 +774,14 @@ func _on_api_key_validated(success: bool, message: String) -> void:
 	
 	if success:
 		status_label.text = "✓ " + message
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_success"))
+		var theme_manager14 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager14:
+			status_label.add_theme_color_override("font_color", theme_manager14.get_color("text_success") if theme_manager14.has_method("get_color") else Color.WHITE)
 	else:
 		status_label.text = "✗ " + message
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_error"))
+		var theme_manager15 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager15:
+			status_label.add_theme_color_override("font_color", theme_manager15.get_color("text_error") if theme_manager15.has_method("get_color") else Color.WHITE)
 
 # === PUBLIC API ===
 func show_dialog() -> void:
@@ -838,8 +851,9 @@ func _show_initial_state() -> void:
 	subtitle.add_theme_font_size_override("font_size", 16)
 	
 	# Apply proper text color for readability
-	if UIThemeManager:
-		subtitle.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	var theme_manager16 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager16:
+		subtitle.add_theme_color_override("font_color", theme_manager16.get_color("text_secondary") if theme_manager16.has_method("get_color") else Color.WHITE)
 	
 	content_container.add_child(subtitle)
 	
@@ -910,8 +924,9 @@ func _show_google_console_state() -> void:
 	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	instruction.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	instruction.add_theme_font_size_override("font_size", 16)
-	if UIThemeManager:
-		instruction.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+	var theme_manager17 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager17:
+		instruction.add_theme_color_override("font_color", theme_manager17.get_color("text_primary") if theme_manager17.has_method("get_color") else Color.WHITE)
 	content_container.add_child(instruction)
 	
 	# Add visual placeholder for Google Console
@@ -928,11 +943,12 @@ func _show_google_console_state() -> void:
 	console_preview.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	
 	# Apply a bordered style
-	if UIThemeManager:
+	var theme_manager18 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager18:
 		var style_box = StyleBoxFlat.new()
 		style_box.set_border_width_all(2)
-		style_box.border_color = UIThemeManager.get_color("border_subtle")
-		style_box.bg_color = UIThemeManager.get_color("surface_subtle")
+		style_box.border_color = theme_manager18.get_color("border_subtle") if theme_manager18.has_method("get_color") else Color.WHITE
+		style_box.bg_color = theme_manager18.get_color("surface_subtle") if theme_manager18.has_method("get_color") else Color.WHITE
 		style_box.corner_radius_top_left = 8
 		style_box.corner_radius_top_right = 8
 		style_box.corner_radius_bottom_left = 8
@@ -975,8 +991,9 @@ func _show_google_console_state() -> void:
 	
 	for step in [step1, step2, step3, step4]:
 		step.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		if UIThemeManager:
-			step.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+		var theme_manager19 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager19:
+			step.add_theme_color_override("font_color", theme_manager19.get_color("text_secondary") if theme_manager19.has_method("get_color") else Color.WHITE)
 		steps_container.add_child(step)
 	
 	# Add helpful text
@@ -987,8 +1004,9 @@ func _show_google_console_state() -> void:
 	)
 	help_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	help_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	if UIThemeManager:
-		help_text.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	var theme_manager20 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager20:
+		help_text.add_theme_color_override("font_color", theme_manager20.get_color("text_secondary") if theme_manager20.has_method("get_color") else Color.WHITE)
 	content_container.add_child(help_text)
 	
 	# Add some spacing before the button
@@ -1055,8 +1073,9 @@ func _show_return_state() -> void:
 	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	instruction.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	instruction.add_theme_font_size_override("font_size", 16)
-	if UIThemeManager:
-		instruction.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+	var theme_manager21 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager21:
+		instruction.add_theme_color_override("font_color", theme_manager21.get_color("text_primary") if theme_manager21.has_method("get_color") else Color.WHITE)
 	content_container.add_child(instruction)
 	
 	# Add helpful tip about key format
@@ -1081,8 +1100,9 @@ func _show_return_state() -> void:
 		"Your key should start with \"AIza\" and be about 39 characters long",
 		"caption"
 	)
-	if UIThemeManager:
-		tip_text.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	var theme_manager22 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager22:
+		tip_text.add_theme_color_override("font_color", theme_manager22.get_color("text_secondary") if theme_manager22.has_method("get_color") else Color.WHITE)
 	tip_container.add_child(tip_text)
 	
 	# Add input field container with margins
@@ -1100,8 +1120,9 @@ func _show_return_state() -> void:
 	api_key_input.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	
 	# Style the input field
-	if UIThemeManager:
-		UIThemeManager.apply_search_field_styling(api_key_input)
+	var theme_manager23 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager23:
+		theme_manager23.apply_search_field_styling(api_key_input)
 		# Add some padding
 		var style = api_key_input.get_theme_stylebox("normal")
 		if style and style is StyleBoxFlat:
@@ -1161,27 +1182,31 @@ func _on_key_input_changed(text: String) -> void:
 		is_api_key_valid = false
 	elif not key.begins_with("AIza"):
 		status_label.text = "Key should start with \"AIza\""
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_error"))
+		var theme_manager24 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager24:
+			status_label.add_theme_color_override("font_color", theme_manager24.get_color("text_error") if theme_manager24.has_method("get_color") else Color.WHITE)
 		next_button.disabled = true
 		is_api_key_valid = false
 	elif key.length() < 35:
 		status_label.text = "Key seems too short (should be ~39 characters)"
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_warning"))
+		var theme_manager25 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager25:
+			status_label.add_theme_color_override("font_color", theme_manager25.get_color("text_warning") if theme_manager25.has_method("get_color") else Color.WHITE)
 		next_button.disabled = true
 		is_api_key_valid = false
 	elif key.length() > 45:
 		status_label.text = "Key seems too long (should be ~39 characters)"
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_warning"))
+		var theme_manager26 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager26:
+			status_label.add_theme_color_override("font_color", theme_manager26.get_color("text_warning") if theme_manager26.has_method("get_color") else Color.WHITE)
 		next_button.disabled = true
 		is_api_key_valid = false
 	else:
 		# Key format looks valid
 		status_label.text = "Key format looks good!"
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_success"))
+		var theme_manager27 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager27:
+			status_label.add_theme_color_override("font_color", theme_manager27.get_color("text_success") if theme_manager27.has_method("get_color") else Color.WHITE)
 		next_button.disabled = false
 		is_api_key_valid = true
 
@@ -1206,8 +1231,9 @@ func _on_connect_button_pressed() -> void:
 	# Disable button and show loading state
 	next_button.disabled = true
 	status_label.text = "Validating API key..."
-	if UIThemeManager:
-		status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	var theme_manager28 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager28:
+		status_label.add_theme_color_override("font_color", theme_manager28.get_color("text_secondary") if theme_manager28.has_method("get_color") else Color.WHITE)
 	
 	# Store the key for later
 	var key_to_validate = api_key_input.text.strip_edges()
@@ -1293,8 +1319,9 @@ func _show_success_state() -> void:
 	var title = UIComponentFactory.create_label("You're Connected!", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 32)
-	if UIThemeManager:
-		title.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+	var theme_manager29 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager29:
+		title.add_theme_color_override("font_color", theme_manager29.get_color("text_primary") if theme_manager29.has_method("get_color") else Color.WHITE)
 	content_container.add_child(title)
 	
 	# Create success message
@@ -1306,8 +1333,9 @@ func _show_success_state() -> void:
 	message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.add_theme_font_size_override("font_size", 16)
-	if UIThemeManager:
-		message.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	var theme_manager30 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager30:
+		message.add_theme_color_override("font_color", theme_manager30.get_color("text_secondary") if theme_manager30.has_method("get_color") else Color.WHITE)
 	content_container.add_child(message)
 	
 	# Add some example questions with subtle styling
@@ -1317,17 +1345,19 @@ func _show_success_state() -> void:
 	
 	var examples_title = UIComponentFactory.create_label("Try asking:", "caption")
 	examples_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	if UIThemeManager:
-		examples_title.add_theme_color_override("font_color", UIThemeManager.get_color("text_tertiary"))
+	var theme_manager31 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager31:
+		examples_title.add_theme_color_override("font_color", theme_manager31.get_color("text_tertiary") if theme_manager31.has_method("get_color") else Color.WHITE)
 	examples_container.add_child(examples_title)
 	
 	# Add example questions in a subtle box
 	var examples_box = PanelContainer.new()
 	examples_box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	
-	if UIThemeManager:
+	var theme_manager32 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager32:
 		var style = StyleBoxFlat.new()
-		style.bg_color = UIThemeManager.get_color("surface_subtle")
+		style.bg_color = theme_manager32.get_color("surface_subtle") if theme_manager32.has_method("get_color") else Color.WHITE
 		style.corner_radius_top_left = 8
 		style.corner_radius_top_right = 8
 		style.corner_radius_bottom_left = 8
@@ -1350,8 +1380,9 @@ func _show_success_state() -> void:
 	
 	for example in [example1, example2, example3]:
 		example.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		if UIThemeManager:
-			example.add_theme_color_override("font_color", UIThemeManager.get_color("text_tertiary"))
+		var theme_manager33 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager33:
+			example.add_theme_color_override("font_color", theme_manager33.get_color("text_tertiary") if theme_manager33.has_method("get_color") else Color.WHITE)
 		examples_list.add_child(example)
 	
 	# Add some spacing before the button
@@ -1369,7 +1400,8 @@ func _show_success_state() -> void:
 	start_button.custom_minimum_size = Vector2(220, 52)
 	
 	# Add a subtle green tint to the button
-	if UIThemeManager:
+	var theme_manager34 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager34:
 		var button_style = start_button.get_theme_stylebox("normal")
 		if button_style and button_style is StyleBoxFlat:
 			var success_style = button_style.duplicate()
@@ -1450,8 +1482,9 @@ func _on_api_key_validated_for_save(success: bool, message: String) -> void:
 	if success:
 		# Validation successful - save configuration and proceed
 		status_label.text = "API key validated successfully!"
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_success"))
+		var theme_manager35 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager35:
+			status_label.add_theme_color_override("font_color", theme_manager35.get_color("text_success") if theme_manager35.has_method("get_color") else Color.WHITE)
 		
 		# Save configuration with educational defaults
 		_save_configuration()
@@ -1469,8 +1502,9 @@ func _on_api_key_validated_for_save(success: bool, message: String) -> void:
 	else:
 		# Validation failed - show error and re-enable button
 		status_label.text = "API key validation failed: " + message
-		if UIThemeManager:
-			status_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_error"))
+		var theme_manager36 = SafeAutoloadAccess.get_autoload("UIThemeManager")
+		if theme_manager36:
+			status_label.add_theme_color_override("font_color", theme_manager36.get_color("text_error") if theme_manager36.has_method("get_color") else Color.WHITE)
 		
 		# Re-enable the button so user can try again
 		next_button.disabled = false

@@ -156,7 +156,7 @@ func hide_panel() -> void:
     tween.tween_callback(func(): 
         visible = false
         modulate.a = 1.0
-        emit_signal("panel_closed")
+        panel_closed.emit()
     )
 
 func _update_functions(functions_array: Array) -> void:

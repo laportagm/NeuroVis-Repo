@@ -69,11 +69,11 @@ func ask_question(question: String, context: Dictionary = {}) -> String:
     # Return empty string since the response will be sent via signal
     return ""
 
-func generate_content(prompt: String) -> String:
-    print("[MockAI] Mock generate_content: %s" % prompt)
+func generate_content(_prompt: String) -> String:
+    print("[MockAI] Mock generate_content: %s" % _prompt)
     
     # Generate a simple response based on the prompt
-    var response = "This is a mock response generated from: " + prompt
+    var response = "This is a mock response generated from: " + _prompt
     
     # Add some educational context
     response += "\n\nIn a real implementation, this would provide detailed educational content about brain anatomy, functions, and clinical relevance."
@@ -92,8 +92,8 @@ func check_setup_status() -> bool:
 func needs_setup() -> bool:
     return false
 
-func validate_api_key(key: String) -> void:
-    print("[MockAI] Mock validating API key: %s" % key)
+func validate_api_key(_key: String) -> void:
+    print("[MockAI] Mock validating API key: %s" % _key)
     
     # Always succeed after a delay
     get_tree().create_timer(0.8).timeout.connect(
@@ -112,7 +112,7 @@ func get_service_status() -> Dictionary:
 func get_available_models() -> Array:
     return ["mock-basic", "mock-advanced", "mock-educational"]
 
-func set_model(_model_name_or_id) -> void:
+func set_model(_model_name_or_id: String) -> void:
     print("[MockAI] Mock set_model: %s" % str(_model_name_or_id))
 
 func get_configuration() -> Dictionary:
@@ -129,13 +129,13 @@ func get_configuration() -> Dictionary:
         }
     }
 
-func set_configuration(config: Dictionary) -> void:
+func set_configuration(_config: Dictionary) -> void:
     """Update provider configuration"""
     print("[MockAI] Mock set_configuration")
-    if config.has("settings") and config.settings.has("mock_delay"):
-        mock_delay = config.settings.mock_delay
+    if _config.has("settings") and _config.settings.has("mock_delay"):
+        mock_delay = _config.settings.mock_delay
 
-func save_configuration(_key: String, _model) -> void:
+func save_configuration(_key: String, _model: String) -> void:
     print("[MockAI] Mock save_configuration")
 
 func reset_settings() -> bool:

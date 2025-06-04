@@ -163,7 +163,7 @@ func _create_styled_button(text: String, color: Color) -> Button:
 
 func _on_close() -> void:
     _animate_exit(self)
-    emit_signal("closed")
+    closed.emit()
 
 # Animation helper functions
 func _animate_entrance(control: Control, delay: float = 0.0) -> void:

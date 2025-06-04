@@ -38,10 +38,15 @@ func _ready() -> void:
 	set_physics_process(true)
 	print("Professional CameraController initialized and added to group")
 
-func initialize(cam: Camera3D, _target: Node3D = null) -> void:
+func initialize(cam: Camera3D, _target: Node3D = null) -> bool:
 	camera = cam
 	if camera:
 		_update_camera_from_state()
+		print("[CAMERA] Camera controller initialized successfully")
+		return true
+	else:
+		push_error("[CAMERA] Camera reference is null")
+		return false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not camera:
@@ -135,9 +140,9 @@ func _update_camera_from_state_safe() -> void:
 			camera.global_position = new_position
 			camera.look_at(pivot_point, Vector3.UP)
 		else:
-			print("[CAMERA] Warning: Invalid camera position calculated, skipping update")
+			push_warning("[CameraController] State error: Invalid camera position calculated, skipping update")
 	else:
-		print("[CAMERA] Warning: Invalid camera calculation values, resetting")
+		push_warning("[CameraController] Calculation error: Invalid camera calculation values, resetting")
 		_reset_to_safe_values()
 
 # Legacy method for compatibility
@@ -212,7 +217,7 @@ func reset_view() -> void:
 	target_rotation = Vector2(0.3, 0.0)
 	target_distance = 3.0
 	target_pivot = Vector3.ZERO
-	emit_signal("camera_reset_completed")
+	camera_reset_completed.emit()
 
 func set_view_preset(preset: String) -> void:
 	match preset:
@@ -230,7 +235,7 @@ func reset_camera_position() -> void:
 
 func setup_initial_animation() -> void:
 	reset_view()
-	emit_signal("camera_animation_finished")
+	camera_animation_finished.emit()
 
 func set_rotation_speed(_speed: float) -> void:
 	# Compatibility method - rotation speed is now constant

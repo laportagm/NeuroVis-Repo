@@ -1,12 +1,22 @@
 # Ultimate NeuroVis Standards with Code Quality Enforcement
 
-## Purpose
-Comprehensive validation including code quality, syntax, and linting enforcement.
+**Purpose**: Maximum compliance enforcement for NeuroVis educational platform using comprehensive MCP integration for uncompromising quality and educational excellence.
+
+**MCPs Used**: `sequential-thinking`, `memory`, `filesystem`, `sqlite`, `godot-mcp`, `github`
 
 ## Usage
+For critical educational features requiring maximum compliance:
 ```bash
 claude -f .claude/commands/ultimate-standards-with-code-quality.md "Your request"
 ```
+
+## MCP-Enhanced Quality Pipeline
+1. **MCP `sequential-thinking`**: Systematic quality analysis with educational context
+2. **MCP `memory`**: Store quality patterns and educational best practices  
+3. **MCP `filesystem`**: Comprehensive file structure and code analysis
+4. **MCP `sqlite`**: Quality metrics logging and educational compliance tracking
+5. **MCP `godot-mcp`**: Godot-specific validation and scene structure analysis
+6. **MCP `github`**: Repository quality validation and educational workflow compliance
 
 ## Ultimate Standards + Code Quality Enforcement
 ```

@@ -325,8 +325,8 @@ func _create_spinner(size: int = 32) -> Control:
 
 func _draw_spinner(control: Control, size: int) -> void:
     """Draw custom spinner"""
-    var center = Vector2(size / 2, size / 2)
-    var radius = size / 2 - 2
+    var center = Vector2(size / 2.0, size / 2.0)
+    var radius = size / 2.0 - 2
     
     # Draw arc
     var color = UIThemeManager.ACCENT_BLUE

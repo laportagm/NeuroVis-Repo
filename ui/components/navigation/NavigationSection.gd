@@ -165,7 +165,7 @@ func set_expanded(is_expanded: bool) -> void:
     _update_expanded_state()
     
     # Emit signal
-    emit_signal("toggled", expanded)
+    toggled.emit(expanded)
 
 ## Toggle the section's expanded state
 func toggle() -> void:
@@ -416,4 +416,4 @@ func _on_item_clicked(item_id: String) -> void:
     select_item(item_id)
     
     # Emit signal
-    emit_signal("item_selected", item_id)
+    item_selected.emit(item_id)

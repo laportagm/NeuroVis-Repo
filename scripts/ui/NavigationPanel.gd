@@ -345,10 +345,10 @@ func _select_nav_item(item_id: String):
         label.modulate = Color("#26d0ce")
         icon.modulate = Color("#26d0ce")
     
-    emit_signal("navigation_item_selected", nav_items[item_id].text)
+    navigation_item_selected.emit(nav_items[item_id].text)
 
 func _on_project_selected(project_name: String):
-    emit_signal("project_selected", project_name)
+    project_selected.emit(project_name)
 
 # Public methods
 func set_selected_item(item_id: String):

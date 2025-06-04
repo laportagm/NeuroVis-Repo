@@ -1,0 +1,241 @@
+diff --git a/core/ai/providers/GeminiAIProvider.gd b/core/ai/providers/GeminiAIProvider.gd
+index 1234567..abcdefg 100644
+--- a/core/ai/providers/GeminiAIProvider.gd
++++ b/core/ai/providers/GeminiAIProvider.gd
+@@ -70,7 +70,7 @@ func initialize() -> bool:
+     if is_initialized:
+         return true
+     
+-    print("[GeminiAI] Initializing Gemini AI provider...")
++    print("[GeminiAI] Info: Initializing Gemini AI provider...")
+     
+     # Create HTTP request node for API calls
+     http_request = HTTPRequest.new()
+@@ -88,12 +88,12 @@ func initialize() -> bool:
+     set_process(true)
+     
+     is_initialized = true
+-    print("[GeminiAI] Gemini AI provider initialized")
++    print("[GeminiAI] Info: Gemini AI provider initialized")
+     return true
+ 
+ func setup_api_key(key: String) -> bool:
+     """Set up and validate API key"""
+-    print("[GeminiAI] Setting up API key...")
++    print("[GeminiAI] Info: Setting up API key...")
+     api_key = key.strip_edges()
+     
+     # Basic validation
+@@ -110,23 +110,25 @@ func setup_api_key(key: String) -> bool:
+     
+     # Basic validation
+     if api_key.length() < 30:
++        push_error("[GeminiAI] Error: Invalid API key format - key too short")
+         error_occurred.emit("Invalid API key format")
+         return false
+     
+     # Test the key
+     var result = await _test_api_key()
+     if result:
+         is_setup_complete = true
+         _save_settings()
+         setup_completed.emit()
+-        print("[GeminiAI] API key setup successful")
++        print("[GeminiAI] Info: API key setup successful")
+         return true
+     else:
+         api_key = ""
+         is_setup_complete = false
++        push_error("[GeminiAI] Error: Failed to validate API key with Gemini API")
+         error_occurred.emit("Failed to validate API key")
+-        print("[GeminiAI] API key setup failed")
+         return false
+ 
+ func ask_question(question: String, context: Dictionary = {}) -> String:
+@@ -132,13 +134,15 @@ func ask_question(question: String, context: Dictionary = {}) -> String:
+     """Send question to Gemini API"""
+-    print("[GeminiAI] Asking question: %s" % question)
++    print("[GeminiAI] Info: Asking question: %s" % question)
+     
+     if not is_setup_complete:
++        push_error("[GeminiAI] Error: Gemini AI not set up - API key not configured")
+         error_occurred.emit("Gemini AI not set up. Please configure your API key.")
+         return ""
+     
+     if rate_limit_used >= RATE_LIMIT_PER_MINUTE:
+         var wait_time = int(rate_limit_reset_time - Time.get_ticks_msec() / 1000.0)
++        push_warning("[GeminiAI] Warning: Rate limit reached - wait %d seconds" % wait_time)
+         error_occurred.emit("Rate limit reached. Please wait %d seconds." % wait_time)
+         return ""
+ 
+@@ -169,6 +173,7 @@ func ask_question(question: String, context: Dictionary = {}) -> String:
+     )
+     
+     if error != OK:
++        push_error("[GeminiAI] Error: Failed to send HTTP request - error code: " + str(error))
+         error_occurred.emit("Failed to send request to Gemini API")
+         return ""
+ 
+@@ -183,9 +188,10 @@ func generate_content(prompt: String) -> String:
+ 
+ func generate_content(prompt: String) -> String:
+     """Generate content with the specified prompt"""
+-    print("[GeminiAI] Generating content with prompt")
++    print("[GeminiAI] Info: Generating content with prompt")
+     
+     if not is_setup_complete:
++        push_error("[GeminiAI] Error: Cannot generate content - API key not configured")
+         error_occurred.emit("Gemini AI not set up. Please configure your API key.")
+         return ""
+ 
+@@ -205,11 +211,12 @@ func is_api_key_valid() -> bool:
+ 
+ func validate_api_key(key: String) -> void:
+     """Validate API key and emit result signal"""
+-    print("[GeminiAI] Validating API key")
++    print("[GeminiAI] Info: Validating API key")
+     
+     var test_key = key.strip_edges()
+     
+     # Basic validation
+     if test_key.length() < 30:
++        push_warning("[GeminiAI] Warning: API key validation failed - key too short")
+         api_key_validated.emit(false, "Invalid API key format")
+         return
+ 
+@@ -260,7 +267,7 @@ func set_model(model_name_or_id) -> void:
+         for key in MODEL_NAMES:
+             if MODEL_NAMES[key] == model_name:
+                 current_model = key
+-                print("[GeminiAI] Model set to: " + model_name)
++                print("[GeminiAI] Info: Model set to: " + model_name)
+                 break
+     # If it's a number, use it directly
+     elif model_name_or_id is int:
+@@ -302,7 +309,7 @@ func set_configuration(config: Dictionary) -> void:
+     if config.has("safety_settings"):
+         set_safety_settings(config.safety_settings)
+     
+-    print("[GeminiAI] Configuration updated")
++    print("[GeminiAI] Info: Configuration updated")
+     config_changed.emit(MODEL_NAMES[current_model], get_configuration())
+ 
+ func save_configuration(key: String, model) -> void:
+@@ -316,7 +323,7 @@ func save_configuration(key: String, model) -> void:
+     _save_settings()
+     
+     config_changed.emit(MODEL_NAMES[current_model], get_configuration())
+-    print("[GeminiAI] Configuration saved")
++    print("[GeminiAI] Info: Configuration saved")
+ 
+ func reset_settings() -> bool:
+     """Clear API key and settings"""
+@@ -327,15 +334,18 @@ func reset_settings() -> bool:
+     # Delete saved settings
+     if FileAccess.file_exists(SETTINGS_PATH):
+         var err = DirAccess.remove_absolute(SETTINGS_PATH)
+-        print("[GeminiAI] Settings file removed, result: " + str(err))
++        if err == OK:
++            print("[GeminiAI] Info: Settings file removed successfully")
++        else:
++            push_warning("[GeminiAI] Warning: Failed to remove settings file - error: " + str(err))
+     
+-    print("[GeminiAI] Settings reset")
++    print("[GeminiAI] Info: Settings reset")
+     return true
+ 
+ func set_current_structure(structure_name: String) -> void:
+     """Set the current brain structure for context"""
+     current_structure = structure_name
+-    print("[GeminiAI] Current structure set to: " + structure_name)
++    print("[GeminiAI] Info: Current structure set to: " + structure_name)
+ 
+ func get_rate_limit_status() -> Dictionary:
+     """Get current rate limit status"""
+@@ -358,7 +368,7 @@ func set_safety_settings(settings: Dictionary) -> void:
+         if safety_settings.has(category):
+             safety_settings[category] = settings[category]
+     
+-    print("[GeminiAI] Safety settings updated")
++    print("[GeminiAI] Info: Safety settings updated")
+ 
+ func get_safety_settings() -> Dictionary:
+     """Get current safety settings"""
+@@ -384,7 +394,7 @@ func _get_api_url_for_model() -> String:
+ 
+ func _test_api_key() -> bool:
+     """Test if API key is valid"""
+-    print("[GeminiAI] Testing API key with Gemini API...")
++    print("[GeminiAI] Info: Testing API key with Gemini API...")
+     
+     # Use a simple test prompt
+     var test_prompt = "Respond with exactly: 'API key valid'"
+@@ -410,7 +420,7 @@ func _test_api_key() -> bool:
+     )
+     
+     if error != OK:
+-        print("[GeminiAI] HTTP request failed with error: " + str(error))
++        push_error("[GeminiAI] Error: HTTP request failed during API key test - error code: " + str(error))
+         return false
+     
+     # Wait for response
+@@ -423,10 +433,12 @@ func _test_api_key() -> bool:
+ func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+     """Handle API response"""
+     if result != HTTPRequest.RESULT_SUCCESS:
++        push_error("[GeminiAI] Error: API request failed - result code: " + str(result))
+         error_occurred.emit("API request failed")
+         return
+     
+     if response_code != 200:
+         var error_body = body.get_string_from_utf8()
++        push_error("[GeminiAI] Error: API returned HTTP " + str(response_code) + " - " + error_body)
+         error_occurred.emit("API error: HTTP " + str(response_code) + " - " + error_body)
+         return
+     
+@@ -435,6 +447,7 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
+     var parse_result = json.parse(body.get_string_from_utf8())
+     
+     if parse_result != OK:
++        push_error("[GeminiAI] Error: Failed to parse API response - parse error: " + str(parse_result))
+         error_occurred.emit("Failed to parse API response")
+         return
+     
+@@ -449,6 +462,7 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
+             response_text = candidate.content.parts[0].text
+     
+     if response_text.is_empty():
++        push_warning("[GeminiAI] Warning: Empty response received from Gemini API")
+         error_occurred.emit("Empty response from Gemini API")
+         return
+     
+@@ -474,14 +488,14 @@ func _save_settings() -> void:
+         
+         file.store_string(JSON.stringify(data))
+         file.close()
+-        print("[GeminiAI] Settings saved")
++        print("[GeminiAI] Info: Settings saved")
+     else:
+-        push_error("[GeminiAI] Failed to save settings")
++        push_error("[GeminiAI] Error: Failed to save settings - could not open file")
+ 
+ func _load_settings() -> void:
+     """Load settings from an encrypted file"""
+     if not FileAccess.file_exists(SETTINGS_PATH):
+-        print("[GeminiAI] No settings file found")
++        print("[GeminiAI] Info: No settings file found")
+         return
+     
+     var file = FileAccess.open_encrypted_with_pass(
+@@ -516,8 +530,8 @@ func _load_settings() -> void:
+             if data.has("safety_settings"):
+                 safety_settings = data.safety_settings
+             
+-            print("[GeminiAI] Settings loaded")
++            print("[GeminiAI] Info: Settings loaded")
+         else:
+-            push_error("[GeminiAI] Failed to parse settings file")
++            push_error("[GeminiAI] Error: Failed to parse settings file - parse error: " + str(parse_result))
+     else:
+-        push_error("[GeminiAI] Failed to open settings file")
++        push_error("[GeminiAI] Error: Failed to open settings file - could not decrypt")

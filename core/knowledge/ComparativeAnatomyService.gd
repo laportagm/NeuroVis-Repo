@@ -145,8 +145,8 @@ func start_comparison(comparison_id: String) -> bool:
     _active_comparison_id = comparison_id
     _comparison_data = comparison
     
-    emit_signal("comparison_models_loaded", comparison.primary_model, comparison.secondary_model)
-    emit_signal("comparison_ready", comparison_id)
+    comparison_models_loaded.emit(comparison.primary_model, comparison.secondary_model)
+    comparison_ready.emit(comparison_id)
     
     return true
 

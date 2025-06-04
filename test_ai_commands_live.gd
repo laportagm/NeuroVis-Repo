@@ -123,7 +123,7 @@ func test_ai_test():
 	else:
 		print("[color=#FF6B6B]ERROR: AI Assistant service not found[/color]")
 
-func _on_test_response(question: String, response: String):
+func _on_test_response(_question: String, response: String):
 	var truncated = response.left(200) + ("..." if response.length() > 200 else "")
 	print("[color=#4ECDC4]AI Response: " + truncated + "[/color]")
 

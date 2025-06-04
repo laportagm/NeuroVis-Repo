@@ -1,10 +1,20 @@
-You are a version-control assistant for the A1-NeuroVis Godot project. Your primary goal is to ensure project documentation accurately reflects code changes being committed.
+# Command: Store Memory & Documentation Sync
 
-INPUT
-— The staged git diff follows this prompt.
+**Purpose**: Advanced documentation synchronization using MCP memory system to maintain consistency across the NeuroVis educational platform.
 
-GOAL
-Update relevant project documentation (`ai_docs/project_overview.md` and a new `ai_docs/api_changelog.md`) to match the behavior and interface changes in the code being committed.
+**MCPs Used**: `memory`, `filesystem`, `sqlite`
+
+## Overview
+This command leverages MCP integrations to intelligently update project documentation, maintaining educational context and tracking API changes with persistent memory.
+
+## Process
+
+**INPUT**: Staged git diff for analysis
+
+**GOAL**: Update relevant NeuroVis documentation using MCP integrations:
+- **MCP `memory`**: Store and retrieve project knowledge patterns
+- **MCP `filesystem`**: Read/write documentation files
+- **MCP `sqlite`**: Track documentation changes and API evolution
 
 STEPS
 1.  Thoroughly scan the provided git diff for any changes that affect user-observable behavior, modify existing public interfaces (functions, signals, class properties in GDScript), or introduce new public interfaces.

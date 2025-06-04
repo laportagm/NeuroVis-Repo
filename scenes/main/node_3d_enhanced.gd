@@ -267,7 +267,7 @@ func _on_structure_selected_event(_event_name: String, event_data) -> void:
         _app_state.record_structure_view(structure_name)
     
     # Emit own signal for backward compatibility
-    emit_signal("structure_selected", structure_name)
+    structure_selected.emit(structure_name)
     
     print("[ENHANCED] Selected: " + structure_name)
 
@@ -278,7 +278,7 @@ func _on_structure_deselected_event(_event_name: String, _event_data) -> void:
     if info_panel:
         info_panel.visible = false
     
-    emit_signal("structure_deselected")
+    structure_deselected.emit()
 
 func _on_structure_hovered_event(_event_name: String, event_data) -> void:
     """Handle structure hovered event from EventBus"""
@@ -295,7 +295,7 @@ func _on_model_loaded_event(_event_name: String, event_data) -> void:
     var model_names = event_data.get("model_names", [])
     
     print("[ENHANCED] Models loaded: " + str(model_names))
-    emit_signal("models_loaded", model_names)
+    models_loaded.emit(model_names)
     
     # Setup model control panel
     if model_control_panel and model_control_panel.has_method("setup_with_models"):
@@ -417,8 +417,8 @@ func _display_structure_info(structure_name: String) -> void:
         info_panel = null
     
     # Create info panel using InfoPanelFactory
-    var InfoPanelFactory = load("res://ui/panels/InfoPanelFactory.gd")
-    info_panel = InfoPanelFactory.create_info_panel()
+    var InfoPanelFactoryScript = load("res://ui/panels/InfoPanelFactory.gd")
+    info_panel = InfoPanelFactoryScript.create_info_panel()
     if not info_panel:
         push_error("[ENHANCED] Failed to create info panel")
         return

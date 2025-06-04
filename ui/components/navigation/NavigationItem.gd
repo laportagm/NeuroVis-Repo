@@ -281,7 +281,7 @@ func _on_gui_input(event: InputEvent) -> void:
     """Handle GUI input"""
     if event is InputEventMouseButton:
         if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-            emit_signal("clicked")
+            clicked.emit()
             get_viewport().set_input_as_handled()
 
 # Static method to create the scene structure

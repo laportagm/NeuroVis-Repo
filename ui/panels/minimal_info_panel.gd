@@ -364,7 +364,7 @@ func _create_tag(text: String) -> Button:
 	tag.add_theme_color_override("font_color", Color(1, 1, 1, 0.7))
 	tag.add_theme_color_override("font_hover_color", Color(1, 1, 1, 0.9))
 	
-	tag.pressed.connect(func(): emit_signal("structure_selected", text))
+	tag.pressed.connect(func(): structure_selected.emit(text))
 	
 	return tag
 
@@ -445,7 +445,7 @@ func _on_bookmark_pressed() -> void:
 		bookmark_button.text = "☆"
 		bookmark_button.add_theme_color_override("font_color", COLORS.interactive)
 	
-	emit_signal("structure_bookmarked", current_structure_id)
+	structure_bookmarked.emit(current_structure_id)
 
 func _on_close_pressed() -> void:
 	"""Close with subtle animation"""
@@ -453,7 +453,7 @@ func _on_close_pressed() -> void:
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0, ANIM.normal)
 	tween.tween_property(self, "position:y", position.y + 20, ANIM.normal)
-	tween.tween_callback(emit_signal.bind("panel_closed"))
+	tween.tween_callback(panel_closed.emit)
 
 # Responsive handling
 func _on_viewport_resized() -> void:

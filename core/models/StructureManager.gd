@@ -55,8 +55,14 @@ var _comparison_structures: Array = []
 func _ready() -> void:
     print("[StructureManager] Initialized")
     # Connect to knowledge service if available
-    if KnowledgeService and KnowledgeService.has_signal("knowledge_base_loaded"):
-        KnowledgeService.knowledge_base_loaded.connect(_on_knowledge_base_loaded)
+    if has_node("/root/KnowledgeService"):
+        var knowledge_service = get_node("/root/KnowledgeService")
+        if knowledge_service.has_signal("knowledge_base_loaded"):
+            knowledge_service.knowledge_base_loaded.connect(_on_knowledge_base_loaded)
+        else:
+            push_warning("[StructureManager] Warning: KnowledgeService does not have knowledge_base_loaded signal")
+    else:
+        push_warning("[StructureManager] Warning: KnowledgeService not available")
 
 # === PUBLIC METHODS ===
 ## Get structure data with optimized caching
@@ -75,20 +81,33 @@ func get_structure_data(structure_name: String, force_refresh: bool = false) -> 
     # Try to get data from knowledge service
     var structure_data = {}
     
-    if KnowledgeService and KnowledgeService.is_initialized():
-        structure_data = KnowledgeService.get_structure(normalized_name)
-        
-        # Attempt fuzzy search if exact match fails
-        if structure_data.is_empty():
-            var search_results = KnowledgeService.search_structures(normalized_name)
-            if not search_results.is_empty():
-                structure_data = search_results[0]
+    if has_node("/root/KnowledgeService"):
+        var knowledge_service = get_node("/root/KnowledgeService")
+        if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+            if knowledge_service.has_method("get_structure"):
+                structure_data = knowledge_service.get_structure(normalized_name)
+            else:
+                push_warning("[StructureManager] Warning: KnowledgeService.get_structure not available")
+            
+            # Attempt fuzzy search if exact match fails
+            if structure_data.is_empty() and knowledge_service.has_method("search_structures"):
+                var search_results = knowledge_service.search_structures(normalized_name)
+                if not search_results.is_empty():
+                    structure_data = search_results[0]
+        else:
+            push_warning("[StructureManager] Warning: KnowledgeService not initialized")
+    else:
+        push_warning("[StructureManager] Warning: KnowledgeService not available")
     
     # Fallback to legacy knowledge base if needed
-    if structure_data.is_empty() and KB and KB.is_loaded:
-        var structure_id = _find_structure_id_legacy(normalized_name)
-        if not structure_id.is_empty():
-            structure_data = KB.get_structure(structure_id)
+    if structure_data.is_empty() and has_node("/root/KB"):
+        var kb = get_node("/root/KB")
+        if kb.has_method("is_loaded") and kb.is_loaded:
+            var structure_id = _find_structure_id_legacy(normalized_name)
+            if not structure_id.is_empty() and kb.has_method("get_structure"):
+                structure_data = kb.get_structure(structure_id)
+        else:
+            push_warning("[StructureManager] Warning: KB not loaded")
     
     # Cache the result if valid
     if not structure_data.is_empty():
@@ -266,28 +285,43 @@ func search_structures(query: String, limit: int = 5) -> Array:
     if query.is_empty():
         return []
     
-    if KnowledgeService and KnowledgeService.is_initialized():
-        return KnowledgeService.search_structures(query, limit)
+    if has_node("/root/KnowledgeService"):
+        var knowledge_service = get_node("/root/KnowledgeService")
+        if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+            if knowledge_service.has_method("search_structures"):
+                return knowledge_service.search_structures(query, limit)
+            else:
+                push_warning("[StructureManager] Warning: KnowledgeService.search_structures not available")
+        else:
+            push_warning("[StructureManager] Warning: KnowledgeService not initialized")
     
     # Fallback search implementation for legacy KB
     var results = []
-    if KB and KB.is_loaded:
-        var structure_ids = KB.get_all_structure_ids()
-        
-        for id in structure_ids:
-            var structure = KB.get_structure(id)
-            if structure is Dictionary:
-                var match_score = _calculate_search_match(structure, query)
-                if match_score > 0:
-                    structure["match_score"] = match_score
-                    results.append(structure)
-        
-        # Sort by match score
-        results.sort_custom(func(a, b): return a.match_score > b.match_score)
-        
-        # Limit results
-        if results.size() > limit:
-            results = results.slice(0, limit)
+    if has_node("/root/KB"):
+        var kb = get_node("/root/KB")
+        if kb.has_method("is_loaded") and kb.is_loaded:
+            if kb.has_method("get_all_structure_ids"):
+                var structure_ids = kb.get_all_structure_ids()
+                
+                for id in structure_ids:
+                    if kb.has_method("get_structure"):
+                        var structure = kb.get_structure(id)
+                        if structure is Dictionary:
+                            var match_score = _calculate_search_match(structure, query)
+                            if match_score > 0:
+                                structure["match_score"] = match_score
+                                results.append(structure)
+                
+                # Sort by match score
+                results.sort_custom(func(a, b): return a.match_score > b.match_score)
+                
+                # Limit results
+                if results.size() > limit:
+                    results = results.slice(0, limit)
+            else:
+                push_warning("[StructureManager] Warning: KB.get_all_structure_ids not available")
+        else:
+            push_warning("[StructureManager] Warning: KB not loaded")
     
     return results
 
@@ -331,22 +365,30 @@ func _normalize_structure_name(name: String) -> String:
 ## Find structure ID in legacy knowledge base
 func _find_structure_id_legacy(mesh_name: String) -> String:
     """Legacy structure ID lookup for backward compatibility"""
-    if not KB or not KB.is_loaded:
+    if not has_node("/root/KB"):
+        return ""
+    
+    var kb = get_node("/root/KB")
+    if not kb.has_method("is_loaded") or not kb.is_loaded:
+        return ""
+    
+    if not kb.has_method("get_all_structure_ids") or not kb.has_method("get_structure"):
+        push_warning("[StructureManager] Warning: KB missing required methods")
         return ""
     
     var lower_name = mesh_name.to_lower()
-    var structure_ids = KB.get_all_structure_ids()
+    var structure_ids = kb.get_all_structure_ids()
     
     # Try exact match first
     for id in structure_ids:
-        var structure = KB.get_structure(id)
+        var structure = kb.get_structure(id)
         if structure is Dictionary and structure.has("displayName"):
             if structure.displayName.to_lower() == lower_name:
                 return id
     
     # Try partial match
     for id in structure_ids:
-        var structure = KB.get_structure(id)
+        var structure = kb.get_structure(id)
         if structure is Dictionary and structure.has("displayName"):
             var display_name = structure.displayName.to_lower()
             if lower_name.contains(display_name) or display_name.contains(lower_name):
@@ -359,24 +401,29 @@ func _find_structures_with_pathology(pathology: String, exclude: Array = []) -> 
     """Find structures affected by the same pathology for educational linking"""
     var affected_structures = []
     
-    if KnowledgeService and KnowledgeService.is_initialized():
-        # Use new KnowledgeService API if available
-        if KnowledgeService.has_method("get_structures_by_pathology"):
-            return KnowledgeService.get_structures_by_pathology(pathology, exclude)
+    if has_node("/root/KnowledgeService"):
+        var knowledge_service = get_node("/root/KnowledgeService")
+        if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+            # Use new KnowledgeService API if available
+            if knowledge_service.has_method("get_structures_by_pathology"):
+                return knowledge_service.get_structures_by_pathology(pathology, exclude)
     
     # Fallback implementation for legacy KB
-    if KB and KB.is_loaded:
-        var structure_ids = KB.get_all_structure_ids()
-        
-        for id in structure_ids:
-            if id in exclude:
-                continue
+    if has_node("/root/KB"):
+        var kb = get_node("/root/KB")
+        if kb.has_method("is_loaded") and kb.is_loaded:
+            if kb.has_method("get_all_structure_ids") and kb.has_method("get_structure"):
+                var structure_ids = kb.get_all_structure_ids()
                 
-            var structure = KB.get_structure(id)
-            if structure is Dictionary and structure.has("commonPathologies"):
-                var pathologies = structure.commonPathologies
-                if pathologies is Array and pathology in pathologies:
-                    affected_structures.append(structure.get("displayName", id))
+                for id in structure_ids:
+                    if id in exclude:
+                        continue
+                        
+                    var structure = kb.get_structure(id)
+                    if structure is Dictionary and structure.has("commonPathologies"):
+                        var pathologies = structure.commonPathologies
+                        if pathologies is Array and pathology in pathologies:
+                            affected_structures.append(structure.get("displayName", id))
     
     return affected_structures
 

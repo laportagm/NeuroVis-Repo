@@ -156,7 +156,7 @@ func _run_tests() -> void:
 	
 	# Simulate close button press
 	print("  - Simulating close button press")
-	close_button.emit_signal("pressed")
+	close_button.pressed.emit()
 	
 	# Wait for panel to hide
 	await get_tree().create_timer(0.1).timeout
@@ -225,9 +225,9 @@ func _run_tests() -> void:
 func _report_success(message: String) -> void:
 	print("\n✓ TEST SUITE PASSED: " + message)
 	print("===== END OF UI INFO PANEL TEST SUITE =====\n")
-	emit_signal("test_completed", true, message)
+	test_completed.emit(true, message)
 
 func _report_failure(message: String) -> void:
 	printerr("\n❌ TEST SUITE FAILED: " + message)
 	print("===== END OF UI INFO PANEL TEST SUITE =====\n")
-	emit_signal("test_completed", false, message)
+	test_completed.emit(false, message)

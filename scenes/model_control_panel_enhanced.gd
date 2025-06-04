@@ -611,17 +611,17 @@ func _on_model_toggled(pressed: bool, model_name: String, status_label: Label) -
 		visible_models -= 1
 	_update_visibility_counter()
 	
-	emit_signal("model_visibility_changed", model_name, pressed)
+	model_visibility_changed.emit(model_name, pressed)
 
 func _on_learn_pressed(model_name: String) -> void:
 	"""Handle learn button press"""
 	print("[ENHANCED_MODEL_PANEL] Learn mode requested for: " + model_name)
-	emit_signal("learning_mode_requested", model_name)
+	learning_mode_requested.emit(model_name)
 
 func _on_focus_pressed(model_name: String) -> void:
 	"""Handle focus button press"""
 	print("[ENHANCED_MODEL_PANEL] Focus requested for: " + model_name)
-	emit_signal("model_selected", model_name)
+	model_selected.emit(model_name)
 
 func _on_category_selected(category_id: String, pressed: bool) -> void:
 	"""Handle category selection"""
@@ -638,14 +638,14 @@ func _on_category_selected(category_id: String, pressed: bool) -> void:
 	print("[ENHANCED_MODEL_PANEL] Category selected: " + category_id)
 	
 	_apply_current_filter()
-	emit_signal("category_selected", category_id)
+	category_selected.emit(category_id)
 
 func _on_search_submitted(text: String) -> void:
 	"""Handle search submission"""
 	search_query = text
 	print("[ENHANCED_MODEL_PANEL] Search performed: " + text)
 	_apply_current_filter()
-	emit_signal("search_performed", text)
+	search_performed.emit(text)
 
 func _on_search_text_changed(text: String) -> void:
 	"""Handle real-time search"""

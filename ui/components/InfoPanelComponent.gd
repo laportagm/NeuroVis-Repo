@@ -411,8 +411,8 @@ func _apply_positioning(position_hint: String) -> void:
 		"center":
 			anchor_left = 0.5
 			anchor_right = 0.5
-			offset_left = -custom_minimum_size.x / 2
-			offset_right = custom_minimum_size.x / 2
+			offset_left = -custom_minimum_size.x / 2.0
+			offset_right = custom_minimum_size.x / 2.0
 
 func _save_component_state() -> void:
 	"""Save component state for persistence"""

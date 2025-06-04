@@ -181,12 +181,19 @@ func _test_register_providers() -> void:
     var initial_providers = ai_registry.get_all_provider_ids()
     var mock_exists = initial_providers.has("mock_provider")
     
-    # Create and register GeminiAIProvider
-    var gemini_provider = GeminiAIProviderScript.new()
-    gemini_provider.name = "GeminiAI"
-    add_child(gemini_provider)
-    
-    var gemini_registered = ai_registry.register_provider("gemini", gemini_provider)
+    # Check if gemini provider is already registered (by AIProviderRegistry initialization)
+    var gemini_registered = false
+    if not ai_registry.get_provider("gemini"):
+        # Create and register GeminiAIProvider only if not already registered
+        var gemini_provider = GeminiAIProviderScript.new()
+        gemini_provider.name = "GeminiAI"
+        add_child(gemini_provider)
+        
+        gemini_registered = ai_registry.register_provider("gemini", gemini_provider)
+    else:
+        # Gemini already registered during initialization
+        gemini_registered = true
+        print("[TEST] Gemini provider already registered by AIProviderRegistry")
     
     # Check results
     var providers = ai_registry.get_all_provider_ids()
@@ -231,6 +238,13 @@ func _test_mock_provider() -> void:
 func _test_provider_switch() -> void:
     """Test switching between providers"""
     print("[TEST] Testing provider switching...")
+    
+    # First ensure the gemini provider exists
+    var providers = ai_registry.get_all_provider_ids()
+    if not providers.has("gemini"):
+        _log_result("Switch Provider (Registry)", false, "Gemini provider not found in registry. Available: %s" % str(providers))
+        current_state = TestState.TEST_PROVIDER_SWITCH
+        return
     
     # Test switching via registry
     var switch_success = ai_registry.set_active_provider("gemini")

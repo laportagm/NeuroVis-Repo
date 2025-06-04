@@ -1,15 +1,20 @@
-# /knowledge-sync
-**Purpose**: Sync project knowledge and architectural decisions
+# NeuroVis Knowledge Synchronization System
 
-**Usage**: `/knowledge-sync "topic_or_update"`
+**Purpose**: Advanced project knowledge synchronization using comprehensive MCP integration to maintain educational context, architectural patterns, and development consistency.
 
-**Integration**: memory + filesystem + github
+**MCPs Used**: `memory`, `filesystem`, `sqlite`, `sequential-thinking`, `github`
 
-**Prompt**:
+**Usage**: 
+```bash
+claude -f .claude/commands/knowledge-sync.md "topic_or_update"
 ```
-Role: NeuroVis Project Architect
-Context: Project knowledge management and documentation
-Project: /Users/gagelaporta/11A-NeuroVis copy3
+
+## MCP-Enhanced Knowledge Management Pipeline
+
+**Context**: 
+- **Role**: NeuroVis Project Architect & Educational Content Curator
+- **Project**: NeuroVis educational neuroscience platform
+- **Focus**: Knowledge consistency + educational accuracy
 
 Knowledge synchronization process:
 1. Read current CLAUDE.md and project documentation

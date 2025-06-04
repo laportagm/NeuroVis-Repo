@@ -263,7 +263,7 @@ func _validate_performance() -> void:
 	
 	# Check FPS
 	var fps: float = Engine.get_frames_per_second()
-	var memory_mb: int = OS.get_static_memory_usage() / 1048576
+	var memory_mb: float = OS.get_static_memory_usage() / 1048576.0
 	
 	validation_progress.emit(ValidationCategory.PERFORMANCE, 0.5)
 	

@@ -102,7 +102,7 @@ func switch_to_system(system: BrainSystem,
     var to_system_name = BrainSystem.keys()[system]
     
     _is_transitioning = true
-    emit_signal("system_transition_started", from_system_name, to_system_name)
+    system_transition_started.emit(from_system_name, to_system_name)
     
     # Hide current system, show new system based on transition style
     match transition_style:
@@ -171,7 +171,7 @@ func load_brain_system(system: BrainSystem) -> bool:
     _system_root_nodes[system] = instance
     
     var system_name = BrainSystem.keys()[system]
-    emit_signal("brain_system_loaded", system_name)
+    brain_system_loaded.emit(system_name)
     return true
 
 # === PRIVATE METHODS ===
@@ -255,7 +255,7 @@ func _complete_transition(to_system: BrainSystem) -> void:
     """Complete the transition to the new system"""
     _is_transitioning = false
     var system_name = BrainSystem.keys()[to_system]
-    emit_signal("system_transition_completed", system_name)
+    system_transition_completed.emit(system_name)
     
     if show_educational_labels_during_transition:
         _update_educational_labels(to_system)

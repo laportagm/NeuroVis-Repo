@@ -117,9 +117,16 @@ static func show_structure_tooltip(target: Control, structure_id: String) -> Int
 	"""Show tooltip with brain structure information"""
 	var structure_data = {}
 	
-	# Get structure data from KnowledgeService if available
-	if KnowledgeService:
-		structure_data = KnowledgeService.get_structure(structure_id)
+	# Safe access to KnowledgeService in static context
+	# Since this is a static function, we need to get a scene tree node reference
+	if target and target.is_inside_tree() and target.has_node("/root/KnowledgeService"):
+		var knowledge_service = target.get_node("/root/KnowledgeService")
+		if knowledge_service and knowledge_service.has_method("get_structure"):
+			structure_data = knowledge_service.get_structure(structure_id)
+		else:
+			push_warning("[InteractiveTooltip] Warning: KnowledgeService.get_structure method not available")
+	else:
+		push_warning("[InteractiveTooltip] Warning: KnowledgeService not available or target not in tree")
 	
 	var content = {
 		"type": "educational",

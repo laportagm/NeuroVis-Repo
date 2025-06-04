@@ -388,7 +388,7 @@ func hide_loading() -> void:
 	get_tree().create_timer(UIThemeManager.ANIM_DURATION_STANDARD).timeout.connect(func():
 		is_showing = false
 		visible = false
-		emit_signal("loading_completed")
+		loading_completed.emit()
 	)
 	
 	print("[LOADING_OVERLAY] Hiding loading overlay")
@@ -422,7 +422,7 @@ func update_progress(phase: String, percentage: float, task_description: String 
 		
 		UIThemeManager.animate_fade_text_change(progress_label, detail_text)
 	
-	emit_signal("loading_phase_changed", phase, percentage)
+	loading_phase_changed.emit(phase, percentage)
 	print("[LOADING_OVERLAY] Progress updated: %s - %.1f%%" % [phase, percentage])
 
 func _animate_progress_update() -> void:
@@ -505,7 +505,7 @@ func _update_educational_content() -> void:
 	if tip_indicator:
 		tip_indicator.text = "%d / %d" % [current_tip_index + 1, loading_tips.size()]
 	
-	emit_signal("educational_tip_changed", current_tip_index, tip)
+	educational_tip_changed.emit(current_tip_index, tip)
 
 func _show_previous_tip() -> void:
 	"""Show previous educational tip"""

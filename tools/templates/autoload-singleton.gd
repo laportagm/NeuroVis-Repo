@@ -68,7 +68,7 @@ func _initialize_singleton() -> void:
 	_is_initialized = true
 	_initialization_time = (Time.get_ticks_msec() - start_time) / 1000.0
 	
-	emit_signal("initialized")
+	initialized.emit()
 	_log_debug(SINGLETON_NAME + " initialized in " + str(_initialization_time) + "s")
 
 func _load_configuration() -> void:
@@ -311,7 +311,7 @@ func _handle_error(message: String) -> void:
 	var full_message = "[" + SINGLETON_NAME + "] " + message
 	
 	push_error(full_message)
-	emit_signal("error_occurred", message)
+	error_occurred.emit(message)
 
 # === LOGGING ===
 func _log_debug(message: String) -> void:

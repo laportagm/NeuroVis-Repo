@@ -5,9 +5,16 @@
 ## structure size awareness, and overlapping geometry resolution to achieve
 ## 100% selection reliability for all anatomical structures.
 ##
+## Medical/Educational Context:
+## - Accurate structure selection is critical for medical education
+## - Small deep brain structures (pineal gland, pituitary) require special handling
+## - Visual feedback must be clear for learning effectiveness
+## - Multi-ray sampling ensures reliable selection even for tiny structures
+##
 ## @tutorial: Advanced selection techniques for educational 3D applications
 ## @version: 3.0
 
+class_name BrainStructureSelectionManager
 extends Node
 
 # Constants
@@ -16,12 +23,15 @@ const HOVER_FADE_SPEED: float = 2.0
 const OUTLINE_THICKNESS: float = 0.02
 
 # Multi-ray sampling configuration
+# Medical Rationale: Small deep brain structures require multiple ray samples
+# to ensure reliable selection. The 9-ray pattern covers center + corners + edges
 const MULTI_RAY_SAMPLES: int = 9  # Center + 4 corners + 4 edges
 const SAMPLE_RADIUS: float = 8.0  # Pixels around click point (increased for better coverage)
 
 # Adaptive tolerance based on structure size
-const MIN_SELECTION_TOLERANCE: float = 2.0   # Minimum pixels
-const MAX_SELECTION_TOLERANCE: float = 20.0  # Maximum pixels
+# Educational Context: Smaller structures need larger tolerance for accessibility
+const MIN_SELECTION_TOLERANCE: float = 2.0   # Minimum pixels for large structures
+const MAX_SELECTION_TOLERANCE: float = 20.0  # Maximum pixels for tiny structures
 const SMALL_STRUCTURE_THRESHOLD: float = 0.05 # Structures smaller than 5% of screen
 
 # Structure size cache for adaptive tolerance
@@ -30,22 +40,28 @@ var last_camera_position: Vector3
 var last_camera_rotation: Vector3
 
 # Structure-specific tolerance overrides for problematic structures
-const STRUCTURE_TOLERANCE_OVERRIDES: Dictionary = {
-    "pineal_gland": 25.0,
-    "pituitary_gland": 25.0,
-    "subthalamic_nucleus": 22.0,
-    "substantia_nigra": 22.0,
-    "globus_pallidus": 20.0,
-    "caudate_nucleus": 15.0,
-    "putamen": 15.0
+# Medical Context: These deep brain structures are clinically important but very small
+# - Pineal gland: ~8mm, produces melatonin, requires 25px tolerance
+# - Pituitary: ~10mm, master endocrine gland, requires 25px tolerance
+# - Subthalamic nucleus: Parkinson's DBS target, requires 22px tolerance
+var structure_tolerance_overrides: Dictionary = {
+    "pineal_gland": 25.0,        # Tiny deep structure (~8mm), critical for circadian rhythm
+    "pituitary_gland": 25.0,     # Small but vital endocrine gland (~10mm)
+    "subthalamic_nucleus": 22.0, # DBS target for Parkinson's disease
+    "substantia_nigra": 22.0,    # Dopamine production, Parkinson's pathology
+    "globus_pallidus": 20.0,     # Movement regulation, dystonia treatment
+    "caudate_nucleus": 15.0,     # Part of basal ganglia, learning/memory
+    "putamen": 15.0              # Movement control, stroke vulnerability
 }
 
 # Collision shape inflation for tiny structures
+# Educational Rationale: Inflated collision boxes ensure students can select
+# these critical structures for learning, despite their small physical size
 const COLLISION_INFLATION: Dictionary = {
-    "pineal_gland": 1.5,
-    "pituitary_gland": 1.5,
-    "subthalamic_nucleus": 1.3,
-    "substantia_nigra": 1.3
+    "pineal_gland": 1.5,         # 50% inflation for this tiny structure
+    "pituitary_gland": 1.5,      # 50% inflation for reliable selection
+    "subthalamic_nucleus": 1.3,  # 30% inflation for DBS education
+    "substantia_nigra": 1.3      # 30% inflation for Parkinson's education
 }
 
 # Configuration variables - will be initialized in _ready()
@@ -93,12 +109,36 @@ func _ready() -> void:
     
     # Pre-calculate collision bounds for optimization
     _precalculate_collision_bounds()
+    
+    # Initialize professional model support
+    _initialize_professional_model_support()
+
+## Initialize the selection system with camera and model references
+## @param camera_ref: Camera3D node for raycasting
+## @param model_parent_ref: Node3D containing the 3D models
+## @returns: bool - true if initialization successful
+func initialize(camera_ref: Camera3D, model_parent_ref: Node3D) -> bool:
+    """Initialize the selection system with required references"""
+    if not camera_ref:
+        push_error("[SELECTION] Camera reference is required")
+        return false
+    
+    if not model_parent_ref:
+        push_error("[SELECTION] Model parent reference is required")
+        return false
+    
+    # Store references for use in raycasting
+    set_meta("camera_ref", camera_ref)
+    set_meta("model_parent_ref", model_parent_ref)
+    
+    print("[SELECTION] Selection system initialized with camera and model references")
+    return true
 
 # Enhanced hover with lighter multi-ray sampling for better accuracy
 func handle_hover_at_position(screen_position: Vector2) -> void:
     # Use single ray for hover (performance optimization)
-    var hit_result = _cast_single_ray(screen_position)
-    var hit_mesh = hit_result.get("mesh", null) if hit_result else null
+    var hit_result: Dictionary = _cast_single_ray(screen_position)
+    var hit_mesh: MeshInstance3D = hit_result.get("mesh", null) if hit_result else null
     
     # Handle hover state changes
     if hit_mesh != current_hovered_mesh:
@@ -119,10 +159,10 @@ func handle_selection_at_position(screen_position: Vector2) -> void:
     clear_current_selection()
     
     # Use enhanced multi-ray selection with adaptive tolerance
-    var hit_data = _cast_multi_ray_selection(screen_position, true)
+    var hit_data: Dictionary = _cast_multi_ray_selection(screen_position, true)
     
     if hit_data and hit_data.has("mesh") and hit_data["mesh"]:
-        var hit_mesh = hit_data["mesh"]
+        var hit_mesh: MeshInstance3D = hit_data["mesh"]
         last_selection_confidence = hit_data.get("confidence", 1.0)
         
         # Apply highlighting
@@ -278,17 +318,21 @@ func set_emission_energy(energy: float) -> void:
 # === ENHANCED SELECTION METHODS ===
 
 ## Multi-ray selection with adaptive tolerance
+## Medical/Educational Rationale: Multi-ray sampling ensures reliable selection
+## of small deep brain structures that are critical for medical education
 func _cast_multi_ray_selection(screen_position: Vector2, use_tolerance: bool) -> Dictionary:
     """Cast multiple rays for improved selection accuracy"""
-    var camera = get_viewport().get_camera_3d()
+    var camera: Camera3D = get_viewport().get_camera_3d()
     if not camera:
         return {}
     
-    var candidates: Array[Dictionary] = []
-    var tolerance = get_adaptive_tolerance(screen_position) if use_tolerance else 0.0
+    var mesh_candidates: Array[Dictionary] = []
+    var selection_tolerance_pixels: float = get_adaptive_tolerance(screen_position) if use_tolerance else 0.0
     
     # Enhanced sample pattern for 9-ray configuration
-    var sample_offsets = [
+    # Educational Context: This pattern ensures even tiny structures like the
+    # pineal gland (8mm) can be reliably selected for learning
+    var sample_offsets: Array[Vector2] = [
         Vector2(0, 0),  # Center
         Vector2(-SAMPLE_RADIUS, -SAMPLE_RADIUS),  # Top-left
         Vector2(SAMPLE_RADIUS, -SAMPLE_RADIUS),   # Top-right
@@ -301,8 +345,9 @@ func _cast_multi_ray_selection(screen_position: Vector2, use_tolerance: bool) ->
     ]
     
     # Add even more samples for extremely small structures
-    if tolerance > 20.0:
-        var extra_radius = SAMPLE_RADIUS * 0.7
+    # Medical Context: Extra samples for structures like subthalamic nucleus (DBS target)
+    if selection_tolerance_pixels > 20.0:
+        var extra_radius: float = SAMPLE_RADIUS * 0.7
         sample_offsets.append_array([
             Vector2(-extra_radius, -extra_radius),  # Inner corners
             Vector2(extra_radius, -extra_radius),
@@ -312,48 +357,49 @@ func _cast_multi_ray_selection(screen_position: Vector2, use_tolerance: bool) ->
     
     # Cast rays from each sample point
     for offset in sample_offsets:
-        var sample_pos = screen_position + offset
-        var hit_result = _cast_single_ray(sample_pos)
+        var sample_pos: Vector2 = screen_position + offset
+        var raycast_result: Dictionary = _cast_single_ray(sample_pos)
         
-        if hit_result:
+        if raycast_result:
             # Check if we already have this mesh as a candidate
-            var found = false
-            for candidate in candidates:
-                if candidate["mesh"] == hit_result["mesh"]:
+            var mesh_already_candidate: bool = false
+            for candidate in mesh_candidates:
+                if candidate["mesh"] == raycast_result["mesh"]:
                     candidate["hit_count"] += 1
-                    candidate["distances"].append(hit_result["distance"])
-                    found = true
+                    candidate["distances"].append(raycast_result["distance"])
+                    mesh_already_candidate = true
                     break
             
-            if not found:
-                candidates.append({
-                    "mesh": hit_result["mesh"],
+            if not mesh_already_candidate:
+                mesh_candidates.append({
+                    "mesh": raycast_result["mesh"],
                     "hit_count": 1,
-                    "distances": [hit_result["distance"]],
-                    "first_hit_position": hit_result["position"],
-                    "structure_size": _get_structure_screen_size(hit_result["mesh"])
+                    "distances": [raycast_result["distance"]],
+                    "first_hit_position": raycast_result["position"],
+                    "structure_size": _get_structure_screen_size(raycast_result["mesh"])
                 })
     
     # Process candidates to find best selection
-    return _process_selection_candidates(candidates, screen_position, tolerance)
+    return _process_selection_candidates(mesh_candidates, screen_position, selection_tolerance_pixels)
 
 ## Process selection candidates with intelligent prioritization
-func _process_selection_candidates(candidates: Array, click_position: Vector2, tolerance: float) -> Dictionary:
+func _process_selection_candidates(mesh_candidates: Array[Dictionary], _click_position: Vector2, selection_tolerance_pixels: float) -> Dictionary:
     """Process multi-ray candidates to determine best selection"""
-    if candidates.is_empty():
+    if mesh_candidates.is_empty():
         return {}
     
     # Sort candidates by priority
-    candidates.sort_custom(_compare_selection_candidates)
+    mesh_candidates.sort_custom(_compare_selection_candidates)
     
     # Calculate selection confidence
-    var best_candidate = candidates[0]
-    var total_samples = MULTI_RAY_SAMPLES
-    if tolerance > 20.0:
+    var best_candidate: Dictionary = mesh_candidates[0]
+    var total_samples: int = MULTI_RAY_SAMPLES
+    if selection_tolerance_pixels > 20.0:
         total_samples += 4  # Extra inner corner samples
-    var confidence = float(best_candidate["hit_count"]) / float(total_samples)
+    var confidence: float = float(best_candidate["hit_count"]) / float(total_samples)
     
     # Apply structure size boost for small structures
+    # Educational Context: Boost confidence for tiny structures to ensure they're selectable
     if best_candidate["structure_size"] < SMALL_STRUCTURE_THRESHOLD:
         confidence = min(confidence * 1.5, 1.0)
     
@@ -383,49 +429,52 @@ func _compare_selection_candidates(a: Dictionary, b: Dictionary) -> bool:
     return a["structure_size"] < b["structure_size"]
 
 ## Get adaptive selection tolerance for a given position
+## Educational Importance: Adaptive tolerance ensures all structures are selectable
+## regardless of their size, critical for comprehensive neuroanatomy education
 func get_adaptive_tolerance(screen_position: Vector2) -> float:
     """Calculate adaptive tolerance based on nearby structure sizes"""
-    var camera = get_viewport().get_camera_3d()
+    var camera: Camera3D = get_viewport().get_camera_3d()
     if not camera:
         return MIN_SELECTION_TOLERANCE
     
     # Find structures near the click position
-    var nearby_structures = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
+    var nearby_structures: Array[Dictionary] = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
     
     if nearby_structures.is_empty():
         return MIN_SELECTION_TOLERANCE
     
     # Check for structure-specific overrides first
-    var smallest_size = 1.0
-    var smallest_structure_name = ""
+    var smallest_size: float = 1.0
     
-    for struct_data in nearby_structures:
-        var mesh = struct_data["mesh"]
-        var normalized_name = mesh.name.to_lower().replace(" ", "_")
+    for structure_data in nearby_structures:
+        var mesh: MeshInstance3D = structure_data["mesh"]
+        var normalized_name: String = mesh.name.to_lower().replace(" ", "_")
         
-        if STRUCTURE_TOLERANCE_OVERRIDES.has(normalized_name):
+        if structure_tolerance_overrides.has(normalized_name):
             # Found a structure with override, use its tolerance
-            return STRUCTURE_TOLERANCE_OVERRIDES[normalized_name]
+            # Medical Context: These are critically important small structures
+            return structure_tolerance_overrides[normalized_name]
         
         # Track smallest structure for adaptive calculation
-        if struct_data["screen_size"] < smallest_size:
-            smallest_size = struct_data["screen_size"]
-            smallest_structure_name = normalized_name
+        if structure_data["screen_size"] < smallest_size:
+            smallest_size = structure_data["screen_size"]
     
     # Adaptive tolerance calculation
-    var base_tolerance = MIN_SELECTION_TOLERANCE
+    var base_tolerance: float = MIN_SELECTION_TOLERANCE
     
     if smallest_size < SMALL_STRUCTURE_THRESHOLD:
         # Small structures get maximum tolerance
+        # Educational Rationale: Ensures students can select small but important structures
         base_tolerance = MAX_SELECTION_TOLERANCE
         
         # Extra boost for very tiny structures
+        # Medical Context: Structures <2% screen size include critical deep brain nuclei
         if smallest_size < 0.02:  # Less than 2% of screen
             base_tolerance *= 1.5
     else:
         # Larger structures get proportionally less tolerance
-        var tolerance_range = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
-        var size_factor = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
+        var tolerance_range: float = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
+        var size_factor: float = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
         base_tolerance = MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
     
     return base_tolerance
@@ -433,39 +482,39 @@ func get_adaptive_tolerance(screen_position: Vector2) -> float:
 ## Cast a single selection ray
 func _cast_single_ray(screen_position: Vector2) -> Dictionary:
     """Cast a single ray and return hit information"""
-    var camera = get_viewport().get_camera_3d()
+    var camera: Camera3D = get_viewport().get_camera_3d()
     if not camera:
         return {}
     
     # Calculate ray
-    var from = camera.project_ray_origin(screen_position)
-    var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
+    var ray_origin: Vector3 = camera.project_ray_origin(screen_position)
+    var ray_end: Vector3 = ray_origin + camera.project_ray_normal(screen_position) * RAY_LENGTH
     
     # Setup raycast
-    var space_state = get_viewport().world_3d.direct_space_state
+    var space_state: PhysicsDirectSpaceState3D = get_viewport().world_3d.direct_space_state
     if not space_state:
         return {}
     
-    var ray_params = PhysicsRayQueryParameters3D.create(from, to)
+    var ray_params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
     ray_params.collision_mask = 0xFFFFFFFF
     ray_params.collide_with_areas = true
     ray_params.hit_from_inside = true  # Important for overlapping geometry
     
     # Perform raycast
-    var result = space_state.intersect_ray(ray_params)
+    var raycast_result: Dictionary = space_state.intersect_ray(ray_params)
     
-    if result.is_empty():
+    if raycast_result.is_empty():
         return {}
     
-    var mesh = _extract_mesh_from_collision(result)
-    if not mesh:
+    var hit_mesh: MeshInstance3D = _extract_mesh_from_collision(raycast_result)
+    if not hit_mesh:
         return {}
     
     return {
-        "mesh": mesh,
-        "position": result["position"],
-        "distance": from.distance_to(result["position"]),
-        "normal": result.get("normal", Vector3.UP)
+        "mesh": hit_mesh,
+        "position": raycast_result["position"],
+        "distance": ray_origin.distance_to(raycast_result["position"]),
+        "normal": raycast_result.get("normal", Vector3.UP)
     }
 
 # Casts a ray from the camera through the screen position and returns the hit mesh
@@ -473,7 +522,7 @@ func _cast_selection_ray(screen_position: Vector2) -> MeshInstance3D:
     # Get the current camera
     var camera = get_viewport().get_camera_3d()
     if not camera:
-        print("Warning: No camera found for selection raycast")
+        push_warning("[Selection] Camera access error: No camera found for selection raycast")
         return null
     
     # Calculate ray origin and direction
@@ -483,7 +532,7 @@ func _cast_selection_ray(screen_position: Vector2) -> MeshInstance3D:
     # Setup raycast parameters
     var space_state = get_viewport().world_3d.direct_space_state
     if not space_state:
-        print("Warning: No physics space found for selection raycast")
+        push_warning("[Selection] Physics error: No physics space found for selection raycast")
         return null
     
     var ray_params = PhysicsRayQueryParameters3D.create(from, to)
@@ -513,7 +562,7 @@ func _extract_mesh_from_collision(collision_result: Dictionary) -> MeshInstance3
     # Enhanced StaticBody3D handling
     if collider is StaticBody3D:
         # Check parent first
-        var parent = collider.get_parent()
+        var parent: Node = collider.get_parent()
         if parent is MeshInstance3D:
             return parent
         
@@ -527,32 +576,32 @@ func _extract_mesh_from_collision(collision_result: Dictionary) -> MeshInstance3
             for sibling in parent.get_children():
                 if sibling is MeshInstance3D:
                     # First check inflated collision for small structures
-                    var collision_point = collision_result.get("position", Vector3.ZERO)
+                    var collision_point: Vector3 = collision_result.get("position", Vector3.ZERO)
                     if _check_inflated_collision(sibling, collision_point):
                         return sibling
                     
                     # Then check normal bounds
                     if sibling != collider:
                         # Verify this mesh is related to the collision
-                        var aabb = sibling.get_aabb()
-                        var local_point = sibling.global_transform.inverse() * collision_point
+                        var mesh_aabb: AABB = sibling.get_aabb()
+                        var local_point: Vector3 = sibling.global_transform.inverse() * collision_point
                         
                         # Check if collision point is within mesh bounds (with tolerance)
-                        var tolerance = 0.1
-                        if aabb.grow(tolerance).has_point(local_point):
+                        var bounds_tolerance: float = 0.1
+                        if mesh_aabb.grow(bounds_tolerance).has_point(local_point):
                             return sibling
     
     # CollisionShape3D handling
     if collider is CollisionShape3D:
-        var parent = collider.get_parent()
+        var parent: Node = collider.get_parent()
         if parent is StaticBody3D:
-            var grandparent = parent.get_parent()
+            var grandparent: Node = parent.get_parent()
             if grandparent is MeshInstance3D:
                 return grandparent
                 
     # Area3D handling for trigger-based selection
     if collider is Area3D:
-        var parent = collider.get_parent()
+        var parent: Node = collider.get_parent()
         if parent is MeshInstance3D:
             return parent
     
@@ -593,32 +642,32 @@ func get_hovered_structure_name() -> String:
 # === HELPER METHODS FOR ENHANCED SELECTION ===
 
 ## Find structures near a screen position
-func _find_nearby_structures(screen_position: Vector2, radius: float) -> Array:
+func _find_nearby_structures(screen_position: Vector2, radius: float) -> Array[Dictionary]:
     """Find all structures within a screen radius of the given position"""
-    var nearby: Array = []
-    var camera = get_viewport().get_camera_3d()
+    var nearby_structures: Array[Dictionary] = []
+    var camera: Camera3D = get_viewport().get_camera_3d()
     if not camera:
-        return nearby
+        return nearby_structures
     
     # Get all potential meshes
-    var brain_model = get_node_or_null("/root/Node3D/BrainModel")
+    var brain_model: Node = get_node_or_null("/root/Node3D/BrainModel")
     if not brain_model:
-        return nearby
+        return nearby_structures
     
-    var all_meshes = _get_all_meshes_recursive(brain_model)
+    var all_meshes: Array[MeshInstance3D] = _get_all_meshes_recursive(brain_model)
     
     # Check each mesh
     for mesh in all_meshes:
-        var screen_pos = _get_mesh_screen_position(mesh)
+        var screen_pos: Vector2 = _get_mesh_screen_position(mesh)
         if screen_pos.distance_to(screen_position) <= radius:
-            nearby.append({
+            nearby_structures.append({
                 "mesh": mesh,
                 "screen_position": screen_pos,
                 "screen_size": _get_structure_screen_size(mesh),
                 "distance": screen_pos.distance_to(screen_position)
             })
     
-    return nearby
+    return nearby_structures
 
 ## Get all meshes recursively
 func _get_all_meshes_recursive(node: Node3D) -> Array[MeshInstance3D]:
@@ -839,19 +888,22 @@ func _cleanup_mesh_animations(mesh: MeshInstance3D) -> void:
     mesh.scale = Vector3.ONE
 
 ## Enhanced collision detection with inflation for small structures
+## Medical/Educational Rationale: Inflated collision boxes ensure that tiny but
+## clinically important structures (pineal gland, pituitary) can be reliably selected
+## for educational exploration, despite their small physical size
 func _check_inflated_collision(mesh: MeshInstance3D, world_position: Vector3) -> bool:
     """Check if position is within inflated bounds of a structure"""
     if not mesh or not mesh.mesh:
         return false
     
-    var normalized_name = mesh.name.to_lower().replace(" ", "_")
-    var inflation_factor = COLLISION_INFLATION.get(normalized_name, 1.0)
+    var normalized_name: String = mesh.name.to_lower().replace(" ", "_")
+    var inflation_factor: float = COLLISION_INFLATION.get(normalized_name, 1.0)
     
     if inflation_factor > 1.0:
         # Check inflated bounds
-        var aabb = mesh.get_aabb()
-        var inflated_aabb = aabb.grow(aabb.size.length() * (inflation_factor - 1.0) * 0.5)
-        var local_point = mesh.global_transform.inverse() * world_position
+        var original_aabb: AABB = mesh.get_aabb()
+        var inflated_aabb: AABB = original_aabb.grow(original_aabb.size.length() * (inflation_factor - 1.0) * 0.5)
+        var local_point: Vector3 = mesh.global_transform.inverse() * world_position
         
         return inflated_aabb.has_point(local_point)
     
@@ -894,7 +946,7 @@ func get_selection_statistics() -> Dictionary:
         "sample_radius": SAMPLE_RADIUS,
         "tolerance_range": [MIN_SELECTION_TOLERANCE, MAX_SELECTION_TOLERANCE],
         "small_structure_threshold": SMALL_STRUCTURE_THRESHOLD,
-        "override_count": STRUCTURE_TOLERANCE_OVERRIDES.size(),
+        "override_count": structure_tolerance_overrides.size(),
         "inflation_count": COLLISION_INFLATION.size()
     }
 
@@ -918,3 +970,84 @@ func dispose() -> void:
     
     # Call _exit_tree cleanup
     _exit_tree()
+
+# === PROFESSIONAL MODEL SUPPORT ===
+
+## Initialize support for professional anatomical models
+func _initialize_professional_model_support() -> void:
+    """Initialize enhanced support for professional anatomical models"""
+    # Connect to AnatomicalModelManager signals if available
+    var anatomical_manager = _find_anatomical_model_manager()
+    if anatomical_manager:
+        if anatomical_manager.has_signal("anatomical_model_loaded"):
+            anatomical_manager.anatomical_model_loaded.connect(_on_anatomical_model_loaded)
+        if anatomical_manager.has_signal("brain_tissue_materials_enhanced"):
+            anatomical_manager.brain_tissue_materials_enhanced.connect(_on_materials_enhanced)
+        
+        print("[SELECTION] Connected to professional AnatomicalModelManager")
+    else:
+        print("[SELECTION] Professional AnatomicalModelManager not available")
+
+## Find AnatomicalModelManager in the scene tree
+func _find_anatomical_model_manager() -> Node:
+    """Find the AnatomicalModelManager in the scene tree"""
+    # Check common locations
+    var manager = get_node_or_null("/root/Node3D/ModelCoordinator/AnatomicalModelManager")
+    if not manager:
+        manager = get_node_or_null("/root/AnatomicalModelManager")
+    if not manager:
+        # Search for it in the tree
+        manager = _search_for_node_type(get_tree().root, "AnatomicalModelManager")
+    return manager
+
+## Search for a node of specific type in the tree
+func _search_for_node_type(node: Node, type_name: String) -> Node:
+    """Recursively search for a node of a specific type"""
+    if node.get_script() and node.get_script().get_global_name() == type_name:
+        return node
+    
+    for child in node.get_children():
+        var result = _search_for_node_type(child, type_name)
+        if result:
+            return result
+    return null
+
+## Handle professional anatomical model being loaded
+func _on_anatomical_model_loaded(model_name: String, structure_count: int) -> void:
+    """Handle when a professional anatomical model is loaded"""
+    print("[SELECTION] Professional model loaded: %s (%d structures)" % [model_name, structure_count])
+    
+    # Clear structure size cache for recalculation
+    structure_sizes.clear()
+    
+    # Update collision bounds for new model
+    _precalculate_collision_bounds()
+    
+    # Update tolerance overrides for known professional model structures
+    _update_professional_structure_tolerances(model_name)
+
+## Handle when brain tissue materials are enhanced
+func _on_materials_enhanced(model_name: String, material_count: int) -> void:
+    """Handle when brain tissue materials are enhanced by AnatomicalModelManager"""
+    print("[SELECTION] Enhanced %d materials for professional model: %s" % [material_count, model_name])
+
+## Update structure tolerance overrides for professional models
+func _update_professional_structure_tolerances(model_name: String) -> void:
+    """Update selection tolerances based on professional model characteristics"""
+    # Professional models may have more precise geometry, so we can be more selective
+    # But maintain tolerance for small critical structures
+    var professional_tolerances = {
+        "pineal_gland": 20.0,
+        "pituitary_gland": 20.0,
+        "subthalamic_nucleus": 18.0,
+        "substantia_nigra": 18.0,
+        "globus_pallidus": 15.0,
+        "caudate_nucleus": 12.0,
+        "putamen": 12.0
+    }
+    
+    # Merge with existing overrides
+    for structure in professional_tolerances:
+        structure_tolerance_overrides[structure] = professional_tolerances[structure]
+    
+    print("[SELECTION] Updated tolerance overrides for professional model: %s" % model_name)

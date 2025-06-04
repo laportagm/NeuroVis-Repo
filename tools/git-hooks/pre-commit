@@ -65,7 +65,51 @@ else
     print_status $GREEN "✅ No GDScript files to check"
 fi
 
-# Check 2: Naming Convention Validation
+# Check 2: Godot 4 Syntax Validation
+echo "🔄 Checking for Godot 3 syntax patterns..."
+godot3_syntax_found=0
+
+for file in $gdscript_files; do
+    if [[ "$file" == *.gd ]] && [[ -f "$file" ]]; then
+        # Check for old signal connection syntax
+        if grep -E '\.connect\s*\(\s*["'\''"]' "$file" >/dev/null 2>&1; then
+            print_status $RED "❌ Godot 3 signal syntax found in: $file"
+            print_status $RED "   Use: signal_name.connect(callback) instead"
+            godot3_syntax_found=1
+            CHECKS_FAILED=1
+        fi
+        
+        # Check for old yield syntax
+        if grep -E '\byield\s*\(' "$file" >/dev/null 2>&1; then
+            print_status $RED "❌ Godot 3 yield syntax found in: $file"
+            print_status $RED "   Use: await instead of yield"
+            godot3_syntax_found=1
+            CHECKS_FAILED=1
+        fi
+        
+        # Check for old export syntax
+        if grep -E 'export\s*\(' "$file" >/dev/null 2>&1; then
+            print_status $RED "❌ Godot 3 export syntax found in: $file"
+            print_status $RED "   Use: @export annotation instead"
+            godot3_syntax_found=1
+            CHECKS_FAILED=1
+        fi
+        
+        # Check for old onready syntax
+        if grep -E '\bonready\s+var\b' "$file" >/dev/null 2>&1; then
+            print_status $RED "❌ Godot 3 onready syntax found in: $file"
+            print_status $RED "   Use: @onready annotation instead"
+            godot3_syntax_found=1
+            CHECKS_FAILED=1
+        fi
+    fi
+done
+
+if [[ $godot3_syntax_found -eq 0 ]]; then
+    print_status $GREEN "✅ Godot 4 syntax check passed"
+fi
+
+# Check 3: Naming Convention Validation
 echo "📋 Checking naming conventions..."
 violated_files=""
 

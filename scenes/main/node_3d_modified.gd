@@ -270,7 +270,7 @@ func _load_brain_models() -> void:
 	print("DEBUG: Successfully loaded " + str(successful_loads) + " of " + str(models_to_load.size()) + " models")
 	
 	# Emit signal that models are loaded
-	emit_signal("models_loaded", model_names)
+	models_loaded.emit(model_names)
 
 # Set up collision bodies for mesh instances
 func _setup_mesh_collisions(node: Node) -> void:
@@ -403,7 +403,7 @@ func _handle_selection(click_position: Vector2) -> void:
 			print("Selected structure: " + structure_name)
 			
 			# Emit signal
-			emit_signal("structure_selected", structure_name)
+			structure_selected.emit(structure_name)
 			
 			# Display structure information if available
 			_display_structure_info(structure_name)
@@ -413,7 +413,7 @@ func _handle_selection(click_position: Vector2) -> void:
 	object_name_label.text = "Selected: None"
 	if info_panel:
 		info_panel.visible = false
-	emit_signal("structure_deselected")
+	structure_deselected.emit()
 
 # Display structure information in the info panel
 func _display_structure_info(structure_name: String) -> void:

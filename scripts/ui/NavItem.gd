@@ -103,7 +103,7 @@ func _on_mouse_exited():
 func _on_gui_input(event: InputEvent):
     if event is InputEventMouseButton:
         if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-            emit_signal("clicked")
+            clicked.emit()
             get_viewport().set_input_as_handled()
 
 # Function to create the scene structure for this component

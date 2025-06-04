@@ -1,12 +1,13 @@
-# Command: A1-NeuroVis Project Analysis and Refactoring Assistance
+# Command: NeuroVis Project Organizer & Analysis
 
+**Purpose**: Comprehensive project organization, analysis, and refactoring assistance for the NeuroVis educational neuroscience platform.
 
+**MCPs Used**: `sequential-thinking`, `memory`, `filesystem`, `sqlite`
 
-You are an AI assistant for the A1-NeuroVis Godot project. Please process the following tasks sequentially. Provide the complete output for each task before moving to the next. Ensure all responses are tailored to the A1-NeuroVis project context, leveraging provided documentation paths and project-specific details.
+## Overview
+This command provides structured project analysis using multiple MCP integrations to maintain code quality, educational focus, and architectural consistency across the NeuroVis platform.
 
-
-
-## AI Task Todo List:
+## Task Pipeline
 
 
 
@@ -16,7 +17,7 @@ You are an AI assistant for the A1-NeuroVis Godot project. Please process the fo
 
 **ROLE:** You are an expert Godot Engine (v4.x) GDScript optimizer.
 
-**PROJECT CONTEXT:** A1-NeuroVis, a 3D desktop application for visualizing brain anatomy. Key project documents are in `ai_docs/`, including `scripting_conventions.md`. The project uses Godot 4.2 and GDScript.
+**PROJECT CONTEXT:** NeuroVis educational neuroscience platform, built with Godot 4.4.1. Educational documentation is in `docs/`, code standards in `docs/dev/DEVELOPMENT_STANDARDS_MASTER.md`.
 
 **TASK:** Analyze the following GDScript code snippet from the A1-NeuroVis project. (Assume the user will paste the GDScript code snippet immediately after this task block if it's not provided inline). The script's primary role is [USER TO SPECIFY, e.g., 'managing the main 3D scene and model loading' or 'handling UI updates for the information panel'].
 
@@ -28,11 +29,13 @@ You are an AI assistant for the A1-NeuroVis Godot project. Please process the fo
 
 1.  Identify potential performance bottlenecks in this GDScript code, specifically considering its use within a Godot 4.x 3D application.
 
-2.  Suggest up to three specific, actionable optimizations that would improve its execution speed or reduce resource usage (CPU, memory) while adhering to Godot best practices and the conventions in `ai_docs/scripting_conventions.md`.
+2.  **Use MCP `sequential-thinking`** to systematically analyze optimization opportunities while considering educational context.
 
-3.  For each suggestion, explain *why* it's an optimization and provide the refactored code snippet.
+3.  **Use MCP `sqlite`** to log optimization suggestions and track performance improvements.
 
-4.  Prioritize optimizations that do not significantly reduce code readability for a beginner developer.
+4.  Suggest up to three specific optimizations that improve performance while maintaining educational clarity and following `docs/dev/DEVELOPMENT_STANDARDS_MASTER.md`.
+
+5.  For each suggestion, explain the educational benefit and provide refactored code with proper documentation.
 
 
 
@@ -60,11 +63,13 @@ You are a version-control assistant for the A1-NeuroVis Godot project. Your prim
 
 **GOAL**
 
-Update relevant A1-NeuroVis project documentation, specifically:
+Update relevant NeuroVis project documentation using MCP integrations:
 
-    * `ai_docs/project_overview.md` (located at `/Users/gagelaporta/A1-NeuroVis/ai_docs/project_overview.md`)
-
-    * A new `ai_docs/api_changelog.md` (to be created at `/Users/gagelaporta/A1-NeuroVis/ai_docs/api_changelog.md` if it doesn't exist), which should track changes to public GDScript interfaces like classes, functions, signals, and exported properties as defined in `ai_docs/scripting_conventions.md`.
+    * **Use MCP `memory`** to store and retrieve documentation patterns and changes
+    * **Use MCP `filesystem`** to read and update project documentation
+    * `docs/Project_Context_PRD.md` - Main project requirements document
+    * `docs/dev/api_changelog.md` - API changes tracking (create if needed)
+    * Track changes to educational GDScript interfaces per `docs/dev/DEVELOPMENT_STANDARDS_MASTER.md`
 
 
 
@@ -152,7 +157,7 @@ If no documentation updates are needed based on the diff, reply with:
 
 **ROLE:** Senior GDScript architect specializing in Godot Engine 4.x project refactoring.
 
-**PROJECT CONTEXT:** A1-NeuroVis, currently undergoing a modular refactoring. The primary monolithic script being analyzed is `res://scenes/node_3d.gd`, which acts as the main scene script (as potentially referenced in `ai_docs/scene_architecture.md` or `CLAUDE.md`). The goal is to extract logic into components as per `docs/refactoring/main_scene_refactor_plan.md`.
+**PROJECT CONTEXT:** NeuroVis educational platform with modular architecture. Main scene script is `scenes/main/node_3d.gd`. **Use MCP `filesystem`** to analyze current architecture and **MCP `memory`** to track refactoring patterns.
 
 **TASK:**
 

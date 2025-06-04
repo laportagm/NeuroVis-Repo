@@ -81,7 +81,7 @@ func start_validation_test() -> void:
     
     # Start processing
     set_process(true)
-    emit_signal("test_started")
+    test_started.emit()
     
     # Start test sequence
     _run_test_sequence()
@@ -126,7 +126,7 @@ func _process(delta: float) -> void:
     
     # Update progress
     var progress = get_test_progress()
-    emit_signal("test_progress", progress)
+    test_progress.emit(progress)
     
     # Check if test is complete
     if elapsed >= TEST_DURATION_SECONDS:
@@ -208,7 +208,7 @@ func _complete_test() -> void:
     # Generate report
     _generate_performance_report()
     
-    emit_signal("test_completed", _results)
+    test_completed.emit(_results)
 
 func _calculate_average(values: Array) -> float:
     """Calculate average of an array"""

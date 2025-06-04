@@ -82,7 +82,7 @@ func _input(event: InputEvent) -> void:
 		handled = _handle_mouse_motion_input(event)
 	
 	# Emit signal for input tracking
-	emit_signal("input_processed", input_type, handled)
+	input_processed.emit(input_type, handled)
 	
 	# Mark input as handled if we processed it
 	if handled:
@@ -149,7 +149,7 @@ func _handle_camera_shortcuts(event: InputEventKey) -> bool:
 	
 	if not shortcut_triggered.is_empty():
 		print("[INPUT_ROUTER] Camera shortcut triggered: ", shortcut_triggered)
-		emit_signal("camera_shortcut_triggered", shortcut_triggered)
+		camera_shortcut_triggered.emit(shortcut_triggered)
 		return true
 	
 	return false
@@ -198,7 +198,7 @@ func _handle_selection_input(position: Vector2, button: int, is_double_click: bo
 		return false
 	
 	print("[INPUT_ROUTER] Selection input at position: ", position)
-	emit_signal("selection_attempted", position, button)
+	selection_attempted.emit(position, button)
 	
 	# Route to selection manager
 	if selection_manager.has_method("handle_selection_at_position"):
@@ -219,7 +219,7 @@ func _handle_mouse_motion_input(event: InputEventMouseMotion) -> bool:
 	if current_time - last_input_time < HOVER_UPDATE_INTERVAL:
 		return false
 	
-	emit_signal("hover_position_changed", mouse_hover_position)
+	hover_position_changed.emit(mouse_hover_position)
 	
 	# Route hover to selection manager if available
 	if enable_selection_input and selection_manager:

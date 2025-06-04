@@ -171,7 +171,7 @@ func start_pathway(pathway_id: String) -> bool:
         _save_progress()
     
     # Emit pathway started signal
-    emit_signal("pathway_started", pathway_id, pathway.name)
+    pathway_started.emit(pathway_id, pathway.name)
     
     # Start first step
     _start_current_step()
@@ -210,7 +210,7 @@ func complete_current_step(success: bool, data: Dictionary = {}) -> bool:
             _save_progress()
             
             # Emit step completed signal
-            emit_signal("step_completed", step_id, progress)
+            step_completed.emit(step_id, progress)
     
     # Handle step-specific completion logic
     match current_step.type:
@@ -305,14 +305,14 @@ func generate_recommendation() -> Dictionary:
         # Completed intermediate pathways, recommend advanced
         recommendation = _find_pathway_recommendation(PathwayDifficulty.ADVANCED)
     elif completion_counts[PathwayDifficulty.ADVANCED] > 0:
-        // Completed advanced pathways, recommend professional
+        # Completed advanced pathways, recommend professional
         recommendation = _find_pathway_recommendation(PathwayDifficulty.PROFESSIONAL)
     else:
-        // Find any incomplete pathway
+        # Find any incomplete pathway
         recommendation = _find_incomplete_pathway_recommendation()
     
     if not recommendation.is_empty():
-        emit_signal("recommendation_available", recommendation)
+        recommendation_available.emit(recommendation)
     
     return recommendation
 
@@ -325,12 +325,12 @@ func _initialize() -> void:
         push_error("[LearningPathwayManager] Failed to initialize - invalid setup")
         return
     
-    // Load pathway configurations
+    # Load pathway configurations
     if not _load_pathway_configurations():
         push_error("[LearningPathwayManager] Failed to load pathway configurations")
         return
     
-    // Load user progress if tracking enabled
+    # Load user progress if tracking enabled
     if track_progress:
         _load_progress()
     
@@ -340,18 +340,18 @@ func _initialize() -> void:
 func _validate_setup() -> bool:
     """Validate that all required dependencies are available"""
     
-    // Get the KnowledgeService reference
+    # Get the KnowledgeService reference
     _knowledge_service = get_node_or_null("/root/KnowledgeService")
     if _knowledge_service == null:
         push_error("[LearningPathwayManager] KnowledgeService not found")
         return false
     
-    // Get the BrainStructureSelectionManager reference
+    # Get the BrainStructureSelectionManager reference
     _selection_manager = get_node_or_null("../BrainStructureSelectionManager")
     if _selection_manager == null:
         push_warning("[LearningPathwayManager] BrainStructureSelectionManager not found - limited selection integration")
     
-    // Get the BrainSystemSwitcher reference if available
+    # Get the BrainSystemSwitcher reference if available
     _brain_system_switcher = get_node_or_null("../BrainSystemSwitcher")
     
     return true
@@ -359,10 +359,10 @@ func _validate_setup() -> bool:
 func _load_pathway_configurations() -> bool:
     """Load learning pathway configurations from file"""
     
-    // In a real implementation, this would load from a config file
-    // For this example, we'll create some sample pathways programmatically
+    # In a real implementation, this would load from a config file
+    # For this example, we'll create some sample pathways programmatically
     
-    // Sample pathways for demonstration
+    # Sample pathways for demonstration
     _available_pathways = {
         "basic_neuroanatomy": {
             "name": "Introduction to Neuroanatomy",
@@ -512,8 +512,8 @@ func _load_pathway_configurations() -> bool:
 func _load_progress() -> bool:
     """Load user progress from file"""
     
-    // In a real implementation, this would load from a save file
-    // For this example, we'll initialize an empty progress structure
+    # In a real implementation, this would load from a save file
+    # For this example, we'll initialize an empty progress structure
     
     _user_progress = {
         "pathways": {},
@@ -526,8 +526,8 @@ func _load_progress() -> bool:
 func _save_progress() -> bool:
     """Save user progress to file"""
     
-    // In a real implementation, this would save to a file
-    // For this example, we'll just update the in-memory structure
+    # In a real implementation, this would save to a file
+    # For this example, we'll just update the in-memory structure
     
     _user_progress.last_session = Time.get_unix_time_from_system()
     
@@ -639,20 +639,20 @@ func _complete_pathway(success: bool) -> void:
     
     var pathway_id = _active_pathway.id
     
-    // Update progress
+    # Update progress
     if track_progress and _user_progress.has("pathways") and _user_progress.pathways.has(pathway_id):
         _user_progress.pathways[pathway_id].completed = success
         _user_progress.pathways[pathway_id].progress = 1.0
         _save_progress()
     
-    // Generate potential recommendation
+    # Generate potential recommendation
     if enable_recommendations and success:
         _generate_next_pathway_recommendation(pathway_id)
     
-    // Emit completion signal
-    emit_signal("pathway_completed", pathway_id, success, 1.0)
+    # Emit completion signal
+    pathway_completed.emit(pathway_id, success, 1.0)
     
-    // Clear active pathway
+    # Clear active pathway
     _end_active_pathway(success)
 
 func _end_active_pathway(success: bool) -> void:
@@ -671,7 +671,7 @@ func _generate_recommendation(type: String, context: Dictionary) -> void:
     
     match type:
         "remedial":
-            // Recommend remedial content for failed assessment
+            # Recommend remedial content for failed assessment
             recommendation = {
                 "type": "remedial",
                 "title": "Review Recommended",
@@ -679,19 +679,19 @@ func _generate_recommendation(type: String, context: Dictionary) -> void:
                 "content": []
             }
             
-            // Add relevant content based on context
+            # Add relevant content based on context
             if context.has("content") and context.content.has("topics"):
                 for topic in context.content.topics:
-                    // This would look up relevant content for each topic
-                    // And add it to the recommendation
+                    # This would look up relevant content for each topic
+                    # And add it to the recommendation
                     pass
         
         "next_pathway":
-            // This is handled by _generate_next_pathway_recommendation
+            # This is handled by _generate_next_pathway_recommendation
             pass
     
     if not recommendation.is_empty():
-        emit_signal("recommendation_available", recommendation)
+        recommendation_available.emit(recommendation)
 
 func _generate_next_pathway_recommendation(completed_pathway_id: String) -> void:
     """Generate a recommendation for the next pathway"""
@@ -714,7 +714,7 @@ func _generate_next_pathway_recommendation(completed_pathway_id: String) -> void
         recommendation = _find_pathway_recommendation(completed_difficulty, [completed_pathway_id])
     
     if not recommendation.is_empty():
-        emit_signal("recommendation_available", recommendation)
+        recommendation_available.emit(recommendation)
 
 func _find_pathway_recommendation(difficulty: int, exclude_ids: Array = []) -> Dictionary:
     """Find a pathway recommendation at a specific difficulty level"""

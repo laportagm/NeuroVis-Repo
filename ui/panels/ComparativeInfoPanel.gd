@@ -13,6 +13,7 @@ extends PanelContainer
 # === SIGNALS ===
 signal structure_focused(structure_name: String)
 signal comparison_cleared()
+# Kept for future analytics/tracking
 signal relationship_explored(relationship: String)
 
 # === CONSTANTS ===

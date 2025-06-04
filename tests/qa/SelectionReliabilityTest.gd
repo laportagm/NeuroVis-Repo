@@ -108,7 +108,7 @@ func start_test() -> void:
     _current_zoom_index = 0
     _current_repetition = 0
     
-    emit_signal("test_started")
+    test_started.emit()
     
     # Start first test
     _test_next_configuration()
@@ -419,7 +419,7 @@ func _process_selection_result() -> void:
     
     # Update progress
     var progress = get_test_progress()
-    emit_signal("test_progress", progress["completed"], progress["total"])
+    test_progress.emit(progress["completed"], progress["total"])
     
     # Continue to next test
     _advance_to_next_test()
@@ -461,7 +461,7 @@ func _advance_to_next_test() -> void:
                 _calculate_structure_metrics(structures[_current_structure_index])
                 
                 # Emit structure completion signal
-                emit_signal("structure_test_completed", 
+                structure_test_completed.emit(
                     structures[_current_structure_index], 
                     _test_results[structures[_current_structure_index]])
                 
@@ -521,7 +521,7 @@ func _complete_testing() -> void:
     print("[SelectionTest] Testing completed in %.1f seconds" % (total_time / 1000.0))
     
     _generate_report()
-    emit_signal("test_completed", _test_results)
+    test_completed.emit(_test_results)
 
 func _generate_report() -> void:
     """Generate comprehensive testing report"""
@@ -736,8 +736,8 @@ func _generate_statistical_summary() -> String:
     mean_difficulty /= difficulty_scores.size()
     
     # Calculate median
-    var median_success = success_rates[int(success_rates.size() / 2)]
-    var median_difficulty = difficulty_scores[int(difficulty_scores.size() / 2)]
+    var median_success = success_rates[int(success_rates.size() / 2.0)]
+    var median_difficulty = difficulty_scores[int(difficulty_scores.size() / 2.0)]
     
     # Calculate standard deviation
     var variance_success = 0.0

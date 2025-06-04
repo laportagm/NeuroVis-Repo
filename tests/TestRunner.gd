@@ -6,6 +6,7 @@ const TestFrameworkScript = preload("res://tests/framework/TestFramework.gd")
 
 # Test suites to run
 const TEST_SUITES = [
+    "res://tests/unit/Godot4SyntaxTest.gd",  # Syntax validation should run first
     "res://tests/integration/test_brain_visualization_core.gd",
     "res://tests/integration/test_ui_components.gd",
     "res://tests/integration/test_ai_assistant.gd",

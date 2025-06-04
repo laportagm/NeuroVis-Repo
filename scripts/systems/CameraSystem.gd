@@ -32,7 +32,7 @@ func _ready() -> void:
 	if not camera_controller:
 		_create_simple_controller()
 	
-	emit_signal("camera_ready")
+	camera_ready.emit()
 
 func initialize_camera_controller(controller) -> void:
 	"""Initialize the camera controller with our camera reference"""
@@ -60,7 +60,7 @@ func focus_on_bounds(bounds: AABB) -> void:
 	if camera_controller and camera_controller.has_method("focus_on_bounds"):
 		camera_controller.focus_on_bounds(bounds.get_center(), bounds.size.length())
 		print("[CAMERA_SYSTEM] Focusing on bounds: ", bounds)
-		emit_signal("focus_completed")
+		focus_completed.emit()
 	else:
 		# Fallback manual focus
 		_manual_focus_on_bounds(bounds)
@@ -122,7 +122,7 @@ func _manual_focus_on_bounds(bounds: AABB) -> void:
 	camera.look_at(center, Vector3.UP)
 	
 	print("[CAMERA_SYSTEM] Manual focus on bounds completed")
-	emit_signal("focus_completed")
+	focus_completed.emit()
 
 func _manual_focus_on_center(center: Vector3, distance: float) -> void:
 	"""Manual focus on center implementation"""
@@ -135,7 +135,7 @@ func _manual_focus_on_center(center: Vector3, distance: float) -> void:
 	camera.look_at(center, Vector3.UP)
 	
 	print("[CAMERA_SYSTEM] Manual focus on center completed")
-	emit_signal("focus_completed")
+	focus_completed.emit()
 
 func _manual_reset_view() -> void:
 	"""Manual camera reset implementation"""
@@ -149,7 +149,7 @@ func _manual_reset_view() -> void:
 	camera_rotation = Vector2(0.3, 0.0)
 	
 	print("[CAMERA_SYSTEM] Manual camera reset completed")
-	emit_signal("reset_completed")
+	reset_completed.emit()
 
 func _create_simple_controller() -> void:
 	"""Create a simple internal camera controller"""

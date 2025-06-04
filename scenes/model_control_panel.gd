@@ -170,7 +170,7 @@ func _on_model_toggled(pressed: bool, model_name: String, status_label: Label) -
     )
     tween.tween_property(status_label, "modulate:a", 1.0, 0.1)
     
-    emit_signal("model_selected", model_name)
+    model_selected.emit(model_name)
 
 func update_button_state(model_name: String, visibility: bool) -> void:
     if not model_cards.has(model_name):

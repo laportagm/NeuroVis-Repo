@@ -294,7 +294,7 @@ func show_tooltip(target: Control, tooltip_id: String, category: String = "ui_el
 	_position_tooltip(target)
 	_show_with_animation()
 	
-	emit_signal("tooltip_shown", target, tooltip_data)
+	tooltip_shown.emit(target, tooltip_data)
 
 func _update_tooltip_content() -> void:
 	"""Update tooltip content with educational information"""
@@ -428,7 +428,7 @@ func hide_tooltip() -> void:
 		visible = false
 		is_showing = false
 		current_target = null
-		emit_signal("tooltip_hidden", current_target)
+		tooltip_hidden.emit(current_target)
 	)
 
 # Signal handlers

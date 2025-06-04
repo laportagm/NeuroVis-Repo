@@ -1139,7 +1139,7 @@ func _create_interactive_structure_chip(structure_name: String) -> Button:
 	# Connect navigation
 	chip.pressed.connect(func(): 
 		UIThemeManager.animate_button_press(chip, UIThemeManager.ACCENT_BLUE)
-		emit_signal("related_structure_selected", structure_name)
+		related_structure_selected.emit(structure_name)
 	)
 	
 	return chip
@@ -1287,7 +1287,7 @@ func _on_close_pressed() -> void:
 	"""Handle close with enhanced animation and cleanup"""
 	UIThemeManager.animate_exit(self, UIThemeManager.ANIMATION.fast * animation_speed_multiplier, "slide_right")
 	get_tree().create_timer(UIThemeManager.ANIMATION.fast * animation_speed_multiplier).timeout.connect(func():
-		emit_signal("panel_closed")
+		panel_closed.emit()
 	)
 
 func _on_bookmark_pressed() -> void:
@@ -1303,7 +1303,7 @@ func _on_bookmark_pressed() -> void:
 	_update_learning_indicators()
 	
 	# Emit signal for external handling
-	emit_signal("structure_bookmarked", current_structure_id, is_bookmarked)
+	structure_bookmarked.emit(current_structure_id, is_bookmarked)
 	
 	# Show feedback
 	if is_bookmarked:
@@ -1320,14 +1320,14 @@ func _on_share_pressed() -> void:
 func _on_fullscreen_pressed() -> void:
 	"""Handle fullscreen mode request"""
 	UIThemeManager.animate_button_press(fullscreen_button, UIThemeManager.ACCENT_PURPLE)
-	emit_signal("fullscreen_requested", current_structure_id)
+	fullscreen_requested.emit(current_structure_id)
 	print("[UNIFIED_INFO_PANEL] Fullscreen mode requested for: %s" % current_structure_id)
 
 func _on_search_submitted(text: String) -> void:
 	"""Handle search submission with history tracking"""
 	if text.strip_edges() != "":
 		search_history.append(text)
-		emit_signal("structure_search_requested", text)
+		structure_search_requested.emit(text)
 		print("[UNIFIED_INFO_PANEL] Search submitted: %s" % text)
 
 func _on_search_text_changed(text: String) -> void:
@@ -1365,7 +1365,7 @@ func _on_quiz_pressed() -> void:
 	UIThemeManager.animate_button_press(quiz_button, UIThemeManager.ACCENT_GREEN)
 	learning_progress["quiz_attempted"] = true
 	_update_learning_indicators()
-	emit_signal("quiz_requested", current_structure_id)
+	quiz_requested.emit(current_structure_id)
 	print("[UNIFIED_INFO_PANEL] Quiz requested for: %s" % current_structure_id)
 
 func _on_notes_pressed() -> void:
@@ -1373,13 +1373,13 @@ func _on_notes_pressed() -> void:
 	UIThemeManager.animate_button_press(notes_button, UIThemeManager.ACCENT_PURPLE)
 	learning_progress["notes_taken"] = true
 	_update_learning_indicators()
-	emit_signal("notes_requested", current_structure_id)
+	notes_requested.emit(current_structure_id)
 	print("[UNIFIED_INFO_PANEL] Notes requested for: %s" % current_structure_id)
 
 func _on_study_plan_pressed() -> void:
 	"""Handle study plan generation request"""
 	UIThemeManager.animate_button_press(study_plan_button, UIThemeManager.ACCENT_ORANGE)
-	emit_signal("study_plan_requested", current_structure_id)
+	study_plan_requested.emit(current_structure_id)
 	print("[UNIFIED_INFO_PANEL] Study plan requested for: %s" % current_structure_id)
 
 func _on_feedback_pressed() -> void:
@@ -1392,7 +1392,7 @@ func _on_feedback_pressed() -> void:
 		"user_progress": learning_progress
 	}
 	
-	emit_signal("feedback_submitted", current_structure_id, feedback_data)
+	feedback_submitted.emit(current_structure_id, feedback_data)
 	print("[UNIFIED_INFO_PANEL] Feedback requested for: %s" % current_structure_id)
 
 # === PUBLIC UTILITY METHODS ===
@@ -1422,7 +1422,7 @@ func set_panel_theme(theme_name: String) -> void:
 	if theme_name in available_themes:
 		current_theme = theme_name
 		_apply_unified_theming()
-		emit_signal("preference_changed", "theme", theme_name)
+		preference_changed.emit("theme", theme_name)
 		print("[UNIFIED_INFO_PANEL] Theme changed to: %s" % theme_name)
 
 func get_learning_progress_summary() -> Dictionary:

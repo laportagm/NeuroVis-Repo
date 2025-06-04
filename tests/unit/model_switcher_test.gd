@@ -136,9 +136,9 @@ func _run_tests() -> void:
 func _report_success(message: String) -> void:
 	print("\n✓ TEST SUITE PASSED: " + message)
 	print("===== END OF MODEL SWITCHER TEST SUITE =====\n")
-	emit_signal("test_completed", true, message)
+	test_completed.emit(true, message)
 
 func _report_failure(message: String) -> void:
 	printerr("\n❌ TEST SUITE FAILED: " + message)
 	print("===== END OF MODEL SWITCHER TEST SUITE =====\n")
-	emit_signal("test_completed", false, message)
+	test_completed.emit(false, message)

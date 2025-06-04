@@ -1,15 +1,20 @@
-# /neuro-debug
-**Purpose**: Comprehensive debugging workflow for NeuroVis
+# NeuroVis Advanced Debugging System
 
-**Usage**: `/neuro-debug "error_location" "description"`
+**Purpose**: Comprehensive educational debugging workflow for NeuroVis platform using advanced MCP integration for systematic error resolution.
 
-**Integration**: sequential-thinking + godot + filesystem + memory
+**MCPs Used**: `sequential-thinking`, `godot-mcp`, `filesystem`, `memory`, `sqlite`
 
-**Prompt**:
+**Usage**: 
+```bash
+claude -f .claude/commands/neuro-debug.md "error_location" "description"
 ```
-Role: Senior GDScript Developer
-Context: NeuroVis debugging session
-Project: /Users/gagelaporta/11A-NeuroVis copy3
+
+## MCP-Enhanced Debugging Pipeline
+
+**Context**: 
+- **Role**: Senior GDScript Developer specializing in educational platforms
+- **Project**: NeuroVis educational neuroscience platform
+- **Focus**: Educational integrity + technical excellence
 
 Step-by-step debugging process:
 1. Use sequential-thinking to analyze the error systematically

@@ -1,9 +1,28 @@
 ## MedicalLighting.gd
 ## Specialized lighting system for medical visualization
 ##
-## Implements professional three-point lighting optimized for 
-## anatomical visualization with presets for different educational
-## contexts.
+## Implements professional three-point lighting optimized for anatomical visualization
+## with presets for different educational and clinical contexts. Each lighting setup
+## is carefully designed to enhance tissue differentiation, depth perception, and
+## structure identification for medical education.
+##
+## Medical Context:
+## - Three-point lighting (key, fill, rim) mimics professional medical photography
+## - HDR tone mapping reveals subtle tissue variations critical for pathology
+## - Ambient occlusion enhances sulci/gyri depth perception
+## - Each preset simulates real-world medical visualization scenarios
+##
+## Educational Importance:
+## - Students learn structure identification under various lighting conditions
+## - Different presets prepare learners for clinical imaging interpretation
+## - Accessibility features support diverse visual needs and photosensitivity
+## - Lighting transitions help focus attention during guided learning
+##
+## Accessibility Considerations:
+## - Adjustable intensity for photosensitive users
+## - High contrast options for users with visual impairments
+## - Neutral color temperatures to avoid eye strain
+## - Bloom effects can be disabled for clarity
 ##
 ## @tutorial: docs/dev/medical-lighting.md
 ## @experimental: false
@@ -12,14 +31,14 @@ class_name MedicalLighting
 extends Node3D
 
 # === ENUMS ===
-## Lighting presets for different educational contexts
+## Lighting presets for different educational and clinical contexts
 enum LightingPreset {
-	EDUCATIONAL,  # Standard educational lighting with warm key light
-	CLINICAL,     # Neutral clinical lighting similar to medical imaging
-	PRESENTATION, # High-contrast presentation lighting
-	EXAMINATION,  # Focused examination lighting
-	SURGICAL,     # Surgical-style overhead lighting
-	CUSTOM        # User-defined custom lighting
+	EDUCATIONAL,  # Warm, inviting lighting for extended study sessions
+	CLINICAL,     # Neutral white balance mimicking medical imaging suites
+	PRESENTATION, # High-contrast for projection and group learning
+	EXAMINATION,  # Focused lighting simulating clinical examination
+	SURGICAL,     # Overhead lighting replicating operating room conditions
+	CUSTOM        # User-defined for specific educational needs
 }
 
 # === SIGNALS ===
@@ -174,16 +193,16 @@ func _ready() -> void:
 	print("[MedicalLighting] Initialized with preset: " + _get_preset_name(active_preset))
 
 # === PUBLIC METHODS ===
-## Apply a lighting preset
-## @param preset: LightingPreset to apply
-## @returns: bool indicating success
-func apply_preset(preset: int) -> bool:
-	"""Apply a predefined lighting preset"""
-	if preset < 0 or preset > LightingPreset.CUSTOM:
-		push_warning("[MedicalLighting] Invalid preset: " + str(preset))
+## Apply a lighting preset optimized for medical visualization
+## @param lighting_preset: LightingPreset to apply for specific educational context
+## @returns: bool - True if preset was successfully applied
+func apply_preset(lighting_preset: int) -> bool:
+	"""Apply a predefined lighting preset for medical education"""
+	if lighting_preset < 0 or lighting_preset > LightingPreset.CUSTOM:
+		push_warning("[MedicalLighting] Invalid preset: " + str(lighting_preset))
 		return false
 	
-	active_preset = preset
+	active_preset = lighting_preset
 	# No need to call _apply_preset here as the setter does that
 	
 	return true
@@ -305,8 +324,16 @@ func reset_to_preset_default() -> bool:
 
 # === PRIVATE METHODS ===
 func _create_lighting_components() -> void:
-	"""Create the three-point lighting components"""
-	# Key Light (main directional light)
+	"""Create the three-point lighting components for professional medical visualization
+	
+	Three-point lighting is the standard in medical photography and visualization:
+	- Key light: Primary illumination defining form and structure
+	- Fill light: Reduces harsh shadows, reveals detail in crevices
+	- Rim light: Separates subject from background, enhances 3D perception
+	"""
+	# Key Light - Primary directional illumination
+	# Medical purpose: Defines anatomical form through controlled shadows,
+	# essential for understanding 3D brain structure
 	_key_light = DirectionalLight3D.new()
 	_key_light.name = "KeyLight"
 	_key_light.shadow_enabled = true
@@ -320,7 +347,9 @@ func _create_lighting_components() -> void:
 	_key_light.look_at(Vector3.ZERO)
 	add_child(_key_light)
 	
-	# Fill Light (softer omni light)
+	# Fill Light - Soft omnidirectional light to reduce harsh shadows
+	# Medical purpose: Reveals anatomical detail in shadowed areas like
+	# deep sulci and fissures, preventing loss of important structures
 	_fill_light = OmniLight3D.new()
 	_fill_light.name = "FillLight"
 	_fill_light.shadow_enabled = true
@@ -332,7 +361,9 @@ func _create_lighting_components() -> void:
 	_fill_light.position = fill_light_position
 	add_child(_fill_light)
 	
-	# Rim Light (back light for edge definition)
+	# Rim Light - Backlighting for edge definition and depth separation
+	# Medical purpose: Creates subtle edge highlighting that helps distinguish
+	# overlapping structures and enhances perception of anatomical layers
 	_rim_light = OmniLight3D.new()
 	_rim_light.name = "RimLight"
 	_rim_light.shadow_enabled = false
@@ -343,19 +374,22 @@ func _create_lighting_components() -> void:
 	add_child(_rim_light)
 
 func _create_environment() -> void:
-	"""Create the environment settings"""
+	"""Create the environment settings optimized for medical visualization"""
 	_environment = Environment.new()
 	
-	# Basic settings
+	# Basic settings - Dark background reduces eye strain and enhances contrast
 	_environment.background_mode = Environment.BG_COLOR
 	_environment.background_color = Color(0.05, 0.05, 0.05)
 	
-	# Ambient light
+	# Ambient light - Provides base illumination to prevent complete shadows
+	# in deep brain structures like sulci
 	_environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	_environment.ambient_light_color = ambient_light_color
 	_environment.ambient_light_energy = ambient_light_energy
 	
-	# Tone mapping
+	# HDR Tone mapping - Critical for medical visualization
+	# Medical importance: HDR reveals subtle tissue density variations that
+	# help distinguish between gray matter, white matter, and pathological tissue
 	if use_hdr:
 		_environment.tonemap_mode = Environment.TONE_MAPPER_ACES
 		_environment.tonemap_exposure = 1.0
@@ -363,7 +397,9 @@ func _create_environment() -> void:
 	else:
 		_environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	
-	# SSAO (for better depth perception)
+	# SSAO (Screen Space Ambient Occlusion) - Enhances anatomical depth perception
+	# Medical importance: Makes gyri and sulci boundaries more distinct,
+	# crucial for identifying cortical regions and understanding brain topology
 	if ambient_occlusion_enabled:
 		_environment.ssao_enabled = true
 		_environment.ssao_radius = 1.0
@@ -372,7 +408,9 @@ func _create_environment() -> void:
 		_environment.ssao_horizon = 0.06
 		_environment.ssao_sharpness = 0.98
 	
-	# Subtle bloom
+	# Subtle bloom effect - Used judiciously for realism
+	# Medical note: Minimal bloom prevents loss of fine anatomical detail
+	# while adding subtle realism to highlighted structures
 	if bloom_enabled:
 		_environment.glow_enabled = true
 		_environment.glow_normalized = true
@@ -387,8 +425,10 @@ func _create_environment() -> void:
 	add_child(_world_environment)
 
 func _initialize_presets() -> void:
-	"""Initialize the lighting presets"""
-	# Educational preset (default)
+	"""Initialize the lighting presets with medical visualization best practices"""
+	# Educational preset - Warm lighting for comfortable extended study sessions
+	# Medical rationale: Reduces eye strain during long anatomy learning sessions
+	# while maintaining sufficient contrast for structure identification
 	_preset_data[LightingPreset.EDUCATIONAL] = {
 		"key_light_color": Color(1.0, 0.96, 0.9),
 		"key_light_energy": 1.5,
@@ -403,7 +443,9 @@ func _initialize_presets() -> void:
 		"ambient_light_energy": 0.3
 	}
 	
-	# Clinical preset (neutral, medical imaging-like)
+	# Clinical preset - Neutral white balance mimicking medical imaging environments
+	# Medical rationale: Simulates radiology suite lighting for accurate tissue
+	# color representation, crucial for pathology identification training
 	_preset_data[LightingPreset.CLINICAL] = {
 		"key_light_color": Color(0.98, 0.98, 1.0),
 		"key_light_energy": 1.2,
@@ -418,7 +460,9 @@ func _initialize_presets() -> void:
 		"ambient_light_energy": 0.2
 	}
 	
-	# Presentation preset (high contrast)
+	# Presentation preset - High contrast for projection and group learning
+	# Medical rationale: Enhanced shadows and highlights make anatomical
+	# landmarks more visible in lecture halls and during group discussions
 	_preset_data[LightingPreset.PRESENTATION] = {
 		"key_light_color": Color(1.0, 0.98, 0.95),
 		"key_light_energy": 2.0,
@@ -433,7 +477,9 @@ func _initialize_presets() -> void:
 		"ambient_light_energy": 0.15
 	}
 	
-	# Examination preset (focused)
+	# Examination preset - Focused lighting for detailed structure analysis
+	# Medical rationale: Simulates examination light positioning used in
+	# clinical settings, helping students prepare for real-world scenarios
 	_preset_data[LightingPreset.EXAMINATION] = {
 		"key_light_color": Color(1.0, 0.98, 0.96),
 		"key_light_energy": 1.8,
@@ -448,7 +494,9 @@ func _initialize_presets() -> void:
 		"ambient_light_energy": 0.25
 	}
 	
-	# Surgical preset (overhead lighting)
+	# Surgical preset - Overhead lighting mimicking operating room conditions
+	# Medical rationale: Bright, shadow-free illumination from above replicates
+	# surgical field lighting, essential for surgical anatomy education
 	_preset_data[LightingPreset.SURGICAL] = {
 		"key_light_color": Color(1.0, 1.0, 1.0),
 		"key_light_energy": 2.0,
@@ -466,13 +514,13 @@ func _initialize_presets() -> void:
 	# Custom preset (initially same as Educational)
 	_preset_data[LightingPreset.CUSTOM] = _preset_data[LightingPreset.EDUCATIONAL].duplicate()
 
-func _apply_preset(preset: int) -> void:
+func _apply_preset(lighting_preset: int) -> void:
 	"""Apply a preset to the lighting setup"""
-	if not _preset_data.has(preset):
-		push_warning("[MedicalLighting] Preset not found: " + str(preset))
+	if not _preset_data.has(lighting_preset):
+		push_warning("[MedicalLighting] Preset not found: " + str(lighting_preset))
 		return
 	
-	var preset_settings = _preset_data[preset]
+	var preset_settings = _preset_data[lighting_preset]
 	
 	# Apply to lights
 	key_light_color = preset_settings.key_light_color
@@ -494,7 +542,7 @@ func _apply_preset(preset: int) -> void:
 	if _key_light:
 		_key_light.look_at(Vector3.ZERO)
 	
-	print("[MedicalLighting] Applied preset: " + _get_preset_name(preset))
+	print("[MedicalLighting] Applied preset: " + _get_preset_name(lighting_preset))
 
 func _update_environment() -> void:
 	"""Update environment settings based on current properties"""
@@ -517,15 +565,15 @@ func _update_environment() -> void:
 	_environment.ambient_light_color = ambient_light_color
 	_environment.ambient_light_energy = ambient_light_energy
 
-func _animate_property(object: Object, property: String, start_value, end_value, duration: float) -> void:
-	"""Animate a property over time"""
+func _animate_property(target_object: Object, property_name: String, start_value: Variant, end_value: Variant, duration: float) -> void:
+	"""Animate a property over time for smooth lighting transitions"""
 	var tween = create_tween()
-	tween.tween_property(object, property, end_value, duration)
+	tween.tween_property(target_object, property_name, end_value, duration)
 	tween.play()
 
-func _get_preset_name(preset: int) -> String:
-	"""Get the name of a preset from its enum value"""
-	match preset:
+func _get_preset_name(lighting_preset: int) -> String:
+	"""Get the name of a preset from its enum value for display purposes"""
+	match lighting_preset:
 		LightingPreset.EDUCATIONAL:
 			return "Educational"
 		LightingPreset.CLINICAL:

@@ -678,7 +678,7 @@ func _on_camera_reset_completed() -> void:
 
 func _on_models_loaded(model_names: Array) -> void:
     print("Models loaded successfully: " + str(model_names))
-    emit_signal("models_loaded", model_names)
+    models_loaded.emit(model_names)
 
 func _on_model_load_failed(model_path: String, error: String) -> void:
     print("ERROR: Failed to load model " + model_path + ": " + error)
@@ -689,7 +689,7 @@ func _on_structure_selected(structure_name: String, _mesh: MeshInstance3D) -> vo
         safe_label.text = "Selected: " + structure_name
     print("Selected structure: " + structure_name)
     
-    emit_signal("structure_selected", structure_name)
+    structure_selected.emit(structure_name)
     _display_structure_info(structure_name)
 
 func _on_structure_deselected() -> void:
@@ -701,7 +701,7 @@ func _on_structure_deselected() -> void:
     if safe_info_panel:
         safe_info_panel.visible = false
     
-    emit_signal("structure_deselected")
+    structure_deselected.emit()
 
 func _on_info_panel_closed() -> void:
     pass
@@ -794,23 +794,43 @@ func _setup_model_control_panel() -> void:
     
     print("Using model control panel from scene")
     
-    # Connect to model switcher signals if they exist
-    if ModelSwitcherGlobal and ModelSwitcherGlobal.has_signal("model_visibility_changed"):
-        ModelSwitcherGlobal.model_visibility_changed.connect(_on_model_visibility_changed)
+    # Connect to model switcher signals if they exist with safe access
+    if has_node("/root/ModelSwitcherGlobal"):
+        var model_switcher = get_node("/root/ModelSwitcherGlobal")
+        if model_switcher.has_signal("model_visibility_changed"):
+            model_switcher.model_visibility_changed.connect(_on_model_visibility_changed)
+        else:
+            push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal.model_visibility_changed signal not available")
+    else:
+        push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal not available")
     
     # Connect to panel signals if they exist
     if model_control_panel.has_signal("model_selected"):
         model_control_panel.model_selected.connect(_on_model_selected)
     
-    # Wait for models to be loaded
-    if ModelSwitcherGlobal and ModelSwitcherGlobal.get_model_names().size() > 0:
-        model_control_panel.setup_with_models(ModelSwitcherGlobal.get_model_names())
+    # Wait for models to be loaded with safe access
+    if has_node("/root/ModelSwitcherGlobal"):
+        var model_switcher = get_node("/root/ModelSwitcherGlobal")
+        if model_switcher.has_method("get_model_names"):
+            var model_names = model_switcher.get_model_names()
+            if model_names.size() > 0:
+                model_control_panel.setup_with_models(model_names)
+            else:
+                models_loaded.connect(func(loaded_model_names): model_control_panel.setup_with_models(loaded_model_names))
+        else:
+            push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal.get_model_names method not available")
     else:
-        models_loaded.connect(func(model_names): model_control_panel.setup_with_models(model_names))
+        models_loaded.connect(func(loaded_model_names): model_control_panel.setup_with_models(loaded_model_names))
 
 func _on_model_selected(model_name: String) -> void:
-    if ModelSwitcherGlobal:
-        ModelSwitcherGlobal.toggle_model_visibility(model_name)
+    if has_node("/root/ModelSwitcherGlobal"):
+        var model_switcher = get_node("/root/ModelSwitcherGlobal")
+        if model_switcher.has_method("toggle_model_visibility"):
+            model_switcher.toggle_model_visibility(model_name)
+        else:
+            push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal.toggle_model_visibility method not available")
+    else:
+        push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal not available for model selection")
 
 func _on_model_visibility_changed(model_name: String, model_is_visible: bool) -> void:
     if model_control_panel and model_control_panel.has_method("update_button_state"):
@@ -853,18 +873,25 @@ func _debug_reset_camera() -> void:
         print("Warning not available for reset")
 
 func _debug_list_models() -> void:
-    if ModelSwitcherGlobal:
-        var model_names = ModelSwitcherGlobal.get_model_names()
-        print("Registered models (", model_names.size(), "):")
-        for model_name in model_names:
-            var model_visible = ModelSwitcherGlobal.is_model_visible(model_name)
-            print("  - ", model_name, " (visible: ", model_visible, ")")
+    if has_node("/root/ModelSwitcherGlobal"):
+        var model_switcher = get_node("/root/ModelSwitcherGlobal")
+        if model_switcher.has_method("get_model_names"):
+            var model_names = model_switcher.get_model_names()
+            print("Registered models (", model_names.size(), "):")
+            for model_name in model_names:
+                if model_switcher.has_method("is_model_visible"):
+                    var model_visible = model_switcher.is_model_visible(model_name)
+                    print("  - ", model_name, " (visible: ", model_visible, ")")
+                else:
+                    print("  - ", model_name, " (visibility check not available)")
+        else:
+            push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal.get_model_names method not available")
     else:
-        print("ModelSwitcherGlobal not available")
+        push_warning("[MainSceneRobust] Warning: ModelSwitcherGlobal not available")
 
 func _debug_test_selection() -> void:
     print("Testing selection system...")
-    var test_position = get_viewport().get_visible_rect().size / 2
+    var test_position = get_viewport().get_visible_rect().size / 2.0
     var safe_selection_manager = get_safe_selection_manager()
     if safe_selection_manager:
         safe_selection_manager.handle_selection_at_position(test_position)
