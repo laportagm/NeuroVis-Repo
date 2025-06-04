@@ -12,10 +12,10 @@ extends Node
 
 # === CONSTANTS ===
 ## Standard anatomical scale for educational consistency (1 unit = 1mm)
-const ANATOMICAL_SCALE: float = 0.001  # Convert mm to meters for Godot
+const ANATOMICAL_SCALE: float = 1.0  # Use 1:1 scale for better visibility
 
 ## RAS (Right-Anterior-Superior) coordinate system adjustment
-const RAS_ROTATION: Vector3 = Vector3(0, 180, 0)  # Degrees
+const RAS_ROTATION: Vector3 = Vector3(0, 0, 0)  # No rotation for now
 
 ## Material enhancement parameters
 const MATERIAL_FRESNEL_STRENGTH: float = 0.3
@@ -40,7 +40,7 @@ signal loading_progress(model_name: String, progress: float)
 # === EXPORTS ===
 @export_group("Model Configuration")
 @export var enable_material_enhancement: bool = true
-@export var enable_lod_system: bool = true
+@export var enable_lod_system: bool = false
 @export var default_model_scale: float = 1.0
 
 @export_group("Material Settings")
@@ -250,7 +250,7 @@ func _configure_anatomical_model(model: Node3D, model_path: String) -> void:
 		enhance_anatomical_materials(model)
 	
 	# Setup LOD if enabled and not overridden for debugging
-	if enable_lod_system and _enable_lod_override:
+	if enable_lod_system and not _enable_lod_override:
 		setup_lod_system(model)
 	
 	# Add metadata

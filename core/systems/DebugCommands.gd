@@ -3,6 +3,9 @@ extends Node
 # Debug command system for NeuroVis
 # Add this script as an autoload singleton in your project
 
+# Load SafeAutoloadAccess for testing
+const SafeAutoloadAccess = preload("res://ui/components/core/SafeAutoloadAccess.gd")
+
 # Used to track registered commands
 var registered_commands = {}
 
@@ -335,6 +338,9 @@ func _ready() -> void:
 
 	# AI and Gemini test commands (moved to lambdas above)
 	register_command("ai_gemini_test", cmd_ai_gemini_test, "Test Gemini AI integration")
+	
+	# SafeAutoloadAccess test command
+	register_command("test_safe_autoload", _test_safe_autoload_access, "Test SafeAutoloadAccess.get_autoload() functionality")
 
 	# Register commands from new debugging systems
 	# TODO: Re-enable once all systems are stable
@@ -986,3 +992,52 @@ func _on_ai_response_test(question: String, response: String) -> void:
 
 func _on_ai_error_test(error: String) -> void:
 	log_error("❌ AI Error: %s" % error)
+
+# SafeAutoloadAccess test function
+func _test_safe_autoload_access(_args: String = "") -> void:
+	"""Test SafeAutoloadAccess.get_autoload() functionality"""
+	log_info("=== Testing SafeAutoloadAccess.get_autoload() ===")
+	
+	# Test 1: Get KnowledgeService
+	log_info("Test 1: Getting KnowledgeService...")
+	var knowledge_service = SafeAutoloadAccess.get_autoload("KnowledgeService")
+	if knowledge_service:
+		log_success("✅ KnowledgeService retrieved successfully")
+		log_info("  Type: %s" % knowledge_service.get_class())
+	else:
+		log_error("❌ Failed to get KnowledgeService")
+	
+	# Test 2: Get UIThemeManager
+	log_info("\nTest 2: Getting UIThemeManager...")
+	var theme_manager = SafeAutoloadAccess.get_autoload("UIThemeManager")
+	if theme_manager:
+		log_success("✅ UIThemeManager retrieved successfully")
+		log_info("  Type: %s" % theme_manager.get_class())
+	else:
+		log_error("❌ Failed to get UIThemeManager")
+	
+	# Test 3: Try non-existent autoload
+	log_info("\nTest 3: Getting non-existent autoload...")
+	var non_existent = SafeAutoloadAccess.get_autoload("NonExistentAutoload")
+	if non_existent:
+		log_error("❌ Unexpected: Got a node for non-existent autoload")
+	else:
+		log_success("✅ Correctly returned null for non-existent autoload")
+	
+	# Test 4: Direct tree access comparison
+	log_info("\nTest 4: Comparing with direct tree access...")
+	var direct_ks = get_tree().root.get_node_or_null("/root/KnowledgeService")
+	var safe_ks = SafeAutoloadAccess.get_autoload("KnowledgeService")
+	if direct_ks == safe_ks:
+		log_success("✅ SafeAutoloadAccess returns same node as direct access")
+	else:
+		log_error("❌ SafeAutoloadAccess returns different node than direct access")
+	
+	# Test 5: Check if SafeAutoloadAccess itself is available
+	log_info("\nTest 5: Checking SafeAutoloadAccess autoload...")
+	if Engine.has_singleton("SafeAutoloadAccess"):
+		log_success("✅ SafeAutoloadAccess is registered as autoload")
+	else:
+		log_error("❌ SafeAutoloadAccess not found in autoloads")
+	
+	log_info("\n=== Test Complete ===")

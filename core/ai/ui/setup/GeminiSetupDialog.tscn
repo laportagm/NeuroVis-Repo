@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8byuqb4o2y0p"]
+[gd_scene load_steps=2 format=3 uid="uid://bwl4xi4kvy8n3"]
 
 [ext_resource type="Script" path="res://ui/panels/GeminiSetupDialog.gd" id="1_6gwn4"]
 

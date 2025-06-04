@@ -8,16 +8,15 @@
 script = ExtResource("1_u5lga")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.0109604, -0.49997, 0.865973, 0, 0.866025, 0.5, -0.99994, 0.0054802, -0.00949199, 27.7102, 4.58655, 0.468256)
+transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 5, 3, 5)
 current = true
-fov = 75.5452
+fov = 60.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0.0160422, 10, -0.0376883)
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0.0160422, 19.8468, -0.0376883)
 shadow_enabled = true
 
 [node name="BrainModel" type="Node3D" parent="."]
-transform = Transform3D(-9.31504e-07, 0, -21.3103, 0, 21.3103, 0, 21.3103, 0, -9.31504e-07, 0, 0, 0)
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 

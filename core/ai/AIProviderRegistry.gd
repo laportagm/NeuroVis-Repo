@@ -233,14 +233,11 @@ func _register_gemini_provider() -> void:
     if _providers.has("gemini"):
         return
     
-    # Try to load the Gemini provider
-    var GeminiProvider = load("res://core/ai/providers/GeminiAIProvider.gd")
-    if not GeminiProvider:
-        print("[AIRegistry] GeminiAIProvider not found")
+    # Try to create the Gemini provider instance
+    var gemini_provider = GeminiAIProvider.new()
+    if not gemini_provider:
+        print("[AIRegistry] Failed to create GeminiAIProvider instance")
         return
-    
-    # Create and register Gemini provider
-    var gemini_provider = GeminiProvider.new()
     gemini_provider.name = "GeminiAI"
     add_child(gemini_provider)
     

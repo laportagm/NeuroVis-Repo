@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://chrbwl4afpb3c"]
+[gd_scene load_steps=4 format=3 uid="uid://cjx5m8p3qwa1h"]
 
-[ext_resource type="Script" uid="uid://dnb8utoyqre0x" path="res://scripts/ui/InformationPanelController.gd" id="1_bwhq4"]
+[ext_resource type="Script" uid="uid://dnb8utoyqre0x" path="res://scenes/ui_info_panel.gd" id="1_bwhq4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_urk3s"]
 bg_color = Color(0.156863, 0.192157, 0.25098, 0.92549)

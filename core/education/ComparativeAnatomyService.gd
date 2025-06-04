@@ -58,8 +58,8 @@ enum AnnotationStyle {
 ## Educational detail level (1-3)
 @export_range(1, 3) var educational_detail: int = 2
 
-## Whether to generate a detailed report
-@export var generate_report: bool = true
+## Whether to generate a detailed report automatically
+@export var auto_generate_report: bool = true
 
 # === PRIVATE VARIABLES ===
 var _knowledge_service: Node
@@ -136,7 +136,7 @@ func start_comparison(structure_ids: Array, comparison_type: ComparisonType = -1
     _generate_annotations(comparison_type, annotation_style)
     
     # Generate educational report if enabled
-    if generate_report:
+    if auto_generate_report:
         _generate_educational_report()
     
     # Emit comparison started signal

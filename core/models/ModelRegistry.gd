@@ -221,7 +221,7 @@ func _get_or_create_anatomical_manager() -> AnatomicalModelManager:
 		
 		# Configure for medical education
 		manager.enable_material_enhancement = true
-		manager.enable_lod_system = true
+		manager.enable_lod_system = false  # Disable LOD for now - causing errors
 		manager.default_model_scale = 1.0  # Professional scaling will be handled internally
 		manager.enable_subsurface_scattering = true
 		

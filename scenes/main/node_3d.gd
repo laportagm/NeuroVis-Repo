@@ -89,6 +89,11 @@ func _ready() -> void:
     # Initialize QA testing system
     _initialize_qa_testing()
 
+    # Reset camera to view brain models
+    if camera_controller and camera_controller.has_method("reset_view"):
+        camera_controller.reset_view()
+        print("[INIT] Camera reset to default view")
+
     print("[INIT] NeuroVis ready!")
 
 func _initialize_ui_safety() -> void:

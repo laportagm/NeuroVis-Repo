@@ -12,7 +12,7 @@ class_name GeminiAIProvider
 extends AIProviderInterface
 
 # === CONSTANTS ===
-const SETTINGS_PATH = "user://gemini_settings.dat"
+const GEMINI_SETTINGS_PATH = "user://gemini_settings.dat"
 const API_URL_BASE = "https://generativelanguage.googleapis.com/v1beta/models/"
 const RATE_LIMIT_PER_MINUTE = 60
 
@@ -330,8 +330,8 @@ func reset_settings() -> bool:
     rate_limit_used = 0
     
     # Delete saved settings
-    if FileAccess.file_exists(SETTINGS_PATH):
-        var err = DirAccess.remove_absolute(SETTINGS_PATH)
+    if FileAccess.file_exists(GEMINI_SETTINGS_PATH):
+        var err = DirAccess.remove_absolute(GEMINI_SETTINGS_PATH)
         if err == OK:
             print("[GeminiAI] Info: Settings file removed successfully")
         else:
@@ -472,7 +472,7 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 func _save_settings() -> void:
     """Save settings to an encrypted file"""
     var file = FileAccess.open_encrypted_with_pass(
-        SETTINGS_PATH,
+        GEMINI_SETTINGS_PATH,
         FileAccess.WRITE,
         OS.get_unique_id()
     )
@@ -494,12 +494,12 @@ func _save_settings() -> void:
 
 func _load_settings() -> void:
     """Load settings from an encrypted file"""
-    if not FileAccess.file_exists(SETTINGS_PATH):
+    if not FileAccess.file_exists(GEMINI_SETTINGS_PATH):
         print("[GeminiAI] Info: No settings file found")
         return
     
     var file = FileAccess.open_encrypted_with_pass(
-        SETTINGS_PATH,
+        GEMINI_SETTINGS_PATH,
         FileAccess.READ,
         OS.get_unique_id()
     )

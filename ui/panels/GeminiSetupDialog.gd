@@ -175,6 +175,28 @@ func _setup_state_containers() -> void:
 		main_container.add_child(container)
 		container.hide() # Hide initially
 
+# === HELPER FUNCTIONS ===
+func _safe_set_label_text(label: Label, text: String) -> void:
+	"""Safely set text on a label with null checking"""
+	if label and is_instance_valid(label):
+		label.text = text
+	else:
+		push_warning("[GeminiSetupDialog] Attempted to set text on null or invalid label: " + text)
+
+func _safe_set_button_disabled(button: Button, disabled: bool) -> void:
+	"""Safely set disabled state on a button with null checking"""
+	if button and is_instance_valid(button):
+		button.disabled = disabled
+	else:
+		push_warning("[GeminiSetupDialog] Attempted to set disabled state on null or invalid button")
+
+func _safe_set_line_edit_text(line_edit: LineEdit, text: String) -> void:
+	"""Safely set text on a LineEdit with null checking"""
+	if line_edit and is_instance_valid(line_edit):
+		line_edit.text = text
+	else:
+		push_warning("[GeminiSetupDialog] Attempted to set text on null or invalid LineEdit: " + text)
+
 func _create_state_container(state: int) -> Control:
 	"""Create UI container for a specific state"""
 	var container = VBoxContainer.new()
@@ -632,8 +654,8 @@ func _update_validation_ui(is_valid: Variant = null) -> void:
 	if is_valid == null:
 		# Hide validation UI when no validation result
 		validation_indicator.visible = false
-		status_label.text = ""
-		next_button.disabled = true
+		_safe_set_label_text(status_label, "")
+		_safe_set_button_disabled(next_button, true)
 		return
 	
 	validation_indicator.visible = true
@@ -641,15 +663,17 @@ func _update_validation_ui(is_valid: Variant = null) -> void:
 	if is_valid:
 		validation_indicator.texture = success_icon
 		validation_indicator.modulate = Color(0, 1, 0.5) # Green
-		status_label.text = "API key is valid"
-		status_label.add_theme_color_override("font_color", Color(0, 1, 0.5)) # Green
-		next_button.disabled = false
+		_safe_set_label_text(status_label, "API key is valid")
+		if status_label and is_instance_valid(status_label):
+			status_label.add_theme_color_override("font_color", Color(0, 1, 0.5)) # Green
+		_safe_set_button_disabled(next_button, false)
 	else:
 		validation_indicator.texture = error_icon
 		validation_indicator.modulate = Color(1, 0.3, 0.3) # Red
-		status_label.text = "Invalid API key format or key not validated"
-		status_label.add_theme_color_override("font_color", Color(1, 0.3, 0.3)) # Red
-		next_button.disabled = true
+		_safe_set_label_text(status_label, "Invalid API key format or key not validated")
+		if status_label and is_instance_valid(status_label):
+			status_label.add_theme_color_override("font_color", Color(1, 0.3, 0.3)) # Red
+		_safe_set_button_disabled(next_button, true)
 
 func _validate_api_key() -> void:
 	"""Validate API key with service"""
@@ -666,9 +690,9 @@ func _validate_api_key() -> void:
 	
 	# Set validating state
 	is_validating = true
-	status_label.text = "Validating..."
+	_safe_set_label_text(status_label, "Validating...")
 	var theme_manager13 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-	if theme_manager13:
+	if theme_manager13 and status_label and is_instance_valid(status_label):
 		status_label.add_theme_color_override("font_color", theme_manager13.get_color("text_secondary") if theme_manager13.has_method("get_color") else Color.WHITE)
 	
 	# Call validation service
@@ -772,15 +796,20 @@ func _on_api_key_validated(success: bool, message: String) -> void:
 	# Update UI
 	_update_validation_ui(success)
 	
+	# Add null check for status_label
+	if not status_label:
+		push_warning("[GeminiSetupDialog] status_label is null in _on_api_key_validated")
+		return
+	
 	if success:
-		status_label.text = "✓ " + message
+		_safe_set_label_text(status_label, "✓ " + message)
 		var theme_manager14 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager14:
+		if theme_manager14 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager14.get_color("text_success") if theme_manager14.has_method("get_color") else Color.WHITE)
 	else:
-		status_label.text = "✗ " + message
+		_safe_set_label_text(status_label, "✗ " + message)
 		var theme_manager15 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager15:
+		if theme_manager15 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager15.get_color("text_error") if theme_manager15.has_method("get_color") else Color.WHITE)
 
 # === PUBLIC API ===
@@ -1177,35 +1206,35 @@ func _on_key_input_changed(text: String) -> void:
 	
 	# Basic validation
 	if key.is_empty():
-		status_label.text = ""
+		_safe_set_label_text(status_label, "")
 		next_button.disabled = true
 		is_api_key_valid = false
 	elif not key.begins_with("AIza"):
-		status_label.text = "Key should start with \"AIza\""
+		_safe_set_label_text(status_label, "Key should start with \"AIza\"")
 		var theme_manager24 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager24:
+		if theme_manager24 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager24.get_color("text_error") if theme_manager24.has_method("get_color") else Color.WHITE)
 		next_button.disabled = true
 		is_api_key_valid = false
 	elif key.length() < 35:
-		status_label.text = "Key seems too short (should be ~39 characters)"
+		_safe_set_label_text(status_label, "Key seems too short (should be ~39 characters)")
 		var theme_manager25 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager25:
+		if theme_manager25 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager25.get_color("text_warning") if theme_manager25.has_method("get_color") else Color.WHITE)
 		next_button.disabled = true
 		is_api_key_valid = false
 	elif key.length() > 45:
-		status_label.text = "Key seems too long (should be ~39 characters)"
+		_safe_set_label_text(status_label, "Key seems too long (should be ~39 characters)")
 		var theme_manager26 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager26:
+		if theme_manager26 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager26.get_color("text_warning") if theme_manager26.has_method("get_color") else Color.WHITE)
 		next_button.disabled = true
 		is_api_key_valid = false
 	else:
 		# Key format looks valid
-		status_label.text = "Key format looks good!"
+		_safe_set_label_text(status_label, "Key format looks good!")
 		var theme_manager27 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager27:
+		if theme_manager27 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager27.get_color("text_success") if theme_manager27.has_method("get_color") else Color.WHITE)
 		next_button.disabled = false
 		is_api_key_valid = true
@@ -1230,9 +1259,9 @@ func _on_connect_button_pressed() -> void:
 	
 	# Disable button and show loading state
 	next_button.disabled = true
-	status_label.text = "Validating API key..."
+	_safe_set_label_text(status_label, "Validating API key...")
 	var theme_manager28 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-	if theme_manager28:
+	if theme_manager28 and status_label and is_instance_valid(status_label):
 		status_label.add_theme_color_override("font_color", theme_manager28.get_color("text_secondary") if theme_manager28.has_method("get_color") else Color.WHITE)
 	
 	# Store the key for later
@@ -1481,9 +1510,9 @@ func _on_api_key_validated_for_save(success: bool, message: String) -> void:
 	
 	if success:
 		# Validation successful - save configuration and proceed
-		status_label.text = "API key validated successfully!"
+		_safe_set_label_text(status_label, "API key validated successfully!")
 		var theme_manager35 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager35:
+		if theme_manager35 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager35.get_color("text_success") if theme_manager35.has_method("get_color") else Color.WHITE)
 		
 		# Save configuration with educational defaults
@@ -1501,9 +1530,9 @@ func _on_api_key_validated_for_save(success: bool, message: String) -> void:
 			gemini_service.api_key_validated.disconnect(_on_api_key_validated_for_save)
 	else:
 		# Validation failed - show error and re-enable button
-		status_label.text = "API key validation failed: " + message
+		_safe_set_label_text(status_label, "API key validation failed: " + message)
 		var theme_manager36 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-		if theme_manager36:
+		if theme_manager36 and status_label and is_instance_valid(status_label):
 			status_label.add_theme_color_override("font_color", theme_manager36.get_color("text_error") if theme_manager36.has_method("get_color") else Color.WHITE)
 		
 		# Re-enable the button so user can try again

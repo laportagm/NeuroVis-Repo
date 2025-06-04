@@ -104,9 +104,9 @@ static func apply_theme_safely(control: Control, style_type: String = "panel") -
 	if not control:
 		return false
 	
-	var theme_manager = get_theme_manager()
-	if theme_manager:
-		# UIThemeManager uses static methods, no need to check has_method
+	# UIThemeManager uses static methods, so we can call them directly
+	# Check if UIThemeManager class is available
+	if is_autoload_available("UIThemeManager"):
 		match style_type:
 			"panel":
 				UIThemeManager.apply_glass_panel(control)
