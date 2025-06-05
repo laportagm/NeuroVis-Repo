@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cboa3wer31o8i"]
+[gd_scene load_steps=3 format=3 uid="uid://c8a3wer31o8i"]
 
-[ext_resource type="Script" uid="uid://mgbqbelrbf51" path="res://scenes/model_control_panel.gd" id="1_afpwb"]
+[ext_resource type="Script" path="res://scenes/model_control_panel.gd" id="1_8f5wb"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6rdyh"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6d5h"]
 bg_color = Color(0.156863, 0.192157, 0.25098, 0.92549)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -22,8 +22,8 @@ offset_right = 300.0
 grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_6rdyh")
-script = ExtResource("1_afpwb")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6d5h")
+script = ExtResource("1_8f5wb")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

@@ -1,868 +1,865 @@
-# Updated Main Scene with Improved AI Integration
-# This updated version uses the new AIIntegrationManager instead of direct AI integration
+## NeuroVis Main Scene Controller (Optimized)
+## Central hub for the educational neuroscience visualization platform
+##
+## This scene coordinates all major systems including 3D visualization,
+## UI management, AI integration, and user interaction.
+##
+## @tutorial: See node_3d_config.gd for configuration options
+## @version: 4.0 - Optimized and cleaned up
+class_name NeuroVisMainScene
 extends Node3D
 
-# Essential preloads - use regular load to avoid parser issues
-var MultiStructureSelectionManagerScript = load("res://core/interaction/MultiStructureSelectionManager.gd")
-var CameraBehaviorControllerScript = load("res://core/interaction/CameraBehaviorController.gd")
-var ModelCoordinatorScene = load("res://core/models/ModelRegistry.gd")
-var ComparativeInfoPanelScript = load("res://ui/panels/ComparativeInfoPanel.gd")
-# UIThemeManager is now available as autoload
+# ===== CONFIGURATION =====
+const Config = preload("res://scenes/main/node_3d_config.gd")
 
-# === NEW FOUNDATION LAYER ===
-var FeatureFlags = load("res://core/features/FeatureFlags.gd")
-var ComponentRegistryScript = load("res://ui/core/ComponentRegistry.gd")
-var ComponentStateManagerScript = load("res://ui/state/ComponentStateManager.gd")
+# ===== ESSENTIAL SCRIPTS =====
+# Only preload scripts we actually use in initialization
+const SafeAutoloadAccess = preload("res://ui/components/core/SafeAutoloadAccess.gd")
+const UIComponentFactoryScript = preload("res://ui/components/core/UIComponentFactory.gd")
+const AIIntegrationManagerScript = preload("res://core/ai/AIIntegrationManager.gd")
 
-# UI Component System preloads - PROGRESSIVE ENABLEMENT
-var SafeAutoloadAccess = load("res://ui/components/core/SafeAutoloadAccess.gd")
-var BaseUIComponentScript = load("res://ui/components/core/BaseUIComponent.gd")
-var UIComponentFactoryScript = load("res://ui/components/core/UIComponentFactory.gd")
-var ResponsiveComponentScript = load("res://ui/components/core/ResponsiveComponent_Safe.gd")
-
-# Legacy support (will be migrated)
-var InfoPanelFactoryScript = load("res://ui/panels/InfoPanelFactory.gd")
-
-# QA Testing integration
-var SelectionTestRunnerScript = load("res://tests/qa/SelectionTestRunner.gd")
-
-# === NEW AI INTEGRATION LAYER ===
-var AIIntegrationManagerScript = load("res://core/ai/AIIntegrationManager.gd")
-
-# Constants
-const RAY_LENGTH: float = 1000.0
-const DEBUG_MODE: bool = true
-
-# Export variables for customizing highlight appearance
+# ===== EXPORT VARIABLES =====
+@export_group("Visual Settings")
 @export var highlight_color: Color = Color(0.0, 1.0, 0.0, 1.0)
 @export var emission_energy: float = 0.5
 
-# Core node references
+@export_group("System Settings")
+@export var enable_debug_mode: bool = true
+@export var enable_minimal_ui_fallback: bool = true
+@export var initialization_timeout: float = 5.0
+
+@export_group("Feature Toggles")
+@export var enable_multi_selection: bool = true
+@export var enable_ai_assistant: bool = true
+@export var enable_comparative_panel: bool = true
+@export var enable_keyboard_shortcuts: bool = true
+
+# ===== NODE REFERENCES =====
 @onready var camera: Camera3D = $Camera3D
 @onready var object_name_label: Label = $UI_Layer/ObjectNameLabel
 @onready var info_panel: Control = $UI_Layer/StructureInfoPanel
 @onready var brain_model_parent: Node3D = $BrainModel
 @onready var model_control_panel: Control = $UI_Layer/ModelControlPanel
 
-# New UI components (temporarily disabled for progressive enablement)
-# var ai_assistant_panel: AIAssistantPanel
-var ai_assistant_panel: Control # Temporary generic type
-var comparative_panel: Control # Comparative info panel for multi-selection
-
-# Components
+# ===== SYSTEM COMPONENTS =====
 var selection_manager: Node
 var camera_controller: Node
 var model_coordinator: Node
-var selection_test_runner: Node # SelectionTestRunner type loaded dynamically
-var ai_integration: Node # AIIntegrationManager instance
+var ai_integration: Node
+var enhanced_model_loader: Node
 
-# System state
+# ===== UI COMPONENTS =====
+var comparative_panel: Control
+var loading_progress: Control
+var keyboard_shortcuts: Control
+var visual_feedback: Node
+
+# ===== STATE MANAGEMENT =====
 var initialization_complete: bool = false
-var last_selected_structure: String = ""
+var selected_structure: String = ""
+var selected_structures: Array = [] # For multi-selection
 
-# Signals
+# ===== SIGNALS =====
+# Selection events
 signal structure_selected(structure_name: String)
 signal structure_deselected
-signal models_loaded(model_names: Array)
+signal multi_selection_changed(selections: Array)
+
+# System events
+signal system_initialized(system_name: String)
 signal initialization_failed(reason: String)
+signal scene_initialization_complete
+
+# Model events
+signal models_loaded(model_names: Array)
+signal model_load_failed(model_name: String, error: String)
 
 func _ready() -> void:
-    print("[INIT] Starting NeuroVis main scene...")
+	print("[INIT] Starting NeuroVis main scene...")
+	var start_time = Time.get_ticks_msec()
 
-    # Initialize foundation layer first
-    _initialize_foundation_layer()
+	# Wait for scene tree to be ready
+	await get_tree().process_frame
 
-    # Initialize safety framework
-    _initialize_ui_safety()
+	# Validate scene structure
+	if not is_inside_tree():
+		_handle_critical_error("Scene not properly added to tree")
+		return
 
-    # Initialize UI component system safely
-    _initialize_ui_components()
+	# Initialize all systems in order
+	_initialize_all_systems()
 
-    # Initialize AI integration (new)
-    _initialize_ai_integration()
+	# Final setup
+	_finalize_initialization(start_time)
 
-    initialize_core_systems()
+# ===== INITIALIZATION METHODS =====
 
-    # Register foundation debug commands
-    _register_foundation_debug_commands()
+func _initialize_all_systems() -> void:
+	"""Initialize all systems in the configured order"""
+	print("[INIT] Initializing core systems...")
 
-    # Initialize QA testing system
-    _initialize_qa_testing()
+	# Initialize in specific order for dependencies
+	_initialize_ui_safety()
+	_initialize_selection_system()
+	_initialize_camera_system()
+	_initialize_model_system()
+	_initialize_ui_panels()
 
-    # Reset camera to view brain models
-    if camera_controller and camera_controller.has_method("reset_view"):
-        camera_controller.reset_view()
-        print("[INIT] Camera reset to default view")
+	# Optional systems
+	if enable_ai_assistant:
+		_initialize_ai_integration()
 
-    print("[INIT] NeuroVis ready!")
+	if enable_keyboard_shortcuts:
+		_initialize_keyboard_shortcuts()
+
+	if enable_debug_mode:
+		_initialize_debug_commands()
+
+func _finalize_initialization(start_time: int) -> void:
+	"""Complete initialization and perform final setup"""
+	var total_time = Time.get_ticks_msec() - start_time
+
+	# Update state
+	initialization_complete = true
+
+	# Reset camera if available
+	if camera_controller and camera_controller.has_method("reset_view"):
+		camera_controller.reset_view()
+
+	print("[INIT] === NeuroVis initialized in " + str(total_time) + "ms ===")
+
+	# Apply model fixes
+	call_deferred("_apply_model_fixes")
+
+	# Emit completion signal
+	scene_initialization_complete.emit()
 
 func _initialize_ui_safety() -> void:
-    """Initialize UI safety framework"""
-    print("[INIT] Initializing UI safety framework...")
+	"""Initialize UI safety framework"""
+	print("[INIT] Initializing UI safety framework...")
 
-    # Log autoload status for debugging
-    if SafeAutoloadAccess.has_method("log_autoload_status"):
-        SafeAutoloadAccess.call("log_autoload_status")
+	# Log autoload status for debugging
+	SafeAutoloadAccess.log_autoload_status()
 
-    # Test safety framework
-    var framework_working = true
-
-    # Test structure retrieval
-    var test_structure = {}
-    if SafeAutoloadAccess.has_method("get_structure_safely"):
-        test_structure = SafeAutoloadAccess.call("get_structure_safely", "Test")
-    if not test_structure.has("id"):
-        framework_working = false
-
-    # Test component creation
-    var test_button = null
-    if UIComponentFactoryScript.has_method("create_button"):
-        test_button = UIComponentFactoryScript.call("create_button", "Test", "primary")
-    if test_button:
-        test_button.queue_free()
-    else:
-        framework_working = false
-
-    if framework_working:
-        print("[INIT] ✓ UI safety framework operational")
-    else:
-        print("[INIT] ⚠ UI safety framework has issues - proceeding with caution")
-
-func _initialize_foundation_layer() -> void:
-    """Initialize the new foundation layer systems"""
-    print("[INIT] Initializing foundation layer...")
-
-    # Load feature flags configuration
-    var flags_loaded = true
-    if FeatureFlags.has_method("is_enabled"):
-        if not FeatureFlags.call("is_enabled", "__test_flag__"): # This triggers initialization
-            flags_loaded = true
-
-    if flags_loaded:
-        print("[INIT] ✓ FeatureFlags initialized")
-        # Log current configuration
-        if FeatureFlags.has_method("is_enabled") and FeatureFlags.has_method("print_flag_status"):
-            if FeatureFlags.get("DEBUG_COMPONENT_INSPECTOR") != null:
-                if FeatureFlags.call("is_enabled", FeatureFlags.get("DEBUG_COMPONENT_INSPECTOR")):
-                    FeatureFlags.call("print_flag_status")
-    else:
-        print("[INIT] ⚠ FeatureFlags initialization failed")
-
-    # Initialize component registry
-    var test_component = ComponentRegistryScript.create_component("button", {"text": "Test"})
-    if test_component:
-        print("[INIT] ✓ ComponentRegistry initialized")
-        test_component.queue_free()
-
-        # Show registry stats in debug mode
-        if FeatureFlags.is_enabled(FeatureFlags.DEBUG_COMPONENT_INSPECTOR):
-            ComponentRegistryScript.print_registry_stats()
-    else:
-        print("[INIT] ⚠ ComponentRegistry initialization failed")
-
-    # Initialize state manager
-    if FeatureFlags.is_enabled(FeatureFlags.UI_STATE_PERSISTENCE):
-        ComponentStateManagerScript.save_component_state("test", {"test": true})
-        var restored = ComponentStateManagerScript.restore_component_state("test")
-        if not restored.is_empty():
-            print("[INIT] ✓ ComponentStateManager initialized")
-            ComponentStateManagerScript.remove_component_state("test")
-        else:
-            print("[INIT] ⚠ ComponentStateManager not working")
-    else:
-        print("[INIT] - ComponentStateManager disabled (feature flag off)")
-
-func _initialize_ui_components() -> void:
-    """Initialize UI components safely"""
-    print("[INIT] Initializing UI components...")
-
-    # Check if we should use new component system
-    if FeatureFlags.is_enabled(FeatureFlags.UI_MODULAR_COMPONENTS):
-        print("[INIT] ✓ Using new modular component system")
-    else:
-        print("[INIT] - Using legacy component system")
-
-    # Initialize AccessibilityManager safely (temporarily disabled)
-    # if AccessibilityManager and AccessibilityManager.has_method("initialize"):
-    #     AccessibilityManager.initialize()
-    #     print("[INIT] ✓ AccessibilityManager initialized")
-    # else:
-    print("[INIT] - AccessibilityManager temporarily disabled for progressive enablement")
+	# Test structure retrieval
+	var test_structure = SafeAutoloadAccess.get_structure_safely("Test")
+	if test_structure.has("id"):
+		print("[INIT] ✓ UI safety framework operational")
+	else:
+		print("[INIT] ⚠ UI safety framework has issues - proceeding with caution")
 
 func _initialize_ai_integration() -> void:
-    """Initialize AI integration with the new architecture"""
-    print("[INIT] Initializing AI integration...")
+	"""Initialize AI integration with the new architecture"""
+	print("[INIT] Initializing AI integration...")
 
-    # Create AI integration manager
-    ai_integration = AIIntegrationManagerScript.new()
-    ai_integration.name = "AIIntegration"
-    add_child(ai_integration)
+	# Create AI integration manager
+	ai_integration = AIIntegrationManagerScript.new()
+	ai_integration.name = "AIIntegration"
+	add_child(ai_integration)
 
-    # Connect to signals
-    ai_integration.ai_setup_completed.connect(_on_ai_setup_completed)
-    ai_integration.ai_setup_cancelled.connect(_on_ai_setup_cancelled)
-    ai_integration.ai_provider_changed.connect(_on_ai_provider_changed)
-    ai_integration.ai_response_received.connect(_on_ai_response_received)
-    ai_integration.ai_error_occurred.connect(_on_ai_error_occurred)
+	# Connect to signals
+	ai_integration.ai_setup_completed.connect(_on_ai_setup_completed)
+	ai_integration.ai_setup_cancelled.connect(_on_ai_setup_cancelled)
+	ai_integration.ai_provider_changed.connect(_on_ai_provider_changed)
+	ai_integration.ai_response_received.connect(_on_ai_response_received)
+	ai_integration.ai_error_occurred.connect(_on_ai_error_occurred)
 
-    print("[INIT] ✓ AI integration initialized")
+	print("[INIT] ✓ AI integration initialized")
 
-func _initialize_qa_testing() -> void:
-    """Initialize QA testing system for selection reliability"""
-    print("[INIT] Initializing QA testing system...")
+func _initialize_keyboard_shortcuts() -> void:
+	"""Initialize keyboard shortcuts help panel"""
+	print("[INIT] Initializing keyboard shortcuts...")
 
-    selection_test_runner = SelectionTestRunnerScript.new()
-    add_child(selection_test_runner)
+	var ui_layer_node = get_node_or_null("UI_Layer")
+	if not ui_layer_node:
+		_log_error("UI_Layer not found for keyboard shortcuts")
+		initialization_failed.emit("UI_Layer not found for keyboard shortcuts")
+		return
 
-    # Initialize with main scene reference
-    selection_test_runner.initialize(self)
+	var KeyboardShortcutsScript = load("res://ui/components/KeyboardShortcuts.gd")
+	if KeyboardShortcutsScript:
+		keyboard_shortcuts = KeyboardShortcutsScript.new()
+		keyboard_shortcuts.name = "KeyboardShortcuts"
+		ui_layer_node.add_child(keyboard_shortcuts)
+		print("[INIT] ✓ Keyboard shortcuts panel ready - Press H or ? to toggle help")
 
-    print("[INIT] ✓ QA testing system ready - Use F1 console commands:"
-        +"\n  - qa_test [full|quick|structure] - Run selection tests"
-        +"\n  - qa_status - Check test progress"
-        +"\n  - qa_analyze - Analyze selection system")
+func _initialize_debug_commands() -> void:
+	"""Register debug commands if debug mode is enabled"""
+	var debug_cmd = get_node_or_null("/root/DebugCmd")
+	if not debug_cmd:
+		print("[INIT] DebugCmd not available")
+		return
 
-func initialize_core_systems() -> void:
-    """Initialize core systems in proper order"""
-    # Validate essential nodes exist
-    if not _validate_essential_nodes():
-        var error_msg = "[CRITICAL] Essential UI nodes missing - cannot initialize"
-        push_error(error_msg)
-        initialization_failed.emit(error_msg)
-        return
+	# Register AI debug commands
+	debug_cmd.register_command("ai_status", Callable(self, "_debug_ai_status"), "Check AI integration status")
+	debug_cmd.register_command("ai_setup", Callable(self, "_debug_ai_setup"), "Show AI setup dialog")
+	debug_cmd.register_command("ai_provider", Callable(self, "_debug_ai_provider"), "List or change AI providers")
 
-    # Initialize systems in order
-    if not _initialize_selection_system():
-        var error_msg = "[CRITICAL] Selection system initialization failed"
-        push_error(error_msg)
-        initialization_failed.emit(error_msg)
-        return
-
-    if not _initialize_camera_system():
-        var error_msg = "[CRITICAL] Camera system initialization failed"
-        push_error(error_msg)
-        initialization_failed.emit(error_msg)
-        return
-
-    if not _initialize_model_system():
-        var error_msg = "[CRITICAL] Model system initialization failed"
-        push_error(error_msg)
-        initialization_failed.emit(error_msg)
-        return
-
-    # Initialize UI panels
-    _initialize_ui_panels()
-
-    # Connect signals
-    _connect_signals()
-
-    initialization_complete = true
-    print("[INIT] Core systems initialized successfully")
+	print("[INIT] ✓ Debug commands registered")
 
 func _validate_essential_nodes() -> bool:
-    """Ensure all required nodes exist"""
-    var essential_nodes = [
-        ["camera", camera],
-        ["object_name_label", object_name_label],
-        ["info_panel", info_panel],
-        ["brain_model_parent", brain_model_parent],
-        ["model_control_panel", model_control_panel]
-    ]
+	"""Ensure all required nodes exist"""
+	var valid = true
 
-    for node_info in essential_nodes:
-        var node_name = node_info[0]
-        var node_ref = node_info[1]
+	# Check critical nodes
+	if not camera:
+		push_error("[CRITICAL] Camera3D node not found")
+		valid = false
 
-        if not node_ref:
-            push_error("[INIT] Missing essential node: " + node_name)
-            return false
+	if not brain_model_parent:
+		push_error("[CRITICAL] BrainModel node not found")
+		valid = false
 
-    return true
+	# Check UI nodes and create fallbacks if needed
+	if not get_node_or_null("UI_Layer") and enable_minimal_ui_fallback:
+		print("[INIT] Creating fallback UI structure")
+		_ensure_minimal_ui()
+	
+	return valid
 
-func _initialize_selection_system() -> bool:
-    """Initialize brain structure selection system"""
-    print("[INIT] Initializing selection system...")
+func _ensure_minimal_ui() -> void:
+	"""Create minimal UI structure if nodes are missing"""
+	# SafeAutoloadAccess not needed here - using static methods
 
-    # Detect if we should use multi-selection
-    if FeatureFlags.is_enabled("multi_structure_selection"):
-        print("[INIT] Using enhanced multi-selection system")
-        selection_manager = MultiStructureSelectionManagerScript.new()
-        selection_manager.name = "MultiStructureSelectionManager"
-        add_child(selection_manager)
+	# Ensure UI_Layer exists
+	var ui_layer = get_node_or_null("UI_Layer")
+	if not ui_layer:
+		print("[INIT] Creating missing UI_Layer")
+		ui_layer = CanvasLayer.new()
+		ui_layer.name = "UI_Layer"
+		add_child(ui_layer)
 
-        # Setup multi-selection signals
-        if selection_manager.has_signal("multi_selection_changed"):
-            selection_manager.multi_selection_changed.connect(_on_multi_selection_changed)
-        if selection_manager.has_signal("comparison_mode_entered"):
-            selection_manager.comparison_mode_entered.connect(_on_comparison_mode_entered)
-        if selection_manager.has_signal("comparison_mode_exited"):
-            selection_manager.comparison_mode_exited.connect(_on_comparison_mode_exited)
-        if selection_manager.has_signal("selection_limit_reached"):
-            selection_manager.selection_limit_reached.connect(_on_selection_limit_reached)
-    else:
-        print("[INIT] Using standard selection system")
-        var SelectionManagerScript = load("res://core/interaction/BrainStructureSelectionManager.gd")
-        selection_manager = SelectionManagerScript.new()
-        selection_manager.name = "BrainStructureSelectionManager"
-        add_child(selection_manager)
+	# Create missing ObjectNameLabel if needed
+	if not object_name_label:
+		print("[INIT] Creating missing ObjectNameLabel")
+		object_name_label = Label.new()
+		object_name_label.name = "ObjectNameLabel"
+		object_name_label.text = "Selected: None"
+		object_name_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
+		object_name_label.position = Vector2(0, 20)
+		object_name_label.size = Vector2(200, 26)
+		object_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		ui_layer.add_child(object_name_label)
 
-        # Setup standard selection signals
-        if selection_manager.has_signal("structure_selected"):
-            selection_manager.structure_selected.connect(_on_structure_selected)
-        if selection_manager.has_signal("selection_cleared"):
-            selection_manager.selection_cleared.connect(_on_selection_cleared)
+	# Create minimal info panel if needed
+	if not info_panel:
+		print("[INIT] Creating minimal StructureInfoPanel")
+		info_panel = PanelContainer.new()
+		info_panel.name = "StructureInfoPanel"
+		info_panel.visible = false
+		info_panel.set_anchors_preset(Control.PRESET_CENTER_LEFT)
+		info_panel.position = Vector2(20, -250)
+		info_panel.size = Vector2(380, 500)
 
-    # Pass required references to selection manager
-    if selection_manager.has_method("initialize"):
-        var success = selection_manager.initialize(camera, brain_model_parent)
-        if not success:
-            push_error("[INIT] Failed to initialize selection manager")
-            return false
-    else:
-        push_error("[INIT] Selection manager missing initialize method")
-        return false
+		# Add a simple label for content
+		var content_label = RichTextLabel.new()
+		content_label.name = "ContentLabel"
+		content_label.text = "Structure information will appear here"
+		info_panel.add_child(content_label)
+		ui_layer.add_child(info_panel)
 
-    # Configure visual properties
-    if selection_manager.has_method("configure_highlight"):
-        selection_manager.configure_highlight(highlight_color, emission_energy)
+	# RefCounted objects don't need queue_free - they're freed automatically
 
-    print("[INIT] ✓ Selection system initialized")
-    return true
+func _initialize_selection_system() -> void:
+	"""Initialize brain structure selection system"""
+	print("[INIT] Initializing selection system...")
 
-func _initialize_camera_system() -> bool:
-    """Initialize camera behavior controller"""
-    print("[INIT] Initializing camera system...")
+	# Load selection manager script
+	var SelectionManagerScript = load("res://core/interaction/BrainStructureSelectionManager.gd")
+	if not SelectionManagerScript:
+		_log_error("Failed to load BrainStructureSelectionManager.gd")
+		initialization_failed.emit("Selection system initialization failed")
+		return
 
-    camera_controller = CameraBehaviorControllerScript.new()
-    camera_controller.name = "CameraBehaviorController"
-    add_child(camera_controller)
+	selection_manager = SelectionManagerScript.new()
+	selection_manager.name = "BrainStructureSelectionManager"
+	add_child(selection_manager)
 
-    # Pass required references to camera controller
-    if camera_controller.has_method("initialize"):
-        var success = camera_controller.initialize(camera, brain_model_parent)
-        if not success:
-            push_error("[INIT] Failed to initialize camera controller")
-            return false
-    else:
-        push_error("[INIT] Camera controller missing initialize method")
-        return false
+	# Initialize with required nodes
+	if selection_manager.has_method("initialize"):
+		var success = selection_manager.initialize(camera, brain_model_parent)
+		if not success:
+			_log_error("Failed to initialize selection manager")
+			initialization_failed.emit("Selection manager initialization failed")
+			return
 
-    print("[INIT] ✓ Camera system initialized")
-    return true
+	# Configure visual properties
+	if selection_manager.has_method("configure_highlight"):
+		selection_manager.configure_highlight(highlight_color, emission_energy)
 
-func _initialize_model_system() -> bool:
-    """Initialize model coordinator"""
-    print("[INIT] Initializing model system...")
+	# Connect signals
+	if selection_manager.has_signal("structure_selected"):
+		selection_manager.structure_selected.connect(_on_structure_selected)
+	if selection_manager.has_signal("selection_cleared"):
+		selection_manager.selection_cleared.connect(_on_selection_cleared)
 
-    model_coordinator = ModelCoordinatorScene.new()
-    model_coordinator.name = "ModelCoordinator"
-    add_child(model_coordinator)
+	print("[INIT] ✓ Selection system initialized")
+	system_initialized.emit("selection")
 
-    # Set the model parent
-    if model_coordinator.has_method("set_model_parent"):
-        model_coordinator.set_model_parent(brain_model_parent)
-    else:
-        push_error("[INIT] Model coordinator missing set_model_parent method")
-        return false
+func _initialize_camera_system() -> void:
+	"""Initialize camera behavior controller"""
+	print("[INIT] Initializing camera system...")
 
-    # Load brain models
-    if model_coordinator.has_method("load_brain_models"):
-        model_coordinator.load_brain_models()
-    else:
-        push_error("[INIT] Model coordinator missing load_brain_models method")
-        return false
+	var CameraBehaviorControllerScript = load("res://core/interaction/CameraBehaviorController.gd")
+	if not CameraBehaviorControllerScript:
+		_log_error("Failed to load CameraBehaviorController.gd")
+		initialization_failed.emit("Camera system initialization failed")
+		return
 
-    # Pass references to model control panel
-    if model_control_panel and model_control_panel.has_method("initialize_with_coordinator"):
-        model_control_panel.initialize_with_coordinator(model_coordinator)
+	camera_controller = CameraBehaviorControllerScript.new()
+	camera_controller.name = "CameraBehaviorController"
+	add_child(camera_controller)
 
-    print("[INIT] ✓ Model system initialized")
-    return true
+	# Initialize with required nodes
+	if camera_controller.has_method("initialize"):
+		var success = camera_controller.initialize(camera, brain_model_parent)
+		if not success:
+			_log_error("Failed to initialize camera controller")
+			initialization_failed.emit("Camera controller initialization failed")
+			return
+
+	print("[INIT] ✓ Camera system initialized")
+	system_initialized.emit("camera")
+
+func _initialize_model_system() -> void:
+	"""Initialize model system"""
+	print("[INIT] Initializing model system...")
+
+	# Create loading progress indicator
+	_create_loading_progress()
+
+	# Try enhanced model loader first
+	var EnhancedModelLoaderScript = load("res://core/models/EnhancedModelLoader.gd")
+	if EnhancedModelLoaderScript:
+		enhanced_model_loader = EnhancedModelLoaderScript.new()
+		enhanced_model_loader.name = "EnhancedModelLoader"
+		add_child(enhanced_model_loader)
+
+		# Connect signals
+		if enhanced_model_loader.has_signal("model_loading_started"):
+			enhanced_model_loader.model_loading_started.connect(_on_model_loading_started)
+		if enhanced_model_loader.has_signal("model_loaded"):
+			enhanced_model_loader.model_loaded.connect(_on_model_loaded)
+		if enhanced_model_loader.has_signal("all_models_loaded"):
+			enhanced_model_loader.all_models_loaded.connect(_on_all_models_loaded)
+		if enhanced_model_loader.has_signal("model_load_failed"):
+			enhanced_model_loader.model_load_failed.connect(_on_model_load_failed)
+
+		# Initialize
+		if enhanced_model_loader.has_method("initialize"):
+			enhanced_model_loader.initialize(brain_model_parent)
+		if enhanced_model_loader.has_method("load_all_models"):
+			enhanced_model_loader.load_all_models()
+	else:
+		# Fallback to basic model loading
+		print("[INIT] Enhanced model loader not found, using basic loading")
+		_load_models_basic()
+
+	# Initialize model control panel
+	if model_control_panel and model_control_panel.has_method("initialize"):
+		model_control_panel.initialize()
+
+	print("[INIT] ✓ Model system initialized")
+	system_initialized.emit("models")
 
 func _initialize_ui_panels() -> void:
-    """Initialize UI panels"""
-    print("[INIT] Initializing UI panels...")
+	"""Initialize UI panels"""
+	print("[INIT] Initializing UI panels...")
 
-    # Initialize info panel if available
-    if info_panel and info_panel.has_method("initialize"):
-        info_panel.initialize()
-        info_panel.hide() # Hide initially until structure selected
+	# Initialize info panel if available
+	if info_panel and info_panel.has_method("initialize"):
+		info_panel.initialize()
+		info_panel.hide() # Hide initially until structure selected
 
-    print("[INIT] ✓ UI panels initialized")
+	# Create comparative panel if enabled
+	if enable_comparative_panel:
+		_create_comparative_panel()
 
-func _connect_signals() -> void:
-    """Connect all required signals"""
-    # Connect input handling
-    # These signals are defined in the Input Map
-
-    # Mouse signals
-    if Input.is_action_just_pressed("ui_select"):
-        get_viewport().set_input_as_handled()
-
-    # Model coordinator signals
-    if model_coordinator and model_coordinator.has_signal("models_loaded"):
-        model_coordinator.models_loaded.connect(func(model_names): models_loaded.emit(model_names))
-
-    # Selection manager signals already connected in _initialize_selection_system
-
-func _register_foundation_debug_commands() -> void:
-    """Register foundation debug commands for testing"""
-    var debug_cmd = get_node_or_null("/root/DebugCmd")
-    if not debug_cmd:
-        print("[INIT] DebugCmd not available, skipping debug command registration")
-        return
-
-    # Register foundation test commands
-    debug_cmd.register_command("test_foundation", Callable(self, "_debug_test_foundation"), "Test foundation layer")
-    debug_cmd.register_command("test_components", Callable(self, "_debug_test_components"), "Test UI component system")
-    debug_cmd.register_command("test_phase3", Callable(self, "_debug_test_phase3"), "Test Phase 3 features")
-
-    # Register AI debug commands
-    debug_cmd.register_command("ai_status", Callable(self, "_debug_ai_status"), "Check AI integration status")
-    debug_cmd.register_command("ai_setup", Callable(self, "_debug_ai_setup"), "Show AI setup dialog")
-    debug_cmd.register_command("ai_provider", Callable(self, "_debug_ai_provider"), "List or change AI providers")
+	print("[INIT] ✓ UI panels initialized")
+	system_initialized.emit("ui")
 
 func _process(_delta: float) -> void:
-    """Handle per-frame updates"""
-    if not initialization_complete:
-        return
+	"""Handle per-frame updates"""
+	if not initialization_complete:
+		return
 
-    # Delegate input handling to the appropriate system
-    _handle_input()
-
-func _handle_input() -> void:
-    """Process input events for brain exploration"""
-    # Right-click for selection
-    if Input.is_action_just_pressed("select_structure"):
-        if selection_manager.has_method("handle_selection_input"):
-            selection_manager.handle_selection_input()
-
-    # Camera controls handled by camera controller
+	# Handle input
+	if Input.is_action_just_pressed("select_structure") and selection_manager:
+		if selection_manager.has_method("handle_selection_input"):
+			selection_manager.handle_selection_input()
 
 func _on_structure_selected(structure_name: String, _mesh: MeshInstance3D) -> void:
-    """Handle selection of a brain structure"""
-    print("[Selection] Structure selected: %s" % structure_name)
+	"""Handle selection of a brain structure"""
+	print("[Selection] Structure selected: %s" % structure_name)
 
-    # Update UI
-    object_name_label.text = "Selected: " + structure_name
-    last_selected_structure = structure_name
+	# Update state
+	selected_structure = structure_name
 
-    # Show structure info
-    _display_structure_info(structure_name)
+	# Update UI
+	if object_name_label:
+		object_name_label.text = "Selected: " + structure_name
 
-    # Update AI context
-    if ai_integration:
-        ai_integration.set_current_structure(structure_name)
+	# Show structure info
+	_display_structure_info(structure_name)
 
-    # Emit signal for external listeners
-    structure_selected.emit(structure_name)
+	# Update AI context
+	if ai_integration and ai_integration.has_method("set_current_structure"):
+		ai_integration.set_current_structure(structure_name)
+
+	# Emit signal for external listeners
+	structure_selected.emit(structure_name)
 
 func _on_selection_cleared() -> void:
-    """Handle clearing of structure selection"""
-    print("[Selection] Selection cleared")
+	"""Handle clearing of structure selection"""
+	print("[Selection] Selection cleared")
 
-    # Update UI
-    object_name_label.text = "Selected: None"
-    last_selected_structure = ""
+	# Update state
+	selected_structure = ""
 
-    # Hide info panel
-    if info_panel:
-        info_panel.hide()
+	# Update UI
+	if object_name_label:
+		object_name_label.text = "Selected: None"
 
-    # Clear AI context
-    if ai_integration:
-        ai_integration.set_current_structure("")
+	# Hide info panel
+	if info_panel:
+		info_panel.hide()
 
-    # Emit signal for external listeners
-    structure_deselected.emit()
+	# Clear AI context
+	if ai_integration and ai_integration.has_method("set_current_structure"):
+		ai_integration.set_current_structure("")
+
+	# Emit signal for external listeners
+	structure_deselected.emit()
 
 func _display_structure_info(structure_name: String) -> void:
-    """Display information about the selected structure"""
-    if not info_panel:
-        push_warning("[UI] Info panel not available")
-        return
+	"""Display information about the selected structure"""
+	if not info_panel:
+		push_warning("[UI] Info panel not available")
+		return
 
-    # Use info panel to display structure info
-    if info_panel.has_method("display_structure_info"):
-        info_panel.display_structure_info(structure_name)
-        info_panel.show()
-    else:
-        push_warning("[UI] Info panel missing display_structure_info method")
+	# Use info panel to display structure info
+	if info_panel.has_method("display_structure_info"):
+		info_panel.display_structure_info(structure_name)
+		info_panel.show()
+	else:
+		# Fallback: just show the panel with default content
+		info_panel.show()
 
 # === MULTI-SELECTION HANDLERS ===
 func _on_multi_selection_changed(selections: Array) -> void:
-    """Handle changes to multi-selection state"""
-    # Update UI based on number of selections
-    if selections.size() == 0:
-        # No selection - hide panels
-        if info_panel:
-            info_panel.hide()
-        if comparative_panel:
-            comparative_panel.hide()
-        object_name_label.text = "Selected: None"
+	"""Handle changes to multi-selection state"""
+	# Update state
+	selected_structures = selections
 
-        # Update AI context
-        if ai_integration:
-            ai_integration.set_current_structure("")
+	# Update UI based on number of selections
+	if selections.size() == 0:
+		_on_selection_cleared()
+	elif selections.size() == 1:
+		# Single selection
+		if comparative_panel:
+			comparative_panel.hide()
+		var selection = selections[0]
+		_on_structure_selected(selection.get("name", ""), null)
+	else:
+		# Multiple selections - show comparative panel
+		if info_panel:
+			info_panel.hide()
+		_show_comparative_panel(selections)
 
-    elif selections.size() == 1:
-        # Single selection - show traditional info panel
-        if comparative_panel:
-            comparative_panel.hide()
-        var selection = selections[0]
-        _display_structure_info(selection["name"])
-        object_name_label.text = "Selected: " + selection["name"]
+	print("[MultiSelect] Selection changed: %d structures" % selections.size())
+	multi_selection_changed.emit(selections)
 
-        # Update AI context
-        if ai_integration:
-            ai_integration.set_current_structure(selection["name"])
+# === HELPER FUNCTIONS ===
+func _create_loading_progress() -> void:
+	"""Create loading progress indicator"""
+	var LoadingProgressScript = load("res://ui/components/LoadingProgress.gd")
+	if LoadingProgressScript:
+		loading_progress = LoadingProgressScript.new()
+		loading_progress.name = "LoadingProgress"
+		var ui_layer_node = get_node_or_null("UI_Layer")
+		if ui_layer_node:
+			ui_layer_node.add_child(loading_progress)
 
-    else:
-        # Multiple selections - show comparative panel
-        if info_panel:
-            info_panel.hide()
-        _show_comparative_panel(selections)
+func _create_comparative_panel() -> void:
+	"""Create comparative info panel"""
+	var ComparativeInfoPanelScript = load("res://ui/panels/ComparativeInfoPanel.gd")
+	if ComparativeInfoPanelScript:
+		comparative_panel = ComparativeInfoPanelScript.new()
+		comparative_panel.name = "ComparativeInfoPanel"
+		comparative_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+		comparative_panel.position.x = -420
+		comparative_panel.custom_minimum_size = Vector2(400, 600)
+		comparative_panel.hide()
 
-        # Update label to show multiple selections
-        var names = []
-        for sel in selections:
-            names.append(sel["name"])
-        object_name_label.text = "Comparing: " + ", ".join(names)
-
-        # Update AI context with first selection
-        if ai_integration and selections.size() > 0:
-            ai_integration.set_current_structure(selections[0]["name"])
-
-    print("[MultiSelect] Selection changed: %d structures" % selections.size())
-
-func _on_comparison_mode_entered() -> void:
-    """Handle entering comparison mode"""
-    print("[MultiSelect] Entered comparison mode")
-
-    # Show comparison mode indicator (optional)
-    # Could add visual feedback here
-
-func _on_comparison_mode_exited() -> void:
-    """Handle exiting comparison mode"""
-    print("[MultiSelect] Exited comparison mode")
-
-    # Hide comparative panel
-    if comparative_panel:
-        comparative_panel.hide()
-
-func _on_selection_limit_reached() -> void:
-    """Handle when selection limit is reached"""
-    print("[MultiSelect] Selection limit reached!")
-
-    # Show user feedback
-    var notification = Label.new()
-    notification.text = "Maximum 3 structures can be selected for comparison"
-    notification.add_theme_color_override("font_color", Color(1, 0.8, 0))
-    notification.add_theme_font_size_override("font_size", 16)
-
-    # Position at top center
-    notification.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-    notification.position.y = 100
-    notification.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-
-    # Add to UI layer
-    var ui_layer = get_node_or_null("UI_Layer")
-    if ui_layer:
-        ui_layer.add_child(notification)
-
-        # Auto-remove after 3 seconds
-        await get_tree().create_timer(3.0).timeout
-        notification.queue_free()
+		var ui_layer_node = get_node_or_null("UI_Layer")
+		if ui_layer_node:
+			ui_layer_node.add_child(comparative_panel)
 
 func _show_comparative_panel(selections: Array) -> void:
-    """Show the comparative information panel"""
-    var ui_layer = get_node_or_null("UI_Layer")
-    if not ui_layer:
-        push_error("[MultiSelect] UI_Layer not found!")
-        return
+	"""Show the comparative information panel"""
+	if not comparative_panel:
+		_create_comparative_panel()
 
-    # Create comparative panel if it doesn't exist
-    if not comparative_panel:
-        comparative_panel = ComparativeInfoPanelScript.new()
-        comparative_panel.name = "ComparativeInfoPanel"
+	if comparative_panel:
+		if comparative_panel.has_method("update_selections"):
+			comparative_panel.update_selections(selections)
+		comparative_panel.show()
 
-        # Position on the right side
-        comparative_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
-        comparative_panel.position.x = -420
-        comparative_panel.custom_minimum_size = Vector2(400, 600)
+		# Update label
+		var names = []
+		for sel in selections:
+			names.append(sel.get("name", "Unknown"))
+		if object_name_label:
+			object_name_label.text = "Comparing: " + ", ".join(names)
 
-        ui_layer.add_child(comparative_panel)
+func _load_models_basic() -> void:
+	"""Basic model loading fallback"""
+	var model_paths = [
+		"res://assets/models/Half_Brain.glb",
+		"res://assets/models/Internal_Structures.glb",
+		"res://assets/models/Brainstem(Solid).glb"
+	]
 
-        # Connect signals
-        comparative_panel.structure_focused.connect(_on_comparative_structure_focused)
-        comparative_panel.comparison_cleared.connect(func(): selection_manager.clear_all_selections())
+	var loaded_models = []
+	for path in model_paths:
+		if ResourceLoader.exists(path):
+			var model = load(path)
+			if model:
+				var instance = model.instantiate()
+				brain_model_parent.add_child(instance)
+				loaded_models.append(instance.name)
+				print("[Models] Loaded: " + instance.name)
 
-    # Update panel with selections
-    comparative_panel.update_selections(selections)
-    comparative_panel.show()
-
-func _on_comparative_structure_focused(structure_name: String) -> void:
-    """Handle focus request from comparative panel"""
-    # Find the mesh for this structure
-    var meshes = _get_all_brain_meshes()
-    for mesh in meshes:
-        if mesh.name == structure_name:
-            # Focus camera on this structure
-            if camera_controller and camera_controller.has_method("focus_on_mesh"):
-                camera_controller.focus_on_mesh(mesh)
-            break
+	if loaded_models.size() > 0:
+		models_loaded.emit(loaded_models)
 
 func _get_all_brain_meshes() -> Array:
-    """Get all brain mesh instances from the brain model parent"""
-    var meshes: Array = []
-    if brain_model_parent:
-        _collect_meshes_recursive(brain_model_parent, meshes)
-    return meshes
+	"""Get all brain mesh instances from the brain model parent"""
+	var meshes: Array = []
+	if brain_model_parent:
+		_collect_meshes_recursive(brain_model_parent, meshes)
+	return meshes
 
 func _collect_meshes_recursive(node: Node, meshes: Array) -> void:
-    """Recursively collect all MeshInstance3D nodes"""
-    if node is MeshInstance3D:
-        meshes.append(node)
-    for child in node.get_children():
-        _collect_meshes_recursive(child, meshes)
+	"""Recursively collect all MeshInstance3D nodes"""
+	if node is MeshInstance3D:
+		meshes.append(node)
+	for child in node.get_children():
+		_collect_meshes_recursive(child, meshes)
 
 # === AI INTEGRATION HANDLERS ===
 func _on_ai_setup_completed(provider_id: String) -> void:
-    """Handle AI setup completion"""
-    print("[AI] Setup completed for provider: %s" % provider_id)
+	"""Handle AI setup completion"""
+	print("[AI] Setup completed for provider: %s" % provider_id)
 
-    # Could show a success notification here
+	# Could show a success notification here
 
 func _on_ai_setup_cancelled() -> void:
-    """Handle AI setup cancellation"""
-    print("[AI] Setup cancelled")
+	"""Handle AI setup cancellation"""
+	print("[AI] Setup cancelled")
 
-    # Could show a notification here
+	# Could show a notification here
 
 func _on_ai_provider_changed(provider_id: String) -> void:
-    """Handle AI provider change"""
-    print("[AI] Provider changed to: %s" % provider_id)
+	"""Handle AI provider change"""
+	print("[AI] Provider changed to: %s" % provider_id)
 
-    # Update UI if needed
+	# Update UI if needed
 
 func _on_ai_response_received(question: String, response: String) -> void:
-    """Handle AI response"""
-    print("[AI] Response received for question: %s" % question)
+	"""Handle AI response"""
+	print("[AI] Response received for question: %s" % question)
 
-    # Update UI with response
-    # This would typically update the AI assistant panel
+	# Update UI with response
+	# This would typically update the AI assistant panel
 
 func _on_ai_error_occurred(error_message: String) -> void:
-    """Handle AI error"""
-    push_warning("[AI] Error: %s" % error_message)
+	"""Handle AI error"""
+	push_warning("[AI] Error: %s" % error_message)
 
-    # Could show an error notification here
+	# Could show an error notification here
 
 # === DEBUG COMMANDS ===
-func _debug_ai_status(args: Array = []) -> void:
-    """Debug command to check AI integration status"""
-    if not ai_integration:
-        print("[AI] AI integration not initialized")
-        return
+func _debug_ai_status(_args: Array = []) -> void:
+	"""Debug command to check AI integration status"""
+	if not ai_integration:
+		print("[AI] AI integration not initialized")
+		return
 
-    var active_provider = ai_integration.get_active_provider_id()
-    var status = ai_integration.get_provider_status()
+	var active_provider = ai_integration.get_active_provider_id()
+	var status = ai_integration.get_provider_status()
 
-    print("\n=== AI INTEGRATION STATUS ===")
-    print("Active Provider: %s" % active_provider)
-    print("Status: %s" % str(status))
-    print("Current Structure: %s" % ai_integration.get_current_structure())
-    print("Available Providers: %s" % str(ai_integration.get_available_providers()))
-    print("============================\n")
+	print("\n=== AI INTEGRATION STATUS ===")
+	print("Active Provider: %s" % active_provider)
+	print("Status: %s" % str(status))
+	print("Current Structure: %s" % ai_integration.get_current_structure())
+	print("Available Providers: %s" % str(ai_integration.get_available_providers()))
+	print("============================\n")
 
 func _debug_ai_setup(args: Array = []) -> void:
-    """Debug command to show AI setup dialog"""
-    if not ai_integration:
-        print("[AI] AI integration not initialized")
-        return
+	"""Debug command to show AI setup dialog"""
+	if not ai_integration:
+		print("[AI] AI integration not initialized")
+		return
 
-    var provider_id = ""
-    if args.size() > 0:
-        provider_id = args[0]
+	var provider_id = ""
+	if args.size() > 0:
+		provider_id = args[0]
 
-    print("[AI] Showing setup dialog for provider: %s" % (provider_id if not provider_id.is_empty() else "default"))
-    ai_integration.show_setup_dialog(provider_id)
+	print("[AI] Showing setup dialog for provider: %s" % (provider_id if not provider_id.is_empty() else "default"))
+	ai_integration.show_setup_dialog(provider_id)
 
 func _debug_ai_provider(args: Array = []) -> void:
-    """Debug command to list or change AI providers"""
-    if not ai_integration:
-        print("[AI] AI integration not initialized")
-        return
+	"""Debug command to list or change AI providers"""
+	if not ai_integration:
+		print("[AI] AI integration not initialized")
+		return
 
-    if args.size() == 0:
-        # List providers
-        var providers = ai_integration.get_available_providers()
-        var active = ai_integration.get_active_provider_id()
+	if args.size() == 0:
+		# List providers
+		var providers = ai_integration.get_available_providers()
+		var active = ai_integration.get_active_provider_id()
 
-        print("\n=== AVAILABLE AI PROVIDERS ===")
-        for provider in providers:
-            var status = ai_integration.get_provider_status(provider)
-            print("%s %s - %s" % ["►" if provider == active else " ", provider, str(status)])
-        print("=============================\n")
+		print("\n=== AVAILABLE AI PROVIDERS ===")
+		for provider in providers:
+			var status = ai_integration.get_provider_status(provider)
+			print("%s %s - %s" % ["►" if provider == active else " ", provider, str(status)])
+		print("=============================\n")
 
-        print("Use 'ai_provider <provider_id>' to change provider")
-    else:
-        # Change provider
-        var provider_id = args[0]
-        var result = ai_integration.set_active_provider(provider_id)
+		print("Use 'ai_provider <provider_id>' to change provider")
+	else:
+		# Change provider
+		var provider_id = args[0]
+		var result = ai_integration.set_active_provider(provider_id)
 
-        if result:
-            print("[AI] Changed provider to: %s" % provider_id)
-        else:
-            print("[AI] Failed to change provider to: %s" % provider_id)
-            print("Available providers: %s" % str(ai_integration.get_available_providers()))
+		if result:
+			print("[AI] Changed provider to: %s" % provider_id)
+		else:
+			print("[AI] Failed to change provider to: %s" % provider_id)
+			print("Available providers: %s" % str(ai_integration.get_available_providers()))
 
-func _debug_test_foundation(args: Array = []) -> void:
-    """Debug command to test foundation layer"""
-    print("\n=== TESTING FOUNDATION LAYER ===")
+func _debug_test_foundation(_args: Array = []) -> void:
+	"""Debug command to test foundation layer"""
+	print("\n=== TESTING FOUNDATION LAYER ===")
 
-    # Test feature flags
-    if FeatureFlags and FeatureFlags.has_method("is_enabled"):
-        print("✓ FeatureFlags: Available")
-        print("  - UI_MODULAR_COMPONENTS: %s" % ("Enabled" if FeatureFlags.is_enabled(FeatureFlags.UI_MODULAR_COMPONENTS) else "Disabled"))
-        print("  - MULTI_STRUCTURE_SELECTION: %s" % ("Enabled" if FeatureFlags.is_enabled("multi_structure_selection") else "Disabled"))
-        print("  - UI_STYLE_ENGINE: %s" % ("Enabled" if FeatureFlags.is_enabled(FeatureFlags.UI_STYLE_ENGINE) else "Disabled"))
-    else:
-        print("✗ FeatureFlags: Not available")
+	# Test feature flags
+	var feature_flags = get_node_or_null("/root/FeatureFlags")
+	if feature_flags:
+		print("✓ FeatureFlags: Available")
+	else:
+		print("✗ FeatureFlags: Not available")
 
-    # Test component registry
-    if ComponentRegistryScript and ComponentRegistryScript.has_method("create_component"):
-        print("✓ ComponentRegistry: Available")
-        var test_btn = ComponentRegistryScript.create_component("button", {"text": "Test"})
-        if test_btn:
-            print("  - Component creation: Working")
-            test_btn.queue_free()
-        else:
-            print("  - Component creation: Failed")
-    else:
-        print("✗ ComponentRegistry: Not available")
+	# Test UI component factory
+	if UIComponentFactoryScript:
+		print("✓ UIComponentFactory: Available")
+	else:
+		print("✗ UIComponentFactory: Not available")
 
-    # Test state manager
-    if ComponentStateManagerScript and ComponentStateManagerScript.has_method("save_component_state"):
-        print("✓ ComponentStateManager: Available")
-        ComponentStateManagerScript.save_component_state("test_key", {"test": true})
-        var data = ComponentStateManagerScript.restore_component_state("test_key")
-        if data and data.has("test"):
-            print("  - State save/restore: Working")
-        else:
-            print("  - State save/restore: Failed")
-        ComponentStateManagerScript.remove_component_state("test_key")
-    else:
-        print("✗ ComponentStateManager: Not available")
+	print("===============================\n")
 
-    print("===============================\n")
+func _debug_test_components(_args: Array = []) -> void:
+	"""Debug command to test UI component system"""
+	print("\n=== TESTING UI COMPONENT SYSTEM ===")
 
-func _debug_test_components(args: Array = []) -> void:
-    """Debug command to test UI component system"""
-    print("\n=== TESTING UI COMPONENT SYSTEM ===")
+	# Test component factory
+	if UIComponentFactoryScript:
+		print("✓ UIComponentFactory: Available")
+		var button = UIComponentFactoryScript.create_button("Test Button", "primary")
+		if button:
+			print("  - Component creation: Working")
+			button.queue_free()
+		else:
+			print("  - Component creation: Failed")
+	else:
+		print("✗ UIComponentFactory: Not available")
 
-    # Test component factory
-    if UIComponentFactoryScript and UIComponentFactoryScript.has_method("create_button"):
-        print("✓ UIComponentFactory: Available")
+	print("=================================\n")
 
-        # Test creating various components
-        var button = UIComponentFactoryScript.create_button("Test Button", "primary")
-        if button:
-            print("  - Button creation: Working")
-            button.queue_free()
-        else:
-            print("  - Button creation: Failed")
 
-        var label = UIComponentFactoryScript.create_label("Test Label", "body")
-        if label:
-            print("  - Label creation: Working")
-            label.queue_free()
-        else:
-            print("  - Label creation: Failed")
-    else:
-        print("✗ UIComponentFactory: Not available")
+# === MODEL LOADING HANDLERS ===
 
-    # Test component registry
-    print("\nTesting fragment components:")
+func _on_models_loaded(model_names: Array) -> void:
+	"""Handle successful model loading"""
+	if loading_progress:
+		loading_progress.complete_loading()
 
-    # Test header fragment
-    var header_config = {
-        "title": "Test Header",
-        "subtitle": "Test Subtitle",
-        "icon": "info"
-    }
-    var header = ComponentRegistryScript.create_component("header", header_config)
-    if header:
-        print("✓ Header fragment created")
-        header.queue_free()
-    else:
-        print("✗ Header fragment failed")
+	print("[Models] Successfully loaded models: ", model_names)
 
-    # Test content fragment
-    var content_config = {
-        "sections": ["description", "functions", "clinical_relevance"]
-    }
-    var content = ComponentRegistryScript.create_component("content", content_config)
-    if content:
-        print("✓ Content fragment created")
-        content.queue_free()
-    else:
-        print("✗ Content fragment failed")
+	# Ensure at least one model is visible
+	var model_switcher = get_node_or_null("/root/ModelSwitcherGlobal")
+	if model_names.size() > 0 and model_switcher:
+		var visible_models = model_switcher.get_visible_models() if model_switcher.has_method("get_visible_models") else []
+		if visible_models.is_empty() and model_switcher.has_method("set_model_visibility"):
+			print("[Models] No models visible, showing first model: ", model_names[0])
+			model_switcher.set_model_visibility(model_names[0], true)
 
-    # Test actions fragment
-    var actions_config = {
-        "preset": "default",
-        "buttons": [
-            {"text": "Learn More", "action": "learn"},
-            {"text": "Bookmark", "action": "bookmark"}
-        ]
-    }
-    var actions = ComponentRegistryScript.create_component("actions", actions_config)
-    if actions:
-        print("✓ Actions fragment created")
-        actions.queue_free()
-    else:
-        print("✗ Actions fragment failed")
+	# Reset camera to view the models
+	if camera_controller and camera_controller.has_method("reset_view"):
+		camera_controller.reset_view()
 
-    # Test section fragment
-    var section_config = {
-        "name": "description",
-        "title": "Description",
-        "collapsible": true,
-        "expanded": true
-    }
-    var section = ComponentRegistryScript.create_component("section", section_config)
-    if section:
-        print("✓ Section fragment created")
-        section.queue_free()
-    else:
-        print("✗ Section fragment failed")
+	# Update the main signal
+	models_loaded.emit(model_names)
 
-    print("=================================\n")
+func _on_model_load_failed(model_path: String, error: String) -> void:
+	"""Handle model loading failure"""
+	push_error("[Model] Failed to load %s: %s" % [model_path, error])
+	model_load_failed.emit(model_path, error)
 
-func _debug_test_phase3() -> void:
-    """Test Phase 3: StyleEngine and AdvancedInteractionSystem"""
-    print("\n=== TESTING PHASE 3: STYLE ENGINE & ADVANCED INTERACTIONS ===")
+	if loading_progress and loading_progress.has_method("show_error"):
+		loading_progress.show_error(error)
 
-    # Enable Phase 3 features for testing
-    FeatureFlags.enable_feature(FeatureFlags.UI_STYLE_ENGINE)
-    FeatureFlags.enable_feature(FeatureFlags.UI_ADVANCED_INTERACTIONS)
-    FeatureFlags.enable_feature(FeatureFlags.UI_SMOOTH_ANIMATIONS)
-    FeatureFlags.enable_feature(FeatureFlags.UI_CONTEXT_MENUS)
-    FeatureFlags.enable_feature(FeatureFlags.UI_GESTURE_RECOGNITION)
+func _on_model_loading_started(total_models: int) -> void:
+	"""Handle start of model loading"""
+	print("[Models] Starting to load %d models" % total_models)
+	if loading_progress and loading_progress.has_method("start_loading"):
+		loading_progress.start_loading(total_models)
 
-    # Load test script
-    var test_script = load("res://test_phase3_features.gd")
-    if test_script:
-        var test_instance = test_script.new()
-        get_tree().root.add_child(test_instance)
+func _on_model_loaded(model_name: String, index: int) -> void:
+	"""Handle individual model loaded"""
+	print("[Models] Loaded model %d: %s" % [index + 1, model_name])
+	if loading_progress and loading_progress.has_method("update_progress"):
+		loading_progress.update_progress(model_name)
 
-        # Auto-remove test instance after completion
-        await get_tree().create_timer(5.0).timeout
-        if is_instance_valid(test_instance):
-            test_instance.queue_free()
-            print("✓ Phase 3 test instance cleaned up")
-    else:
-        print("✗ Failed to load Phase 3 test script")
+func _on_all_models_loaded(successful_count: int, total_count: int) -> void:
+	"""Handle completion of all model loading"""
+	print("[Models] Loading complete: %d/%d models loaded successfully" % [successful_count, total_count])
 
-    print("=== PHASE 3 TESTS COMPLETED ===\n")
+	if loading_progress:
+		loading_progress.complete_loading()
+
+	# Get list of loaded models from enhanced loader
+	if enhanced_model_loader and enhanced_model_loader.has_method("get_loaded_model_names"):
+		var model_names = enhanced_model_loader.get_loaded_model_names()
+		_on_models_loaded(model_names)
+
+
+# ===== LOGGING UTILITIES =====
+func _log_debug(message: String) -> void:
+	"""Log debug messages"""
+	if enable_debug_mode:
+		print("[DEBUG] " + message)
+
+func _log_warning(message: String) -> void:
+	"""Log warning messages"""
+	push_warning("[WARNING] " + message)
+
+func _log_error(message: String) -> void:
+	"""Log error messages"""
+	push_error("[ERROR] " + message)
+
+# ===== ERROR HANDLING =====
+func _handle_critical_error(error: String) -> void:
+	"""Handle critical errors that prevent initialization"""
+	push_error("[CRITICAL] " + error)
+	initialization_failed.emit(error)
+
+
+# ===== SIGNAL HANDLERS (Missing Methods) =====
+func _on_camera_3d_visibility_changed() -> void:
+	"""Handle camera visibility changes"""
+	print("[DEBUG] Camera visibility changed")
+
+	if not camera:
+		_log_warning("Camera reference not available")
+		return
+
+	var camera_is_visible = camera.visible
+	_log_debug("Camera visibility: " + str(camera_is_visible))
+
+	# Adjust lighting based on camera visibility
+	if camera_is_visible:
+		# Camera is visible - ensure lighting is optimal
+		_adjust_lighting_for_visibility(true)
+
+		# Update UI to show camera is active
+		if object_name_label:
+			object_name_label.modulate = Color.WHITE
+	else:
+		# Camera is not visible - dim lighting to conserve resources
+		_adjust_lighting_for_visibility(false)
+
+		# Dim UI to indicate inactive state
+		if object_name_label:
+			object_name_label.modulate = Color(0.7, 0.7, 0.7, 1.0)
+
+func _on_brain_model_script_changed() -> void:
+	"""Handle brain model script changes"""
+	print("[DEBUG] Brain model script changed")
+
+	if not brain_model_parent:
+		_log_warning("Brain model parent reference not available")
+		return
+
+	# Refresh dependent systems
+	if selection_manager and selection_manager.has_method("refresh_model_references"):
+		selection_manager.refresh_model_references()
+
+	if camera_controller and camera_controller.has_method("recalculate_bounds"):
+		camera_controller.recalculate_bounds()
+
+	if enhanced_model_loader and enhanced_model_loader.has_method("refresh_model_list"):
+		enhanced_model_loader.refresh_model_list()
+
+func _on_brain_model_tree_exiting() -> void:
+	"""Handle brain model cleanup when exiting scene tree"""
+	print("[DEBUG] Brain model tree exiting - performing cleanup")
+
+	# Clear selection to prevent invalid references
+	if selection_manager:
+		if selection_manager.has_method("clear_selection"):
+			selection_manager.clear_selection()
+		elif selection_manager.has_method("clear_all_selections"):
+			selection_manager.clear_all_selections()
+
+	# Clear model reference
+	brain_model_parent = null
+
+	# Update UI
+	if object_name_label:
+		object_name_label.text = "Selected: No Model Available"
+	if info_panel:
+		info_panel.hide()
+
+	# Reset camera
+	if camera_controller and camera_controller.has_method("reset_view"):
+		camera_controller.reset_view()
+
+# ===== HELPER METHODS FOR SIGNAL HANDLERS =====
+func _adjust_lighting_for_visibility(camera_visible: bool) -> void:
+	"""Adjust scene lighting based on camera visibility"""
+	if not camera:
+		return
+
+	# Adjust directional light intensity
+	var target_energy = 1.0 if camera_visible else 0.5
+	for child in camera.get_children():
+		if child is DirectionalLight3D:
+			child.light_energy = target_energy
+
+# ===== MODEL FIXES =====
+func _apply_model_fixes() -> void:
+	"""Apply quick fixes for oversized models and camera positioning"""
+	print("[MODEL_FIX] Applying model fixes...")
+
+	# Fix oversized models in BrainModel container
+	if brain_model_parent:
+		var models = []
+		_collect_meshes_recursive(brain_model_parent, models)
+
+		for model in models:
+			# Fix oversized Brainstem if detected
+			if "brainstem" in model.name.to_lower() and model.scale.x > 10.0:
+				print("[MODEL_FIX] Fixing oversized Brainstem")
+				model.scale = Vector3.ONE
+				model.position = Vector3.ZERO
+
+			# Ensure all models are visible
+			if not model.visible:
+				model.visible = true
+				print("[MODEL_FIX] Made %s visible" % model.name)
+
+	# Reset camera if needed
+	if camera and camera.global_position.length() > 100.0:
+		print("[MODEL_FIX] Resetting camera position")
+		camera.global_position = Vector3(15, 10, 15)
+		camera.look_at(Vector3.ZERO, Vector3.UP)
