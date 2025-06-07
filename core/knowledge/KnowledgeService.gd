@@ -95,19 +95,19 @@ var _search_cache: Dictionary = {}
 var _settings: Dictionary = {}
 
 # === LIFECYCLE METHODS ===
-var _is_initialized: bool = false
-var _initialization_time: float = 0.0
-var _error_count: int = 0
+var _is_initialized_2: bool = false
+var _initialization_time_2: float = 0.0
+var _error_count_2: int = 0
 
 # === DATA STORAGE ===
 ## Medical structure data indexed by ID
-var _anatomical_data: Dictionary = {}
+var _anatomical_data_2: Dictionary = {}
 ## Fast lookup index for structure names (lowercase) -> structure data
-var _structure_index: Dictionary = {}
+var _structure_index_2: Dictionary = {}
 ## Cache for search results to maintain 60fps during educational interactions
-var _search_cache: Dictionary = {}
+var _search_cache_2: Dictionary = {}
 ## Configuration settings for educational features
-var _settings: Dictionary = {}
+var _settings_2: Dictionary = {}
 
 # === LIFECYCLE METHODS ===
 

@@ -53,7 +53,7 @@ _enforce_cache_limits()
 
 
 ## Retrieve value from cache
-var entry = _cache.entries[key]
+var entry_2 = _cache.entries[key]
 
 # Check if expired
 var age = Time.get_unix_time_from_system() - entry.created_at

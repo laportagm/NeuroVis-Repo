@@ -91,14 +91,14 @@ var config = ConfigFile.new()
 
 var user_value = config.get_value("features", flag_name)
 	_flags[flag_name] = user_value
-var config = ConfigFile.new()
+var config_2 = ConfigFile.new()
 var ignore_overrides = config.get_value("system", "ignore_debug_overrides", false)
 var old_value = _flags.get(flag_name, false)
 	_flags[flag_name] = true
 
 	_notify_listeners(flag_name, old_value, true)
 
-var old_value = _flags.get(flag_name, true)
+var old_value_2 = _flags.get(flag_name, true)
 	_flags[flag_name] = false
 
 	_notify_listeners(flag_name, old_value, false)
@@ -106,7 +106,7 @@ var old_value = _flags.get(flag_name, true)
 var current_state = is_enabled(flag_name)
 var new_state = not current_state
 
-var config = ConfigFile.new()
+var config_3 = ConfigFile.new()
 	config.load("user://feature_flags.cfg")  # Load existing or create new
 
 	config.set_value("features", flag_name, value)
@@ -115,7 +115,7 @@ var config = ConfigFile.new()
 
 	static func _get_flag_source(flag_name: String) -> String:
 		"""Determine source of flag value (default, user, etc.)"""
-var config = ConfigFile.new()
+var config_4 = ConfigFile.new()
 var descriptions = {
 	UI_MODULAR_COMPONENTS: "New component-based UI system",
 	UI_LEGACY_PANELS: "Legacy panel system (for compatibility)",
@@ -132,8 +132,8 @@ var descriptions = {
 	DEBUG_PERFORMANCE_OVERLAY: "Developer performance overlay"
 	}
 
-var config = ConfigFile.new()
-var config = ConfigFile.new()
+var config_5 = ConfigFile.new()
+var config_6 = ConfigFile.new()
 	config.load("user://feature_flags.cfg")
 	config.set_value("system", "core_development_mode", true)
 	config.save("user://feature_flags.cfg")
@@ -141,7 +141,7 @@ var config = ConfigFile.new()
 	# Apply core development preset
 	apply_preset("core_development")
 
-var config = ConfigFile.new()
+var config_7 = ConfigFile.new()
 	config.load("user://feature_flags.cfg")
 	config.set_value("system", "core_development_mode", false)
 	config.save("user://feature_flags.cfg")

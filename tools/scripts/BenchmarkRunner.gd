@@ -23,7 +23,7 @@ var json_start = Time.get_ticks_msec()
 var json_test_data = '{"test": "data", "array": [1, 2, 3, 4, 5], "nested": {"value": 42}}'
 var json_iterations = 10000
 
-var json = JSON.new()
+var json_2 = JSON.new()
 json.parse(json_test_data)
 
 var json_duration = Time.get_ticks_msec() - json_start
@@ -103,7 +103,7 @@ var string_avg = float(string_duration) / float(string_ops)
 benchmark_results["system_string_ops_avg_ms"] = string_avg
 var total_duration = Time.get_ticks_msec() - start_time
 
-var file = FileAccess.open("benchmark-results.json", FileAccess.WRITE)
+var file_2 = FileAccess.open("benchmark-results.json", FileAccess.WRITE)
 var summary_content = (
 """# 📊 Performance Benchmark Results
 
@@ -139,7 +139,7 @@ benchmark_results.get("system_file_ops_avg_ms", 0)
 
 # Add performance status indicators
 var kb_loading = benchmark_results.get("data_kb_loading_avg_ms", 0)
-var file = FileAccess.open("performance-summary.md", FileAccess.WRITE)
+var file_3 = FileAccess.open("performance-summary.md", FileAccess.WRITE)
 
 func _init():
 	print("📊 NeuroVis Performance Benchmark Runner Starting...")
@@ -292,4 +292,3 @@ func _fix_orphaned_code():
 		file.store_string(summary_content)
 		file.close()
 		print("📄 Generated: performance-summary.md")
-

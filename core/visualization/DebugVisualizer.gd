@@ -51,7 +51,7 @@ var from = camera.project_ray_origin(click_position)
 var to = from + camera.project_ray_normal(click_position) * ray_length
 
 # Create a 3D line for visualization
-var ray_container = get_node("RayVisualizations")
+var ray_container_2 = get_node("RayVisualizations")
 
 # Create immediate geometry
 var immediate_mesh = ImmediateMesh.new()
@@ -84,15 +84,15 @@ var timer = Timer.new()
 	timer.one_shot = true
 	timer.timeout.connect(
 	func():
-var collision_container = get_node("CollisionVisualizations")
+var collision_container_2 = get_node("CollisionVisualizations")
 
 # Find all collision shapes in the scene
 	_visualize_collision_shapes(main_scene, collision_container)
 
 
 var visual = _create_collision_shape_visual(node)
-var mesh_instance = MeshInstance3D.new()
-var material = StandardMaterial3D.new()
+var mesh_instance_2 = MeshInstance3D.new()
+var material_2 = StandardMaterial3D.new()
 
 # Set up material
 	material.albedo_color = Color(0, 1, 0, 0.3)  # Green, semi-transparent
@@ -103,7 +103,7 @@ var material = StandardMaterial3D.new()
 var shape = collision_shape.shape
 var mesh = null
 
-var label_container = get_node("LabelVisualizations")
+var label_container_2 = get_node("LabelVisualizations")
 
 # Get brain model nodes
 var brain_model = main_scene.get_node("BrainModel")

@@ -179,4 +179,3 @@ func _log(message: String, level: String = "info") -> void:
 	"""Component logging"""
 	if not enable_logging:
 		return
-

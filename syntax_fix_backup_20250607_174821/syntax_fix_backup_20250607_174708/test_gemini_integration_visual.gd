@@ -219,4 +219,3 @@ func _on_ai_response(question: String, response: String):
 func _on_ai_error(error: String):
 	if not is_instance_valid(test_panel):
 		return
-

@@ -577,4 +577,3 @@ func _load_settings() -> void:
 	if not FileAccess.file_exists(GEMINI_SETTINGS_PATH):
 		print("[GeminiAI] Info: No settings file found")
 		return
-

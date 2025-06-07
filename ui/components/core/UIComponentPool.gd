@@ -58,7 +58,7 @@ component.visible = true
 # Emit signal
 component_retrieved.emit(component_type, component)
 
-var instance_id = component.get_instance_id()
+var instance_id_2 = component.get_instance_id()
 
 var component_type = _active_components[instance_id]
 
@@ -69,12 +69,12 @@ var stats = _stats.duplicate()
 stats["pool_sizes"] = {}
 var active_counts = {}
 var type = _active_components[instance_id]
-var stats = get_pool_stats()
+var stats_2 = get_pool_stats()
 
 var available = stats["pool_sizes"][type]
 var active = stats["active_counts"].get(type, 0)
 var created_count = 0
-var component = _create_component(component_type)
+var component_2 = _create_component(component_type)
 var panel = PanelContainer.new()
 var vbox = VBoxContainer.new()
 panel.add_child(vbox)
@@ -87,16 +87,16 @@ section.add_child(header)
 var label = Label.new()
 header.add_child(label)
 var tooltip = PanelContainer.new()
-var label = Label.new()
+var label_2 = Label.new()
 tooltip.add_child(label)
-var panel = PanelContainer.new()
-var vbox = VBoxContainer.new()
+var panel_2 = PanelContainer.new()
+var vbox_2 = VBoxContainer.new()
 panel.add_child(vbox)
 
-var header = HBoxContainer.new()
+var header_2 = HBoxContainer.new()
 vbox.add_child(header)
 
-var title = Label.new()
+var title_2 = Label.new()
 title.name = "Title"
 header.add_child(title)
 
@@ -104,9 +104,9 @@ var content = VBoxContainer.new()
 content.name = "Content"
 vbox.add_child(content)
 
-var section = VBoxContainer.new()
+var section_2 = VBoxContainer.new()
 
-var header = HBoxContainer.new()
+var header_3 = HBoxContainer.new()
 section.add_child(header)
 
 var toggle = Button.new()
@@ -115,11 +115,11 @@ toggle.text = "▼"
 toggle.custom_minimum_size = Vector2(24, 24)
 header.add_child(toggle)
 
-var title = Label.new()
+var title_3 = Label.new()
 title.name = "Title"
 header.add_child(title)
 
-var content = VBoxContainer.new()
+var content_2 = VBoxContainer.new()
 content.name = "Content"
 section.add_child(content)
 

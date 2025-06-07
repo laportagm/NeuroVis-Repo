@@ -152,16 +152,16 @@ var global_aabb = AABB(
 	mesh_instance.global_transform.basis * mesh_aabb.size
 	)
 
-var center = combined_aabb.get_center()
-var radius = combined_aabb.size.length() / 2.0
+var center_2 = combined_aabb.get_center()
+var radius_2 = combined_aabb.size.length() / 2.0
 
 # Calculate camera position based on current view direction
-var view_dir = (camera.global_position - target_position).normalized()
-var distance = radius * 2.0 * distance_factor
+var view_dir_2 = (camera.global_position - target_position).normalized()
+var distance_2 = radius * 2.0 * distance_factor
 	distance = clamp(distance, min_zoom_distance, max_zoom_distance)
 
-var new_camera_pos = center + view_dir * distance
-var new_transform = camera.global_transform
+var new_camera_pos_2 = center + view_dir * distance
+var new_transform_2 = camera.global_transform
 	new_transform.origin = new_camera_pos
 
 	# Look at model center
@@ -227,10 +227,10 @@ var direction = (camera.global_position - target_position).normalized()
 	camera.global_position = target_position + direction * _camera_distance
 
 
-var input_dir = Vector3.ZERO
+var input_dir_2 = Vector3.ZERO
 
 # Get input direction
-var viewport_size = get_viewport().get_visible_rect().size
+var viewport_size_2 = get_viewport().get_visible_rect().size
 var mouse_velocity = Input.get_last_mouse_velocity()
 
 # Convert mouse movement to pan input
@@ -255,20 +255,20 @@ var move_vec = (
 	current_view = AnatomicalView.CUSTOM
 
 
-var zoom_input = 0.0
+var zoom_input_2 = 0.0
 
 # Get input from keyboard
-var direction = (camera.global_position - target_position).normalized()
+var direction_2 = (camera.global_position - target_position).normalized()
 	camera.global_position = target_position + direction * _camera_distance
 
 	# Mark as custom view
 	current_view = AnatomicalView.CUSTOM
 
 
-var input_dir = Vector3.ZERO
+var input_dir_3 = Vector3.ZERO
 
 # Get input direction
-var move_vec = (
+var move_vec_2 = (
 	camera.global_transform.basis * input_dir.normalized() * movement_speed * delta * 5.0
 	)
 	camera.global_position += move_vec
@@ -281,8 +281,8 @@ var forward_dir = -camera.global_transform.basis.z
 	current_view = AnatomicalView.CUSTOM
 
 	# Handle rotation with mouse
-var viewport_size = get_viewport().get_visible_rect().size
-var mouse_velocity = Input.get_last_mouse_velocity()
+var viewport_size_3 = get_viewport().get_visible_rect().size
+var mouse_velocity_2 = Input.get_last_mouse_velocity()
 
 # Convert mouse movement to rotation
 var rot_x = -mouse_velocity.x / viewport_size.x * orbit_speed * 0.5
@@ -293,7 +293,7 @@ var rot_y = -mouse_velocity.y / viewport_size.y * orbit_speed * 0.5
 	camera.rotate_object_local(Vector3(1, 0, 0), rot_y)
 
 	# Update target position
-var forward_dir = -camera.global_transform.basis.z
+var forward_dir_2 = -camera.global_transform.basis.z
 	target_position = camera.global_position + forward_dir * _camera_distance
 
 
@@ -317,7 +317,7 @@ var dir = (camera.global_position - target_position).normalized()
 	camera_movement_completed.emit()
 
 
-var screenshot_env = _environment.duplicate()
+var screenshot_env_2 = _environment.duplicate()
 
 # Enhanced settings for screenshots
 	screenshot_env.ssao_enabled = true

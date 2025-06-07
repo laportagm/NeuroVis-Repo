@@ -16,7 +16,7 @@ var hipocampus_data = "Should be hippocampus"
 
 
 # Performance critical function without annotation
-var result = ""
+var result_2 = ""
 var node = get_node("SomePath")
 node.do_something()  # Could be null
 

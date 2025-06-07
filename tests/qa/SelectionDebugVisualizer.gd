@@ -32,7 +32,7 @@ add_child(hit_marker)
 
 
 ## Show collision shapes
-var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
+var brain_model_parent_2 = _main_scene.get_node_or_null("BrainModel")
 var color = HIT_COLOR if success else Color(1.0, 0.5, 0.0, 1.0)  # Orange for fail
 var marker = _create_sphere_mesh(world_pos, 0.02, color)
 _click_markers.append(marker)
@@ -44,7 +44,7 @@ old_marker.queue_free()
 
 
 ## Toggle specific visualizations
-var meshes: Array[MeshInstance3D] = []
+var meshes_2: Array[MeshInstance3D] = []
 var search_name = structure_name.to_lower().replace("_", " ")
 
 var node_name = node.name.to_lower()
@@ -73,7 +73,7 @@ mesh_instance_3d.material_override = material
 # Store for later cleanup
 var mesh_instance = MeshInstance3D.new()
 var immediate_mesh = ImmediateMesh.new()
-var material = StandardMaterial3D.new()
+var material_2 = StandardMaterial3D.new()
 
 material.vertex_color_use_as_albedo = true
 material.albedo_color = color
@@ -103,37 +103,37 @@ sphere_mesh.rings = 4
 sphere_mesh.radius = radius
 sphere_mesh.height = radius * 2
 
-var mesh_instance = MeshInstance3D.new()
+var mesh_instance_2 = MeshInstance3D.new()
 mesh_instance.mesh = sphere_mesh
 mesh_instance.position = position
 
-var material = StandardMaterial3D.new()
+var material_3 = StandardMaterial3D.new()
 material.albedo_color = color
 material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 
 mesh_instance.material_override = material
 
-var meshes = _find_structure_meshes(parent, structure_name)
+var meshes_3 = _find_structure_meshes(parent, structure_name)
 
 var current = mesh.get_parent()
-var mesh_instance = MeshInstance3D.new()
+var mesh_instance_3 = MeshInstance3D.new()
 
 # Create mesh based on shape type
 var box_shape = collision_shape.shape as BoxShape3D
-var box_mesh = BoxMesh.new()
+var box_mesh_2 = BoxMesh.new()
 box_mesh.size = box_shape.size
 mesh_instance.mesh = box_mesh
 
 var sphere_shape = collision_shape.shape as SphereShape3D
-var sphere_mesh = SphereMesh.new()
+var sphere_mesh_2 = SphereMesh.new()
 sphere_mesh.radius = sphere_shape.radius
 sphere_mesh.height = sphere_shape.radius * 2
 mesh_instance.mesh = sphere_mesh
 
 # Trimesh - create a simple box to indicate presence
-var aabb = (
+var aabb_2 = (
 collision_shape.get_parent().get_aabb()
-var box_mesh = BoxMesh.new()
+var box_mesh_3 = BoxMesh.new()
 box_mesh.size = aabb.size
 mesh_instance.mesh = box_mesh
 
@@ -143,7 +143,7 @@ mesh_instance.mesh = box_mesh
 mesh_instance.global_transform = collision_shape.global_transform
 
 # Create material
-var material = StandardMaterial3D.new()
+var material_4 = StandardMaterial3D.new()
 material.albedo_color = COLLISION_COLOR
 material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 material.cull_mode = BaseMaterial3D.CULL_DISABLED

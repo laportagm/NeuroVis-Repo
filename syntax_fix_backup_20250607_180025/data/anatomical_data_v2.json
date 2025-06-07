@@ -1,0 +1,337 @@
+{
+  "version": "2.0.0",
+  "metadata": {
+    "created": "2024-12-01",
+    "authors": ["NeuroVis Team"],
+    "sources": [
+      "Gray's Anatomy (41st Edition)",
+      "NeuroNames Database",
+      "Allen Brain Atlas",
+      "Kandel's Principles of Neural Science"
+    ],
+    "license": "Educational Use"
+  },
+  "structures": [
+    {
+      "id": "hippocampus",
+      "displayName": "Hippocampus",
+      "alternativeNames": ["Cornu Ammonis", "Archicortex"],
+      "category": "Limbic System",
+      "parentStructure": "temporal_lobe",
+      "subStructures": ["ca1", "ca2", "ca3", "dentate_gyrus"],
+      "shortDescription": "A seahorse-shaped structure crucial for memory formation and spatial navigation.",
+      "detailedDescription": "The hippocampus is a complex brain structure embedded deep in the temporal lobe. It has a major role in learning and memory, particularly in the formation of new memories about experienced events (episodic memory) and facts (semantic memory). The hippocampus is also crucial for spatial memory and navigation.",
+      "functions": [
+        {
+          "name": "Memory Consolidation",
+          "description": "Transfers information from short-term to long-term memory",
+          "importance": "critical"
+        },
+        {
+          "name": "Spatial Navigation",
+          "description": "Contains place cells that help create cognitive maps",
+          "importance": "critical"
+        },
+        {
+          "name": "Pattern Separation",
+          "description": "Distinguishes between similar experiences to reduce memory interference",
+          "importance": "high"
+        },
+        {
+          "name": "Emotion Regulation",
+          "description": "Works with amygdala to attach emotional significance to memories",
+          "importance": "moderate"
+        }
+      ],
+      "connections": [
+        {
+          "target": "entorhinal_cortex",
+          "type": "bidirectional",
+          "pathway": "Perforant Path",
+          "strength": 0.9,
+          "description": "Main input/output pathway for hippocampal processing"
+        },
+        {
+          "target": "amygdala",
+          "type": "bidirectional",
+          "pathway": "Direct projections",
+          "strength": 0.7,
+          "description": "Emotional memory processing"
+        },
+        {
+          "target": "prefrontal_cortex",
+          "type": "efferent",
+          "pathway": "Fornix",
+          "strength": 0.8,
+          "description": "Memory retrieval and executive control"
+        },
+        {
+          "target": "mammillary_bodies",
+          "type": "efferent",
+          "pathway": "Fornix",
+          "strength": 0.6,
+          "description": "Part of Papez circuit for memory"
+        }
+      ],
+      "clinicalRelevance": [
+        {
+          "condition": "Alzheimer's Disease",
+          "involvement": "One of the first regions affected, leading to memory loss",
+          "severity": "severe"
+        },
+        {
+          "condition": "Temporal Lobe Epilepsy",
+          "involvement": "Common seizure focus, may require surgical intervention",
+          "severity": "moderate"
+        },
+        {
+          "condition": "PTSD",
+          "involvement": "Altered hippocampal volume and function",
+          "severity": "moderate"
+        },
+        {
+          "condition": "Depression",
+          "involvement": "Reduced neurogenesis and volume",
+          "severity": "mild"
+        }
+      ],
+      "developmentalInfo": {
+        "embryonicOrigin": "Medial pallium",
+        "developmentTimeline": "Forms early but continues developing into adolescence",
+        "neurogenesis": "One of few brain regions with adult neurogenesis",
+        "maturationAge": "Fully mature by early 20s"
+      },
+      "anatomicalDetails": {
+        "volume": "3.5-4.0 cm³ per hemisphere",
+        "location": {
+          "lobe": "Temporal",
+          "gyrus": "Parahippocampal",
+          "depth": "Medial temporal lobe"
+        },
+        "bloodSupply": [
+          "Posterior cerebral artery",
+          "Anterior choroidal artery"
+        ],
+        "cytoarchitecture": {
+          "layers": 3,
+          "primaryCellType": "Pyramidal neurons",
+          "specializedCells": ["Place cells", "Grid cells", "Time cells"]
+        }
+      },
+      "neurotransmitters": [
+        {
+          "name": "Glutamate",
+          "role": "Primary excitatory neurotransmitter",
+          "receptors": ["NMDA", "AMPA", "Kainate"]
+        },
+        {
+          "name": "GABA",
+          "role": "Primary inhibitory neurotransmitter",
+          "receptors": ["GABA-A", "GABA-B"]
+        },
+        {
+          "name": "Acetylcholine",
+          "role": "Modulates learning and memory",
+          "receptors": ["Nicotinic", "Muscarinic"]
+        }
+      ],
+      "researchNotes": [
+        {
+          "year": 2014,
+          "discovery": "Discovery of time cells that encode temporal information",
+          "researchers": ["Eichenbaum et al."],
+          "significance": "Explains how hippocampus encodes episodic memories"
+        },
+        {
+          "year": 2005,
+          "discovery": "Place cells discovered to have grid-like firing patterns",
+          "researchers": ["O'Keefe and Dostrovsky"],
+          "significance": "Nobel Prize winning work on spatial navigation"
+        }
+      ],
+      "educationalLevel": {
+        "beginner": {
+          "summary": "The hippocampus is like your brain's 'save button' for memories. It helps you remember facts and experiences.",
+          "analogy": "Think of it as a librarian that decides which books (memories) are important enough to keep permanently.",
+          "keyPoints": [
+            "Shaped like a seahorse",
+            "Helps form new memories",
+            "Important for finding your way around"
+          ]
+        },
+        "intermediate": {
+          "summary": "The hippocampus is essential for declarative memory formation and spatial navigation, working closely with surrounding cortical areas.",
+          "keyPoints": [
+            "Converts short-term memories to long-term storage",
+            "Contains specialized cells for spatial mapping",
+            "Vulnerable to stress and aging",
+            "Shows adult neurogenesis"
+          ]
+        },
+        "advanced": {
+          "summary": "The hippocampus exhibits a trisynaptic circuit crucial for memory encoding via LTP/LTD mechanisms, with distinct functional gradients along its longitudinal axis.",
+          "keyPoints": [
+            "CA3 performs pattern completion via recurrent collaterals",
+            "DG performs pattern separation via sparse coding",
+            "Ventral-dorsal gradient: emotion vs. cognition",
+            "Phase precession and theta rhythms coordinate memory encoding"
+          ]
+        }
+      },
+      "interactiveFeatures": {
+        "animations": [
+          {
+            "id": "memory_formation",
+            "title": "Memory Formation Pathway",
+            "description": "Shows information flow from cortex through hippocampus"
+          },
+          {
+            "id": "place_cell_firing",
+            "title": "Place Cell Activity",
+            "description": "Demonstrates how place cells fire in specific locations"
+          }
+        ],
+        "3dHighlights": [
+          {
+            "region": "ca1",
+            "color": "#FF6B6B",
+            "description": "CA1 - Output region"
+          },
+          {
+            "region": "ca3",
+            "color": "#4ECDC4",
+            "description": "CA3 - Autoassociative network"
+          },
+          {
+            "region": "dentate_gyrus",
+            "color": "#95E1D3",
+            "description": "Dentate Gyrus - Pattern separation"
+          }
+        ]
+      },
+      "assessmentQuestions": [
+        {
+          "id": "hipp_q1",
+          "level": "beginner",
+          "question": "What is the main function of the hippocampus?",
+          "options": [
+            "Controlling movement",
+            "Forming new memories",
+            "Processing vision",
+            "Regulating heartbeat"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The hippocampus is primarily responsible for forming new memories, particularly episodic and spatial memories."
+        },
+        {
+          "id": "hipp_q2",
+          "level": "intermediate",
+          "question": "Which pathway is the main input to the hippocampus?",
+          "options": [
+            "Corpus callosum",
+            "Perforant path",
+            "Corticospinal tract",
+            "Optic radiation"
+          ],
+          "correctAnswer": 1,
+          "explanation": "The perforant path from the entorhinal cortex is the main input pathway to the hippocampus."
+        }
+      ],
+      "relatedStructures": [
+        {
+          "id": "entorhinal_cortex",
+          "relationship": "Primary input/output",
+          "importance": "critical"
+        },
+        {
+          "id": "amygdala",
+          "relationship": "Emotional memory processing",
+          "importance": "high"
+        },
+        {
+          "id": "fornix",
+          "relationship": "Major output pathway",
+          "importance": "high"
+        }
+      ],
+      "mediaResources": [
+        {
+          "type": "image",
+          "url": "assets/images/hippocampus_anatomy.png",
+          "caption": "Anatomical structure of the hippocampus",
+          "credit": "NeuroVis Team"
+        },
+        {
+          "type": "video",
+          "url": "assets/videos/memory_formation.mp4",
+          "caption": "Memory formation in the hippocampus",
+          "duration": 120
+        }
+      ],
+      "tags": [
+        "memory",
+        "limbic_system",
+        "temporal_lobe",
+        "neurogenesis",
+        "spatial_navigation",
+        "alzheimers_target"
+      ],
+      "lastUpdated": "2024-12-01T10:00:00Z",
+      "reviewedBy": ["Dr. Jane Smith", "Dr. John Doe"],
+      "confidence": 0.95
+    }
+  ],
+  "pathways": [
+    {
+      "id": "papez_circuit",
+      "name": "Papez Circuit",
+      "description": "Neural circuit involved in emotion and memory",
+      "components": [
+        "hippocampus",
+        "fornix",
+        "mammillary_bodies",
+        "anterior_thalamus",
+        "cingulate_cortex",
+        "entorhinal_cortex"
+      ],
+      "function": "Emotional processing and memory consolidation",
+      "clinicalRelevance": "Disruption leads to memory disorders"
+    }
+  ],
+  "systems": [
+    {
+      "id": "limbic_system",
+      "name": "Limbic System",
+      "description": "Structures involved in emotion, behavior, and memory",
+      "structures": [
+        "hippocampus",
+        "amygdala",
+        "thalamus",
+        "hypothalamus",
+        "cingulate_gyrus",
+        "fornix"
+      ],
+      "primaryFunctions": [
+        "Emotional regulation",
+        "Memory formation",
+        "Behavioral responses",
+        "Autonomic regulation"
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Long-term potentiation",
+      "abbreviation": "LTP",
+      "definition": "Persistent strengthening of synapses based on recent patterns of activity",
+      "relatedStructures": ["hippocampus"],
+      "category": "neurophysiology"
+    },
+    {
+      "term": "Neurogenesis",
+      "definition": "The formation of new neurons from neural stem cells",
+      "relatedStructures": ["hippocampus", "subventricular_zone"],
+      "category": "development"
+    }
+  ]
+}

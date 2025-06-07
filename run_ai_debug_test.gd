@@ -15,7 +15,7 @@ var commands_to_check = [
 "ai_gemini_reset"
 ]
 var cmd_func = debug_cmd.get("commands")
-var cmd_func = debug_cmd.get("commands")
+var cmd_func_2 = debug_cmd.get("commands")
 var provider_names = [
 "OPENAI_GPT", "ANTHROPIC_CLAUDE", "GOOGLE_GEMINI", "GEMINI_USER", "MOCK_RESPONSES"
 ]
@@ -127,4 +127,3 @@ func _fix_orphaned_code():
 
 		# Keep running for observation
 		await get_tree().create_timer(3.0).timeout
-

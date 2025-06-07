@@ -467,7 +467,7 @@ func reset_to_preset_default() -> bool:
 
 func _create_lighting_components() -> void:
 	"""Create the three-point lighting components for professional medical visualization
-	
+
 	Three-point lighting is the standard in medical photography and visualization:
 	- Key light: Primary illumination defining form and structure
 	- Fill light: Reduces harsh shadows, reveals detail in crevices

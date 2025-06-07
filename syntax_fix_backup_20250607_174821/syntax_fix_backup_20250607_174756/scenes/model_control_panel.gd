@@ -226,4 +226,3 @@ func _animate_entrance(control: Control, delay: float = 0.0) -> void:
 	"""Smooth entrance animation for any control"""
 	control.modulate.a = 0
 	control.scale = Vector2(0.9, 0.9)
-

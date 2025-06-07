@@ -1,0 +1,166 @@
+name: NeuroVis Linting and Code Quality
+
+on:
+  push:
+    branches: [ main, develop, 'feature/*' ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint and Validate Code
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Full history for better analysis
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pip
+          .claude/.venv
+          .claude/cache
+        key: ${{ runner.os }}-lint-${{ hashFiles('requirements.txt', '.pre-commit-config.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-lint-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pre-commit
+        pip install gdtoolkit
+        # Install other Python dependencies
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Run pre-commit hooks
+      run: |
+        pre-commit install
+        pre-commit run --all-files --show-diff-on-failure
+    
+    - name: Run NeuroVis linting
+      run: |
+        chmod +x .claude/lint-and-fix.sh
+        .claude/lint-and-fix.sh --ci
+      env:
+        CI: true
+    
+    - name: Upload lint report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: lint-report
+        path: |
+          .claude/reports/
+          lint-report.json
+        retention-days: 30
+    
+    - name: Comment PR with results
+      if: github.event_name == 'pull_request' && always()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const reportPath = '.claude/reports/summary.md';
+          
+          if (fs.existsSync(reportPath)) {
+            const report = fs.readFileSync(reportPath, 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🧹 Linting Report\n\n${report}`
+            });
+          }
+
+  validate-medical:
+    name: Validate Medical Terminology
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install validation tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyspellchecker
+    
+    - name: Run medical terminology validation
+      run: |
+        python .claude/hooks/validate-medical-terms.py $(find . -name "*.gd" -o -name "*.json")
+    
+    - name: Check educational metadata
+      run: |
+        python .claude/hooks/check-educational-metadata.py $(find . -name "*.gd" -o -name "*.json")
+
+  performance-check:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Run performance checks
+      run: |
+        python .claude/hooks/check-performance.py $(find . -name "*.gd")
+    
+    - name: Check accessibility compliance
+      run: |
+        python .claude/hooks/check-accessibility.py $(find ui/ -name "*.gd")
+
+  format-check:
+    name: Code Formatting Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install gdformat
+      run: |
+        python -m pip install --upgrade pip
+        pip install gdtoolkit
+    
+    - name: Check GDScript formatting
+      run: |
+        gdformat --check $(find . -name "*.gd" -not -path "./.godot/*" -not -path "./addons/*")
+    
+    - name: Generate diff if formatting needed
+      if: failure()
+      run: |
+        gdformat --diff $(find . -name "*.gd" -not -path "./.godot/*" -not -path "./addons/*") > formatting.diff
+        cat formatting.diff
+    
+    - name: Upload formatting diff
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: formatting-diff
+        path: formatting.diff

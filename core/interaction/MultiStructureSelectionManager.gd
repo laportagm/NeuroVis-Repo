@@ -58,7 +58,7 @@ selection_limit_reached.emit()
 _show_selection_limit_feedback()
 
 
-var state = _get_next_selection_state()
+var state_2 = _get_next_selection_state()
 _add_selection(mesh, state)
 
 var selection_data = {
@@ -89,8 +89,8 @@ state_material.albedo_color.a = 0.85
 
 # Apply to all surfaces
 var surface_count = mesh.mesh.get_surface_count()
-var vf = get("visual_feedback")
-var orig_mats = get("original_materials")
+var vf_2 = get("visual_feedback")
+var orig_mats_2 = get("original_materials")
 var original_mat = orig_mats.get(mesh) if orig_mats != null else null
 vf.clear_feedback(mesh, original_mat)
 # TODO: Temporarily disabled while fixing inheritance
@@ -111,7 +111,7 @@ var name2 = _normalize_structure_name(_selected_structures[j]["name"])
 
 var info = []
 var current_time = Time.get_ticks_msec() / 1000.0
-var colors = SELECTION_COLORS[state]
+var colors_2 = SELECTION_COLORS[state]
 var material = StandardMaterial3D.new()
 
 material.albedo_color = colors["default"]
@@ -121,7 +121,7 @@ material.emission_energy_multiplier = colors["emission"]
 material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 material.albedo_color.a = 0.85
 
-var surface_count = mesh.mesh.get_surface_count()
+var surface_count_2 = mesh.mesh.get_surface_count()
 var first_state = _selected_structures[0]["state"]
 
 var _selected_structures: Array = []  # Array of Dictionary: {mesh, state, name, timestamp}

@@ -734,5 +734,3 @@ func _update_status(status: String) -> void:
 	"""Update status label"""
 	if status_label:
 		status_label.text = status
-
-

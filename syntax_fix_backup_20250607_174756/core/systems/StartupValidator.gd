@@ -385,4 +385,3 @@ func _validate_accessibility() -> void:
 	"""Validate accessibility features"""
 	print("[StartupValidator] Validating accessibility...")
 	validation_progress.emit(ValidationCategory.ACCESSIBILITY, 0.0)
-

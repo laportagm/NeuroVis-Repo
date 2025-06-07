@@ -103,7 +103,7 @@ container.hide()  # Hide initially
 
 
 # === HELPER FUNCTIONS ===
-var container = VBoxContainer.new()
+var container_2 = VBoxContainer.new()
 container.size_flags_horizontal = Control.SIZE_FILL
 container.size_flags_vertical = Control.SIZE_FILL
 container.add_theme_constant_override("separation", 24)
@@ -171,7 +171,7 @@ var connect_button = UIComponentFactory.create_button("Let's Get Started", "prim
 	next_button = connect_button
 
 
-var title = UIComponentFactory.create_label("Get Your API Key", "heading")
+var title_2 = UIComponentFactory.create_label("Get Your API Key", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	container.add_child(title)
 
@@ -203,7 +203,7 @@ var note_text = UIComponentFactory.create_label(
 	container.add_child(note_container)
 
 	# Button container
-var button_container = HBoxContainer.new()
+var button_container_2 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	button_container.add_theme_constant_override("separation", 16)
 
@@ -225,7 +225,7 @@ var continue_button = UIComponentFactory.create_button("I Have My Key", "primary
 	next_button = continue_button
 
 
-var title = UIComponentFactory.create_label("Enter Your API Key", "heading")
+var title_3 = UIComponentFactory.create_label("Enter Your API Key", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.set_meta("_accessible_description", "Dialog title: Enter Your API Key")
 	container.add_child(title)
@@ -256,7 +256,7 @@ var key_input_row = HBoxContainer.new()
 	# Enable keyboard navigation
 	api_key_input.focus_mode = Control.FOCUS_ALL
 
-var theme_manager = SafeAutoloadAccess.get_autoload("UIThemeManager")
+var theme_manager_2 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var contrast_color = (
 	theme_manager.get_color("text_primary")
 var educational_note = UIComponentFactory.create_label(
@@ -271,9 +271,9 @@ var educational_note = UIComponentFactory.create_label(
 
 	# Ensure minimum font size
 var theme_manager2 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var min_font_size = 16
-var current_size = educational_note.get_theme_font_size("font_size")
-var button_container = HBoxContainer.new()
+var min_font_size_2 = 16
+var current_size_2 = educational_note.get_theme_font_size("font_size")
+var button_container_3 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	button_container.add_theme_constant_override("separation", 16)
 
@@ -286,7 +286,7 @@ var back_button = UIComponentFactory.create_button("Back", "secondary")
 	back_button.set_meta("_accessible_description", "Go back to previous screen")
 
 	# Connect button
-var connect_button = UIComponentFactory.create_button("Connect", "primary")
+var connect_button_2 = UIComponentFactory.create_button("Connect", "primary")
 	connect_button.custom_minimum_size.x = 120
 	connect_button.custom_minimum_size.y = 44  # WCAG minimum touch target size
 	connect_button.pressed.connect(_on_next_button_pressed)
@@ -302,7 +302,7 @@ var connect_button = UIComponentFactory.create_button("Connect", "primary")
 	next_button = connect_button
 
 
-var title = UIComponentFactory.create_label("🎉 Setup Complete!", "heading")
+var title_4 = UIComponentFactory.create_label("🎉 Setup Complete!", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.set_meta("_accessible_description", "Setup complete - success message")
 	container.add_child(title)
@@ -331,8 +331,8 @@ var success_message = UIComponentFactory.create_label(
 
 	# Ensure minimum font size and proper contrast
 var theme_manager3 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var min_font_size = 16
-var current_size = success_message.get_theme_font_size("font_size")
+var min_font_size_3 = 16
+var current_size_3 = success_message.get_theme_font_size("font_size")
 var examples_title = UIComponentFactory.create_label("Try asking about:", "subheading")
 	examples_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	examples_title.set_meta("_accessible_description", "Example questions section")
@@ -355,7 +355,7 @@ var example_label = UIComponentFactory.create_label(example, "caption")
 
 	# Make captions more readable with proper contrast
 var theme_manager10 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var button_container = CenterContainer.new()
+var button_container_4 = CenterContainer.new()
 var get_started_button = UIComponentFactory.create_button("Get Started", "primary")
 	get_started_button.custom_minimum_size.x = 200
 	get_started_button.custom_minimum_size.y = 44  # WCAG minimum touch target size
@@ -381,7 +381,7 @@ var auto_close_notice = UIComponentFactory.create_label(
 	next_button = get_started_button
 
 
-var container = HBoxContainer.new()
+var container_3 = HBoxContainer.new()
 	container.add_theme_constant_override("separation", 16)
 
 var number = Label.new()
@@ -408,13 +408,13 @@ var root_rect = get_viewport().get_visible_rect()
 	position.y = (root_rect.size.y - size.y) / 2.0
 
 
-var key = api_key_input.text.strip_edges()
+var key_2 = api_key_input.text.strip_edges()
 
 # Skip if key is not valid
-var key = ""
+var key_3 = ""
 var theme_manager14 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var theme_manager15 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.3)
 
 	# Show initial state
@@ -435,7 +435,7 @@ var top_spacer = Control.new()
 	content_container.add_child(top_spacer)
 
 	# Create title - "Connect to Gemini"
-var title = UIComponentFactory.create_label("Connect to Gemini", "heading")
+var title_5 = UIComponentFactory.create_label("Connect to Gemini", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 28)
 	content_container.add_child(title)
@@ -461,7 +461,7 @@ var button_spacer = Control.new()
 	content_container.add_child(button_spacer)
 
 	# Create primary button - "Let's Get Started"
-var button_container = HBoxContainer.new()
+var button_container_5 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_container.add_child(button_container)
 
@@ -476,7 +476,7 @@ var bottom_spacer = Control.new()
 	content_container.add_child(bottom_spacer)
 
 	# Store reference to button for keyboard navigation
-var content_container = VBoxContainer.new()
+var content_container_2 = VBoxContainer.new()
 	content_container.size_flags_horizontal = Control.SIZE_FILL
 	content_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_theme_constant_override("separation", 24)
@@ -484,12 +484,12 @@ var content_container = VBoxContainer.new()
 	main_container.add_child(content_container)
 
 	# Add top spacer for vertical centering
-var top_spacer = Control.new()
+var top_spacer_2 = Control.new()
 	top_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_child(top_spacer)
 
 	# Create title - "Almost There!"
-var title = UIComponentFactory.create_label("Almost There!", "heading")
+var title_6 = UIComponentFactory.create_label("Almost There!", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 28)
 	content_container.add_child(title)
@@ -546,10 +546,10 @@ var steps_container = VBoxContainer.new()
 	steps_container.add_theme_constant_override("separation", 8)
 	inner_content.add_child(steps_container)
 
-var step1 = UIComponentFactory.create_label("1. Sign in with Google", "caption")
-var step2 = UIComponentFactory.create_label('2. Click "Get API key"', "caption")
-var step3 = UIComponentFactory.create_label('3. Click "Create API key"', "caption")
-var step4 = UIComponentFactory.create_label("4. Copy your key", "caption")
+var step1_2 = UIComponentFactory.create_label("1. Sign in with Google", "caption")
+var step2_2 = UIComponentFactory.create_label('2. Click "Get API key"', "caption")
+var step3_2 = UIComponentFactory.create_label('3. Click "Create API key"', "caption")
+var step4_2 = UIComponentFactory.create_label("4. Copy your key", "caption")
 
 var theme_manager19 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var help_text = UIComponentFactory.create_label(
@@ -559,28 +559,28 @@ var help_text = UIComponentFactory.create_label(
 	help_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	help_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 var theme_manager20 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var button_spacer = Control.new()
+var button_spacer_2 = Control.new()
 	button_spacer.custom_minimum_size.y = 24
 	content_container.add_child(button_spacer)
 
 	# Create button container
-var button_container = HBoxContainer.new()
+var button_container_6 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_container.add_child(button_container)
 
 	# Create "I Have My Key" button
-var continue_button = UIComponentFactory.create_button("I Have My Key", "primary")
+var continue_button_2 = UIComponentFactory.create_button("I Have My Key", "primary")
 	continue_button.custom_minimum_size = Vector2(200, 48)
 	continue_button.pressed.connect(_on_continue_button_pressed)
 	button_container.add_child(continue_button)
 
 	# Add bottom spacer for vertical centering
-var bottom_spacer = Control.new()
+var bottom_spacer_2 = Control.new()
 	bottom_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_child(bottom_spacer)
 
 	# Focus the continue button
-var content_container = VBoxContainer.new()
+var content_container_3 = VBoxContainer.new()
 	content_container.size_flags_horizontal = Control.SIZE_FILL
 	content_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_theme_constant_override("separation", 24)
@@ -588,18 +588,18 @@ var content_container = VBoxContainer.new()
 	main_container.add_child(content_container)
 
 	# Add top spacer for vertical centering
-var top_spacer = Control.new()
+var top_spacer_3 = Control.new()
 	top_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_child(top_spacer)
 
 	# Create title - "Perfect! Now Paste Your Key"
-var title = UIComponentFactory.create_label("Perfect! Now Paste Your Key", "heading")
+var title_7 = UIComponentFactory.create_label("Perfect! Now Paste Your Key", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 28)
 	content_container.add_child(title)
 
 	# Create instruction text
-var instruction = UIComponentFactory.create_label(
+var instruction_2 = UIComponentFactory.create_label(
 	"Copy your API key from Google Console and paste it below.", "body"
 	)
 	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -622,7 +622,7 @@ var tip_text = UIComponentFactory.create_label(
 	'Your key should start with "AIza" and be about 39 characters long', "caption"
 	)
 var theme_manager22 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var input_container = MarginContainer.new()
+var input_container_2 = MarginContainer.new()
 	input_container.add_theme_constant_override("margin_left", 60)
 	input_container.add_theme_constant_override("margin_right", 60)
 	input_container.add_theme_constant_override("margin_top", 16)
@@ -659,12 +659,12 @@ var new_style = style.duplicate()
 	content_container.add_child(status_label)
 
 	# Add some spacing before the button
-var button_spacer = Control.new()
+var button_spacer_3 = Control.new()
 	button_spacer.custom_minimum_size.y = 16
 	content_container.add_child(button_spacer)
 
 	# Create button container
-var button_container = HBoxContainer.new()
+var button_container_7 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_container.add_child(button_container)
 
@@ -676,7 +676,7 @@ var button_container = HBoxContainer.new()
 	button_container.add_child(next_button)
 
 	# Add bottom spacer for vertical centering
-var bottom_spacer = Control.new()
+var bottom_spacer_3 = Control.new()
 	bottom_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_child(bottom_spacer)
 
@@ -684,7 +684,7 @@ var bottom_spacer = Control.new()
 	api_key_input.grab_focus()
 
 
-var key = text.strip_edges()
+var key_4 = text.strip_edges()
 
 # Basic validation
 var theme_manager24 = SafeAutoloadAccess.get_autoload("UIThemeManager")
@@ -697,7 +697,7 @@ var theme_manager28 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var key_to_validate = api_key_input.text.strip_edges()
 
 # Validate the API key using the service
-var content_container = VBoxContainer.new()
+var content_container_4 = VBoxContainer.new()
 	content_container.size_flags_horizontal = Control.SIZE_FILL
 	content_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_theme_constant_override("separation", 32)
@@ -705,7 +705,7 @@ var content_container = VBoxContainer.new()
 	main_container.add_child(content_container)
 
 	# Add top spacer for vertical centering
-var top_spacer = Control.new()
+var top_spacer_4 = Control.new()
 	top_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_child(top_spacer)
 
@@ -720,7 +720,7 @@ var checkmark = TextureRect.new()
 	checkmark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
 	# Try to use a checkmark icon
-var image = Image.create(80, 80, false, Image.FORMAT_RGBA8)
+var image_2 = Image.create(80, 80, false, Image.FORMAT_RGBA8)
 	image.fill(Color(0, 0, 0, 0))
 var dist = Vector2(x - 40, y - 40).length()
 var texture = ImageTexture.create_from_image(image)
@@ -731,7 +731,7 @@ var texture = ImageTexture.create_from_image(image)
 	checkmark_container.add_child(checkmark)
 
 	# Animate the checkmark with a subtle bounce
-var tween = checkmark.create_tween()
+var tween_3 = checkmark.create_tween()
 	tween.set_trans(Tween.TRANS_BOUNCE)
 	tween.set_ease(Tween.EASE_OUT)
 	checkmark.scale = Vector2(0.0, 0.0)
@@ -744,7 +744,7 @@ var rotate_tween = checkmark.create_tween()
 	rotate_tween.tween_property(checkmark, "rotation", deg_to_rad(360), 0.6)
 
 	# Create title - "You're Connected!"
-var title = UIComponentFactory.create_label("You're Connected!", "heading")
+var title_8 = UIComponentFactory.create_label("You're Connected!", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 32)
 var theme_manager29 = SafeAutoloadAccess.get_autoload("UIThemeManager")
@@ -759,18 +759,18 @@ var message = UIComponentFactory.create_label(
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.add_theme_font_size_override("font_size", 16)
 var theme_manager30 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var examples_container = VBoxContainer.new()
+var examples_container_2 = VBoxContainer.new()
 	examples_container.add_theme_constant_override("separation", 8)
 	content_container.add_child(examples_container)
 
-var examples_title = UIComponentFactory.create_label("Try asking:", "caption")
+var examples_title_2 = UIComponentFactory.create_label("Try asking:", "caption")
 	examples_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 var theme_manager31 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var examples_box = PanelContainer.new()
 	examples_box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 
 var theme_manager32 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var style = StyleBoxFlat.new()
+var style_2 = StyleBoxFlat.new()
 	style.bg_color = (
 	theme_manager32.get_color("surface_subtle")
 var examples_list = VBoxContainer.new()
@@ -786,17 +786,17 @@ var example3 = UIComponentFactory.create_label(
 	)
 
 var theme_manager33 = SafeAutoloadAccess.get_autoload("UIThemeManager")
-var button_spacer = Control.new()
+var button_spacer_4 = Control.new()
 	button_spacer.custom_minimum_size.y = 24
 	content_container.add_child(button_spacer)
 
 	# Create button container
-var button_container = HBoxContainer.new()
+var button_container_8 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_container.add_child(button_container)
 
 	# Create "Start Using Gemini" button with success styling
-var start_button = UIComponentFactory.create_button("Start Using Gemini", "primary")
+var start_button_2 = UIComponentFactory.create_button("Start Using Gemini", "primary")
 	start_button.custom_minimum_size = Vector2(220, 52)
 
 	# Add a subtle green tint to the button
@@ -821,12 +821,12 @@ var pressed_style = button_style.duplicate()
 	_create_celebration_particles(content_container)
 
 	# Add bottom spacer for vertical centering
-var bottom_spacer = Control.new()
+var bottom_spacer_4 = Control.new()
 	bottom_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_container.add_child(bottom_spacer)
 
 	# Focus the start button
-var auto_close_timer = get_tree().create_timer(30.0)
+var auto_close_timer_2 = get_tree().create_timer(30.0)
 	auto_close_timer.timeout.connect(_on_success_auto_close)
 
 
@@ -842,7 +842,7 @@ var rect = ColorRect.new()
 	particle.add_child(rect)
 
 	# Animate the particle
-var tween = particle.create_tween()
+var tween_4 = particle.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(
 	particle,
@@ -854,8 +854,8 @@ var tween = particle.create_tween()
 	tween.chain().tween_callback(particle.queue_free)
 
 
-var key = ""
-var key = ""
+var key_5 = ""
+var key_6 = ""
 var theme_manager35 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var theme_manager36 = SafeAutoloadAccess.get_autoload("UIThemeManager")
 

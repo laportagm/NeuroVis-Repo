@@ -91,8 +91,8 @@ var critical_resources: Array[Dictionary] = [
 {"path": "res://assets/models/Internal_Structures.glb", "type": "3d_model"}
 ]
 
-var passed: int = 0
-var total: int = critical_resources.size()
+var passed_2: int = 0
+var total_2: int = critical_resources.size()
 
 var resource_info: Dictionary = critical_resources[i]
 var exists: bool = ResourceLoader.exists(resource_info["path"])
@@ -106,7 +106,7 @@ critical_error.emit(ValidationCategory.RESOURCES, error_msg)
 validation_progress.emit(ValidationCategory.RESOURCES, float(i + 1) / float(total))
 await get_tree().process_frame
 
-var result: ValidationResult = (
+var result_2: ValidationResult = (
 ValidationResult.PASS if passed == total else ValidationResult.FAIL
 )
 _validation_results[ValidationCategory.RESOURCES] = {
@@ -138,7 +138,7 @@ var passed_count: int = 0
 var warning_count: int = 0
 var failed_count: int = 0
 
-var result: Dictionary = _validation_results[category]
+var result_3: Dictionary = _validation_results[category]
 ValidationResult.PASS:
 	passed_count += 1
 	ValidationResult.WARNING:

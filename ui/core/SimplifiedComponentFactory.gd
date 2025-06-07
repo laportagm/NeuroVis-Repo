@@ -16,8 +16,8 @@ var component = create_component(component_type, config)
 var factory_script = _safe_load_script("res://ui/panels/InfoPanelFactory.gd")
 var panel = factory_script.create_info_panel()
 var enhanced_script = _safe_load_script("res://ui/panels/EnhancedInformationPanel.gd")
-var panel = enhanced_script.new()
-var panel = PanelContainer.new()
+var panel_2 = enhanced_script.new()
+var panel_3 = PanelContainer.new()
 	panel.name = "SettingsPanel"
 	panel.custom_minimum_size = Vector2(300, 200)
 
@@ -33,18 +33,18 @@ var content = Label.new()
 	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(content)
 
-var panel = PanelContainer.new()
+var panel_4 = PanelContainer.new()
 	panel.name = "AIAssistantPanel"
 	panel.custom_minimum_size = Vector2(350, 250)
 
-var vbox = VBoxContainer.new()
+var vbox_2 = VBoxContainer.new()
 	panel.add_child(vbox)
 
-var title = Label.new()
+var title_2 = Label.new()
 	title.text = "AI Assistant"
 	vbox.add_child(title)
 
-var content = Label.new()
+var content_2 = Label.new()
 	content.text = "AI Assistant (simplified - full features coming in Phase 3)"
 	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(content)
@@ -58,18 +58,18 @@ var label = Label.new()
 var container_type = config.get("type", "vbox")
 
 "vbox":
-var panel = PanelContainer.new()
+var panel_5 = PanelContainer.new()
 	panel.name = "BasicInfoPanel"
 	panel.custom_minimum_size = Vector2(300, 200)
 
-var vbox = VBoxContainer.new()
+var vbox_3 = VBoxContainer.new()
 	panel.add_child(vbox)
 
-var title = Label.new()
+var title_3 = Label.new()
 	title.text = "Structure Information"
 	vbox.add_child(title)
 
-var content = Label.new()
+var content_3 = Label.new()
 	content.text = "Select a brain structure to see information."
 	content.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(content)
@@ -77,7 +77,7 @@ var content = Label.new()
 var fallback = PanelContainer.new()
 	fallback.name = "Fallback_" + component_type
 
-var label = Label.new()
+var label_2 = Label.new()
 	label.text = "Component: " + component_type + " (Simplified)"
 	fallback.add_child(label)
 

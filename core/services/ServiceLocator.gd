@@ -19,7 +19,7 @@ var services = []
 # Add primary services
 var status = "Available"
 var factory = _factories[service_name]
-var instance = null
+var instance_2 = null
 
 var _services: Dictionary = {}
 

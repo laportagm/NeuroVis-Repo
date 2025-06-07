@@ -1,0 +1,262 @@
+--- a/core/interaction/BrainStructureSelectionManager.gd
++++ b/core/interaction/BrainStructureSelectionManager.gd
+@@ -18,8 +18,8 @@ const HOVER_FADE_SPEED: float = 2.0
+ const OUTLINE_THICKNESS: float = 0.02
+ 
+ # Multi-ray sampling configuration
+-const MULTI_RAY_SAMPLES: int = 5  # Center + 4 corners
+-const SAMPLE_RADIUS: float = 5.0  # Pixels around click point
++const MULTI_RAY_SAMPLES: int = 9  # Center + 4 corners + 4 edges
++const SAMPLE_RADIUS: float = 8.0  # Pixels around click point (increased for better coverage)
+ 
+ # Adaptive tolerance based on structure size
+ const MIN_SELECTION_TOLERANCE: float = 2.0   # Minimum pixels
+@@ -32,6 +32,24 @@ var structure_sizes: Dictionary = {}  # mesh -> screen_size_percentage
+ var last_camera_position: Vector3
+ var last_camera_rotation: Vector3
+ 
++# Structure-specific tolerance overrides for problematic structures
++const STRUCTURE_TOLERANCE_OVERRIDES: Dictionary = {
++    "pineal_gland": 25.0,
++    "pituitary_gland": 25.0,
++    "subthalamic_nucleus": 22.0,
++    "substantia_nigra": 22.0,
++    "globus_pallidus": 20.0,
++    "caudate_nucleus": 15.0,
++    "putamen": 15.0
++}
++
++# Collision shape inflation for tiny structures
++const COLLISION_INFLATION: Dictionary = {
++    "pineal_gland": 1.5,
++    "pituitary_gland": 1.5,
++    "subthalamic_nucleus": 1.3,
++    "substantia_nigra": 1.3
++}
++
+ # Configuration variables - will be initialized in _ready()
+ var highlight_color: Color = Color(0.2, 0.8, 1.0, 1.0)  # Default cyan
+ var hover_color: Color = Color(1.0, 0.7, 0.0, 0.6)     # Default orange
+@@ -48,6 +66,7 @@ var hover_tween: Tween
+ # Selection confidence tracking
+ var last_selection_confidence: float = 0.0
+ var selection_candidates: Array[Dictionary] = []
++var debug_visualization_enabled: bool = false
+ 
+ # Signals
+ signal structure_selected(structure_name: String, mesh: MeshInstance3D)
+@@ -65,6 +84,9 @@ func _ready() -> void:
+     
+     # Start structure size caching
+     _update_structure_sizes()
++    
++    # Pre-calculate collision bounds for optimization
++    _precalculate_collision_bounds()
+ 
+ # Enhanced hover with lighter multi-ray sampling for better accuracy
+ func handle_hover_at_position(screen_position: Vector2) -> void:
+@@ -119,6 +141,10 @@ func handle_selection_at_position(screen_position: Vector2) -> void:
+     else:
+         structure_deselected.emit()
+ 
++## Enable/disable debug visualization
++func set_debug_visualization(enabled: bool) -> void:
++    debug_visualization_enabled = enabled
++
+ # Clears the current selection and restores original materials
+ func clear_current_selection() -> void:
+     if current_selected_mesh != null:
+@@ -338,10 +364,26 @@ func get_adaptive_tolerance(screen_position: Vector2) -> float:
+     
+     # Find structures near the click position
+     var nearby_structures = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
++    var smallest_structure_name = ""
+     
+     if nearby_structures.is_empty():
+         return MIN_SELECTION_TOLERANCE
+     
++    # Check for structure-specific overrides first
++    for struct_data in nearby_structures:
++        var mesh = struct_data["mesh"]
++        var normalized_name = mesh.name.to_lower().replace(" ", "_")
++        
++        if STRUCTURE_TOLERANCE_OVERRIDES.has(normalized_name):
++            # Found a structure with override, use its tolerance
++            return STRUCTURE_TOLERANCE_OVERRIDES[normalized_name]
++        
++        # Track smallest structure for adaptive calculation
++        if struct_data["screen_size"] < smallest_size:
++            smallest_size = struct_data["screen_size"]
++            smallest_structure_name = normalized_name
++    
++    # Additional bonus for known problematic structures
++    var base_tolerance = MIN_SELECTION_TOLERANCE
+     # Calculate tolerance based on smallest nearby structure
+     var smallest_size = 1.0
+     for struct_data in nearby_structures:
+@@ -351,13 +393,19 @@ func get_adaptive_tolerance(screen_position: Vector2) -> float:
+     
+     # Adaptive tolerance calculation
+     if smallest_size < SMALL_STRUCTURE_THRESHOLD:
+-        # Small structures get maximum tolerance
+-        return MAX_SELECTION_TOLERANCE
++        # Small structures get maximum tolerance + potential override
++        base_tolerance = MAX_SELECTION_TOLERANCE
++        
++        # Extra boost for very tiny structures
++        if smallest_size < 0.02:  # Less than 2% of screen
++            base_tolerance *= 1.5
+     else:
+         # Larger structures get proportionally less tolerance
+         var tolerance_range = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
+         var size_factor = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
+-        return MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
++        base_tolerance = MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
++    
++    return base_tolerance
+ 
+ ## Cast a single selection ray
+ func _cast_single_ray(screen_position: Vector2) -> Dictionary:
+@@ -396,6 +444,47 @@ func _cast_single_ray(screen_position: Vector2) -> Dictionary:
+         "normal": result.get("normal", Vector3.UP)
+     }
+ 
++## Enhanced collision detection with inflation for small structures
++func _check_inflated_collision(mesh: MeshInstance3D, world_position: Vector3) -> bool:
++    """Check if position is within inflated bounds of a structure"""
++    if not mesh or not mesh.mesh:
++        return false
++    
++    var normalized_name = mesh.name.to_lower().replace(" ", "_")
++    var inflation_factor = COLLISION_INFLATION.get(normalized_name, 1.0)
++    
++    if inflation_factor > 1.0:
++        # Check inflated bounds
++        var aabb = mesh.get_aabb()
++        var inflated_aabb = aabb.grow(aabb.size.length() * (inflation_factor - 1.0) * 0.5)
++        var local_point = mesh.global_transform.inverse() * world_position
++        
++        return inflated_aabb.has_point(local_point)
++    
++    return false
++
++## Precalculate collision bounds for all structures
++func _precalculate_collision_bounds() -> void:
++    """Cache collision bounds for performance optimization"""
++    var brain_model = get_node_or_null("/root/Node3D/BrainModel")
++    if not brain_model:
++        return
++    
++    var all_meshes = _get_all_meshes_recursive(brain_model)
++    print("[Selection] Precalculating bounds for %d structures" % all_meshes.size())
++    
++    for mesh in all_meshes:
++        if mesh.mesh:
++            var aabb = mesh.get_aabb()
++            var normalized_name = mesh.name.to_lower().replace(" ", "_")
++            
++            # Apply inflation if needed
++            var inflation_factor = COLLISION_INFLATION.get(normalized_name, 1.0)
++            if inflation_factor > 1.0:
++                aabb = aabb.grow(aabb.size.length() * (inflation_factor - 1.0) * 0.5)
++            
++            # Cache the bounds
++            mesh.set_meta("precalculated_aabb", aabb)
++
+ # Casts a ray from the camera through the screen position and returns the hit mesh
+ func _cast_selection_ray(screen_position: Vector2) -> MeshInstance3D:
+     # Get the current camera
+@@ -456,17 +545,30 @@ func _extract_mesh_from_collision(collision_result: Dictionary) -> MeshInstance3
+         # Check siblings for related mesh
+         if parent:
+             for sibling in parent.get_children():
+-                if sibling is MeshInstance3D and sibling != collider:
+-                    # Verify this mesh is related to the collision
+-                    var aabb = sibling.get_aabb()
+-                    var collision_point = collision_result.get("position", Vector3.ZERO)
+-                    var local_point = sibling.global_transform.inverse() * collision_point
+-                    
+-                    # Check if collision point is within mesh bounds (with tolerance)
+-                    var tolerance = 0.1
+-                    if aabb.grow(tolerance).has_point(local_point):
++                if sibling is MeshInstance3D:
++                    # First check inflated collision for small structures
++                    var collision_point = collision_result.get("position", Vector3.ZERO)
++                    if _check_inflated_collision(sibling, collision_point):
+                         return sibling
++                    
++                    # Then check normal bounds
++                    if sibling != collider:
++                        # Verify this mesh is related to the collision
++                        var aabb = sibling.get_aabb()
++                        var local_point = sibling.global_transform.inverse() * collision_point
++                        
++                        # Check if collision point is within mesh bounds (with tolerance)
++                        var tolerance = 0.1
++                        if aabb.grow(tolerance).has_point(local_point):
++                            return sibling
+     
++    # CollisionShape3D handling
++    if collider is CollisionShape3D:
++        var parent = collider.get_parent()
++        if parent is StaticBody3D:
++            var grandparent = parent.get_parent()
++            if grandparent is MeshInstance3D:
++                return grandparent
++                
+     # Area3D handling for trigger-based selection
+     if collider is Area3D:
+         var parent = collider.get_parent()
+@@ -626,6 +728,51 @@ func _calculate_average(values: Array) -> float:
+     
+     return sum / values.size()
+ 
++## Debug visualization for selection rays
++func _visualize_selection_rays(screen_position: Vector2, rays: Array) -> void:
++    """Visualize selection rays for debugging"""
++    if not debug_visualization_enabled:
++        return
++    
++    var debug_parent = get_node_or_null("/root/Node3D/DebugVisualization")
++    if not debug_parent:
++        debug_parent = Node3D.new()
++        debug_parent.name = "DebugVisualization"
++        get_node("/root/Node3D").add_child(debug_parent)
++    
++    # Clear previous visualizations
++    for child in debug_parent.get_children():
++        child.queue_free()
++    
++    # Draw rays
++    for ray_data in rays:
++        var line = ImmediateGeometry3D.new()
++        debug_parent.add_child(line)
++        
++        line.clear()
++        line.begin(Mesh.PRIMITIVE_LINES)
++        line.set_color(Color.RED if ray_data["hit"] else Color.YELLOW)
++        line.add_vertex(ray_data["from"])
++        line.add_vertex(ray_data["to"])
++        line.end()
++
++## Get selection statistics for analysis
++func get_selection_statistics() -> Dictionary:
++    """Return current selection system statistics"""
++    return {
++        "last_confidence": last_selection_confidence,
++        "structure_cache_size": structure_sizes.size(),
++        "multi_ray_samples": MULTI_RAY_SAMPLES,
++        "sample_radius": SAMPLE_RADIUS,
++        "tolerance_range": [MIN_SELECTION_TOLERANCE, MAX_SELECTION_TOLERANCE],
++        "small_structure_threshold": SMALL_STRUCTURE_THRESHOLD,
++        "override_count": STRUCTURE_TOLERANCE_OVERRIDES.size(),
++        "inflation_count": COLLISION_INFLATION.size()
++    }
++
++## Clear structure size cache (useful when camera changes significantly)
++func clear_structure_cache() -> void:
++    structure_sizes.clear()
++
+ # Cleanup method to prevent memory leaks
+ func _exit_tree() -> void:
+     # Clear all references

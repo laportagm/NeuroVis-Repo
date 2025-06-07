@@ -66,7 +66,7 @@ var model_name = model_def.get("name", "Unknown")
 var model_resource = load(model_def.path)
 var model_instance = model_resource.instantiate()
 var meshes_found = 0
-var model_name = model_def.get("name", "Unknown")
+var model_name_2 = model_def.get("name", "Unknown")
 
 # Process the node if it's a MeshInstance3D
 var mesh = model_node as MeshInstance3D
@@ -75,7 +75,7 @@ meshes_found += 1
 model_initialized.emit(model_name, mesh)
 
 # Recursively process children
-var model_name = model_def.get("name", "Unknown")
+var model_name_3 = model_def.get("name", "Unknown")
 var material = mesh.get_surface_override_material(i)
 var std_mat = material as StandardMaterial3D
 # Ensure material is visible
@@ -95,12 +95,12 @@ var visible_models = model_switcher.get_visible_models()
 var first_model_name = loaded_models.keys()[0]
 model_switcher.set_model_visibility(first_model_name, true)
 var camera = get_viewport().get_camera_3d()
-var model_switcher = get_node_or_null("/root/ModelSwitcherGlobal")
-var model_data = loaded_models[model_name]
-var instance = model_data["instance"]
+var model_switcher_2 = get_node_or_null("/root/ModelSwitcherGlobal")
+var model_data_2 = loaded_models[model_name]
+var instance_2 = model_data["instance"]
 
-var instance = loaded_models[model_name]["instance"]
-var model_data = loaded_models[model_name]
+var instance_3 = loaded_models[model_name]["instance"]
+var model_data_3 = loaded_models[model_name]
 var meshes = model_data.get("meshes", [])
 
 func _initialize_model_meshes(model_node: Node, model_def: Dictionary) -> void:

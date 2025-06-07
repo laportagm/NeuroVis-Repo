@@ -29,27 +29,27 @@ _safe_call_method(info_panel, "display_structure_data", [test_data], "check_info
 await get_tree().create_timer(0.5).timeout
 
 # Check children again to see if data was applied
-var main_scene = _get_validated_main_scene("check_ui_visibility")
+var main_scene_2 = _get_validated_main_scene("check_ui_visibility")
 var ui_layer = main_scene.get_node_or_null("UI_Layer")
 var child_count = ui_layer.get_child_count()
 var child = ui_layer.get_child(i)
 var viewport = get_viewport()
-var main_scene = _get_validated_main_scene("check_structure_selection_flow")
-var info_panel = main_scene.info_panel
+var main_scene_3 = _get_validated_main_scene("check_structure_selection_flow")
+var info_panel_2 = main_scene.info_panel
 
 var signal_list = info_panel.get_signal_list()
 var has_panel_closed = false
 
 var connections = info_panel.get_signal_connection_list("panel_closed")
 var target_object = connection.callable.get_object()
-var was_visible = info_panel.visible if info_panel else false
+var was_visible_2 = info_panel.visible if info_panel else false
 
 # Check if the signal exists before trying to emit it
 var indent_text = ""
 var visible_text = ""
-var main_scene = _get_validated_main_scene("test_info_panel_with_data")
-var info_panel = main_scene.info_panel
-var test_data = {
+var main_scene_4 = _get_validated_main_scene("test_info_panel_with_data")
+var info_panel_3 = main_scene.info_panel
+var test_data_2 = {
 "id": "test_structure",
 "displayName": "Test Structure",
 "shortDescription":
@@ -66,10 +66,10 @@ var test_data = {
 		info_panel.visible = true
 
 		# Force UI_Layer visibility
-var ui_layer = main_scene.get_node_or_null("UI_Layer")
-var parent = info_panel.get_parent()
-var main_scene = _get_validated_main_scene("trace_info_panel_calls")
-var info_panel = main_scene.info_panel
+var ui_layer_2 = main_scene.get_node_or_null("UI_Layer")
+var parent_2 = info_panel.get_parent()
+var main_scene_5 = _get_validated_main_scene("trace_info_panel_calls")
+var info_panel_4 = main_scene.info_panel
 var original_method = info_panel.display_structure_data
 
 # Use a more GDScript-friendly approach for function patching
@@ -433,4 +433,3 @@ func _safe_call_method(object: Object, method_name: String, args: Array, context
 func _has_signal(object: Object, signal_name: String) -> bool:
 	if object == null:
 		return false
-

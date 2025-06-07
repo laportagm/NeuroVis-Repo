@@ -142,7 +142,7 @@ _add_message("assistant", welcome_text, "Welcome")
 
 
 # === AI SERVICE INTEGRATION ===
-var gemini = get_node_or_null("/root/GeminiAI")
+var gemini_2 = get_node_or_null("/root/GeminiAI")
 var provider_name = provider_selector.get_item_text(index)
 var provider = AIAssistantService.AIProvider.get(provider_name)
 
@@ -203,7 +203,7 @@ var timestamp = UIComponentFactory.create_label(Time.get_time_string_from_system
 	message_container.add_child(header)
 
 	# Title (if provided)
-var title_label = UIComponentFactory.create_label(title, "subheading")
+var title_label_2 = UIComponentFactory.create_label(title, "subheading")
 	message_container.add_child(title_label)
 
 	# Message content
@@ -750,5 +750,3 @@ func _update_status(status: String) -> void:
 	"""Update status label"""
 	if status_label:
 		status_label.text = status
-
-

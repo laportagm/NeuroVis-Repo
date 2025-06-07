@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 	"""Called every frame"""
 	if not _is_initialized:
 		return
-	
+
 	# Process logic here
 	pass
 
@@ -49,30 +49,30 @@ func _process(delta: float) -> void:
 ## @return: {{RETURN_DESCRIPTION}}
 func {{METHOD_NAME}}({{PARAM_NAME}}: {{PARAM_TYPE}}) -> {{RETURN_TYPE}}:
 	"""{{METHOD_DOCUMENTATION}}"""
-	
+
 	# Validation
 	if {{VALIDATION_CONDITION}}:
 		push_error("[{{CLASS_NAME}}] {{ERROR_MESSAGE}}")
 		return {{ERROR_RETURN_VALUE}}
-	
+
 	# Implementation
 	# TODO: Implement method logic
-	
+
 	return {{SUCCESS_RETURN_VALUE}}
 
 # === PRIVATE METHODS ===
 func _initialize() -> void:
 	"""Initialize the component with default settings"""
-	
+
 	# Setup validation
 	if not _validate_setup():
 		push_error("[{{CLASS_NAME}}] Failed to initialize - invalid setup")
 		return
-	
+
 	# Initialize subsystems
 	_setup_connections()
 	_apply_initial_state()
-	
+
 	_is_initialized = true
 	print("[{{CLASS_NAME}}] Initialized successfully")
 
@@ -82,35 +82,35 @@ func _exit_tree() -> void:
 
 func _validate_setup() -> bool:
 	"""Validate that all required dependencies are available"""
-	
+
 	# Add validation logic
 	return true
 
 func _setup_connections() -> void:
 	"""Setup signal connections and dependencies"""
-	
+
 	# Connect signals here
 	pass
 
 func _apply_initial_state() -> void:
 	"""Apply initial state and configuration"""
-	
+
 	# Set initial state here
 	pass
 
 func _cleanup() -> void:
 	"""Clean up resources and connections"""
-	
+
 	# Cleanup logic here
 	_is_initialized = false
 
 # === EVENT HANDLERS ===
 func _on_{{EVENT_NAME}}({{PARAM_NAME}}: {{PARAM_TYPE}}) -> void:
 	"""Handle {{EVENT_DESCRIPTION}}"""
-	
+
 	if not _is_initialized:
 		return
-	
+
 	# Event handling logic
 	pass
 

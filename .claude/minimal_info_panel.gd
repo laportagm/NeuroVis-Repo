@@ -152,7 +152,7 @@ var item = _create_list_item(function_text)
 content.add_child(item)
 
 
-var content = VBoxContainer.new()
+var content_2 = VBoxContainer.new()
 content.name = "RelatedContent"
 content.visible = false
 related_section.add_child(content)
@@ -226,7 +226,7 @@ var count_label = Label.new()
 	count_label.add_theme_color_override("font_color", COLORS.text_muted)
 	header.add_child(count_label)
 
-var item = Label.new()
+var item_2 = Label.new()
 	item.text = "    " + text  # Simple indent instead of bullet
 	item.add_theme_font_size_override("font_size", FONT_SIZES.small)
 	item.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
@@ -240,11 +240,11 @@ var tween = create_tween()
 
 	item.mouse_exited.connect(
 	func():
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.tween_property(item, "modulate", Color.WHITE, ANIM.fast)
 	)
 
-var tag = Button.new()
+var tag_2 = Button.new()
 	tag.text = text
 	tag.flat = true
 
@@ -256,7 +256,7 @@ var style = StyleBoxFlat.new()
 	style.set_corner_radius_all(16)
 	style.set_content_margin_all(6)
 
-var hover_style = style.duplicate()
+var hover_style_2 = style.duplicate()
 	hover_style.bg_color = COLORS.border
 	hover_style.border_color = Color(1, 1, 1, 0.12)
 
@@ -266,9 +266,9 @@ var hover_style = style.duplicate()
 	tag.add_theme_color_override("font_color", Color(1, 1, 1, 0.7))
 	tag.add_theme_color_override("font_hover_color", Color(1, 1, 1, 0.9))
 
-	tag.pressed.connect(func(): emit_signal("structure_selected", text))
+	tag.pressed.connect(func(): structure_selected.emit(text))
 
-var tween = create_tween()
+var tween_3 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 1.0, ANIM.slow).set_trans(ANIM.curve)
 	tween.tween_property(self, "position:y", position.y - 20, ANIM.slow).set_trans(ANIM.curve)
@@ -280,10 +280,10 @@ var section_node: VBoxContainer
 	"relatedstructures", "related":
 		section_node = related_section
 
-var indicator = section_node.find_child("*Indicator", true, false)
-var tween = create_tween()
-var content = section_node.get_child(section_node.get_child_count() - 1)
-var tween = create_tween()
+var indicator_2 = section_node.find_child("*Indicator", true, false)
+var tween_4 = create_tween()
+var content_3 = section_node.get_child(section_node.get_child_count() - 1)
+var tween_5 = create_tween()
 	tween.tween_property(sections_container, "modulate:a", 0, ANIM.fast)
 	tween.tween_callback(_update_content.bind(data))
 	tween.tween_property(sections_container, "modulate:a", 1, ANIM.fast)
@@ -294,7 +294,7 @@ var category = data.get("category", "Neural Structure")
 
 
 	# Signal handlers
-var tween = create_tween()
+var tween_6 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0, ANIM.normal)
 	tween.tween_property(self, "position:y", position.y + 20, ANIM.normal)
@@ -305,7 +305,7 @@ var tween = create_tween()
 var viewport_width = get_viewport().size.x
 
 var container = get_child(0) as MarginContainer
-var container = get_child(0) as MarginContainer
+var container_2 = get_child(0) as MarginContainer
 
 @onready var header_container: HBoxContainer
 @onready var structure_name: Label
@@ -477,7 +477,7 @@ func _on_bookmark_pressed() -> void:
 			bookmark_button.text = "☆"
 			bookmark_button.add_theme_color_override("font_color", COLORS.interactive)
 
-			emit_signal("structure_bookmarked", current_structure_id)
+			structure_bookmarked.emit(current_structure_id)
 
 
 func _on_close_pressed() -> void:

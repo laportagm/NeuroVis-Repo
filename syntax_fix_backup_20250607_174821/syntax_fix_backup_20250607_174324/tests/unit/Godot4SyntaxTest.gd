@@ -183,4 +183,3 @@ func _fix_orphaned_code():
 
 			# Exit with appropriate code
 			get_tree().quit(0 if result.passed else 1)
-

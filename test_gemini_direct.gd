@@ -5,7 +5,7 @@ extends Node
 
 
 var gemini_service = get_node_or_null("/root/GeminiAI")
-var gemini_service = get_node("/root/GeminiAI")
+var gemini_service_2 = get_node("/root/GeminiAI")
 var response = await gemini_service.ask_question("Say 'Hello NeuroVis!'")
 
 func _ready():

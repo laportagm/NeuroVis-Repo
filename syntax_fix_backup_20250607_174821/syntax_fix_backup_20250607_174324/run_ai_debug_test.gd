@@ -127,4 +127,3 @@ func _fix_orphaned_code():
 
 		# Keep running for observation
 		await get_tree().create_timer(3.0).timeout
-

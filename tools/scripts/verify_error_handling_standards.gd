@@ -100,7 +100,7 @@ issues.append(
 issues_by_type[issue_type] += 1
 
 # Check for valid but incorrect prefixes
-var regex = RegEx.new()
+var regex_2 = RegEx.new()
 regex.compile(r"\[[A-Za-z]+\]")
 var prefix_line = ""
 
@@ -273,4 +273,3 @@ func _fix_orphaned_code():
 										else:
 											print("\n✅ All files comply with error handling standards!")
 											quit(0)
-

@@ -268,7 +268,7 @@ var command_buffer = ""
 
 	# AI and Gemini test commands (moved to lambdas above)
 	register_command("ai_gemini_test", cmd_ai_gemini_test, "Test Gemini AI integration")
-	
+
 	# SafeAutoloadAccess test command
 	register_command("test_safe_autoload", _test_safe_autoload_access, "Test SafeAutoloadAccess.get_autoload() functionality")
 
@@ -807,7 +807,7 @@ var command_buffer = ""
 		log_info("  Type: %s" % knowledge_service.get_class())
 	else:
 		log_error("❌ Failed to get KnowledgeService")
-	
+
 	# Test 2: Get UIThemeManager
 	log_info("\nTest 2: Getting UIThemeManager...")
 	var theme_manager = SafeAutoloadAccess.get_autoload("UIThemeManager")
@@ -816,7 +816,7 @@ var command_buffer = ""
 		log_info("  Type: %s" % theme_manager.get_class())
 	else:
 		log_error("❌ Failed to get UIThemeManager")
-	
+
 	# Test 3: Try non-existent autoload
 	log_info("\nTest 3: Getting non-existent autoload...")
 	var non_existent = SafeAutoloadAccess.get_autoload("NonExistentAutoload")
@@ -824,7 +824,7 @@ var command_buffer = ""
 		log_error("❌ Unexpected: Got a node for non-existent autoload")
 	else:
 		log_success("✅ Correctly returned null for non-existent autoload")
-	
+
 	# Test 4: Direct tree access comparison
 	log_info("\nTest 4: Comparing with direct tree access...")
 	var direct_ks = get_tree().root.get_node_or_null("/root/KnowledgeService")
@@ -833,14 +833,14 @@ var command_buffer = ""
 		log_success("✅ SafeAutoloadAccess returns same node as direct access")
 	else:
 		log_error("❌ SafeAutoloadAccess returns different node than direct access")
-	
+
 	# Test 5: Check if SafeAutoloadAccess itself is available
 	log_info("\nTest 5: Checking SafeAutoloadAccess autoload...")
 	if Engine.has_singleton("SafeAutoloadAccess"):
 		log_success("✅ SafeAutoloadAccess is registered as autoload")
 	else:
 		log_error("❌ SafeAutoloadAccess not found in autoloads")
-	
+
 	log_info("\n=== Test Complete ===")
 
 var _qa_debug_viz: Node3D = null
@@ -1043,6 +1043,6 @@ func _on_ai_error_test(error: String) -> void:
 func _test_safe_autoload_access(_args: String = "") -> void:
 	"""Test SafeAutoloadAccess.get_autoload() functionality"""
 	log_info("=== Testing SafeAutoloadAccess.get_autoload() ===")
-	
+
 	# Test 1: Get KnowledgeService
 	log_info("Test 1: Getting KnowledgeService...")

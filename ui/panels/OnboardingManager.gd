@@ -217,8 +217,8 @@ var config = ConfigFile.new()
 var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0.0, 0.7)
-var tween = control.create_tween()
-var tween = control.create_tween()
+var tween_2 = control.create_tween()
+var tween_3 = control.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(control, "modulate:a", 0.0, duration)
 	tween.tween_property(control, "scale", Vector2(0.9, 0.9), duration)
@@ -227,7 +227,7 @@ var tween = control.create_tween()
 
 	# Public method to check if user has completed onboarding
 	static func has_completed_onboarding() -> bool:
-var config = ConfigFile.new()
+var config_2 = ConfigFile.new()
 var error = config.load("user://settings.cfg")
 
 func _ready() -> void:

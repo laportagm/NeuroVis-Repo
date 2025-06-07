@@ -112,7 +112,7 @@ var color = _current_colors[key]
 
 var cache_key = "hover_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
 
-var hover_mat = StandardMaterial3D.new()
+var hover_mat_2 = StandardMaterial3D.new()
 
 # Base color with transparency
 var base_color = _current_colors["hover"]
@@ -133,12 +133,12 @@ var base_color = _current_colors["hover"]
 	hover_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 
 	# Depth fade for overlapping structures
-var cache_key = "select_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
+var cache_key_2 = "select_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
 
-var select_mat = StandardMaterial3D.new()
+var select_mat_2 = StandardMaterial3D.new()
 
 # Selection color
-var base_color = _current_colors["selected"]
+var base_color_2 = _current_colors["selected"]
 	select_mat.albedo_color = base_color
 
 	# Strong emission for clear selection
@@ -156,12 +156,12 @@ var base_color = _current_colors["selected"]
 	select_mat.albedo_color.a = 0.9
 
 	_material_cache[cache_key] = select_mat
-var cache_key = "related_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
+var cache_key_3 = "related_%s_%s" % [mesh.get_instance_id(), feedback_intensity]
 
-var related_mat = StandardMaterial3D.new()
+var related_mat_2 = StandardMaterial3D.new()
 
 # Subtle indication
-var base_color = _current_colors["related"]
+var base_color_3 = _current_colors["related"]
 	related_mat.albedo_color = Color(base_color.r, base_color.g, base_color.b, 0.6)
 
 	# Soft emission
@@ -187,10 +187,10 @@ var hover_scale = original_scale * 1.02
 	_active_tweens["%s_hover" % mesh.get_instance_id()] = tween
 
 
-var tween = mesh.create_tween()
+var tween_2 = mesh.create_tween()
 
 # Quick pulse
-var original_scale = mesh.scale
+var original_scale_2 = mesh.scale
 	tween.tween_property(mesh, "scale", original_scale * 1.1, 0.1 / animation_speed)
 	tween.tween_property(mesh, "scale", original_scale, 0.2 / animation_speed)
 

@@ -239,4 +239,3 @@ func _manual_set_view_preset(preset: String) -> void:
 	"""Manual view preset implementation"""
 	if not camera:
 		return
-

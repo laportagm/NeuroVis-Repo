@@ -255,7 +255,7 @@ var header_font = font_bold.duplicate()
 	theme.set_font_size("section_header_size", "Label", font_sizes.small)
 	theme.set_color("section_header_color", "Label", colors.text_secondary)
 
-var theme = create_theme()
+var theme_2 = create_theme()
 
 func _fix_orphaned_code():
 	if ResourceLoader.exists("res://assets/fonts/Inter-Regular.ttf"):

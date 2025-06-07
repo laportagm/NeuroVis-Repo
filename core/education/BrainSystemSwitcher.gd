@@ -74,7 +74,7 @@ timer.wait_time = transition_duration
 timer.start()
 
 
-var timer = get_node("TransitionTimer") as Timer
+var timer_2 = get_node("TransitionTimer") as Timer
 timer.wait_time = transition_duration
 timer.start()
 

@@ -75,9 +75,9 @@ var test_resources = []
 var memory_test_files = []
 
 # Collect some test files
-var start_time = Time.get_ticks_msec()
+var start_time_2 = Time.get_ticks_msec()
 var resource = load(file_path)
-var load_time = Time.get_ticks_msec() - start_time
+var load_time_2 = Time.get_ticks_msec() - start_time
 var test5_result = framework.end_test()
 
 # Test 6: Resource Path Validation Debug
@@ -87,12 +87,12 @@ var path_issues = 0
 var all_resources = []
 
 # Collect all found resources
-var resource = load(resource_path)
+var resource_2 = load(resource_path)
 var test6_result = framework.end_test()
 
 var summary = framework.get_test_summary()
 var total_resources = 0
-var count = resource_types[type].size()
+var count_2 = resource_types[type].size()
 total_resources += count
 var dir = DirAccess.open(dir_path)
 var file_name = dir.get_next()

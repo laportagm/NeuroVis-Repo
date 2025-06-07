@@ -32,7 +32,7 @@ var direction = Vector3(0, 0, 1).normalized()
 camera.global_position = center + direction * distance
 camera.look_at(center, Vector3.UP)
 
-var direction = Vector3(0, 0, 1).normalized()
+var direction_2 = Vector3(0, 0, 1).normalized()
 camera.global_position = center + direction * distance
 camera.look_at(center, Vector3.UP)
 
@@ -242,4 +242,3 @@ func _manual_set_view_preset(preset: String) -> void:
 	"""Manual view preset implementation"""
 	if not camera:
 		return
-

@@ -85,10 +85,10 @@ new_transform.origin = focus_point - new_transform.basis.z * distance
 
 # Prevent gimbal lock by checking up vector
 var new_up = new_transform.basis.y
-var delta = mouse_pos - last_mouse_position
+var delta_2 = mouse_pos - last_mouse_position
 
 # Prevent zero delta
-var right = transform.basis.x.normalized() * delta.x * PAN_SENSITIVITY
+var right_2 = transform.basis.x.normalized() * delta.x * PAN_SENSITIVITY
 var up = transform.basis.y.normalized() * -delta.y * PAN_SENSITIVITY
 var offset = right + up
 
@@ -132,7 +132,7 @@ look_at(focus_point, Vector3.UP)
 # Validate transform
 _validate_transform()
 
-var viewport = get_viewport()
+var viewport_2 = get_viewport()
 var from = project_ray_origin(mouse_pos)
 var to = from + project_ray_normal(mouse_pos) * 1000.0
 
@@ -159,8 +159,8 @@ position = focus_point + cam_dir * zoom_distance
 _validate_transform()
 
 # Update debug visualization
-var distance = position.distance_to(focus_point)
-var cam_dir = (position - focus_point).normalized()
+var distance_2 = position.distance_to(focus_point)
+var cam_dir_2 = (position - focus_point).normalized()
 
 var _original_pos = position
 var _original_focus = focus_point
@@ -573,5 +573,3 @@ func _handle_debug_keys(event: InputEventKey) -> void:
 
 
 						# === TEST METHODS ===
-
-

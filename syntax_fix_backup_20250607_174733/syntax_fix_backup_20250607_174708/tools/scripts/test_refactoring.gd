@@ -104,4 +104,3 @@ func _fix_orphaned_code():
 				print("✓ Integration test completed")
 				else:
 					print("✗ Component integration test failed")
-

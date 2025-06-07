@@ -13,7 +13,7 @@ extends Node
 
 # === SIGNALS ===
 	extends %s
-	
+
 signal provider_registered(provider_id: String)
 signal provider_unregistered(provider_id: String)
 signal active_provider_changed(provider_id: String)
@@ -129,11 +129,11 @@ const DEFAULT_PROVIDER_ID = "mock_provider"
 		var response = "This is a mock response to: " + question
 		response_received.emit(response)
 		return response
-		
+
 		var response = "Mock content generated from: " + prompt
 		response_received.emit(response)
 		return response
-		
+
 	var MockProviderClass = GDScript.new()
 	MockProviderClass.source_code = script.source_code
 
@@ -292,21 +292,21 @@ func set_provider_config(provider_id: String, config: Dictionary) -> void:
 	# Also update provider instance if it has set_configuration method
 	func initialize() -> bool:
 		return true
-		
+
 	func setup_api_key(_key: String) -> bool:
 		return true
-		
+
 	func ask_question(question: String, _context: Dictionary = {}) -> String:
 	func generate_content(prompt: String) -> String:
 	func check_setup_status() -> bool:
 		return true
-		
+
 	func needs_setup() -> bool:
 		return false
-		
+
 	func validate_api_key(_key: String) -> void:
 		api_key_validated.emit(true, "Mock validation successful")
-		
+
 	func get_service_status() -> Dictionary:
 		return {
 			"initialized": true,
@@ -314,19 +314,19 @@ func set_provider_config(provider_id: String, config: Dictionary) -> void:
 			"api_configured": true,
 			"provider": "mock"
 		}
-		
+
 	func get_available_models() -> Array:
 		return ["mock-model-basic", "mock-model-advanced"]
-		
+
 	func set_model(_model_name_or_id) -> void:
 		pass
-		
+
 	func get_configuration() -> Dictionary:
 		return {"provider": "mock", "models": {}}
-		
+
 	func save_configuration(_key: String, _model) -> void:
 		pass
-		
+
 	func reset_settings() -> bool:
 		return true
 	"""

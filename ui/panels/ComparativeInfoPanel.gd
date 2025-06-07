@@ -40,7 +40,7 @@ relationship_label.add_theme_font_size_override("font_size", 16)
 relationship_container.add_child(relationship_label)
 
 
-var card = PanelContainer.new()
+var card_2 = PanelContainer.new()
 card.custom_minimum_size = Vector2(0, STRUCTURE_CARD_HEIGHT)
 
 var vbox = VBoxContainer.new()
@@ -115,7 +115,7 @@ card.add_theme_stylebox_override("panel", card_style)
 
 # === PUBLIC METHODS ===
 ## Update display with new structure selections
-var card = _structure_cards[index]
+var card_3 = _structure_cards[index]
 var structure_name = selection_data["name"]
 var structure_data = {}
 
@@ -123,22 +123,22 @@ var normalized_name = _normalize_structure_name(structure_name)
 structure_data = _knowledge_service.get_structure(normalized_name)
 
 # Update state indicator
-var state_indicator = card.find_child("StateIndicator")
-var name_label = card.find_child("NameLabel")
-var focus_button = card.find_child("FocusButton")
-var facts_label = card.find_child("FactsLabel")
-var functions_label = card.find_child("FunctionsLabel")
+var state_indicator_2 = card.find_child("StateIndicator")
+var name_label_2 = card.find_child("NameLabel")
+var focus_button_2 = card.find_child("FocusButton")
+var facts_label_2 = card.find_child("FactsLabel")
+var functions_label_2 = card.find_child("FunctionsLabel")
 var functions = structure_data.get("functions", [])
-var clinical_label = card.find_child("ClinicalLabel")
+var clinical_label_2 = card.find_child("ClinicalLabel")
 var clinical = structure_data.get("clinicalRelevance", "")
 var abbreviated = []
-var card = _structure_cards[index]
+var card_4 = _structure_cards[index]
 var tween = create_tween()
 tween.tween_property(card, "modulate:a", 1.0, PANEL_ANIMATION_TIME)
 
 
-var card = _structure_cards[index]
-var tween = create_tween()
+var card_5 = _structure_cards[index]
+var tween_2 = create_tween()
 tween.tween_property(card, "modulate:a", 0.0, PANEL_ANIMATION_TIME)
 tween.tween_callback(card.hide)
 
@@ -155,7 +155,7 @@ no_rel_label.modulate.a = 0.6
 relationship_container.add_child(no_rel_label)
 
 
-var relationships = []
+var relationships_2 = []
 
 # Example relationship detection (extend with actual data)
 var structure_names = []

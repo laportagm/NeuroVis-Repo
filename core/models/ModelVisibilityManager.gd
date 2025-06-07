@@ -17,21 +17,21 @@ var new_visibility = not model_info.visible
 model_info.node.visible = new_visibility
 model_info.visible = new_visibility
 
-var model_info = models[model_name]
+var model_info_2 = models[model_name]
 
 # Update visibility
 model_info.node.visible = visibility
 model_info.visible = visibility
 
-var model_info = models[model_key]
+var model_info_3 = models[model_key]
 model_info.node.visible = (model_key == model_name)
 model_info.visible = (model_key == model_name)
 
 # Emit signal for each changed model
 model_visibility_changed.emit(model_key, model_info.visible)
 
-var model_info = models[model_name]
-var new_visibility = not model_info.visible
+var model_info_4 = models[model_name]
+var new_visibility_2 = not model_info.visible
 
 # Update visibility
 model_info.node.visible = new_visibility
@@ -136,4 +136,3 @@ func _fix_orphaned_code():
 
 	# Emit signal
 	model_visibility_changed.emit(model_name, new_visibility)
-

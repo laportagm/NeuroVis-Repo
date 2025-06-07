@@ -32,8 +32,8 @@ var structure_data: Dictionary = {}
 
 
 var section = sections[section_name]
-var section = sections[section_name]
-var section = ComponentRegistry.create_component(
+var section_2 = sections[section_name]
+var section_3 = ComponentRegistry.create_component(
 "section",
 {
 "name": section_name,
@@ -42,20 +42,20 @@ var section = ComponentRegistry.create_component(
 }
 )
 
-var section = sections[section_name]
-var section = sections[section_name]
-var section = sections.description
+var section_4 = sections[section_name]
+var section_5 = sections[section_name]
+var section_6 = sections.description
 var description = data.get(
 "shortDescription", data.get("description", "No description available.")
 )
 
-var section = sections.functions
+var section_7 = sections.functions
 var functions = data.get("functions", [])
 
-var section = sections.connections
+var section_8 = sections.connections
 var connections = data.get("connections", [])
 
-var section = sections.clinical
+var section_9 = sections.clinical
 var clinical_notes = data.get("clinicalNotes", data.get("clinicalRelevance", ""))
 
 var formatted = description
@@ -64,14 +64,14 @@ var formatted = description
 var first_sentence = formatted.split(".")[0] + "."
 formatted = "[b]" + first_sentence + "[/b]" + formatted.substr(first_sentence.length())
 
-var formatted = ""
+var formatted_2 = ""
 var function_text = str(functions[i])
 formatted += "• " + function_text
-var formatted = ""
+var formatted_3 = ""
 var connection = str(connections[i])
 # Make connections clickable links
 formatted += "→ [url=" + connection + "]" + connection + "[/url]"
-var formatted = clinical_text
+var formatted_4 = clinical_text
 var clinical_keywords = [
 "pathology", "disease", "disorder", "syndrome", "damage", "lesion", "dysfunction"
 ]
@@ -93,11 +93,11 @@ content_changed.emit({"action": "link_activated", "link": link_text})
 # === SEARCH AND HIGHLIGHTING ===
 var total_matches = 0
 
-var section = sections[section_name]
+var section_10 = sections[section_name]
 var matches = section.highlight_text(search_term)
 total_matches += matches
 
-var section = sections[section_name]
+var section_11 = sections[section_name]
 var content = ContentComponent.new()
 content.configure_content(config)
 

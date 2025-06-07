@@ -67,10 +67,10 @@ var loading_data = {
 
 	loading_started.emit(loading_id)
 
-var loading_data = active_loadings[loading_id]
+var loading_data_2 = active_loadings[loading_id]
 	loading_data.progress = clamp(progress, 0.0, 1.0)
 
-var loading_data = active_loadings[loading_id]
+var loading_data_3 = active_loadings[loading_id]
 	loading_data.state = LoadingState.SUCCESS if success else LoadingState.ERROR
 
 	# Show completion animation
@@ -125,11 +125,11 @@ var container = HBoxContainer.new()
 	container.add_theme_constant_override("separation", 8)
 
 	# Small spinner
-var spinner = _create_spinner(16)
+var spinner_2 = _create_spinner(16)
 	container.add_child(spinner)
 
 	# Loading text
-var label = Label.new()
+var label_2 = Label.new()
 	label.text = context.get("message", "Loading...")
 	label.add_theme_color_override("font_color", UIThemeManager.TEXT_SECONDARY)
 	container.add_child(label)
@@ -160,16 +160,16 @@ var line_style = StyleBoxFlat.new()
 	_add_shimmer_animation(line)
 
 	# Add to parent if specified
-var container = VBoxContainer.new()
+var container_2 = VBoxContainer.new()
 	container.add_theme_constant_override("separation", 8)
 
 	# Label
-var label = Label.new()
+var label_3 = Label.new()
 	label.text = context.get("message", "Loading...")
 	container.add_child(label)
 
 	# Progress bar
-var progress = ProgressBar.new()
+var progress_2 = ProgressBar.new()
 	progress.custom_minimum_size = Vector2(context.get("width", 200), 8)
 	progress.value = 0
 	progress.show_percentage = context.get("show_percentage", true)
@@ -208,7 +208,7 @@ var style = StyleBoxFlat.new()
 	_add_shimmer_animation(shimmer_container)
 
 	# Add to parent if specified
-var spinner = Control.new()
+var spinner_3 = Control.new()
 	spinner.custom_minimum_size = Vector2(size, size)
 
 	# Create spinner visual
@@ -217,7 +217,7 @@ var texture_rect = TextureRect.new()
 	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
 	# Create spinning animation
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.set_loops()
 	tween.tween_property(texture_rect, "rotation", TAU, 1.0)
 
@@ -241,17 +241,17 @@ var gradient = Gradient.new()
 	gradient.set_color(0.5, Color(1, 1, 1, 0.1))
 	gradient.set_color(1, Color(1, 1, 1, 0))
 
-var tween = create_tween()
+var tween_3 = create_tween()
 	tween.set_loops()
 	tween.tween_method(
 	func(offset: float):
 var progress_bars = ui_element.find_children("", "ProgressBar", true, false)
 var labels = ui_element.find_children("", "Label", true, false)
-var tween = create_tween()
+var tween_4 = create_tween()
 
-var loading_data = active_loadings[loading_id]
+var loading_data_4 = active_loadings[loading_id]
 
-var tween = create_tween()
+var tween_5 = create_tween()
 	tween.tween_property(loading_data.ui_element, "modulate:a", 0.0, 0.3)
 	tween.tween_callback(loading_data.ui_element.queue_free)
 

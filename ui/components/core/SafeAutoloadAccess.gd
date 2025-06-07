@@ -27,7 +27,7 @@ var tree = Engine.get_main_loop() as SceneTree
 var node = null
 
 # Access autoload via scene tree (avoids Engine.get_singleton warnings)
-var tree = Engine.get_main_loop() as SceneTree
+var tree_2 = Engine.get_main_loop() as SceneTree
 var is_valid = false
 
 var style_box = StyleBoxFlat.new()
@@ -44,7 +44,7 @@ var style_box = StyleBoxFlat.new()
 	control.add_theme_stylebox_override("panel", style_box)
 
 	"button":
-var style_box = StyleBoxFlat.new()
+var style_box_2 = StyleBoxFlat.new()
 	style_box.bg_color = Color(0.3, 0.3, 0.3, 0.9)
 	style_box.corner_radius_top_left = 4
 	style_box.corner_radius_top_right = 4
@@ -56,15 +56,15 @@ var style_box = StyleBoxFlat.new()
 var knowledge_service = get_knowledge_service()
 var kb = _safe_get_autoload("KB")
 var ai_assistant = get_ai_assistant()
-var inst = instance()
+var inst_2 = instance()
 	inst._validate_autoload(autoload_name)
-var inst = instance()
+var inst_3 = instance()
 var status = {}
 var autoloads = [
 	"UIThemeManager", "KnowledgeService", "AIAssistant", "ModelSwitcherGlobal", "DebugCmd"
 	]
 
-var status = get_autoload_status()
+var status_2 = get_autoload_status()
 var status_text = "✓ Available" if status[autoload_name] else "✗ Unavailable"
 
 var _autoload_status: Dictionary = {}

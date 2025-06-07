@@ -84,13 +84,13 @@ var announcement = {
 
 				static func announce_focus_change(component: Control) -> void:
 					"""Announce when focus changes to a component"""
-var role = component.get_meta("accessibility_role", "element")
-var label = component.get_meta("accessibility_label", component.name)
+var role_2 = component.get_meta("accessibility_role", "element")
+var label_2 = component.get_meta("accessibility_label", component.name)
 var description = component.get_meta("accessibility_description", "")
 
-var announcement = label + ", " + role
+var announcement_2 = label + ", " + role
 var current_time = Time.get_time_string_from_system()
-var announcement = announcement_queue.pop_front()
+var announcement_3 = announcement_queue.pop_front()
 	last_announcement_time = current_time
 
 	# In a real implementation, this would interface with platform screen readers
@@ -108,7 +108,7 @@ var style = StyleBoxFlat.new()
 	style.border_width_bottom = 2
 	component.add_theme_stylebox_override("normal", style)
 	component.add_theme_color_override("font_color", text_color)
-var style = StyleBoxFlat.new()
+var style_2 = StyleBoxFlat.new()
 	style.bg_color = bg_color
 	style.border_color = border_color
 	style.border_width_left = 1
@@ -123,7 +123,7 @@ var style = StyleBoxFlat.new()
 var current_size = 14  # Default size
 
 var min_size = TOUCH_TARGET_SIZES.minimum
-var current_size = component.custom_minimum_size
+var current_size_2 = component.custom_minimum_size
 
 var tween = component.create_tween()
 	tween.tween_property(component, "modulate", Color(1.2, 1.2, 1.2), 0.2)
@@ -141,7 +141,7 @@ var focus_style = StyleBoxFlat.new()
 
 	static func _on_component_focus_exited(component: Control) -> void:
 		"""Handle component focus lost"""
-var tween = component.create_tween()
+var tween_2 = component.create_tween()
 	tween.tween_property(component, "modulate", Color.WHITE, 0.2)
 
 

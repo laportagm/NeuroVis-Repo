@@ -75,7 +75,7 @@ preview_container.add_child(sample_label)
 var color_container = HBoxContainer.new()
 preview_container.add_child(color_container)
 
-var colors = accessibility_manager.get_recommended_colors() if accessibility_manager else {}
+var colors_2 = accessibility_manager.get_recommended_colors() if accessibility_manager else {}
 
 var color_rect = ColorRect.new()
 color_rect.color = colors[color_name]

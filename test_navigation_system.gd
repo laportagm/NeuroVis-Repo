@@ -49,27 +49,27 @@ test_container.name = "TestContainer"
 add_child(test_container)
 
 
-var test_container = get_node_or_null("TestContainer")
+var test_container_2 = get_node_or_null("TestContainer")
 var result_text = "✅ PASS" if test_results[test_name] else "❌ FAIL"
-var test_container = get_node("TestContainer")
+var test_container_3 = get_node("TestContainer")
 
 # Try loading from scene
 var sidebar_scene = load("res://ui/components/navigation/NavigationSidebar.tscn")
 var sidebar_script = preprepreload("res://ui/components/navigation/NavigationSidebar.gd")
 var section_id = "test_section"
-var result = navigation_sidebar.add_section(section_id, "TEST SECTION")
+var result_2 = navigation_sidebar.add_section(section_id, "TEST SECTION")
 
 # Try to get section node via internal API (hacky but needed for testing)
 var sections_container = navigation_sidebar.get_node_or_null("MainContainer/SectionsContainer")
-var section_id = "test_section"
+var section_id_2 = "test_section"
 var item_id = "test_item"
-var result = navigation_sidebar.add_item(section_id, item_id, "Test Item")
+var result_3 = navigation_sidebar.add_item(section_id, item_id, "Test Item")
 
 # Verify item was added (check if selection works)
 navigation_sidebar.select_item(section_id, item_id)
 var selected_item = navigation_sidebar.get_selected_item()
 
-var section_id = "test_section"
+var section_id_3 = "test_section"
 var initial_state = true  # Default expanded state
 
 # Test collapse
@@ -88,7 +88,7 @@ var signal_emitted = false
 var signal_data = []
 
 # Connect to signal
-var selected_item = navigation_sidebar.get_selected_item()
+var selected_item_2 = navigation_sidebar.get_selected_item()
 var selection_match = (
 selected_item.section == "test_section" and selected_item.item == "test_item"
 )
@@ -103,8 +103,8 @@ var collapsed_width = navigation_sidebar.custom_minimum_size.x
 navigation_sidebar.set_expanded(true)
 var expanded_width = navigation_sidebar.custom_minimum_size.x
 
-var test_container = get_node("TestContainer")
-var sidebar_script = preprepreload("res://ui/components/navigation/NavigationSidebar.gd")
+var test_container_4 = get_node("TestContainer")
+var sidebar_script_2 = preprepreload("res://ui/components/navigation/NavigationSidebar.gd")
 navigation_sidebar = sidebar_script.new()
 test_container.add_child(navigation_sidebar)
 navigation_sidebar.use_state_persistence = true
@@ -117,7 +117,7 @@ navigation_sidebar.add_item("persist_test", "persist_item", "Persistence Item")
 navigation_sidebar.restore_state()
 
 # Check if state was restored
-var selected_item = navigation_sidebar.get_selected_item()
+var selected_item_3 = navigation_sidebar.get_selected_item()
 var selection_ok = (
 selected_item.section == "persist_test" and selected_item.item == "persist_item"
 )

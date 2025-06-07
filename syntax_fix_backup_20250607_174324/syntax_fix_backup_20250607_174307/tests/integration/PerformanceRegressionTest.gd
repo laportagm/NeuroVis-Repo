@@ -176,4 +176,3 @@ func run_test() -> bool:
 
 	# Test 1: Knowledge Base Loading Performance
 	framework.start_test("Knowledge Base Loading Performance")
-

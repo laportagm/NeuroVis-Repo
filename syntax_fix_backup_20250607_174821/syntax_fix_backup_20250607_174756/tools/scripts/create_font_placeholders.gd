@@ -139,4 +139,3 @@ func _fix_orphaned_code():
 
 				# Quit the script
 				quit()
-

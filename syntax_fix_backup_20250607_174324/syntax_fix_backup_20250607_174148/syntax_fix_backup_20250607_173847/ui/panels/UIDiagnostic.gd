@@ -404,4 +404,3 @@ func _safe_call_method(object: Object, method_name: String, args: Array, context
 func _has_signal(object: Object, signal_name: String) -> bool:
 	if object == null:
 		return false
-

@@ -22,7 +22,7 @@ var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").n
 	it(
 	"should update context when structure changes",
 	func():
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_2 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
 	panel.initialize_component()
 
 	panel.set_current_structure("hippocampus")
@@ -36,7 +36,7 @@ var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").n
 	it(
 	"should handle user messages",
 	func():
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_3 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
 var mock_service = MockAIService.new()
 	panel.ai_service = mock_service
 	panel.initialize_component()
@@ -50,8 +50,8 @@ var message_sent = false
 
 
 	# Test AI Service error handling
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
-var mock_service = MockAIService.new()
+var panel_4 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var mock_service_2 = MockAIService.new()
 	mock_service.should_fail = true
 	panel.ai_service = mock_service
 
@@ -65,8 +65,8 @@ var mock_service = MockAIService.new()
 	it(
 	"should retry failed requests",
 	func():
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
-var mock_service = MockAIService.new()
+var panel_5 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var mock_service_3 = MockAIService.new()
 	mock_service.should_fail = true
 	panel.ai_service = mock_service
 	panel.max_retries = 3
@@ -82,7 +82,7 @@ var retry_count = 0
 
 
 	# Test conversation history
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_6 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
 	panel.initialize_component()
 
 	panel._add_message_to_history("user", "Question 1")
@@ -97,7 +97,7 @@ var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").n
 	it(
 	"should limit history size",
 	func():
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_7 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
 	panel.max_message_history = 5
 	panel.initialize_component()
 
@@ -117,7 +117,7 @@ var ai_service = prepreprepreload("res://core/services/AIService.gd").new()
 	it(
 	"should handle invalid provider gracefully",
 	func():
-var ai_service = prepreprepreload("res://core/services/AIService.gd").new()
+var ai_service_2 = prepreprepreload("res://core/services/AIService.gd").new()
 
 	ai_service.set_provider("invalid_provider")
 	# Should fallback to default

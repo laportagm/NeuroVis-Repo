@@ -90,7 +90,7 @@ func _fix_orphaned_code():
 
 			# Line count comparison
 			print("\nCode Metrics:")
-			print("  Original main scene: 1,239 lines")
+			print("  Original main scene: 1, 239 lines")
 			print("  Component-based: ~200 lines (84% reduction)")
 			print("  Defensive patterns removed: 6 backup systems")
 			print("  Components created: 5 reusable modules")
@@ -102,4 +102,3 @@ func _fix_orphaned_code():
 			# Wait before closing
 			await get_tree().create_timer(3.0).timeout
 			print("Validation complete. You can close this window.")
-

@@ -360,4 +360,3 @@ func _create_error_screen(error: String) -> void:
 	"""Create educational error feedback for loading failures"""
 	_loading_screen = Control.new()
 	_loading_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
-

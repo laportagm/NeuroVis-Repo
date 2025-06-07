@@ -136,4 +136,3 @@ func _fix_orphaned_code():
 					print("Loaded " + str(structures.size()) + " anatomical structures.")
 
 					return true
-

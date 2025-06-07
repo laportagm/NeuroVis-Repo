@@ -48,7 +48,7 @@ current_state = ComponentState.READY
 
 var theme_applied = SafeAutoloadAccess.apply_theme_safely(self, "panel")
 
-var old_value = _component_config.get(key)
+var old_value_2 = _component_config.get(key)
 _component_config[key] = value
 component_updated.emit(key, old_value, value)
 
@@ -59,12 +59,12 @@ var tween = create_tween()
 tween.tween_property(self, "modulate:a", 1.0, duration)
 
 
-var tween = create_tween()
+var tween_2 = create_tween()
 tween.tween_property(self, "modulate:a", 0.0, duration)
 tween.tween_callback(func(): visible = false)
 
 
-var tween = create_tween()
+var tween_3 = create_tween()
 tween.tween_property(self, "modulate", Color.WHITE.darkened(0.1), duration * 0.5)
 tween.tween_property(self, "modulate", Color.WHITE, duration * 0.5)
 
@@ -384,4 +384,3 @@ func _log(message: String, level: String = "info") -> void:
 	"""Component logging with autoload status on errors"""
 	if not enable_logging:
 		return
-

@@ -177,12 +177,12 @@ func _initialize_subsystems() -> void:
 
 func get_structure(identifier: String) -> Dictionary:
 	"""Get anatomical structure data by ID or display name
-	
+
 	Educational Context - Search Priority:
 	1. Direct ID match (exact match for internal references)
 	2. Case-insensitive name match (user-friendly lookup)
 	3. Normalized name match (handles 3D model naming inconsistencies)
-	
+
 	Examples:
 	- "hippocampus" → returns hippocampus data
 	- "Hippocampus" → returns hippocampus data
@@ -206,7 +206,7 @@ func get_structure(identifier: String) -> Dictionary:
 	# Case-insensitive lookup by name or ID
 func search_structures(query: String, limit: int = 10) -> Array[Dictionary]:
 	"""Search anatomical structures by keyword for educational queries
-	
+
 	Educational Context:
 	- Fuzzy search across multiple fields (name, functions, clinical relevance)
 	- Results cached to maintain interactive performance
@@ -276,7 +276,7 @@ func _load_anatomical_data() -> void:
 
 func _build_structure_index() -> void:
 	"""Build searchable index of anatomical structures for educational lookup
-	
+
 	Educational Context:
 	- Creates dual index: by ID and by display name (lowercase)
 	- Enables O(1) lookup performance for interactive educational queries
@@ -312,13 +312,13 @@ func _matches_search(structure: Dictionary, query: String) -> bool:
 
 func _normalize_structure_name(structure_name: String) -> String:
 	"""Normalize structure names from 3D models to match knowledge base IDs
-	
+
 	Educational Context:
 	Medical 3D models often have inconsistent naming due to:
 	- Export suffixes: "(good)", "(solid)", "(separated)"
 	- Artist annotations: "Hipp and Others", "Brain model"
 	- Plural/singular forms: "Thalami" vs "Thalamus"
-	
+
 	This normalization ensures educational content matches regardless of model source.
 	"""
 

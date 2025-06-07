@@ -8,7 +8,7 @@
 ## @tutorial: Godot 3 to 4 migration guide
 ## @version: 1.0
 
-extends MainLoop
+extends SceneTree
 
 # === CONSTANTS ===
 
@@ -24,11 +24,11 @@ var _files_scanned: int = 0
 var _total_issues: int = 0
 
 
-func _ready() -> void:
+func _initialize() -> void:
 	"""Run validation when script starts"""
 	print("🔍 Starting Godot 4 syntax validation...")
 	var success = validate_project()
-	
+
 	# Exit with appropriate code
 	if success:
 		print("✅ Validation complete - no issues found!")
@@ -228,10 +228,10 @@ func _scan_directory(dir_path: String) -> void:
 			_scan_directory(full_path)
 		else:
 			# Validate file
-			var issues = validate_file(full_path)
-			if not issues.is_empty():
-				_issues_found.append({"file": full_path, "issues": issues})
-				_total_issues += issues.size()
+			var file_issues = validate_file(full_path)
+			if not file_issues.is_empty():
+				_issues_found.append({"file": full_path, "issues": file_issues})
+				_total_issues += file_issues.size()
 			_files_scanned += 1
 
 		file_name = dir.get_next()
@@ -251,7 +251,7 @@ func _print_validation_report() -> void:
 
 		for file_data in _issues_found:
 			var file_path = file_data.file
-			var issues = file_data.issues
+			var issues_3 = file_data.issues
 
 			# Make path relative to project for readability
 			var relative_path = file_path.replace(ProjectSettings.globalize_path("res://"), "")

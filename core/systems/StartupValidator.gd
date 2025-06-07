@@ -66,7 +66,7 @@ var required_autoloads = {
 
 var index = 0
 var node = get_node_or_null("/root/" + autoload_name)
-var results = {}
+var results_2 = {}
 var critical_resources = [
 "res://assets/data/anatomical_data.json",
 "res://assets/models/Half_Brain.glb",
@@ -76,32 +76,32 @@ var critical_resources = [
 ]
 
 var resource_path = critical_resources[i]
-var results = {}
+var results_3 = {}
 
 # Test UIThemeManager
 var UIThemeManager = preprepreload("res://ui/panels/UIThemeManager.gd")
 var test_style = UIThemeManager.create_enhanced_glass_style()
 var InfoPanelFactory = preprepreload("res://ui/panels/InfoPanelFactory.gd")
-var results = {}
+var results_4 = {}
 
 # Check KnowledgeService
 var ks = get_node_or_null("/root/KnowledgeService")
 var test_structure = ks.get_structure("hippocampus")
 var search_results = ks.search_structures("brain", 5)
 var structure_count = ks.get_structure_count()
-var results = {}
+var results_5 = {}
 
 # Check memory usage
 var static_memory = OS.get_static_memory_usage()
 var memory_mb = static_memory / 1024.0 / 1024.0
 
 var max_fps = Engine.max_fps
-var results = {}
+var results_6 = {}
 
 # Check font size settings
 var project_settings_valid = ProjectSettings.has_setting("application/config/name")
 var theme_manager = get_node_or_null("/root/UIThemeManager")
-var cat_results = validation_results[category]
+var cat_results_2 = validation_results[category]
 var result = cat_results[check]
 var status_symbol = "?"
 ValidationResult.PASS:
@@ -385,4 +385,3 @@ func _validate_accessibility() -> void:
 	"""Validate accessibility features"""
 	print("[StartupValidator] Validating accessibility...")
 	validation_progress.emit(ValidationCategory.ACCESSIBILITY, 0.0)
-

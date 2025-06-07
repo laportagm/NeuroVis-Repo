@@ -58,4 +58,3 @@ func _fix_orphaned_code():
 			print("[TEST] 3. Dialog showed guidance screen after button click")
 
 			queue_free()
-

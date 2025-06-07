@@ -81,7 +81,7 @@ button_container.add_child(close_button)
 var result = "✅ PASS" if success else "❌ FAIL"
 var text = "=== AI INTEGRATION TEST RESULTS ===\n\n"
 
-var result = test_results[test_name]
+var result_2 = test_results[test_name]
 var status = "✅ PASS" if result.success else "❌ FAIL"
 text += "%s: %s\n" % [test_name, status]
 var config_init = ai_config.has_method("get_provider_config")
@@ -103,15 +103,15 @@ gemini_registered = ai_registry.register_provider("gemini", gemini_provider)
 # Gemini already registered during initialization
 gemini_registered = true
 var providers = ai_registry.get_all_provider_ids()
-var success = gemini_registered and providers.has("gemini")
-var message = "Registered providers: %s" % str(providers)
+var success_2 = gemini_registered and providers.has("gemini")
+var message_2 = "Registered providers: %s" % str(providers)
 
 _log_result("Register Providers", success, message)
 current_state = TestState.REGISTER_PROVIDERS
 
 
 var active_id = ai_registry.get_active_provider_id()
-var success = active_id == "mock_provider"
+var success_3 = active_id == "mock_provider"
 
 # Get the mock provider
 var mock_provider = ai_registry.get_active_provider()
@@ -130,12 +130,12 @@ _log_result("Activate Mock Provider", success, "Active provider: %s" % active_id
 current_state = TestState.TEST_MOCK_PROVIDER
 
 
-var providers = ai_registry.get_all_provider_ids()
+var providers_2 = ai_registry.get_all_provider_ids()
 var switch_success = ai_registry.set_active_provider("gemini")
-var active_id = ai_registry.get_active_provider_id()
+var active_id_2 = ai_registry.get_active_provider_id()
 var provider = ai_registry.get_active_provider()
 
-var success = switch_success and active_id == "gemini" and provider != null
+var success_4 = switch_success and active_id == "gemini" and provider != null
 _log_result("Switch Provider (Registry)", success, "Active provider: %s" % active_id)
 
 # Test switching via integration manager
@@ -171,7 +171,7 @@ current_state = TestState.TEST_CONFIGURATION
 
 
 var structure = ai_integration.get_current_structure()
-var success = structure == "amygdala"
+var success_5 = structure == "amygdala"
 
 _log_result("Structure Context", success, "Current structure: %s" % structure)
 

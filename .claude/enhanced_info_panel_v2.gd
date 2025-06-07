@@ -147,7 +147,7 @@ var bullet = Label.new()
 	container.add_child(bullet)
 
 	# Text
-var label = Label.new()
+var label_2 = Label.new()
 	label.text = text
 	label.add_theme_font_size_override("font_size", 13)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -187,39 +187,39 @@ var tween = create_tween()
 	Tween.EASE_OUT
 	)
 
-var tween = button.create_tween()
+var tween_2 = button.create_tween()
 
-var tween = item.create_tween()
+var tween_3 = item.create_tween()
 
 var is_expanded = expanded_sections.get(section_id, false)
 	expanded_sections[section_id] = not is_expanded
 
 	# Update indicator
-var header = section.get_child(0)
-var indicator = header.get_child(0)
+var header_2 = section.get_child(0)
+var indicator_2 = header.get_child(0)
 
 # Animate indicator rotation
-var tween = indicator.create_tween()
-var tween = bookmark_button.create_tween()
+var tween_4 = indicator.create_tween()
+var tween_5 = bookmark_button.create_tween()
 	tween.tween_property(bookmark_button, "scale", Vector2(1.3, 1.3), 0.1)
 	tween.tween_property(bookmark_button, "scale", Vector2.ONE, 0.1)
 
-	emit_signal("structure_bookmarked", current_structure_id)
+	structure_bookmarked.emit(current_structure_id)
 
-var tween = share_button.create_tween()
+var tween_6 = share_button.create_tween()
 	tween.tween_property(share_button, "rotation_degrees", 360, 0.3)
 	tween.tween_callback(func(): share_button.rotation_degrees = 0)
 
-	emit_signal("structure_shared", current_structure_id)
+	structure_shared.emit(current_structure_id)
 
-var tween = create_tween()
+var tween_7 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate", Color.TRANSPARENT, 0.2)
 	tween.tween_property(self, "scale", Vector2(0.95, 0.95), 0.2)
 	tween.tween_callback(emit_signal.bind("panel_closed"))
 
 var new_breakpoint = _get_current_breakpoint()
-var tween = create_tween()
+var tween_8 = create_tween()
 	tween.tween_property(sections_container, "modulate:a", 0, 0.15)
 	tween.tween_callback(_update_all_content.bind(structure_data))
 	tween.tween_property(sections_container, "modulate:a", 1, 0.15)

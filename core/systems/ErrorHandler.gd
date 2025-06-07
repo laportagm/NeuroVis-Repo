@@ -156,7 +156,7 @@ var tween = create_tween()
 	)
 
 	# Auto-dismiss after delay (except critical errors)
-var notification = ErrorNotificationScript.new()
+var notification_2 = ErrorNotificationScript.new()
 
 # Use severity-appropriate notification type
 var notification_type = ErrorNotificationScript.NotificationType.ERROR
@@ -246,7 +246,7 @@ var action_btn = Button.new()
 	panel.add_child(content)
 	panel.set_meta("error_id", error_data.id)
 
-var error_data = active_errors[error_id]
+var error_data_2 = active_errors[error_id]
 	_handle_error_action(error_data, action_type)
 
 	_dismiss_notification(error_id, panel)
@@ -257,7 +257,7 @@ var model_name = error_data.context.get("model_name", "")
 
 
 var panels = notification_container.get_child(0).get_children()
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.2)
 	tween.tween_property(panel, "position:x", panel.position.x + 50, 0.2)

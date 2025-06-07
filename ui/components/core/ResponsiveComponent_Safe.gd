@@ -44,7 +44,7 @@ var last_viewport_size: Vector2 = Vector2.ZERO
 
 
 var viewport = get_viewport()
-var viewport = get_viewport()
+var viewport_2 = get_viewport()
 var viewport_size = viewport.get_visible_rect().size
 var old_breakpoint = current_breakpoint
 _update_breakpoint(viewport_size)
@@ -185,4 +185,3 @@ func _log(message: String, level: String = "info") -> void:
 	"""Component logging"""
 	if not enable_logging:
 		return
-

@@ -106,7 +106,7 @@ var progress_config = {"max_value": max_val}
 	progress_config.merge(config)
 
 var progress = create_component(ComponentType.PROGRESS_BAR, progress_config) as ProgressBar
-var panel = create_panel("default", {"padding": 20})
+var panel_2 = create_panel("default", {"padding": 20})
 
 # Add title bar
 var title_bar = HBoxContainer.new()
@@ -140,11 +140,11 @@ var main_container = VBoxContainer.new()
 	panel.set_meta("close_button", close_btn)
 	panel.set_meta("content_container", content_container)
 
-var panel = create_panel("default")
-var main_container = VBoxContainer.new()
+var panel_3 = create_panel("default")
+var main_container_2 = VBoxContainer.new()
 
 # Title
-var title = create_label(config.title, "heading")
+var title_2 = create_label(config.title, "heading")
 	main_container.add_child(title)
 	main_container.add_child(HSeparator.new())
 
@@ -158,7 +158,7 @@ var form_panel = create_panel("default")
 var form_container = VBoxContainer.new()
 
 # Title
-var title = create_label(config.title, "heading")
+var title_3 = create_label(config.title, "heading")
 	form_container.add_child(title)
 	form_container.add_child(HSeparator.new())
 
@@ -170,21 +170,21 @@ var field_row = _create_form_field(field_config)
 var actions_row = HBoxContainer.new()
 	actions_row.alignment = BoxContainer.ALIGNMENT_END
 
-var button = create_button(action.get("text", "Action"), action.get("style", "primary"))
+var button_2 = create_button(action.get("text", "Action"), action.get("style", "primary"))
 	actions_row.add_child(button)
 
 	form_container.add_child(actions_row)
 
 	form_panel.add_child(form_container)
 var themed = SafeAutoloadAccess.apply_theme_safely(button, "button")
-var themed = SafeAutoloadAccess.apply_theme_safely(label, "label")
-var themed = SafeAutoloadAccess.apply_theme_safely(panel, "panel")
-var themed = SafeAutoloadAccess.apply_theme_safely(input, "button")
-var themed = SafeAutoloadAccess.apply_theme_safely(progress, "button")
-var section = VBoxContainer.new()
+var themed_2 = SafeAutoloadAccess.apply_theme_safely(label, "label")
+var themed_3 = SafeAutoloadAccess.apply_theme_safely(panel, "panel")
+var themed_4 = SafeAutoloadAccess.apply_theme_safely(input, "button")
+var themed_5 = SafeAutoloadAccess.apply_theme_safely(progress, "button")
+var section_2 = VBoxContainer.new()
 
 # Section title
-var title = create_label(section_config.title, "subheading")
+var title_4 = create_label(section_config.title, "subheading")
 	section.add_child(title)
 
 	# Section content
@@ -197,8 +197,8 @@ var item_data = item_config.get("config", {})
 
 "button":
 var container = HBoxContainer.new()
-var label = create_label(item_config.get("label", "Value:"))
-var slider = create_slider(
+var label_2 = create_label(item_config.get("label", "Value:"))
+var slider_2 = create_slider(
 	item_data.get("min", 0), item_data.get("max", 1), item_data.get("value", 0.5)
 	)
 	container.add_child(label)
@@ -206,7 +206,7 @@ var slider = create_slider(
 var field_container = VBoxContainer.new()
 
 # Field label
-var label = create_label(field_config.label, "body")
+var label_3 = create_label(field_config.label, "body")
 	field_container.add_child(label)
 
 	# Field input
@@ -243,7 +243,7 @@ var base_component = create_component(type, config)
 var _style = config.get("style", "primary")
 
 # Apply theming safely
-var _style = config.get("style", "body")
+var _style_2 = config.get("style", "body")
 
 # Apply theming safely
 var _style_variant = config.get("theme_variant", "default")
@@ -578,4 +578,3 @@ func _fix_orphaned_code():
 				# For now, just return the base component
 func _fix_orphaned_code():
 	return base_component
-

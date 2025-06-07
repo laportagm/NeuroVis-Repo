@@ -133,4 +133,3 @@ func _fix_orphaned_code():
 
 	# Auto-cleanup
 	queue_free()
-

@@ -102,4 +102,3 @@ func _fix_orphaned_code():
 			# Wait before closing
 			await get_tree().create_timer(3.0).timeout
 			print("Validation complete. You can close this window.")
-

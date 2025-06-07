@@ -91,7 +91,7 @@ var section_widget = _create_section_widget(section_id, config)
 	_log("Added section: " + section_id)
 
 
-var section_widget = sections[section_id]
+var section_widget_2 = sections[section_id]
 	content_container.remove_child(section_widget)
 	section_widget.queue_free()
 
@@ -100,7 +100,7 @@ var section_widget = sections[section_id]
 	section_order.erase(section_id)
 
 
-var section_widget = sections[section_id]
+var section_widget_3 = sections[section_id]
 var content_type = section_configs[section_id].get("content_type", "text")
 
 	_update_section_content(section_widget, content_type, content_data)
@@ -143,7 +143,7 @@ var collapse_btn = UIComponentFactory.create_button(
 	# Store reference for rotation animation
 	header_container.set_meta("collapse_button", collapse_btn)
 
-var content_type = config.get("content_type", "text")
+var content_type_2 = config.get("content_type", "text")
 
 "rich_text":
 var rich_text = RichTextLabel.new()
@@ -214,7 +214,7 @@ var item_label = UIComponentFactory.create_label(str(items[i]), "body")
 
 
 var connections = data.get("connections", [])
-var label = UIComponentFactory.create_label(connection.get("name", "Unknown"), "caption")
+var label_2 = UIComponentFactory.create_label(connection.get("name", "Unknown"), "caption")
 var strength = UIComponentFactory.create_progress_bar(100.0)
 	strength.value = connection.get("strength", 0) * 100
 
@@ -235,11 +235,11 @@ var button = UIComponentFactory.create_button(
 	buttons_container.add_child(button)
 
 
-var card = UIComponentFactory.create_panel("default")
+var card_2 = UIComponentFactory.create_panel("default")
 var card_content = VBoxContainer.new()
 
 # Card title
-var title = UIComponentFactory.create_label(card_data.title, "subheading")
+var title_2 = UIComponentFactory.create_label(card_data.title, "subheading")
 	card_content.add_child(title)
 
 	# Card description
@@ -248,10 +248,10 @@ var desc = UIComponentFactory.create_label(card_data.description, "body")
 	card_content.add_child(desc)
 
 	card.add_child(card_content)
-var section_widget = sections[section_id]
-var content_node = section_widget.get_meta("content")
+var section_widget_4 = sections[section_id]
+var content_node_2 = section_widget.get_meta("content")
 var header_node = section_widget.get_meta("header")
-var collapse_btn = header_node.get_meta("collapse_button")
+var collapse_btn_2 = header_node.get_meta("collapse_button")
 
 var is_visible = content_node.visible
 	content_node.visible = not is_visible
@@ -267,13 +267,13 @@ var target_rotation = PI if not is_visible else 0
 var search_lower = search_text.to_lower()
 
 var section_config = section_configs[section_id]
-var title = section_config.get("title", "").to_lower()
+var title_3 = section_config.get("title", "").to_lower()
 var visible = title.contains(search_lower)
 
 	set_section_visibility(section_id, visible)
 
 
-var section_widget = sections[section_id]
+var section_widget_5 = sections[section_id]
 var config = section_widget.get_meta("config")
 var result = []
 

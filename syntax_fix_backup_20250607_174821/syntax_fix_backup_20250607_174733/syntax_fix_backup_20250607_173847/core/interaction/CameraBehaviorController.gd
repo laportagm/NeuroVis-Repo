@@ -307,5 +307,3 @@ func _reset_to_safe_values() -> void:
 	pan_velocity = Vector3.ZERO
 	zoom_velocity = 0.0
 	print("[CAMERA] Reset to safe values")
-
-

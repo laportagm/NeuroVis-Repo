@@ -72,7 +72,7 @@ var essential_systems = [
 	BrainSystem.WHOLE_BRAIN, BrainSystem.INTERNAL_STRUCTURES, BrainSystem.HALF_SECTIONAL
 	]
 
-var success = true
+var success_2 = true
 var timer = Timer.new()
 	add_child(timer)
 	timer.wait_time = duration
@@ -85,7 +85,7 @@ var timer = Timer.new()
 var target_position = _system_camera_positions[system]
 
 # This would actually move the camera in a real implementation
-var system_name = BrainSystem.keys()[to_system]
+var system_name_2 = BrainSystem.keys()[to_system]
 	system_transition_completed.emit(system_name)
 
 var _current_system: BrainSystem = BrainSystem.WHOLE_BRAIN

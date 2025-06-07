@@ -384,4 +384,3 @@ func _log(message: String, level: String = "info") -> void:
 	"""Component logging with autoload status on errors"""
 	if not enable_logging:
 		return
-

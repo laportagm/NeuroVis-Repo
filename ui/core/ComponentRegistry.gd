@@ -28,18 +28,18 @@ static func _ensure_initialized() -> void:
 var component = _factories[component_type].call(config)
 
 var cached_component = _component_cache[component_id]
-var component = create_component(component_type, config)
+var component_2 = create_component(component_type, config)
 
-var component = _component_cache[component_id]
+var component_3 = _component_cache[component_id]
 
 # Save component state if persistence is enabled
-var component = _component_cache[component_id]
+var component_4 = _component_cache[component_id]
 var component_script = _safe_load_script("res://ui/components/InfoPanelComponent.gd")
 var panel = component_script.new()
 	panel.configure(config)
 var enhanced_script = _safe_load_script("res://ui/panels/EnhancedInformationPanel.gd")
 var factory_script = _safe_load_script("res://ui/panels/InfoPanelFactory.gd")
-var panel = PanelContainer.new()
+var panel_2 = PanelContainer.new()
 	panel.name = "SettingsPanel"
 
 var label = Label.new()
@@ -47,18 +47,18 @@ var label = Label.new()
 	panel.add_child(label)
 
 var ai_script = _safe_load_script("res://ui/components/panels/AIAssistantPanel.gd")
-var panel = ai_script.new()
-var panel = PanelContainer.new()
+var panel_3 = ai_script.new()
+var panel_4 = PanelContainer.new()
 	panel.name = "AIAssistantPanel"
 
-var label = Label.new()
+var label_2 = Label.new()
 	label.text = "AI Assistant (Coming Soon)"
 	panel.add_child(label)
 
-var component_script = _safe_load_script("res://ui/components/fragments/HeaderComponent.gd")
+var component_script_2 = _safe_load_script("res://ui/components/fragments/HeaderComponent.gd")
 var header = component_script.new()
 	header.configure_header(config)
-var header = HBoxContainer.new()
+var header_2 = HBoxContainer.new()
 	header.name = "HeaderComponent"
 
 	# Title label
@@ -75,7 +75,7 @@ var button = Button.new()
 	button.set_meta("action", action)
 	header.add_child(button)
 
-var component_script = _safe_load_script("res://ui/components/fragments/ContentComponent.gd")
+var component_script_3 = _safe_load_script("res://ui/components/fragments/ContentComponent.gd")
 var content = component_script.new()
 var content_container = VBoxContainer.new()
 	content_container.name = "ContentComponent"
@@ -84,17 +84,17 @@ var sections = config.get("sections", ["description"])
 var section = _create_section_component({"name": section_name})
 	content_container.add_child(section)
 
-var component_script = _safe_load_script("res://ui/components/fragments/ActionsComponent.gd")
+var component_script_4 = _safe_load_script("res://ui/components/fragments/ActionsComponent.gd")
 var actions = component_script.new()
 var actions_container = HBoxContainer.new()
 	actions_container.name = "ActionsComponent"
 
 var buttons = config.get("buttons", [])
-var button = _create_button_component(button_config)
+var button_2 = _create_button_component(button_config)
 	actions_container.add_child(button)
 
-var component_script = _safe_load_script("res://ui/components/fragments/SectionComponent.gd")
-var section = component_script.new()
+var component_script_5 = _safe_load_script("res://ui/components/fragments/SectionComponent.gd")
+var section_2 = component_script.new()
 	section.configure_section(config)
 var section_container = VBoxContainer.new()
 	section_container.name = config.get("name", "Section") + "Component"
@@ -111,11 +111,11 @@ var section_content = VBoxContainer.new()
 	section_content.name = "SectionContent"
 	section_container.add_child(section_content)
 
-var button = Button.new()
+var button_3 = Button.new()
 
 	button.text = config.get("text", "Button")
 
-var label = Label.new()
+var label_3 = Label.new()
 
 	label.text = config.get("text", "Label")
 
@@ -126,12 +126,12 @@ var component_id = component.get_meta("component_id", "")
 var fallback = PanelContainer.new()
 	fallback.name = "Fallback_" + component_type
 
-var label = Label.new()
+var label_4 = Label.new()
 	label.text = "Component: " + component_type + " (Fallback)"
 	fallback.add_child(label)
 
 	push_warning("[ComponentRegistry] Using fallback for: %s" % component_type)
-var panel = PanelContainer.new()
+var panel_5 = PanelContainer.new()
 	panel.name = "FallbackInfoPanel"
 	panel.custom_minimum_size = Vector2(300, 200)
 

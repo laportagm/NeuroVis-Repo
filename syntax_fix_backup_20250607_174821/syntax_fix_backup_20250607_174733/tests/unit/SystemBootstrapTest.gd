@@ -191,5 +191,3 @@ func _fix_orphaned_code():
 		)
 		else:
 			print("[TEST] Camera controller initialization failed (expected in isolated test)")
-
-

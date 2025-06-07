@@ -65,7 +65,7 @@ SliceAxis.SAGITTAL:
 			slice_planes[axis] = plane
 
 
-var plane = slice_planes[axis]
+var plane_2 = slice_planes[axis]
 	plane.visible = true
 
 	# Position plane
@@ -82,7 +82,7 @@ var plane = slice_planes[axis]
 				slice_position_changed.emit(_get_axis_name(axis), position)
 
 
-var plane = slice_planes[axis]
+var plane_3 = slice_planes[axis]
 
 SliceAxis.SAGITTAL:
 	plane.position.x = position
@@ -134,7 +134,7 @@ var pathway_visual = _create_pathway_visualization(structures)
 	pathway_visualizations.append(pathway_visual)
 
 	# Animate signal flow
-var tween = create_tween()
+var tween_2 = create_tween()
 
 var from_pos = _get_structure_position(structures[i])
 var to_pos = _get_structure_position(structures[i + 1])
@@ -156,7 +156,7 @@ var particle = _create_signal_particle()
 		)
 
 
-var tween = create_tween()
+var tween_3 = create_tween()
 	tween.set_parallel(true)
 
 	# Calculate explosion vectors for each structure
@@ -167,7 +167,7 @@ var distance = 2.0 if expand else 0.0
 
 # Store original position
 var target_pos = model.get_meta("original_position", model.position)
-var tween = create_tween()
+var tween_4 = create_tween()
 	tween.set_loops()
 	tween.tween_property(
 	brain_model_parent,
@@ -179,12 +179,12 @@ var tween = create_tween()
 	active_animations["rotation"] = tween
 
 
-var mat = model.get_surface_override_material(0)
-var mat = model.get_surface_override_material(0)
+var mat_2 = model.get_surface_override_material(0)
+var mat_3 = model.get_surface_override_material(0)
 var color = color_map[structure_id]
-var structure = _find_structure_mesh(structure_id)
+var structure_2 = _find_structure_mesh(structure_id)
 
-var mat = StandardMaterial3D.new()
+var mat_4 = StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.emission_enabled = true
 	mat.emission = color
@@ -194,7 +194,7 @@ var mat = StandardMaterial3D.new()
 	structure.material_override = mat
 
 
-var original_mat = model.get_meta("original_material", null)
+var original_mat_2 = model.get_meta("original_material", null)
 var structures = pathway_data.get("structures", [])
 var connections = pathway_data.get("connections", [])
 
@@ -206,8 +206,8 @@ var line = _create_connection_line(
 	pathway_visualizations.append(line)
 
 
-var structure = _find_structure_mesh(structure_id)
-var mat = ShaderMaterial.new()
+var structure_3 = _find_structure_mesh(structure_id)
+var mat_5 = ShaderMaterial.new()
 	mat.shader = highlight_shader
 	mat.set_shader_parameter("highlight_color", Color.CYAN)
 	mat.set_shader_parameter("highlight_strength", highlight_intensity)
@@ -217,20 +217,20 @@ var mat = ShaderMaterial.new()
 
 	highlighted_structures.append(structure_id)
 	# Remove highlight
-var original_mat = structure.get_meta("original_material", null)
-var structure = _find_structure_mesh(structure_id)
+var original_mat_3 = structure.get_meta("original_material", null)
+var structure_4 = _find_structure_mesh(structure_id)
 var pathway_node = Node3D.new()
 	pathway_node.name = "Pathway_Visualization"
 
 	# Create connections between structures
-var line = _create_connection_line(structures[i], structures[i + 1], 1.0)
+var line_2 = _create_connection_line(structures[i], structures[i + 1], 1.0)
 	pathway_node.add_child(line)
 
 	add_child(pathway_node)
 var line_node = Node3D.new()
 
-var from_pos = _get_structure_position(from_id)
-var to_pos = _get_structure_position(to_id)
+var from_pos_2 = _get_structure_position(from_id)
+var to_pos_2 = _get_structure_position(to_id)
 
 # Create line mesh
 var immediate_mesh = ImmediateMesh.new()
@@ -238,7 +238,7 @@ var mesh_instance = MeshInstance3D.new()
 	mesh_instance.mesh = immediate_mesh
 
 	# Create material
-var mat = StandardMaterial3D.new()
+var mat_6 = StandardMaterial3D.new()
 	mat.vertex_color_use_as_albedo = true
 	mat.emission_enabled = true
 	mat.emission = Color.CYAN

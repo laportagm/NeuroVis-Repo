@@ -298,4 +298,3 @@ func _fix_orphaned_code():
 										for result in test_results:
 											if result.status == "FAIL":
 												print("  - [" + result.test + "] " + result.message)
-

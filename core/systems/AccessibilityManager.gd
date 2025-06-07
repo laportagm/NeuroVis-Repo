@@ -70,35 +70,35 @@ var g = _srgb_to_linear(color.g)
 var b = _srgb_to_linear(color.b)
 
 # Calculate luminance
-var r = color.r
-var g = color.g
-var b = color.b
+var r_2 = color.r
+var g_2 = color.g
+var b_2 = color.b
 
 # Matrix transformation for deuteranope
 var new_r = 0.625 * r + 0.375 * g
 var new_g = 0.7 * r + 0.3 * g
 var new_b = 0.0 * r + 0.3 * g + 0.7 * b
 
-var r = color.r
-var g = color.g
-var b = color.b
+var r_3 = color.r
+var g_3 = color.g
+var b_3 = color.b
 
 # Matrix transformation for protanope
-var new_r = 0.567 * r + 0.433 * g
-var new_g = 0.558 * r + 0.442 * g
-var new_b = 0.0 * r + 0.242 * g + 0.758 * b
+var new_r_2 = 0.567 * r + 0.433 * g
+var new_g_2 = 0.558 * r + 0.442 * g
+var new_b_2 = 0.0 * r + 0.242 * g + 0.758 * b
 
-var r = color.r
-var g = color.g
-var b = color.b
+var r_4 = color.r
+var g_4 = color.g
+var b_4 = color.b
 
 # Matrix transformation for tritanope
-var new_r = 0.95 * r + 0.05 * g
-var new_g = 0.0 * r + 0.433 * g + 0.567 * b
-var new_b = 0.0 * r + 0.475 * g + 0.525 * b
+var new_r_3 = 0.95 * r + 0.05 * g
+var new_g_3 = 0.0 * r + 0.433 * g + 0.567 * b
+var new_b_3 = 0.0 * r + 0.475 * g + 0.525 * b
 
 var gray = 0.299 * color.r + 0.587 * color.g + 0.114 * color.b
-var colors = get_recommended_colors()
+var colors_2 = get_recommended_colors()
 var bg = colors["background"]
 
 var ratio = check_contrast_ratio(colors[key], bg)

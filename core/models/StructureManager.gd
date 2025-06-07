@@ -43,11 +43,11 @@ var normalized_name = _normalize_structure_name(structure_name)
 # Try to get data from knowledge service
 var structure_data = {}
 
-var knowledge_service = get_node("/root/KnowledgeService")
+var knowledge_service_2 = get_node("/root/KnowledgeService")
 var search_results = knowledge_service.search_structures(normalized_name)
 var kb = get_node("/root/KB")
 var structure_id = _find_structure_id_legacy(normalized_name)
-var structure_data = get_structure_data(structure_name)
+var structure_data_2 = get_structure_data(structure_name)
 var highlight_type_str = HighlightType.keys()[highlight_type].to_lower()
 highlight_structure(structure_name, highlight_type_str)
 
@@ -57,7 +57,7 @@ find_related_structures(structure_name)
 var cache_key = structure_name
 var related = _relationship_cache[cache_key]
 related_structures_found.emit(structure_name, related)
-var structure_data = get_structure_data(structure_name)
+var structure_data_3 = get_structure_data(structure_name)
 var related_structures = []
 
 var pathologies = structure_data["commonPathologies"]
@@ -74,9 +74,9 @@ structure_comparison_started.emit(structure_names)
 
 
 ## End active comparison mode
-var knowledge_service = get_node("/root/KnowledgeService")
+var knowledge_service_3 = get_node("/root/KnowledgeService")
 var results = []
-var kb = get_node("/root/KB")
+var kb_2 = get_node("/root/KB")
 var structure_ids = kb.get_all_structure_ids()
 
 var structure = kb.get_structure(id)
@@ -105,27 +105,27 @@ var name_map = {
 
 # Check for direct mapping
 var lower_name = clean_name.to_lower()
-var kb = get_node("/root/KB")
-var lower_name = mesh_name.to_lower()
-var structure_ids = kb.get_all_structure_ids()
+var kb_3 = get_node("/root/KB")
+var lower_name_2 = mesh_name.to_lower()
+var structure_ids_2 = kb.get_all_structure_ids()
 
 # Try exact match first
-var structure = kb.get_structure(id)
-var structure = kb.get_structure(id)
+var structure_2 = kb.get_structure(id)
+var structure_3 = kb.get_structure(id)
 var display_name = structure.displayName.to_lower()
 var affected_structures = []
 
-var knowledge_service = get_node("/root/KnowledgeService")
-var kb = get_node("/root/KB")
-var structure_ids = kb.get_all_structure_ids()
+var knowledge_service_4 = get_node("/root/KnowledgeService")
+var kb_4 = get_node("/root/KB")
+var structure_ids_3 = kb.get_all_structure_ids()
 
-var structure = kb.get_structure(id)
-var pathologies = structure.commonPathologies
+var structure_4 = kb.get_structure(id)
+var pathologies_2 = structure.commonPathologies
 var score = 0.0
 var lower_query = query.to_lower()
 
 # Check display name
-var display_name = structure.displayName.to_lower()
+var display_name_2 = structure.displayName.to_lower()
 var description = structure.shortDescription.to_lower()
 var clinical = structure.clinicalRelevance.to_lower()
 var current_data = get_structure_data(_current_structure, true)

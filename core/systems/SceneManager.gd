@@ -86,7 +86,7 @@ var elapsed = (Time.get_ticks_msec() / 1000.0) - _loading_start_time
 var progress_array = []
 var progress = ResourceLoader.load_threaded_get_status(scene_path, progress_array)
 var result = get_tree().change_scene_to_packed(scene)
-var panel = ColorRect.new()
+var panel_2 = ColorRect.new()
 	panel.color = Color(0.7, 0.1, 0.1, 0.8)  # Red background for errors
 	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_loading_screen.add_child(panel)
@@ -366,4 +366,3 @@ func _create_error_screen(error: String) -> void:
 	"""Create educational error feedback for loading failures"""
 	_loading_screen = Control.new()
 	_loading_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
-

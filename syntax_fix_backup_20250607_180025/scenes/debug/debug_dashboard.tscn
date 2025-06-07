@@ -1,0 +1,167 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw8jb6y5qkxas"]
+
+[ext_resource type="Script" path="res://scripts/dev_utils/DebugDashboard.gd" id="1_8r2vw"]
+
+[node name="DebugDashboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_8r2vw")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = -10.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HeaderContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+text = "🔍 Debug Dashboard"
+theme_type_variation = &"HeaderLarge"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToggleButton" type="Button" parent="PanelContainer/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+text = "▼"
+flat = true
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Performance" type="Control" parent="PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Performance"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="FPSContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer"]
+layout_mode = 2
+
+[node name="FPSLabel" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer/FPSContainer"]
+layout_mode = 2
+text = "FPS:"
+
+[node name="FPSValue" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer/FPSContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "60"
+horizontal_alignment = 2
+
+[node name="MemoryContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer"]
+layout_mode = 2
+
+[node name="MemoryLabel" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer/MemoryContainer"]
+layout_mode = 2
+text = "Memory:"
+
+[node name="MemoryValue" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer/MemoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0 MB"
+horizontal_alignment = 2
+
+[node name="PerformanceGraph" type="Control" parent="PanelContainer/VBoxContainer/TabContainer/Performance/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Errors" type="Control" parent="PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Errors"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ErrorSummary" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Errors/VBoxContainer"]
+layout_mode = 2
+
+[node name="ErrorCountLabel" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Errors/VBoxContainer/ErrorSummary"]
+layout_mode = 2
+text = "Total Errors:"
+
+[node name="ErrorCountValue" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Errors/VBoxContainer/ErrorSummary"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer/Errors/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ErrorLog" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Errors/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Health" type="Control" parent="PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Health"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="OverallHealth" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Health/VBoxContainer"]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Health/VBoxContainer/OverallHealth"]
+layout_mode = 2
+text = "System Health:"
+
+[node name="HealthStatus" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Health/VBoxContainer/OverallHealth"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "GOOD"
+horizontal_alignment = 2
+
+[node name="ComponentHealth" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Health/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tests" type="Control" parent="PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Tests"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TestControls" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Tests/VBoxContainer"]
+layout_mode = 2
+
+[node name="RunTestsButton" type="Button" parent="PanelContainer/VBoxContainer/TabContainer/Tests/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Run Tests"
+
+[node name="StressTestButton" type="Button" parent="PanelContainer/VBoxContainer/TabContainer/Tests/VBoxContainer/TestControls"]
+layout_mode = 2
+text = "Stress Test"
+
+[node name="TestResults" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer/Tests/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TestLog" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Tests/VBoxContainer/TestResults"]
+layout_mode = 2
+size_flags_horizontal = 3

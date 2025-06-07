@@ -49,7 +49,7 @@ var line = file.get_line().strip_edges()
 
 # Skip comments and empty lines
 var issues = _check_line_for_unsafe_patterns(line, line_number)
-var issues = []
+var issues_2 = []
 
 # Skip lines that already use safe patterns
 var regex = RegEx.new()
@@ -66,7 +66,7 @@ issues.append(
 }
 )
 
-var regex = RegEx.new()
+var regex_2 = RegEx.new()
 regex.compile(safe_pattern)
 var issues_by_type = {}
 var issue_type = issue.issue_type

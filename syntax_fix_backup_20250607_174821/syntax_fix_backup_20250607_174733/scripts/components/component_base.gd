@@ -98,5 +98,3 @@ func _cleanup_component() -> void:
 	## Get the component's current status for debugging
 func _get_custom_status() -> Dictionary:
 	return {}
-
-

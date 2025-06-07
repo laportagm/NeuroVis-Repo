@@ -53,7 +53,7 @@ var camera_forward = -camera.global_transform.basis.z.normalized()
 
 # Check if vectors are approximately aligned
 var dot_product = direction_to_target.dot(camera_forward)
-var events = []
+var events_2 = []
 
 # 1. Keyboard input - left arrow
 var left_event = InputEventKey.new()

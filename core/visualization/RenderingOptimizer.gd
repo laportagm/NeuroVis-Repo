@@ -111,7 +111,7 @@ var camera_paths = [
 
 var lod_nodes = get_tree().get_nodes_in_group("LODManagers")
 var nodes = get_tree().get_nodes_in_group("autoload")
-var mesh_instances = []
+var mesh_instances_2 = []
 	_collect_mesh_instances(get_tree().root, mesh_instances)
 
 	_scene_objects = mesh_instances
@@ -143,7 +143,7 @@ var distance = _camera.global_position.distance_to(center)
 var visible_groups = occlusion_depth
 var current_group = 0
 
-var group = group_data.group
+var group_2 = group_data.group
 var is_visible = current_group < visible_groups
 
 # Update visibility of all objects in this group
@@ -152,8 +152,8 @@ var group_name = "default"
 var priority = 0
 
 # Try to find a meaningful parent name
-var group = _occlusion_objects[group_name]
-var center = Vector3.ZERO
+var group_3 = _occlusion_objects[group_name]
+var center_2 = Vector3.ZERO
 
 var material_groups = {}
 
@@ -162,7 +162,7 @@ var signature = _generate_material_signature(material)
 
 # Check if similar material already exists
 var found_group = false
-var group = material_groups[group_id]
+var group_4 = material_groups[group_id]
 var group_id = str(signature.hash())
 	material_groups[group_id] = {
 	"signature": signature,
@@ -172,7 +172,7 @@ var group_id = str(signature.hash())
 	}
 
 	# Create batched materials for groups with multiple materials
-var group = material_groups[group_id]
+var group_5 = material_groups[group_id]
 var batched_material = _create_batched_material(group.materials)
 	group.batched_material = batched_material
 
@@ -183,15 +183,15 @@ var original_materials = []
 var mesh = mesh_info.mesh
 var surface_idx = mesh_info.surface_idx
 
-var material_groups = {}
+var material_groups_2 = {}
 
-var material = obj.get_surface_override_material(i)
-var signature = _generate_material_signature(material)
+var material_2 = obj.get_surface_override_material(i)
+var signature_2 = _generate_material_signature(material)
 
 # Check if similar material already exists
-var found_group = false
-var group = material_groups[group_id]
-var group_id = model_name + "_" + str(signature.hash())
+var found_group_2 = false
+var group_6 = material_groups[group_id]
+var group_id_2 = model_name + "_" + str(signature.hash())
 	material_groups[group_id] = {
 	"signature": signature,
 	"materials": [material],
@@ -200,22 +200,22 @@ var group_id = model_name + "_" + str(signature.hash())
 	}
 
 	# Create batched materials for groups with multiple materials
-var group = material_groups[group_id]
-var batched_material = _create_batched_material(group.materials)
+var group_7 = material_groups[group_id]
+var batched_material_2 = _create_batched_material(group.materials)
 	group.batched_material = batched_material
 
 	# Apply to all meshes in group
-var affected_meshes = []
-var original_materials = []
+var affected_meshes_2 = []
+var original_materials_2 = []
 
-var mesh = mesh_info.mesh
-var surface_idx = mesh_info.surface_idx
+var mesh_2 = mesh_info.mesh
+var surface_idx_2 = mesh_info.surface_idx
 
-var priority = 0
+var priority_2 = 0
 
 # Determine priority based on name
-var center = Vector3.ZERO
-var signature = {}
+var center_3 = Vector3.ZERO
+var signature_3 = {}
 
 var params = []
 # In a complete implementation, we would enumerate shader parameters
@@ -228,7 +228,7 @@ var matches = 0
 var total = 0
 
 # Essential properties
-var distance = color1.distance_to(color2)
+var distance_2 = color1.distance_to(color2)
 var base_material = materials[0]
 
 var batched = StandardMaterial3D.new()
@@ -239,7 +239,7 @@ var batched = StandardMaterial3D.new()
 	batched.roughness = base_material.roughness
 	batched.emission_enabled = base_material.emission_enabled
 
-var batched = ShaderMaterial.new()
+var batched_2 = ShaderMaterial.new()
 	batched.shader = base_material.shader
 
 	# Copy parameters

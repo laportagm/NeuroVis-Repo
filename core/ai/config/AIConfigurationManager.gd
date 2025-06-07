@@ -145,13 +145,13 @@ var dir = DirAccess.open("user://")
 var config = initial_config
 var provider_config = get_provider_config(provider_id)
 
-var provider_config = get_provider_config(provider_id)
+var provider_config_2 = get_provider_config(provider_id)
 
 var file = FileAccess.open_encrypted_with_pass(
 	PROVIDER_CONFIG_DIRECTORY + provider_id + "_key.dat", FileAccess.WRITE, OS.get_unique_id()
 	)
 
-var config = get_provider_config(provider_id)
+var config_2 = get_provider_config(provider_id)
 	config["has_api_key"] = true
 	set_provider_config(provider_id, config)
 	push_error("[AIConfig] Failed to save API key for provider: " + provider_id)
@@ -159,27 +159,27 @@ var config = get_provider_config(provider_id)
 
 var key_path = PROVIDER_CONFIG_DIRECTORY + provider_id + "_key.dat"
 
-var file = FileAccess.open_encrypted_with_pass(key_path, FileAccess.READ, OS.get_unique_id())
+var file_2 = FileAccess.open_encrypted_with_pass(key_path, FileAccess.READ, OS.get_unique_id())
 
 var api_key = file.get_as_text()
 	file.close()
-var key_path = PROVIDER_CONFIG_DIRECTORY + provider_id + "_key.dat"
+var key_path_2 = PROVIDER_CONFIG_DIRECTORY + provider_id + "_key.dat"
 
-var dir = DirAccess.open(PROVIDER_CONFIG_DIRECTORY)
-var config = get_provider_config(provider_id)
+var dir_2 = DirAccess.open(PROVIDER_CONFIG_DIRECTORY)
+var config_3 = get_provider_config(provider_id)
 	config["has_api_key"] = false
 	set_provider_config(provider_id, config)
 
 
-var config = get_provider_config(provider_id)
-var dir = DirAccess.open(PROVIDER_CONFIG_DIRECTORY)
+var config_4 = get_provider_config(provider_id)
+var dir_3 = DirAccess.open(PROVIDER_CONFIG_DIRECTORY)
 var file_name = dir.get_next()
-var file = FileAccess.open(CONFIG_FILE_PATH, FileAccess.READ)
+var file_3 = FileAccess.open(CONFIG_FILE_PATH, FileAccess.READ)
 var data = file.get_var()
 	file.close()
 
-var file = FileAccess.open(CONFIG_FILE_PATH, FileAccess.WRITE)
-var data = {"configurations": _configurations, "default_provider": _default_provider}
+var file_4 = FileAccess.open(CONFIG_FILE_PATH, FileAccess.WRITE)
+var data_2 = {"configurations": _configurations, "default_provider": _default_provider}
 	file.store_var(data)
 	file.close()
 var warnings: PackedStringArray = []

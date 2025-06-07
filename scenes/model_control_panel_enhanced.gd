@@ -165,14 +165,14 @@ var separator = HSeparator.new()
 	footer_container.add_child(reset_button)
 
 
-var title = header_container.find_child("MainTitle")
-var subtitle = header_container.find_child("Subtitle")
+var title_2 = header_container.find_child("MainTitle")
+var subtitle_2 = header_container.find_child("Subtitle")
 var category_data = model_categories[category_id]
 var chip = _create_category_chip(category_id, category_data)
 	category_container.add_child(chip)
 
 
-var chip = Button.new()
+var chip_2 = Button.new()
 	chip.name = "CategoryChip_" + category_id
 	chip.text = category_data["icon"] + " " + category_data["name"]
 	chip.toggle_mode = true
@@ -204,7 +204,7 @@ var card = _create_enhanced_model_card(model_name, i)
 	_apply_current_filter()
 
 
-var card = PanelContainer.new()
+var card_2 = PanelContainer.new()
 	card.name = "ModelCard_" + model_name
 
 	# Get model metadata
@@ -244,7 +244,7 @@ var name_container = HBoxContainer.new()
 	info_section.add_child(name_container)
 
 	# Category icon
-var category_data = model_categories.get(
+var category_data_2 = model_categories.get(
 	metadata.get("category", "all"), model_categories["all"]
 	)
 var icon_label = Label.new()
@@ -342,10 +342,10 @@ var container = HBoxContainer.new()
 	card.add_child(container)
 
 	# Category icon
-var category_data = model_categories.get(
+var category_data_3 = model_categories.get(
 	metadata.get("category", "all"), model_categories["all"]
 	)
-var icon_label = Label.new()
+var icon_label_2 = Label.new()
 	icon_label.text = category_data["icon"]
 	icon_label.custom_minimum_size = Vector2(32, 32)
 	UIThemeManager.apply_modern_label(
@@ -354,13 +354,13 @@ var icon_label = Label.new()
 	container.add_child(icon_label)
 
 	# Model info
-var info_section = VBoxContainer.new()
+var info_section_2 = VBoxContainer.new()
 	info_section.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info_section.add_theme_constant_override("separation", UIThemeManager.MARGIN_TINY)
 	container.add_child(info_section)
 
 	# Name
-var name_label = Label.new()
+var name_label_2 = Label.new()
 	name_label.text = model_name.replace("_", " ")
 	UIThemeManager.apply_modern_label(
 	name_label, UIThemeManager.FONT_SIZE_MEDIUM, UIThemeManager.TEXT_PRIMARY
@@ -368,7 +368,7 @@ var name_label = Label.new()
 	info_section.add_child(name_label)
 
 	# Status
-var status_label = Label.new()
+var status_label_2 = Label.new()
 	status_label.name = "StatusLabel"
 	status_label.text = "Visible"
 	UIThemeManager.apply_modern_label(
@@ -377,7 +377,7 @@ var status_label = Label.new()
 	info_section.add_child(status_label)
 
 	# Toggle
-var toggle = CheckButton.new()
+var toggle_2 = CheckButton.new()
 	toggle.name = "ModelToggle"
 	toggle.button_pressed = true
 	toggle.custom_minimum_size = Vector2(48, 32)
@@ -387,8 +387,8 @@ var toggle = CheckButton.new()
 	toggle.toggled.connect(_on_model_toggled.bind(model_name, status_label))
 
 
-var card = model_cards[model_name]
-var metadata = card.get_meta("metadata", {})
+var card_3 = model_cards[model_name]
+var metadata_2 = card.get_meta("metadata", {})
 
 var should_show = _should_show_model(model_name, metadata)
 
@@ -407,22 +407,22 @@ var model_names = model_cards.keys()
 var model_states = {}
 
 # Save current states
-var card = model_cards[model_name]
-var toggle = card.find_child("ModelToggle")
-var model_name = model_names[i]
-var card = _create_enhanced_model_card(model_name, i)
+var card_4 = model_cards[model_name]
+var toggle_3 = card.find_child("ModelToggle")
+var model_name_2 = model_names[i]
+var card_5 = _create_enhanced_model_card(model_name, i)
 	models_container.add_child(card)
 	model_cards[model_name] = card
 
 	# Restore state
-var toggle = card.find_child("ModelToggle")
-var card = model_cards[model_name]
-var toggle = card.find_child("ModelToggle")
-var status_label = card.find_child("StatusLabel")
+var toggle_4 = card.find_child("ModelToggle")
+var card_6 = model_cards[model_name]
+var toggle_5 = card.find_child("ModelToggle")
+var status_label_3 = card.find_child("StatusLabel")
 
-var card = model_cards[model_name]
-var toggle = card.find_child("ModelToggle")
-var status_label = card.find_child("StatusLabel")
+var card_7 = model_cards[model_name]
+var toggle_6 = card.find_child("ModelToggle")
+var status_label_4 = card.find_child("StatusLabel")
 
 var status_text = "👁️ Visible" if visibility else "👁️‍🗨️ Hidden"
 var status_color = (
@@ -435,15 +435,15 @@ var status_color = (
 
 
 var visible = []
-var card = model_cards[model_name]
-var toggle = card.find_child("ModelToggle")
+var card_8 = model_cards[model_name]
+var toggle_7 = card.find_child("ModelToggle")
 var recommendations = []
 var sorted_models = []
 
 # Sort by difficulty
-var card = model_cards[model_name]
-var metadata = card.get_meta("metadata", {})
-var difficulty = metadata.get("difficulty", "beginner")
+var card_9 = model_cards[model_name]
+var metadata_3 = card.get_meta("metadata", {})
+var difficulty_2 = metadata.get("difficulty", "beginner")
 
 var priority = 1 if difficulty == "beginner" else 2 if difficulty == "intermediate" else 3
 	sorted_models.append({"name": model_name, "priority": priority, "metadata": metadata})

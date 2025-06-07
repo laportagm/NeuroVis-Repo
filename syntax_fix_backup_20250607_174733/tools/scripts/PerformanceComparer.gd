@@ -201,4 +201,3 @@ func _fix_orphaned_code():
 		json_file.store_string(JSON.stringify(comparison_report, "\t"))
 		json_file.close()
 		print("📄 Generated: performance-comparison.json")
-

@@ -18,7 +18,7 @@ assert_true(panel.animation_enabled)
 it(
 "should add and remove sections dynamically",
 func():
-var panel = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel_2 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
 	panel.initialize_component()
 
 	# Test adding custom section
@@ -40,7 +40,7 @@ var sections = panel.get_all_sections_data()
 	it(
 	"should load brain structure data correctly",
 	func():
-var panel = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel_3 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
 var test_scene = Node.new()
 	test_scene.add_child(panel)
 
@@ -83,7 +83,7 @@ var component = prepreprepreload("res://ui/components/core/ResponsiveComponent.g
 	it(
 	"should detect tablet breakpoint",
 	func():
-var component = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
+var component_2 = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
 	component.responsive_enabled = true
 
 	# Simulate tablet viewport
@@ -97,7 +97,7 @@ var component = prepreprepreload("res://ui/components/core/ResponsiveComponent.g
 	it(
 	"should detect desktop breakpoint",
 	func():
-var component = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
+var component_3 = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
 	component.responsive_enabled = true
 
 	# Simulate desktop viewport
@@ -120,7 +120,7 @@ var button = UIComponentFactory.create_button("Test Button", "primary")
 	it(
 	"should create panels with glass morphism",
 	func():
-var panel = UIComponentFactory.create_panel("default")
+var panel_4 = UIComponentFactory.create_panel("default")
 
 	assert_not_null(panel)
 	assert_true(panel is PanelContainer)
@@ -144,7 +144,7 @@ var form = UIComponentFactory.create_form(fields, {"title": "Login Form"})
 
 
 	# Test signal connectivity
-var panel = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel_5 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
 var signal_received = false
 
 	panel.panel_closed.connect(func(): signal_received = true)
@@ -156,7 +156,7 @@ var signal_received = false
 	it(
 	"should emit content_changed signal",
 	func():
-var panel = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel_6 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
 	panel.initialize_component()
 
 var signal_data = {}

@@ -100,40 +100,40 @@ var node_name = node.name
 item.set_text(0, node_name + " (" + node_class + ")")
 
 # Add children
-var test_header = Label.new()
+var test_header_2 = Label.new()
 test_header.text = "Running test: " + test_name
 test_results_container.add_child(test_header)
 
 # Check if the script exists
 var script_path = "res://tests/" + test_name + ".gd"
 var test_script = load(script_path)
-var test_instance = test_script.new()
+var test_instance_2 = test_script.new()
 var cleanup_timer = Timer.new()
 add_child(cleanup_timer)
 cleanup_timer.wait_time = 5.0  # Allow up to 5 seconds for test to complete
 cleanup_timer.one_shot = true
 cleanup_timer.timeout.connect(
 func():
-var test_scripts = []
-var dir = DirAccess.open(test_container_path)
+var test_scripts_2 = []
+var dir_2 = DirAccess.open(test_container_path)
 
 var file_name = dir.get_next()
 
-var dir = DirAccess.open("res://")
-var script_path = "res://tests/model_switcher_test.gd"
+var dir_3 = DirAccess.open("res://")
+var script_path_2 = "res://tests/model_switcher_test.gd"
 var script_content = """
 var main_scene = null
 var model_switcher = null
 var model_control_panel = null
 var timer = null
 
-var main_scene = get_tree().current_scene
+var main_scene_2 = get_tree().current_scene
 var model_names = model_switcher.get_model_names()
 var test_model_name = model_names[0]
 var initial_visibility = model_switcher.is_model_visible(test_model_name)
 
 var new_visibility = model_switcher.is_model_visible(test_model_name)
-var test_model_name = model_names[0]
+var test_model_name_2 = model_names[0]
 
 # Check if model control panel has method to update button state
 var has_buttons = false
@@ -657,12 +657,12 @@ func _run_tests() -> void:
 func _report_success(message: String) -> void:
 	print("\\n✓ TEST SUITE PASSED: " + message)
 	print("===== END OF MODEL SWITCHER TEST SUITE =====\\n")
-	emit_signal("test_completed", true, message)
+	test_completed.emit(true, message)
 
 func _report_failure(message: String) -> void:
 	printerr("\\n❌ TEST SUITE FAILED: " + message)
 	print("===== END OF MODEL SWITCHER TEST SUITE =====\\n")
-	emit_signal("test_completed", false, message)
+	test_completed.emit(false, message)
 	"""
 
 	# Save the script

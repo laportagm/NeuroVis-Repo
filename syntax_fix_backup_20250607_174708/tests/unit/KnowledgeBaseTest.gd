@@ -86,4 +86,3 @@ func _fix_orphaned_code():
 	print("Success Rate: %.1f%%" % summary.success_rate)
 
 	return test1_result and test2_result and test3_result and test4_result
-

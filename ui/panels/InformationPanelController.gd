@@ -104,7 +104,7 @@ var tween = create_tween()
 tween.tween_property(self, "modulate:a", 1.0, 0.3)
 
 
-var tween = create_tween()
+var tween_2 = create_tween()
 tween.tween_property(self, "modulate:a", 0.0, 0.2)
 tween.tween_callback(
 func():
@@ -224,5 +224,3 @@ func _create_function_item(text: String, index: int) -> Control:
 func _on_close_pressed() -> void:
 	"""Handle close button press"""
 	hide_panel()
-
-

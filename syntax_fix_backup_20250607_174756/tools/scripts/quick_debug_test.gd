@@ -93,4 +93,3 @@ func _fix_orphaned_code():
 				print("  ✗ Main scene script not found")
 				else:
 					print("  ✗ Main scene file not found")
-

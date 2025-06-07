@@ -61,19 +61,19 @@ model_definitions = default_models
 
 
 ## Load a single model and return result
-var error = "Model file not found: " + model_info.path
+var error_2 = "Model file not found: " + model_info.path
 var anatomical_manager = _get_or_create_anatomical_manager()
-var error = "Failed to create AnatomicalModelManager"
+var error_3 = "Failed to create AnatomicalModelManager"
 var model_instance = anatomical_manager.load_anatomical_model(model_info.path, model_parent)
-var error = "Professional model loading failed: " + model_info.path
+var error_4 = "Professional model loading failed: " + model_info.path
 var model_name = model_info.path.get_file().replace(".glb", "").replace("(Solid)", "")
 model_instance.name = model_name
 
 var model_scene = load(model_info.path)
-var error = "Failed to load model scene: " + model_info.path
-var model_instance = model_scene.instantiate()
-var error = "Failed to instantiate model: " + model_info.path
-var model_name = model_info.path.get_file().replace(".glb", "").replace("(Solid)", "")
+var error_5 = "Failed to load model scene: " + model_info.path
+var model_instance_2 = model_scene.instantiate()
+var error_6 = "Failed to instantiate model: " + model_info.path
+var model_name_2 = model_info.path.get_file().replace(".glb", "").replace("(Solid)", "")
 
 # Add to scene
 model_parent.add_child(model_instance)

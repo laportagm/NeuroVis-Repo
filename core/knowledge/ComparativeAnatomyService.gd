@@ -38,14 +38,14 @@ var entry = _comparison_database[comparison_id]
 var types = []
 var comparisons = []
 
-var entry = _comparison_database[id]
+var entry_2 = _comparison_database[id]
 
 # Apply type filter if specified
 var comparison = _comparison_database[comparison_id]
 
 # Load the required models for this comparison
 var loading_success = _load_comparison_models(comparison)
-var comparison = _comparison_database[comparison_id]
+var comparison_2 = _comparison_database[comparison_id]
 
 # Generate educational report data
 var report = {
@@ -68,7 +68,7 @@ var required_fields = [
 "key_structures"
 ]
 
-var comparison = _comparison_database[_active_comparison_id]
+var comparison_3 = _comparison_database[_active_comparison_id]
 var tips = []
 
 # Generate tips based on comparison type

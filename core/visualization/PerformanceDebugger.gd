@@ -29,7 +29,7 @@ var start_time = Time.get_unix_time_from_system()
 await get_tree().create_timer(5.0).timeout  # Wait 5 seconds
 
 var elapsed = Time.get_unix_time_from_system() - start_time
-var duration = Time.get_unix_time_from_system() - function_timings[func_name]
+var duration_2 = Time.get_unix_time_from_system() - function_timings[func_name]
 
 func _ready():
 	print("[PERF] Performance debugger initialized")
@@ -111,4 +111,3 @@ func _fix_orphaned_code():
 
 	# Force engine to pause
 	get_tree().paused = true
-

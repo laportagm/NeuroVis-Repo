@@ -166,5 +166,3 @@ func _on_manager_structure_deselected() -> void:
 
 
 ## Cleanup
-
-

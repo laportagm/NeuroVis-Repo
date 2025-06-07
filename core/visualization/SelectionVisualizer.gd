@@ -121,7 +121,7 @@ var overlay = parent.get_node(overlay_name)
 
 	# Remove outline if present
 var outline_mesh = _outline_meshes[structure_name]
-var parent = outline_mesh.get_parent()
+var parent_2 = outline_mesh.get_parent()
 	parent.remove_child(outline_mesh)
 	outline_mesh.queue_free()
 
@@ -146,17 +146,17 @@ var material = ShaderMaterial.new()
 
 var dir = DirAccess.open("res://assets/materials/brain_materials")
 var parent_dir = DirAccess.open("res://assets/materials")
-var parent = mesh_instance.get_parent()
+var parent_3 = mesh_instance.get_parent()
 var highlight_color = _get_highlight_color(is_primary, selection_index)
 
 # Create a duplicate mesh for the highlight effect
-var overlay = MeshInstance3D.new()
+var overlay_2 = MeshInstance3D.new()
 	overlay.name = mesh_instance.name + "_highlight_overlay"
 	overlay.mesh = mesh_instance.mesh
 	overlay.global_transform = mesh_instance.global_transform
 
 	# Create and configure highlight shader material
-var material = ShaderMaterial.new()
+var material_2 = ShaderMaterial.new()
 	material.shader = _selection_shader
 
 	# Set shader parameters
@@ -174,17 +174,17 @@ var material = ShaderMaterial.new()
 	_highlight_materials[structure_name] = material
 
 	# Apply to all surfaces
-var highlight_color = _get_highlight_color(is_primary, selection_index)
+var highlight_color_2 = _get_highlight_color(is_primary, selection_index)
 
 # Store original materials
-var original_materials = []
+var original_materials_2 = []
 var highlight_material = StandardMaterial3D.new()
 	highlight_material.albedo_color = highlight_color
 	highlight_material.emission_enabled = true
 	highlight_material.emission = highlight_color
 	highlight_material.emission_energy_multiplier = highlight_intensity
 
-var parent = mesh_instance.get_parent()
+var parent_4 = mesh_instance.get_parent()
 
 # Create outline mesh (slightly larger version of original)
 var outline = MeshInstance3D.new()
@@ -196,19 +196,19 @@ var outline = MeshInstance3D.new()
 	outline.scale = mesh_instance.scale * 1.05
 
 	# Apply outline material
-var highlight_data = _highlighted_structures[structure_name]
+var highlight_data_2 = _highlighted_structures[structure_name]
 	_update_highlight_material(
 	structure_name, highlight_data.is_primary, highlight_data.selection_index
 	)
 
 
-var material = _highlight_materials[structure_name]
-var highlight_color = _get_highlight_color(is_primary, selection_index)
+var material_3 = _highlight_materials[structure_name]
+var highlight_color_3 = _get_highlight_color(is_primary, selection_index)
 
-var material = _highlight_materials[structure_name]
-var highlight_data = _highlighted_structures.get(structure_name)
+var material_4 = _highlight_materials[structure_name]
+var highlight_data_3 = _highlighted_structures.get(structure_name)
 
-var outline_mesh = _outline_meshes[structure_name]
+var outline_mesh_2 = _outline_meshes[structure_name]
 var structures_to_recreate = {}
 
 # Store current highlight data

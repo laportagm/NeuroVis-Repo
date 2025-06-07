@@ -28,18 +28,18 @@ signal ai_error_occurred(error_message: String)
 # === PRIVATE VARIABLES ===
 
 var provider = _registry.get_provider(provider_id)
-var provider = _registry.get_active_provider()
-var provider = _registry.get_active_provider()
-var provider = _registry.get_provider(provider_id)
+var provider_2 = _registry.get_active_provider()
+var provider_3 = _registry.get_active_provider()
+var provider_4 = _registry.get_provider(provider_id)
 var root = get_tree().root
 var main_scene = root.get_child(root.get_child_count() - 1)
 var ui_layer = main_scene.get_node_or_null("UI_Layer")
 var dialog_scene = load("res://core/ai/ui/setup/GeminiSetupDialog.tscn")
-var provider = _registry.get_provider(provider_id)
+var provider_5 = _registry.get_provider(provider_id)
 _connect_provider_signals(provider)
 
 # Update current structure on the provider
-var provider = _registry.get_provider("gemini")
+var provider_6 = _registry.get_provider("gemini")
 var question = "Unknown question"
 
 # Forward the response
@@ -254,14 +254,14 @@ func _fix_orphaned_code():
 
 			# Connect signals
 			if _setup_dialog.has_signal("setup_completed"):
-				if _setup_dialog.is_connected("setup_completed", _on_gemini_setup_completed):
-					_setup_dialog.disconnect("setup_completed", _on_gemini_setup_completed)
-					_setup_dialog.connect("setup_completed", _on_gemini_setup_completed)
+				if _setup_dialog.setup_completed.is_connected(_on_gemini_setup_completed):
+					_setup_dialog.setup_completed.disconnect(_on_gemini_setup_completed)
+					_setup_dialog.setup_completed.connect(_on_gemini_setup_completed)
 
 					if _setup_dialog.has_signal("setup_cancelled"):
-						if _setup_dialog.is_connected("setup_cancelled", _on_gemini_setup_cancelled):
-							_setup_dialog.disconnect("setup_cancelled", _on_gemini_setup_cancelled)
-							_setup_dialog.connect("setup_cancelled", _on_gemini_setup_cancelled)
+						if _setup_dialog.setup_cancelled.is_connected(_on_gemini_setup_cancelled):
+							_setup_dialog.setup_cancelled.disconnect(_on_gemini_setup_cancelled)
+							_setup_dialog.setup_cancelled.connect(_on_gemini_setup_cancelled)
 
 							# Add to scene
 							ui_layer.add_child(_setup_dialog)

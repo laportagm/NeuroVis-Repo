@@ -337,7 +337,7 @@ var chip = _create_structure_chip(structure_name, i)
 	related_structures_container.add_child(chip)
 
 
-var chip = Button.new()
+var chip_2 = Button.new()
 	chip.text = structure_name
 	chip.flat = true
 	chip.custom_minimum_size.y = 28
@@ -378,23 +378,23 @@ var chip_style = StyleBoxFlat.new()
 	# Staggered entrance
 	UIThemeManager.animate_entrance(chip, index * 0.1)
 
-var structure_name = structure_data.get("displayName", "").to_lower()
+var structure_name_2 = structure_data.get("displayName", "").to_lower()
 
-var tween = learning_progress_bar.create_tween()
+var tween_2 = learning_progress_bar.create_tween()
 	tween.tween_property(learning_progress_bar, "value", learning_progress, 0.5)
 
 	# Emit progress signal
-	emit_signal("learning_progress_updated", current_structure_id, learning_progress)
+	learning_progress_updated.emit(current_structure_id, learning_progress)
 
 
-var color = bookmark_active_color if is_bookmarked else bookmark_inactive_color
+var color_2 = bookmark_active_color if is_bookmarked else bookmark_inactive_color
 	UIThemeManager.apply_modern_button(bookmark_button, color, "icon")
 
 
 	# ===== ENHANCED ANIMATIONS =====
 
 
-var tween = create_tween()
+var tween_3 = create_tween()
 	tween.set_parallel(true)
 
 	# Slide in from right
@@ -420,7 +420,7 @@ var tween = create_tween()
 	# ===== ENHANCED SIGNAL HANDLERS =====
 
 
-var tween = create_tween()
+var tween_4 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0.0, 0.25)
 	(
@@ -435,7 +435,7 @@ var tween = create_tween()
 	func():
 		visible = false
 		is_animating = false
-		emit_signal("panel_closed")
+		panel_closed.emit()
 		)
 		. set_delay(0.25)
 		)
@@ -739,19 +739,19 @@ func _on_bookmark_pressed() -> void:
 	)
 
 	# Emit signal
-	emit_signal("structure_bookmarked", current_structure_id, is_bookmarked)
+	structure_bookmarked.emit(current_structure_id, is_bookmarked)
 	print("[ENHANCED_INFO_PANEL] Bookmark toggled: %s = %s" % [current_structure_id, is_bookmarked])
 
 
 func _on_related_structure_selected(structure_name: String) -> void:
 	"""Handle related structure selection"""
-	emit_signal("related_structure_selected", structure_name)
+	related_structure_selected.emit(structure_name)
 	print("[ENHANCED_INFO_PANEL] Related structure selected: " + structure_name)
 
 
 func _on_action_button_pressed(action_type: String) -> void:
 	"""Handle action button presses"""
-	emit_signal("action_requested", action_type, current_structure_id)
+	action_requested.emit(action_type, current_structure_id)
 	print("[ENHANCED_INFO_PANEL] Action requested: %s for %s" % [action_type, current_structure_id])
 
 

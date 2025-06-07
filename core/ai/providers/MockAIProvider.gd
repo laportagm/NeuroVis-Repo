@@ -79,7 +79,7 @@ var response = "This is a mock response generated from: " + _prompt
 
 	# Return empty string since the response will be sent via signal
 var lower_question = question.to_lower()
-var response = ""
+var response_2 = ""
 
 # Check if asking about current structure
 var structure_lower = current_structure.to_lower()

@@ -31,8 +31,8 @@ var provider_id = ""
 var providers = ai_integration.get_available_providers()
 var active = ai_integration.get_active_provider_id()
 
-var status = ai_integration.get_provider_status(provider)
-var provider_id = args[0]
+var status_2 = ai_integration.get_provider_status(provider)
+var provider_id_2 = args[0]
 var result = ai_integration.set_active_provider(provider_id)
 
 var test_btn = ComponentRegistryScript.create_component("button", {"text": "Test"})

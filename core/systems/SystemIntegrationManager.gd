@@ -58,7 +58,7 @@ LegacySystem.SELECTION_MANAGER:
 
 					# Update status
 var adapter_node = Node.new()
-var system_name = LegacySystem.keys()[system_type]
+var system_name_2 = LegacySystem.keys()[system_type]
 	adapter_node.name = system_name + "Adapter"
 
 	add_child(adapter_node)
@@ -96,7 +96,7 @@ var legacy_factory = _find_legacy_system("InfoPanelFactory")
 
 var system = _legacy_root.get_node_or_null(system_name)
 var systems_path = "SceneManager/MainEducationalScene/Systems/"
-var system = _new_root.get_node_or_null(systems_path + system_path)
+var system_2 = _new_root.get_node_or_null(systems_path + system_path)
 var result = _find_node_recursive(child, node_name)
 
 var _system_status: Dictionary = {}

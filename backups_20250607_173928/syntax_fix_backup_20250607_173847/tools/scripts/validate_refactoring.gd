@@ -79,7 +79,7 @@ extends Node
 
 	# Line count comparison
 	print("\nCode Metrics:")
-	print("  Original main scene: 1,239 lines")
+	print("  Original main scene: 1, 239 lines")
 	print("  Component-based: ~200 lines (84% reduction)")
 	print("  Defensive patterns removed: 6 backup systems")
 	print("  Components created: 5 reusable modules")

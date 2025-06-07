@@ -55,13 +55,13 @@ var structure = _priority_structures[structure_name].node
 var base_material = StandardMaterial3D.new()
 
 # Apply properties to base material
-var structure = _priority_structures[structure_name].node
+var structure_2 = _priority_structures[structure_name].node
 	_apply_batch_material(structure, batch_name, true)
 
 	_material_stats.batched_groups += 1
 	material_stats_updated.emit(_material_stats)
 
-var structure = _priority_structures[structure_name].node
+var structure_3 = _priority_structures[structure_name].node
 var original_materials = _original_materials[structure_name]
 
 var node_path = NodePath(node_path_str)
@@ -70,15 +70,15 @@ var node = structure.get_node_or_null(node_path)
 var materials = original_materials[node_path_str]
 
 # Apply original materials
-var structure = _priority_structures[structure_name].node
+var structure_4 = _priority_structures[structure_name].node
 	_optimize_structure_materials(structure, structure_name)
 
 	_update_material_stats()
-var node_path = node.get_path_to(node)
+var node_path_2 = node.get_path_to(node)
 var node_path_str = node_path.get_as_property_path()
 
-var materials = []
-var structure = _priority_structures[structure_name].node
+var materials_2 = []
+var structure_5 = _priority_structures[structure_name].node
 	_optimize_structure_materials(structure, structure_name)
 
 	_update_material_stats()
@@ -100,7 +100,7 @@ var shared_material = _find_similar_material(original_material, similarity_thres
 var optimized = _create_optimized_material(original_material, priority)
 
 # Cache the new material
-var cache_key = _get_material_hash(optimized)
+var cache_key_2 = _get_material_hash(optimized)
 	_material_cache[cache_key] = optimized
 
 	# Apply optimized material
@@ -108,15 +108,15 @@ var cache_key = _get_material_hash(optimized)
 	)
 
 	## Apply performance-focused optimization
-var similarity_threshold = 0.6  # 60% similarity
+var similarity_threshold_2 = 0.6  # 60% similarity
 
 # Educational priority influences sharing
-var shared_material = _find_similar_material(original_material, similarity_threshold)
+var shared_material_2 = _find_similar_material(original_material, similarity_threshold)
 
 var simplified = _create_simplified_material(original_material, priority)
 
 # Cache the new material
-var cache_key = _get_material_hash(simplified)
+var cache_key_3 = _get_material_hash(simplified)
 	_material_cache[cache_key] = simplified
 
 	# Apply simplified material
@@ -194,10 +194,10 @@ var shading_match = int(mat_a.shading_mode) == int(mat_b.shading_mode)
 var emission_similarity = 1.0 - mat_a.emission.distance_to(mat_b.emission)
 	score += emission_similarity
 
-var optimized = original.duplicate() as StandardMaterial3D
+var optimized_2 = original.duplicate() as StandardMaterial3D
 
 # Optimization settings based on priority
-var simplified = original.duplicate() as StandardMaterial3D
+var simplified_2 = original.duplicate() as StandardMaterial3D
 
 # Apply aggressive simplifications
 	simplified.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
@@ -216,22 +216,22 @@ var hash_parts = []
 	hash_parts.append(str(mat.transparency))
 	hash_parts.append(str(mat.shading_mode))
 
-var batch = _material_batches[batch_name]
+var batch_2 = _material_batches[batch_name]
 
 # Clear existing variations if variation is 0
-var structure = _priority_structures[structure_name].node
+var structure_6 = _priority_structures[structure_name].node
 	_apply_material_to_structure(structure, batch.material)
 
 
 	# Update variations for each structure
-var structure = _priority_structures[structure_name].node
+var structure_7 = _priority_structures[structure_name].node
 
 # Create variation if needed
-var variation = batch.material.duplicate()
+var variation_2 = batch.material.duplicate()
 
 # Apply variation
-var base_color = variation.albedo_color
-var variation_color = Color(
+var base_color_2 = variation.albedo_color
+var variation_color_2 = Color(
 	clamp(base_color.r + (randf() - 0.5) * material_variation * 0.2, 0, 1),
 	clamp(base_color.g + (randf() - 0.5) * material_variation * 0.2, 0, 1),
 	clamp(base_color.b + (randf() - 0.5) * material_variation * 0.2, 0, 1),
@@ -246,7 +246,7 @@ var variation_color = Color(
 	_apply_material_to_structure(structure, batch.variations[structure_name])
 
 	## Apply brightness adjustment to all materials
-var batch = _material_batches[batch_name]
+var batch_3 = _material_batches[batch_name]
 	_adjust_material_brightness(batch.material, brightness_factor)
 
 	# Adjust variations too
@@ -267,14 +267,14 @@ var batched_materials = 0
 
 # Count original materials
 var structure_materials = _original_materials[structure_name]
-var batch = _material_batches[batch_name]
+var batch_4 = _material_batches[batch_name]
 
 # Count how many structures are in this batch
 var structures_in_batch = batch.structures.size()
 
 # Estimate how many materials would have been used
 var batch_original_count = 0
-var structure_materials = _original_materials[structure_name]
+var structure_materials_2 = _original_materials[structure_name]
 var shared_count = _material_cache.size()
 var estimated_original = total_materials
 var estimated_optimized = shared_count + (total_materials - batched_materials)
@@ -292,7 +292,7 @@ var draw_call_reduction = estimated_original - estimated_optimized
 
 	## Integrate with LOD system if available
 var lod_system = get_node_or_null("../LODSystem")
-var structure = _priority_structures[structure_name].node
+var structure_8 = _priority_structures[structure_name].node
 var current_priority = _priority_structures[structure_name].priority
 
 # Adjust priority based on LOD level

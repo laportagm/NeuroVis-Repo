@@ -54,7 +54,7 @@ button.tooltip_text = tooltip if tooltip != "" else _get_default_tooltip(action)
 button.set_meta("action", action)
 
 # Apply styling
-var button_type = "danger" if action == "close" else "secondary"
+var button_type_2 = "danger" if action == "close" else "secondary"
 UIThemeManager.apply_enhanced_button_style(button, button_type)
 
 # Add hover effects
@@ -64,15 +64,15 @@ UIThemeManager.add_hover_effect(button)
 button.pressed.connect(func(): _on_action_button_pressed(action))
 
 # Ensure container exists before adding button
-var button = action_buttons[action]
+var button_2 = action_buttons[action]
 button.queue_free()
 action_buttons.erase(action)
 
 
 var mobile_size = Vector2(32, 32)
 var desktop_size = Vector2(36, 36)
-var button = action_buttons[action]
-var button_type = "danger" if action == "close" else "secondary"
+var button_3 = action_buttons[action]
+var button_type_3 = "danger" if action == "close" else "secondary"
 var icons = {
 "close": "×",
 "bookmark": "☆",
@@ -101,7 +101,7 @@ var tooltips = {
 "save": "Save changes",
 "cancel": "Cancel operation"
 }
-var button = action_buttons[action]
+var button_4 = action_buttons[action]
 UIThemeManager.animate_button_press(button)
 
 
@@ -115,7 +115,7 @@ prev_button.focus_neighbor_right = current_button.get_path()
 
 # Set accessible names
 title_label.set_meta("accessible_name", "Panel title")
-var button = action_buttons[action]
+var button_5 = action_buttons[action]
 button.set_meta("accessible_name", _get_default_tooltip(action))
 
 

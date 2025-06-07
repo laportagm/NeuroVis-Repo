@@ -103,14 +103,14 @@ var test_results = {}
 
 var results = {}
 
-var total_fps = 0.0
+var total_fps_2 = 0.0
 var min_fps = _fps_samples[0]
 var max_fps = _fps_samples[0]
 
 var variance = 0.0
 var total_draw_calls = 0
 var total_objects = 0
-var results = {}
+var results_2 = {}
 
 # Get loading times from model loader if available
 var loading_stats = _model_registry.get_loading_statistics()
@@ -125,20 +125,20 @@ var last_memory = _memory_samples.back().total_memory
 	results["memory_after_loading"] = last_memory / 1048576.0  # Convert to MB
 	results["memory_increase"] = (last_memory - first_memory) / 1048576.0  # Convert to MB
 
-var results = {}
+var results_3 = {}
 
 # Placeholder for selection times - in a real implementation,
 # this would be populated during the selection simulation
 var selection_times = [0.05, 0.04, 0.06, 0.05, 0.04]  # Example values in seconds
 
-var total_time = 0.0
+var total_time_2 = 0.0
 var base_fps = _fps_samples[0]
 var selection_fps = _fps_samples[-1]
 	results["fps_before_selection"] = base_fps
 	results["fps_during_selection"] = selection_fps
 	results["fps_impact_percent"] = ((base_fps - selection_fps) / base_fps) * 100
 
-var results = {}
+var results_4 = {}
 
 var total_memory = 0.0
 var min_memory = _memory_samples[0].total_memory
@@ -164,7 +164,7 @@ var selection_manager_paths = [
 
 var nodes = get_tree().get_nodes_in_group("selection_managers")
 var found = _find_node_of_type(child, type)
-var found = _find_node_with_name_containing(child, name_part)
+var found_2 = _find_node_with_name_containing(child, name_part)
 
 var _benchmark_timer: Timer
 var _measurement_timer: Timer

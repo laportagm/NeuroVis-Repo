@@ -28,7 +28,7 @@ var current_path = path + "/" + node.name
 # Check if this node is a MeshInstance3D
 var parent_name = ""
 var knowledge_base = null
-var main_scene = get_tree().current_scene
+var main_scene_2 = get_tree().current_scene
 
 var structure_ids = knowledge_base.get_all_structure_ids()
 
@@ -46,7 +46,7 @@ var found_partial = false
 var structure = knowledge_base.get_structure(id)
 var display_name = structure.displayName.to_lower()
 var neural_net = null
-var main_scene = get_tree().current_scene
+var main_scene_3 = get_tree().current_scene
 
 var mapped = 0
 var unmapped = 0

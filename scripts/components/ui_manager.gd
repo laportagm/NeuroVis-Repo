@@ -37,8 +37,8 @@ register_panel(panel_id, panel)
 
 # Register known panels if not already registered
 var panel = panels[panel_id]
-var panel = panels[panel_id]
-var panel = panels[panel_id]
+var panel_2 = panels[panel_id]
+var panel_3 = panels[panel_id]
 var tween = object_name_label.create_tween()
 tween.tween_property(object_name_label, "modulate:a", 0.0, 0.1)
 tween.tween_callback(func(): object_name_label.text = text)
@@ -47,12 +47,12 @@ object_name_label.text = text
 
 
 ## Setup initial UI state
-var tween = panel.create_tween()
+var tween_2 = panel.create_tween()
 tween.tween_property(panel, "modulate:a", 1.0, panel_animation_duration)
 
 
 ## Animate panel hiding
-var tween = panel.create_tween()
+var tween_3 = panel.create_tween()
 tween.tween_property(panel, "modulate:a", 0.0, panel_animation_duration)
 tween.tween_callback(func(): panel.visible = false)
 

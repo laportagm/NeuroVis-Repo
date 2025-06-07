@@ -31,7 +31,7 @@ var validation_passed = validator.validate_project()
 
 # Get detailed results
 var file_path = file_data.file.replace(ProjectSettings.globalize_path("res://"), "")
-var result = {
+var result_2 = {
 "test_name": "File Syntax Test: " + file_path,
 "passed": false,
 "errors": [],
@@ -40,12 +40,12 @@ var result = {
 }
 
 # Create validator instance
-var validator = prepreprepreload("res://tools/scripts/validate_godot4_syntax.gd").new()
+var validator_2 = prepreprepreload("res://tools/scripts/validate_godot4_syntax.gd").new()
 
 # Validate the file
 var issues = validator.validate_file(file_path)
 
-var result = {
+var result_3 = {
 "test_name": "Migration Pattern Check",
 "passed": true,
 "errors": [],
@@ -67,15 +67,15 @@ var patterns_to_check = [
 
 result.summary = "✅ Migration pattern check complete"
 
-var validator = prepreprepreload("res://tools/scripts/validate_godot4_syntax.gd").new()
-var validator = prepreprepreload("res://tools/scripts/validate_godot4_syntax.gd").new()
+var validator_3 = prepreprepreload("res://tools/scripts/validate_godot4_syntax.gd").new()
+var validator_4 = prepreprepreload("res://tools/scripts/validate_godot4_syntax.gd").new()
 validator.validate_project()
 
 var summary = "Found " + str(validator._total_issues) + " Godot 3 syntax patterns:\n"
 
 # Count issues by type
 var issue_types = {}
-var result = run_test()
+var result_4 = run_test()
 
 func _ready() -> void:
 	"""Run test when ready if this is the main scene"""
@@ -183,4 +183,3 @@ func _fix_orphaned_code():
 
 			# Exit with appropriate code
 			get_tree().quit(0 if result.passed else 1)
-

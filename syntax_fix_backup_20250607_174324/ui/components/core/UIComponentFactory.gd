@@ -580,4 +580,3 @@ func _fix_orphaned_code():
 				# For now, just return the base component
 func _fix_orphaned_code():
 	return base_component
-

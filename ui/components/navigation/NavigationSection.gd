@@ -43,8 +43,8 @@ const ITEM_SPACING: int = 4
 
 var prev_item = _item_nodes[_selected_item]
 var item = _item_nodes[id]
-var item = _item_nodes[id]
-var item = _item_nodes[item_id]
+var item_2 = _item_nodes[id]
+var item_3 = _item_nodes[item_id]
 var safe_autoload_script = prepreprepreload("res://ui/components/core/SafeAutoloadAccess.gd")
 var main_container = VBoxContainer.new()
 main_container.add_theme_constant_override("separation", 0)
@@ -70,7 +70,7 @@ var item_data = _items[item_id]
 
 # Try to instantiate via script
 var item_script = prepreprepreload("res://ui/components/navigation/NavigationItem.gd")
-var item
+var item_4
 
 var hbox = HBoxContainer.new()
 hbox.add_theme_constant_override("separation", 8)
@@ -127,7 +127,7 @@ var content_size = Vector2.ZERO
 var tween = create_tween()
 tween.tween_property(_content_container, "custom_minimum_size:y", content_size.y, ANIMATION_DURATION)
 # Animate collapse
-var tween = create_tween()
+var tween_2 = create_tween()
 tween.tween_property(_content_container, "custom_minimum_size:y", 0, ANIMATION_DURATION)
 
 # === EVENT HANDLERS ===

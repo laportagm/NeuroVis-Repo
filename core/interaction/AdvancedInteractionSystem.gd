@@ -71,15 +71,15 @@ _show_context_menu(position, context)
 
 
 var target = _get_control_at_position(position)
-var target = _get_control_at_position(position)
-var context = _get_interaction_context(position)
+var target_2 = _get_control_at_position(position)
+var context_2 = _get_interaction_context(position)
 _show_context_menu(position, context)
 
 
 # === DRAG & DROP SYSTEM ===
 var source = _get_control_at_position(_mouse_start_position)
 var drop_target = _get_drop_target_at_position(position)
-var drop_target = _get_drop_target_at_position(position)
+var drop_target_2 = _get_drop_target_at_position(position)
 
 var structure_name = context.get("structure_name", "")
 var menu_type = context.get("menu_type", "default")
@@ -132,8 +132,8 @@ var action_data = {
 
 	# Limit history size
 var viewport = get_viewport()
-var target = _get_control_at_position(position)
-var context = {
+var target_3 = _get_control_at_position(position)
+var context_3 = {
 	"position": position,
 	"timestamp": Time.get_time_dict_from_system()["unix"],
 	"mode": _current_mode

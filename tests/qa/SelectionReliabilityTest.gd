@@ -72,11 +72,11 @@ var reps = _repetitions if _repetitions > 0 else REPETITIONS_PER_STRUCTURE
 var total_tests = structures.size() * cameras.size() * zooms.size() * reps
 var completed_tests = _calculate_completed_tests()
 
-var structures = (
+var structures_2 = (
 _structures_to_test if not _structures_to_test.is_empty() else STRUCTURES_TO_TEST
 )
-var cameras = _camera_positions if not _camera_positions.is_empty() else CAMERA_POSITIONS
-var zooms = _zoom_levels if not _zoom_levels.is_empty() else ZOOM_LEVELS
+var cameras_2 = _camera_positions if not _camera_positions.is_empty() else CAMERA_POSITIONS
+var zooms_2 = _zoom_levels if not _zoom_levels.is_empty() else ZOOM_LEVELS
 
 # Check if we've completed all tests
 var structure_name = structures[_current_structure_index]
@@ -92,7 +92,7 @@ var found_mesh = false
 # Search for the structure mesh
 var meshes = _find_meshes_recursive(child, structure_name)
 var screen_rect = _calculate_screen_bounds(mesh)
-var meshes: Array[MeshInstance3D] = []
+var meshes_2: Array[MeshInstance3D] = []
 
 var node_name = node.name.to_lower()
 var search_name = structure_name.to_lower().replace("_", " ")
@@ -140,7 +140,7 @@ bounds.position + Vector2(bounds.size.x * 0.9, bounds.size.y * 0.5),  # Right ed
 bounds.get_center() + Vector2(randf_range(-10, 10), randf_range(-10, 10))  # Random offset
 ]
 
-var structure_name = _current_test_data["structure"]
+var structure_name_2 = _current_test_data["structure"]
 var success = _selection_success and _last_selected_structure == structure_name
 
 # Update test data
@@ -168,16 +168,16 @@ var dist_to_right = abs(position.x - (bounds.position.x + bounds.size.x))
 var dist_to_top = abs(position.y - bounds.position.y)
 var dist_to_bottom = abs(position.y - (bounds.position.y + bounds.size.y))
 
-var reps = _repetitions if _repetitions > 0 else REPETITIONS_PER_STRUCTURE
-var zooms = _zoom_levels if not _zoom_levels.is_empty() else ZOOM_LEVELS
+var reps_2 = _repetitions if _repetitions > 0 else REPETITIONS_PER_STRUCTURE
+var zooms_3 = _zoom_levels if not _zoom_levels.is_empty() else ZOOM_LEVELS
 
-var cameras = (
+var cameras_3 = (
 _camera_positions if not _camera_positions.is_empty() else CAMERA_POSITIONS
 )
 
-var structures = (
+var structures_3 = (
 _structures_to_test
-var results = _test_results[structure_name]
+var results_2 = _test_results[structure_name]
 
 # Calculate success rate
 var success_rate = 0.0
@@ -218,8 +218,8 @@ _calculate_overall_success_rate()
 
 # Sort structures by difficulty score
 var sorted_structures = []
-var structure_name = struct_data["name"]
-var results = _test_results[structure_name]
+var structure_name_3 = struct_data["name"]
+var results_3 = _test_results[structure_name]
 
 report += (
 """### %s
@@ -251,7 +251,7 @@ _test_results[struct_data["name"]]["failure_coordinates"]
 )
 var high_count = 0
 var score = _test_results[struct_data["name"]]["difficulty_score"]
-var patterns: Array[String] = []
+var patterns_2: Array[String] = []
 
 var camera_failures = {}
 var zoom_failures = {}

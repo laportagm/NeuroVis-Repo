@@ -91,7 +91,7 @@ framework.start_test("Autoload Initialization Order")
 var dependency_issues = 0
 
 # Test KB → ModelSwitcherGlobal interaction
-var kb = Engine.get_singleton("KB")
+var kb_2 = Engine.get_singleton("KB")
 var ms = Engine.get_singleton("ModelSwitcherGlobal")
 
 var test8_result = framework.end_test()
@@ -302,4 +302,3 @@ func _fix_orphaned_code():
 	and test7_result
 	and test8_result
 	)
-

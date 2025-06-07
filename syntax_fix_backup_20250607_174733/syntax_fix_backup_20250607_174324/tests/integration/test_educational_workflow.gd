@@ -312,4 +312,3 @@ func _print_test_report() -> void:
 	print("\n" + "=".repeat(50))
 	print("EDUCATIONAL WORKFLOW TEST REPORT")
 	print("=".repeat(50) + "\n")
-

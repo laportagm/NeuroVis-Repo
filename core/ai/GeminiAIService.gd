@@ -68,21 +68,21 @@ API_URL + "?key=" + api_key, headers, HTTPClient.METHOD_POST, JSON.stringify(bod
 )
 
 var result = await http_request.request_completed
-var test_successful = _test_api_key()
+var test_successful_2 = _test_api_key()
 var old_model = current_model
 
 # If it's a string, find the corresponding enum value
 var model_name = model_name_or_id
 var default_models = []
-var result = await ask_question(prompt)
+var result_2 = await ask_question(prompt)
 var err = DirAccess.remove_absolute(SETTINGS_PATH)
-var prompt = "You are NeuroBot, an expert neuroanatomy tutor. "
+var prompt_2 = "You are NeuroBot, an expert neuroanatomy tutor. "
 prompt += "Provide clear, educational explanations suitable for medical students. "
 
 var file = FileAccess.open_encrypted_with_pass(
 SETTINGS_PATH, FileAccess.WRITE, OS.get_unique_id()
 )
-var file = FileAccess.open_encrypted_with_pass(
+var file_2 = FileAccess.open_encrypted_with_pass(
 SETTINGS_PATH, FileAccess.READ, OS.get_unique_id()
 )
 

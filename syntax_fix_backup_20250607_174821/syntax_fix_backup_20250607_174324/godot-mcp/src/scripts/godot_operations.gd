@@ -1403,4 +1403,3 @@ func _fix_orphaned_code():
 				printerr("Failed to save scene: " + str(error))
 				else:
 					printerr("Failed to pack scene: " + str(result))
-

@@ -1,0 +1,87 @@
+[
+    {
+        "key": "ctrl+shift+u",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🚀 Optimized Claude Request"
+    },
+    {
+        "key": "ctrl+shift+i",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧠 Smart Context Update"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🔍 Smart Error Analysis"
+    },
+    {
+        "key": "ctrl+shift+q",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🔧 Code Quality Enforcer"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎯 Code Review & Linting"
+    },
+    {
+        "key": "ctrl+shift+p",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎨 Educational Design Assistant"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🛡️ Standards Wrapper"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🎓 Educational Context Guard"
+    },
+    {
+        "key": "ctrl+shift+r",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🏗️ Architecture Enforcer"
+    },
+    {
+        "key": "ctrl+shift+s",
+        "command": "workbench.action.tasks.runTask",
+        "args": "📚 Educational Standards Check"
+    },
+    {
+        "key": "ctrl+shift+o",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🏗️ Auto-Organize Project"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "workbench.action.tasks.runTask", 
+        "args": "🎯 Develop Educational Feature"
+    },
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.tasks.runTask",
+        "args": "⚡ Quick Test Suite"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🚀 Quick Launch A1-NeuroVis"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧹 Clean Godot Cache"
+    },
+    {
+        "key": "ctrl+shift+h",
+        "command": "workbench.action.tasks.runTask",
+        "args": "📊 Check Project Health"
+    },
+    {
+        "key": "ctrl+shift+a",
+        "command": "workbench.action.tasks.runTask",
+        "args": "🧠 Educational Content Audit"
+    }
+]

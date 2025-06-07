@@ -77,8 +77,8 @@ var spacing = layout_config.spacing
 _apply_container_spacing(spacing)
 
 var current_size = node.get_theme_font_size("font_size")
-var current_size = node.get_theme_font_size("font_size")
-var current_size = node.get_theme_font_size("normal_font_size")
+var current_size_2 = node.get_theme_font_size("font_size")
+var current_size_3 = node.get_theme_font_size("normal_font_size")
 var position = layout_config.position
 var width_percent = layout_config.panel_width_percent
 
@@ -432,4 +432,3 @@ func _log(message: String, level: String = "info") -> void:
 	"""Component logging"""
 	if not enable_logging:
 		return
-

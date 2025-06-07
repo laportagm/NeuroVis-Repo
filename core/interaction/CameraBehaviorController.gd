@@ -45,12 +45,12 @@ pan_velocity = cam_transform.basis.x * pan_delta.x + cam_transform.basis.y * pan
 
 last_mouse_pos = event.position
 
-var pan_delta = Vector3(
+var pan_delta_2 = Vector3(
 event.delta.x * PAN_SPEED * camera_distance * 0.5,
 -event.delta.y * PAN_SPEED * camera_distance * 0.5,
 0.0
 )
-var cam_transform = camera.global_transform
+var cam_transform_2 = camera.global_transform
 pan_velocity += cam_transform.basis.x * pan_delta.x + cam_transform.basis.y * pan_delta.y
 
 zoom_velocity -= (event.factor - 1.0) * ZOOM_SPEED * 10.0
@@ -313,5 +313,3 @@ func _reset_to_safe_values() -> void:
 	pan_velocity = Vector3.ZERO
 	zoom_velocity = 0.0
 	print("[CAMERA] Reset to safe values")
-
-

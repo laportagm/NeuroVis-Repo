@@ -174,7 +174,7 @@ var tween = create_tween()
 	Color.WHITE,
 	UIThemeManager.get_animation_duration("content_fade_duration")
 	)
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.tween_property(
 	content_node,
 	"modulate",
@@ -189,7 +189,7 @@ var tween = create_tween()
 
 	# === EVENT HANDLERS ===
 var structure_id = current_structure.get("id", "")
-var structure_name = current_structure.get("displayName", "structure")
+var structure_name_2 = current_structure.get("displayName", "structure")
 
 func _ready() -> void:
 	_setup_panel_structure()

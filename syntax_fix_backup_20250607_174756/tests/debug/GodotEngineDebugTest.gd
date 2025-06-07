@@ -243,4 +243,3 @@ func _fix_orphaned_code():
 	and test7_result
 	and test8_result
 	)
-

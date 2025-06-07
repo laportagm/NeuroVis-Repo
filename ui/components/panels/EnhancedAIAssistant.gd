@@ -78,7 +78,7 @@ source_panel = _create_source_panel()
 add_child(source_panel)
 
 
-var header = HBoxContainer.new()
+var header_2 = HBoxContainer.new()
 header.add_theme_constant_override("separation", 12)
 
 # Title
@@ -137,7 +137,7 @@ container.add_child(label)
 
 # Suggestion buttons will be added dynamically
 
-var container = HBoxContainer.new()
+var container_2 = HBoxContainer.new()
 container.add_theme_constant_override("separation", 8)
 
 # Input field
@@ -163,8 +163,8 @@ panel.add_theme_stylebox_override("panel", style)
 var content = VBoxContainer.new()
 content.add_theme_constant_override("separation", 4)
 
-var header = HBoxContainer.new()
-var title = Label.new()
+var header_3 = HBoxContainer.new()
+var title_2 = Label.new()
 title.text = "Sources"
 title.add_theme_font_size_override("font_size", 14)
 header.add_child(title)
@@ -230,12 +230,12 @@ chat_messages.add_child(message)
 _scroll_to_bottom()
 
 
-var message = _create_message_bubble(text, false)
+var message_2 = _create_message_bubble(text, false)
 chat_messages.add_child(message)
 _scroll_to_bottom()
 
 
-var message = Label.new()
+var message_3 = Label.new()
 message.text = text
 message.add_theme_color_override("font_color", DesignSystem.get_color("text_muted"))
 message.add_theme_font_size_override("font_size", 12)
@@ -244,14 +244,14 @@ chat_messages.add_child(message)
 _scroll_to_bottom()
 
 
-var container = HBoxContainer.new()
+var container_3 = HBoxContainer.new()
 
 var bubble = PanelContainer.new()
 bubble.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 bubble.custom_minimum_size.x = 100
 
-var style = StyleBoxFlat.new()
-var label = RichTextLabel.new()
+var style_2 = StyleBoxFlat.new()
+var label_2 = RichTextLabel.new()
 label.bbcode_enabled = true
 label.fit_content = true
 label.text = text
@@ -263,7 +263,7 @@ var indicator = _create_message_bubble("...", false)
 chat_messages.add_child(indicator)
 
 # Animate dots
-var label = indicator.get_node("PanelContainer/RichTextLabel")
+var label_3 = indicator.get_node("PanelContainer/RichTextLabel")
 var tween = create_tween()
 tween.set_loops()
 tween.tween_callback(func(): label.text = ".").set_delay(0.3)
@@ -274,7 +274,7 @@ var dialog = AcceptDialog.new()
 dialog.title = "AI Assistant Settings"
 dialog.dialog_hide_on_ok = true
 
-var content = VBoxContainer.new()
+var content_2 = VBoxContainer.new()
 content.add_theme_constant_override("separation", 8)
 
 # Show sources toggle
@@ -318,7 +318,7 @@ var lang_selector = OptionButton.new()
 	# === UTILITY METHODS ===
 var data = KnowledgeService.get_structure(structure_id)
 var start = max(0, conversation_history.size() - count)
-var style = StyleBoxFlat.new()
+var style_3 = StyleBoxFlat.new()
 	style.bg_color = DesignSystem.get_color("surface_light")
 	style.corner_radius_top_left = 16
 	style.corner_radius_top_right = 16
@@ -328,16 +328,16 @@ var style = StyleBoxFlat.new()
 	style.content_margin_right = 12
 	style.content_margin_top = 6
 	style.content_margin_bottom = 6
-var content = source_panel.get_child(0)
+var content_3 = source_panel.get_child(0)
 
 # Clear existing sources
-var label = Label.new()
+var label_4 = Label.new()
 	label.text = "• " + source
 	label.add_theme_color_override("font_color", DesignSystem.get_color("text_secondary"))
 	content.add_child(label)
 
 
-var context = {
+var context_2 = {
 	"timestamp": Time.get_unix_time_from_system(),
 	"structure": params.get("structure", ""),
 	"educational_mode": params.get("mode", EducationalMode.STUDENT),

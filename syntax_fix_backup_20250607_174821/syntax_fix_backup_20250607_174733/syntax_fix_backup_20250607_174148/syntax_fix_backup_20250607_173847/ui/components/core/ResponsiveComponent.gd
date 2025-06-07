@@ -24,7 +24,7 @@ const BREAKPOINT_WIDTHS = {
 
 const BREAKPOINT_NAMES = {
 	Breakpoint.MOBILE: "mobile",
-	Breakpoint.TABLET_PORTRAIT: "tablet_portrait", 
+	Breakpoint.TABLET_PORTRAIT: "tablet_portrait",
 	Breakpoint.TABLET_LANDSCAPE: "tablet_landscape",
 	Breakpoint.DESKTOP: "desktop",
 	Breakpoint.WIDE_DESKTOP: "wide_desktop"
@@ -51,11 +51,11 @@ var layout_configs: Dictionary = {}
 	var viewport = get_viewport()
 	if not viewport:
 		return
-	
+
 	current_viewport_size = viewport.get_visible_rect().size
 	var new_breakpoint = _calculate_breakpoint(current_viewport_size.x)
 	var new_orientation = current_viewport_size.y > current_viewport_size.x
-	
+
 	# Check for breakpoint change
 	if new_breakpoint != current_breakpoint:
 		var old_breakpoint_name = BREAKPOINT_NAMES[current_breakpoint]
@@ -63,41 +63,41 @@ var layout_configs: Dictionary = {}
 		var new_breakpoint_name = BREAKPOINT_NAMES[current_breakpoint]
 		_log("Breakpoint changed: " + old_breakpoint_name + " -> " + new_breakpoint_name)
 		breakpoint_changed.emit(old_breakpoint_name, new_breakpoint_name)
-	
+
 	# Check for orientation change
 	if new_orientation != is_portrait_orientation:
 		is_portrait_orientation = new_orientation
 		_log("Orientation changed: " + ("portrait" if is_portrait_orientation else "landscape"))
 		orientation_changed.emit(is_portrait_orientation)
-	
+
 	# Apply responsive layout
 	_apply_responsive_layout()
 
 	var breakpoint_name = BREAKPOINT_NAMES[current_breakpoint]
 	var layout_config = layout_configs.get(breakpoint_name, {})
-	
+
 	if layout_config.is_empty():
 		return
-	
+
 	_log("Applying responsive layout: " + breakpoint_name)
-	
+
 	# Apply padding and margin
 	_apply_spacing(layout_config)
-	
+
 	# Apply typography scaling
 	if adaptive_typography and layout_config.has("font_scale"):
 		_apply_typography_scaling(layout_config.font_scale)
-	
+
 	# Apply touch-friendly mode
 	if layout_config.has("button_height"):
 		_apply_touch_friendly_sizing(layout_config.button_height)
-	
+
 	# Apply positioning
 	_apply_responsive_positioning(layout_config)
-	
+
 	# Apply layout structure
 	_apply_layout_structure(layout_config)
-	
+
 	layout_adapted.emit(breakpoint_name)
 
 		var padding = layout_config.padding
@@ -115,7 +115,7 @@ var layout_configs: Dictionary = {}
 			style.content_margin_left = padding.get("left", 16)
 			style.content_margin_right = padding.get("right", 16)
 			add_theme_stylebox_override("panel", style)
-	
+
 	# Spacing for container children
 	if layout_config.has("spacing"):
 		var spacing = layout_config.spacing
@@ -135,14 +135,14 @@ var layout_configs: Dictionary = {}
 		if current_size <= 0:
 			current_size = 14
 		node.add_theme_font_size_override("normal_font_size", int(current_size * scale))
-	
+
 	# Recursively apply to children
 	for child in node.get_children():
 		_apply_typography_to_children(child, scale)
 
 	var position = layout_config.position
 	var width_percent = layout_config.panel_width_percent
-	
+
 	match position:
 		"right":
 			anchor_left = 1.0
@@ -171,21 +171,21 @@ var layout_configs: Dictionary = {}
 	var parent = container.get_parent()
 	if not parent:
 		return
-	
+
 	var children = container.get_children()
 	var container_index = container.get_index()
-	
+
 	# Create new container
 	var new_container = VBoxContainer.new() if to_vertical else HBoxContainer.new()
 	new_container.name = container.name
 	new_container.size_flags_horizontal = container.size_flags_horizontal
 	new_container.size_flags_vertical = container.size_flags_vertical
-	
+
 	# Move children
 	for child in children:
 		container.remove_child(child)
 		new_container.add_child(child)
-	
+
 	# Replace container
 	parent.remove_child(container)
 	parent.add_child(new_container)
@@ -207,13 +207,13 @@ func _ready() -> void:
 	# Set component ID if not provided
 	if component_id.is_empty():
 		component_id = get_class() + "_" + str(get_instance_id())
-	
+
 	# Setup responsive layouts
 	_setup_responsive_layouts()
-	
+
 	# Initial responsive adaptation
 	call_deferred("_adapt_to_viewport")
-	
+
 	# Connect to viewport changes
 	if get_viewport():
 		get_viewport().size_changed.connect(_on_viewport_changed)
@@ -326,7 +326,7 @@ func _adapt_to_viewport() -> void:
 	"""Adapt component to current viewport size"""
 	if not responsive_enabled:
 		return
-	
+
 func _calculate_breakpoint(width: float) -> Breakpoint:
 	"""Calculate breakpoint based on width"""
 	if width < BREAKPOINT_WIDTHS[Breakpoint.MOBILE]:
@@ -378,7 +378,7 @@ func _apply_touch_sizing_to_children(node: Node, button_height: int) -> void:
 		node.custom_minimum_size.y = button_height
 	elif node is OptionButton:
 		node.custom_minimum_size.y = button_height
-	
+
 	# Recursively apply to children
 	for child in node.get_children():
 		_apply_touch_sizing_to_children(child, button_height)
@@ -387,12 +387,12 @@ func _apply_responsive_positioning(layout_config: Dictionary) -> void:
 	"""Apply responsive positioning"""
 	if not layout_config.has("position") or not layout_config.has("panel_width_percent"):
 		return
-	
+
 func _apply_layout_structure(layout_config: Dictionary) -> void:
 	"""Apply layout structure changes"""
 	if not layout_config.has("stack_vertical"):
 		return
-	
+
 func _apply_stacking_to_children(node: Node, vertical: bool) -> void:
 	"""Apply vertical/horizontal stacking"""
 	for child in node.get_children():
@@ -402,7 +402,7 @@ func _apply_stacking_to_children(node: Node, vertical: bool) -> void:
 		elif child is VBoxContainer and not vertical:
 			# Convert VBox to HBox
 			_convert_container_orientation(child, false)
-		
+
 		# Recursively apply to children
 		_apply_stacking_to_children(child, vertical)
 
@@ -421,4 +421,4 @@ func _log(message: String, level: String = "info") -> void:
 	"""Component logging"""
 	if not enable_logging:
 		return
-	
+

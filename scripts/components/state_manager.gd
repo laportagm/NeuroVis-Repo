@@ -50,7 +50,7 @@ var structure_ids = knowledge_base.get_all_structure_ids()
 
 # Try exact match with display name
 var structure = knowledge_base.get_structure(id)
-var structure = knowledge_base.get_structure(id)
+var structure_2 = knowledge_base.get_structure(id)
 var display_name = structure.displayName.to_lower()
 
 func _initialize_component() -> bool:

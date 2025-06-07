@@ -1,0 +1,27 @@
+{
+  "baseline_metrics": {
+    "timestamp": "2025-01-26T00:00:00",
+    "main_scene": {
+      "file": "scenes/node_3d.gd",
+      "line_count": 1239,
+      "function_count": 67,
+      "backup_references": 6,
+      "retry_logic_instances": 1
+    },
+    "complexity_indicators": {
+      "nested_if_statements": "excessive",
+      "error_handling_patterns": "defensive_programming",
+      "initialization_phases": 5,
+      "safe_getter_functions": 6
+    },
+    "performance": {
+      "startup_time": "unknown - needs measurement",
+      "memory_at_load": "unknown - needs measurement",
+      "fps": "target: 60fps"
+    },
+    "test_coverage": {
+      "unit_tests": "framework exists, coverage unknown",
+      "integration_tests": "none found"
+    }
+  }
+}

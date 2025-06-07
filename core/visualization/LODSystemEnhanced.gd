@@ -99,7 +99,7 @@ var priority = _structure_priorities.get(structure_name, StructurePriority.BACKG
 var target_lod = _determine_lod_level(distance, priority)
 
 # Switch LOD if needed
-var structure_data = {
+var structure_data_2 = {
 	"root_node": structure,
 	"lod_meshes": {},
 	"original_meshes": {},
@@ -113,14 +113,14 @@ var structure_data = {
 	_store_original_meshes(structure, structure_data)
 
 	# If LOD variants provided, store them
-var structure_data = _structure_data[structure_name]
+var structure_data_3 = _structure_data[structure_name]
 var tween = _transition_tweens[structure_name]
-var distance = _cached_structure_distances.get(structure_name, 0.0)
-var target_lod = _determine_lod_level(distance, priority)
+var distance_2 = _cached_structure_distances.get(structure_name, 0.0)
+var target_lod_2 = _determine_lod_level(distance, priority)
 	_switch_lod_level(structure_name, target_lod)
 
-var distance = _cached_structure_distances.get(structure_name, 0.0)
-var target_lod = _determine_lod_level(distance, StructurePriority.PRIMARY)
+var distance_3 = _cached_structure_distances.get(structure_name, 0.0)
+var target_lod_3 = _determine_lod_level(distance, StructurePriority.PRIMARY)
 	_switch_lod_level(structure_name, target_lod, true)  # Force instant transition for focus
 
 var structure = _structure_data[structure_name]
@@ -142,8 +142,8 @@ var camera_paths = [
 	"/root/Node3D/Camera3D"
 	]
 
-var structure = _structure_data[structure_name]
-var distance = _calculate_structure_distance(structure.root_node)
+var structure_2 = _structure_data[structure_name]
+var distance_4 = _calculate_structure_distance(structure.root_node)
 	_cached_structure_distances[structure_name] = distance
 	structure.last_distance = distance
 
@@ -174,14 +174,14 @@ var adjusted_factor = lerp(1.0, priority_factor, educational_focus_bias)
 	effective_distance *= adjusted_factor
 
 	# Find appropriate LOD level based on adjusted distance
-var structure = _structure_data[structure_name]
+var structure_3 = _structure_data[structure_name]
 var current_level = _current_lod_levels.get(structure_name, 0)
 
 var time_now = Time.get_ticks_msec() / 1000.0
 var time_since_change = time_now - structure.last_lod_change
 
 # Rate limit LOD changes to prevent thrashing
-var tween = _transition_tweens[structure_name]
+var tween_2 = _transition_tweens[structure_name]
 var material = node.get_surface_override_material(i)
 	mesh_dict[node.get_path()].materials.append(material)
 
@@ -227,8 +227,8 @@ var vertex_count = _get_vertex_count(simplified_mesh)
 
 var array_mesh = ArrayMesh.new()
 
-var arrays = original_mesh.surface_get_arrays(surface_idx)
-var vertex_count = arrays[Mesh.ARRAY_VERTEX].size()
+var arrays_2 = original_mesh.surface_get_arrays(surface_idx)
+var vertex_count_2 = arrays[Mesh.ARRAY_VERTEX].size()
 
 # If mesh is small enough, don't simplify further
 var stride = int(1.0 / quality_factor)
@@ -252,8 +252,8 @@ var b = original_indices[i + 1]
 var c = original_indices[i + 2]
 
 # Skip triangles that use vertices we've excluded
-var material = original_mesh.surface_get_material(surface_idx)
-var lod_meshes = structure_data.lod_meshes[level]
+var material_2 = original_mesh.surface_get_material(surface_idx)
+var lod_meshes_2 = structure_data.lod_meshes[level]
 
 var node_path = NodePath(node_path_str)
 var node = structure_data.root_node.get_node_or_null(node_path)
@@ -262,19 +262,19 @@ var mesh_data = lod_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply materials
-var original_meshes = structure_data.original_meshes
+var original_meshes_2 = structure_data.original_meshes
 
-var node_path = NodePath(node_path_str)
-var node = structure_data.root_node.get_node_or_null(node_path)
+var node_path_2 = NodePath(node_path_str)
+var node_2 = structure_data.root_node.get_node_or_null(node_path)
 
-var mesh_data = original_meshes[node_path_str]
+var mesh_data_2 = original_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply original materials
-var current_level = _current_lod_levels.get(structure_name, 0)
+var current_level_2 = _current_lod_levels.get(structure_name, 0)
 
 # Create a tween for smooth transition
-var tween = create_tween()
+var tween_3 = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_IN_OUT)
 
@@ -284,10 +284,10 @@ var tween = create_tween()
 	# Apply target meshes immediately
 var transition_duration = transition_time
 var node_paths
-var node_path = NodePath(node_path_str)
-var node = structure_data.root_node.get_node_or_null(node_path)
+var node_path_3 = NodePath(node_path_str)
+var node_3 = structure_data.root_node.get_node_or_null(node_path)
 
-var material = node.get_surface_override_material(i)
+var material_3 = node.get_surface_override_material(i)
 
 var start_alpha = 0.7
 var end_alpha = 1.0
@@ -328,32 +328,32 @@ var variant_instance = variant_scene.instantiate()
 	# This is just a placeholder implementation
 
 
-var structure = _structure_data[structure_name]
-var distance = _cached_structure_distances.get(structure_name, 0.0)
-var priority = _structure_priorities.get(structure_name, StructurePriority.BACKGROUND)
-var target_lod = _determine_lod_level(distance, priority)
+var structure_4 = _structure_data[structure_name]
+var distance_5 = _cached_structure_distances.get(structure_name, 0.0)
+var priority_2 = _structure_priorities.get(structure_name, StructurePriority.BACKGROUND)
+var target_lod_4 = _determine_lod_level(distance, priority)
 
-var structure = _structure_data[structure_name]
-var current_level = _current_lod_levels.get(structure_name, 0)
+var structure_5 = _structure_data[structure_name]
+var current_level_3 = _current_lod_levels.get(structure_name, 0)
 
 # Keep only current LOD level and adjacent levels
 var keep_keys = []
-var priority = _structure_priorities.get(
+var priority_3 = _structure_priorities.get(
 	structure_name, StructurePriority.BACKGROUND
 	)
 var cached_keys = _mesh_cache.keys()
-var structure = _structure_data[structure_name]
+var structure_6 = _structure_data[structure_name]
 
 # Regenerate any missing LOD levels
-var quality_factor = (
+var quality_factor_2 = (
 	quality_reduction_factors[level]
-var lod_meshes = {}
+var lod_meshes_3 = {}
 
-var original_data = structure.original_meshes[node_path]
+var original_data_2 = structure.original_meshes[node_path]
 
 # Create simplified mesh
-var simplified_mesh = _simplify_mesh(original_data.mesh, quality_factor)
-var vertex_count = _get_vertex_count(simplified_mesh)
+var simplified_mesh_2 = _simplify_mesh(original_data.mesh, quality_factor)
+var vertex_count_3 = _get_vertex_count(simplified_mesh)
 
 # Store simplified mesh and materials
 	lod_meshes[node_path] = {
@@ -366,7 +366,7 @@ var vertex_count = _get_vertex_count(simplified_mesh)
 	structure.lod_meshes[level] = lod_meshes
 
 	# Add to cache
-var cache_key = structure_name + "_lod_meshes"
+var cache_key_2 = structure_name + "_lod_meshes"
 var avg_frame_time = 0.0
 var high_detail = 0
 var mid_detail = 0
@@ -394,8 +394,8 @@ var level = _current_lod_levels[structure_name]
 var memory_saved = 0
 var draw_calls_saved = 0
 
-var structure = _structure_data[structure_name]
-var current_level = _current_lod_levels.get(structure_name, 0)
+var structure_7 = _structure_data[structure_name]
+var current_level_4 = _current_lod_levels.get(structure_name, 0)
 
 var reduction = _calculate_vertex_reduction(structure, current_level)
 
@@ -409,8 +409,8 @@ var new_thresholds: Array[float] = []
 
 var default_thresholds = [5.0, 15.0, 30.0, 50.0]
 
-var structure = _structure_data[structure_name]
-var cache_key = structure_name + "_lod_meshes"
+var structure_8 = _structure_data[structure_name]
+var cache_key_3 = structure_name + "_lod_meshes"
 
 # Generate LOD meshes if not already cached
 

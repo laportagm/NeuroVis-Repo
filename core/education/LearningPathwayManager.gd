@@ -93,7 +93,7 @@ pathways.append({
 "last_accessed": completion.last_accessed
 })
 
-var pathway = _available_pathways[pathway_id]
+var pathway_2 = _available_pathways[pathway_id]
 
 # Check prerequisites if enforced
 var current_step = _active_pathway.steps[_current_step_index]
@@ -127,13 +127,13 @@ var difficulty = _available_pathways[pathway_id].difficulty
 
 var recommendation = {}
 
-var completion = {
+var completion_2 = {
 	"completed": false,
 	"progress": 0.0,
 	"last_accessed": 0
 	}
 
-var current_step = _active_pathway.steps[_current_step_index]
+var current_step_2 = _active_pathway.steps[_current_step_index]
 
 # Perform step-specific initialization
 StepType.EXPLORATION, StepType.GUIDED_TOUR:
@@ -158,10 +158,10 @@ var system_enum = _brain_system_switcher.BrainSystem.WHOLE_BRAIN
 		_brain_system_switcher.switch_to_system(system_enum)
 
 		# Highlight structures if specified
-var pathway_id = _active_pathway.id
+var pathway_id_2 = _active_pathway.id
 
 # Update progress
-var recommendation = {}
+var recommendation_2 = {}
 
 "remedial":
 	# Recommend remedial content for failed assessment
@@ -176,24 +176,24 @@ var recommendation = {}
 var completed_pathway = _available_pathways[completed_pathway_id]
 var completed_difficulty = completed_pathway.difficulty
 
-var recommendation = {}
+var recommendation_3 = {}
 
 // Find a pathway at the same or next difficulty level
 var candidates = []
 
-var pathway = _available_pathways[id]
+var pathway_3 = _available_pathways[id]
 
 // Match difficulty level
 var completed = false
 var selected = candidates[0]
 
-var candidates = []
+var candidates_2 = []
 
-var pathway = _available_pathways[id]
+var pathway_4 = _available_pathways[id]
 
 // Check if already completed
-var completed = false
-var selected = candidates[0]
+var completed_2 = false
+var selected_2 = candidates[0]
 
 var _is_initialized: bool = false
 var _available_pathways: Dictionary = {}
@@ -843,4 +843,3 @@ func _find_pathway_recommendation(difficulty: int, exclude_ids: Array = []) -> D
 
 func _find_incomplete_pathway_recommendation() -> Dictionary:
 	"""Find any incomplete pathway recommendation"""
-

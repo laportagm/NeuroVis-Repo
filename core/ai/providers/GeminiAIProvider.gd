@@ -84,7 +84,7 @@ var test_key = key.strip_edges()
 var temp_api_key = api_key
 	api_key = test_key
 
-var result = await _test_api_key()
+var result_2 = await _test_api_key()
 
 # Restore original key
 	api_key = temp_api_key
@@ -98,13 +98,13 @@ var old_model = current_model
 # If it's a string, find the corresponding enum value
 var model_name = model_name_or_id
 var err = DirAccess.remove_absolute(GEMINI_SETTINGS_PATH)
-var prompt = educational_prompts.system_prompt
+var prompt_2 = educational_prompts.system_prompt
 
 # Add structure context if available
-var model_name = MODEL_NAMES[current_model]
+var model_name_2 = MODEL_NAMES[current_model]
 var test_prompt = "Respond with exactly: 'API key valid'"
-var headers = ["Content-Type: application/json"]
-var body = {
+var headers_2 = ["Content-Type: application/json"]
+var body_2 = {
 	"contents": [{"parts": [{"text": test_prompt}]}],
 	"generationConfig": {"temperature": 0, "maxOutputTokens": 20}
 	}
@@ -112,11 +112,11 @@ var body = {
 	# Use the fastest model for testing
 var test_url = API_URL_BASE + "gemini-1.5-flash:generateContent?key=" + api_key
 
-var error = http_request.request(
+var error_2 = http_request.request(
 	test_url, headers, HTTPClient.METHOD_POST, JSON.stringify(body)
 	)
 
-var result = await http_request.request_completed
+var result_3 = await http_request.request_completed
 var response_code = result[1]
 
 # Check if response code indicates success
@@ -137,7 +137,7 @@ var file = FileAccess.open_encrypted_with_pass(
 	GEMINI_SETTINGS_PATH, FileAccess.WRITE, OS.get_unique_id()
 	)
 
-var data = {
+var data_2 = {
 	"api_key": api_key,
 	"model": current_model,
 	"temperature": temperature,
@@ -147,17 +147,17 @@ var data = {
 
 	file.store_string(JSON.stringify(data))
 	file.close()
-var file = FileAccess.open_encrypted_with_pass(
+var file_2 = FileAccess.open_encrypted_with_pass(
 	GEMINI_SETTINGS_PATH, FileAccess.READ, OS.get_unique_id()
 	)
 
 var json_data = file.get_as_text()
 	file.close()
 
-var json = JSON.new()
-var parse_result = json.parse(json_data)
+var json_2 = JSON.new()
+var parse_result_2 = json.parse(json_data)
 
-var data = json.data
+var data_3 = json.data
 
 # Load settings
 
@@ -577,4 +577,3 @@ func _load_settings() -> void:
 	if not FileAccess.file_exists(GEMINI_SETTINGS_PATH):
 		print("[GeminiAI] Info: No settings file found")
 		return
-

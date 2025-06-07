@@ -51,7 +51,7 @@ label.visible = labels_visible
 
 
 # Remove a specific label
-var label = structure_labels[structure_id]
+var label_2 = structure_labels[structure_id]
 var label_count = 0
 
 # Clear existing labels first

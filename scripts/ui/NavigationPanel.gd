@@ -74,14 +74,14 @@ var nav_section = VBoxContainer.new()
 	parent.add_child(nav_section)
 
 	# Section header
-var header = Label.new()
+var header_2 = Label.new()
 	header.text = "NAVIGATION"
 	header.add_theme_font_size_override("font_size", 12)
 	header.add_theme_color_override("font_color", Color("#a0a0a0"))
 	nav_section.add_child(header)
 
 	# Add some spacing
-var spacer = Control.new()
+var spacer_2 = Control.new()
 	spacer.custom_minimum_size.y = 8
 	nav_section.add_child(spacer)
 
@@ -143,14 +143,14 @@ var projects_section = VBoxContainer.new()
 var header_container = HBoxContainer.new()
 	projects_section.add_child(header_container)
 
-var header = Label.new()
+var header_3 = Label.new()
 	header.text = "PROJECTS"
 	header.add_theme_font_size_override("font_size", 12)
 	header.add_theme_color_override("font_color", Color("#a0a0a0"))
 	header_container.add_child(header)
 
 	# Spacer
-var spacer = Control.new()
+var spacer_3 = Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header_container.add_child(spacer)
 
@@ -183,7 +183,7 @@ var all_label = Label.new()
 	projects_section.add_child(all_label)
 
 	# All projects list
-var project_item = _create_project_item(project)
+var project_item_2 = _create_project_item(project)
 	projects_section.add_child(project_item)
 
 
@@ -226,10 +226,10 @@ var layers_section = VBoxContainer.new()
 	parent.add_child(layers_section)
 
 	# Section header
-var header_container = HBoxContainer.new()
+var header_container_2 = HBoxContainer.new()
 	layers_section.add_child(header_container)
 
-var header = Label.new()
+var header_4 = Label.new()
 	header.text = "DATA LAYERS"
 	header.add_theme_font_size_override("font_size", 12)
 	header.add_theme_color_override("font_color", Color("#a0a0a0"))
@@ -248,11 +248,11 @@ var item_id = item.get_meta("id")
 	_select_nav_item(item_id)
 
 
-var style = item.get_meta("style") as StyleBoxFlat
+var style_2 = item.get_meta("style") as StyleBoxFlat
 	style.bg_color = Color("#2a2a2a")
 	item.add_theme_stylebox_override("panel", style)
 
-var label = item.get_meta("label") as Label
+var label_2 = item.get_meta("label") as Label
 var icon = item.get_meta("icon") as TextureRect
 	label.modulate = Color("#e5e5e5")
 	icon.modulate = Color("#e5e5e5")
@@ -260,13 +260,13 @@ var icon = item.get_meta("icon") as TextureRect
 	item.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 
-var style = item.get_meta("style") as StyleBoxFlat
+var style_3 = item.get_meta("style") as StyleBoxFlat
 	style.bg_color = Color.TRANSPARENT
 	style.border_width_left = 0
 	item.add_theme_stylebox_override("panel", style)
 
-var label = item.get_meta("label") as Label
-var icon = item.get_meta("icon") as TextureRect
+var label_3 = item.get_meta("label") as Label
+var icon_2 = item.get_meta("icon") as TextureRect
 	label.modulate = Color("#e5e5e5")
 	icon.modulate = Color("#a0a0a0")
 
@@ -284,16 +284,16 @@ var prev_icon = prev_item.get_meta("icon") as TextureRect
 
 	# Select new
 	current_nav_selection = item_id
-var item = nav_item_nodes[item_id]
-var style = item.get_meta("style") as StyleBoxFlat
+var item_2 = nav_item_nodes[item_id]
+var style_4 = item.get_meta("style") as StyleBoxFlat
 	style.bg_color = Color("#1f3a3a")
 	style.border_width_left = 3
 	style.border_color = Color("#26d0ce")
 	style.content_margin_left = 9  # Compensate for border
 	item.add_theme_stylebox_override("panel", style)
 
-var label = item.get_meta("label") as Label
-var icon = item.get_meta("icon") as TextureRect
+var label_4 = item.get_meta("label") as Label
+var icon_3 = item.get_meta("icon") as TextureRect
 	label.modulate = Color("#26d0ce")
 	icon.modulate = Color("#26d0ce")
 

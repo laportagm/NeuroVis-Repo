@@ -136,4 +136,3 @@ func _fix_orphaned_code():
 
 	# Emit signal
 	model_visibility_changed.emit(model_name, new_visibility)
-

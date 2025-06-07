@@ -53,7 +53,7 @@ ui_layer.add_child(modern_info)
 modern_info.display_structure_data(structure_data)
 var existing_display = ui_layer.get_node_or_null("ModernInfoDisplay")
 var neural_net = system_bootstrap.get_neural_net()
-var knowledge_base = system_bootstrap.get_knowledge_base()
+var knowledge_base_2 = system_bootstrap.get_knowledge_base()
 
 # Try neural net mapping first
 var mapped_id = neural_net.map_mesh_name_to_structure_id(mesh_name)
@@ -62,7 +62,7 @@ var lower_mesh_name = mesh_name.to_lower()
 
 # Try exact match first
 var structure = knowledge_base.get_structure(id)
-var structure = knowledge_base.get_structure(id)
+var structure_2 = knowledge_base.get_structure(id)
 var display_name = structure.displayName.to_lower()
 var script_path = "res://ui/panels/ModernInfoDisplay.gd"
 var status = get_ui_status()

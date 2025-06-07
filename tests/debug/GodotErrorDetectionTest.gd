@@ -98,17 +98,17 @@ var model_paths = [
 ]
 
 var model = load(model_path)
-var instance = model.instantiate()
+var instance_2 = model.instantiate()
 var test7_result = framework.end_test()
 
 var summary = framework.get_test_summary()
 var dir = DirAccess.open(dir_path)
-var file_name = dir.get_next()
+var file_name_2 = dir.get_next()
 
 var full_path = dir_path + file_name
 
 var script = load(full_path)
-var script = node.get_script()
+var script_2 = node.get_script()
 var file = FileAccess.open(scene_path, FileAccess.READ)
 var content = file.get_as_text()
 file.close()

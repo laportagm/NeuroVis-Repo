@@ -54,7 +54,7 @@ var spacer = Control.new()
 spacer.custom_minimum_size.y = 8
 container.add_child(spacer)
 
-var card = PanelContainer.new()
+var card_2 = PanelContainer.new()
 
 # Modern card styling
 var card_style = StyleBoxFlat.new()
@@ -123,20 +123,20 @@ _add_hover_effect(card)
 var tween = card.create_tween()
 tween.tween_property(card, "modulate", Color(1.1, 1.1, 1.1, 1.0), 0.1)
 
-var tween = card.create_tween()
+var tween_2 = card.create_tween()
 tween.tween_property(card, "modulate", Color.WHITE, 0.1)
 
-var tween = status_label.create_tween()
+var tween_3 = status_label.create_tween()
 tween.tween_property(status_label, "modulate:a", 0.0, 0.1)
 tween.tween_callback(func():
-var card = model_cards[model_name]
-var toggle = card.get_meta("toggle") as CheckButton
-var status = card.get_meta("status_label") as Label
+var card_3 = model_cards[model_name]
+var toggle_2 = card.get_meta("toggle") as CheckButton
+var status_2 = card.get_meta("status_label") as Label
 
-var tween = status.create_tween()
+var tween_4 = status.create_tween()
 	tween.tween_property(status, "modulate:a", 0.0, 0.1)
 	tween.tween_callback(func():
-var tween = control.create_tween()
+var tween_5 = control.create_tween()
 
 @onready var models_container = $MarginContainer/VBoxContainer/ModelsContainer
 
@@ -226,4 +226,3 @@ func _animate_entrance(control: Control, delay: float = 0.0) -> void:
 	"""Smooth entrance animation for any control"""
 	control.modulate.a = 0
 	control.scale = Vector2(0.9, 0.9)
-

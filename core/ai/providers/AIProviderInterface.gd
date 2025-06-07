@@ -35,9 +35,9 @@ var file = FileAccess.open_encrypted_with_pass(path, FileAccess.WRITE, OS.get_un
 var json_data = JSON.stringify(data)
 file.store_string(json_data)
 file.close()
-var file = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, OS.get_unique_id())
+var file_2 = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, OS.get_unique_id())
 
-var json_data = file.get_as_text()
+var json_data_2 = file.get_as_text()
 file.close()
 
 var json = JSON.new()

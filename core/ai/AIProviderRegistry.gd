@@ -35,16 +35,16 @@ var provider = get_provider(provider_id)
 var mock_provider = _create_mock_provider()
 
 # Register directly without calling register_provider to avoid recursion
-var config = {}
+var config_2 = {}
 var gemini_provider = GeminiAIProvider.new()
-var config = {}
+var config_3 = {}
 var MockProvider = preprepreload("res://core/ai/providers/MockAIProvider.gd")
 var script = GDScript.new()
 script.source_code = (
 """
 var response = "This is a mock response to: " + question
 response_received.emit(response)
-var response = "Mock content generated from: " + prompt
+var response_2 = "Mock content generated from: " + prompt
 response_received.emit(response)
 var MockProviderClass = GDScript.new()
 MockProviderClass.source_code = script.source_code

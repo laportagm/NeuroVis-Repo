@@ -8,13 +8,13 @@ var debug_cmd
 var ai_service = get_node_or_null("/root/AIAssistant")
 var status = ai_service.get_service_status()
 var gemini = status.gemini_status
-var gemini = get_node_or_null("/root/GeminiAI")
+var gemini_2 = get_node_or_null("/root/GeminiAI")
 var setup_complete = (
 gemini.check_setup_status() if gemini.has_method("check_setup_status") else false
 )
 var rate = gemini.get_rate_limit_status()
-var ai_service = get_node_or_null("/root/AIAssistant")
-var ai_service = get_node_or_null("/root/AIAssistant")
+var ai_service_2 = get_node_or_null("/root/AIAssistant")
+var ai_service_3 = get_node_or_null("/root/AIAssistant")
 var question = "What is the hippocampus?"
 var truncated = response.left(200) + ("..." if response.length() > 200 else "")
 

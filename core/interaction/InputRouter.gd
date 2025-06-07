@@ -51,7 +51,7 @@ var is_double_click = (current_time - last_click_time) < DOUBLE_CLICK_TIME
 	last_click_time = current_time
 
 	# Right mouse button - structure selection
-var current_time = Time.get_ticks_msec() / 1000.0
+var current_time_2 = Time.get_ticks_msec() / 1000.0
 var status = get_input_status()
 var fake_event = InputEventKey.new()
 	fake_event.keycode = shortcut_key

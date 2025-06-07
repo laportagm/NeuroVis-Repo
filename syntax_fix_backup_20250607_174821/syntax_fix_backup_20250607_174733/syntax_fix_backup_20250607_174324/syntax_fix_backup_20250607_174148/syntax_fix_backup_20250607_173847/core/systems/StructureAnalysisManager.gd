@@ -337,5 +337,3 @@ func _cleanup_singleton() -> void:
 
 
 # === DEBUG METHODS ===
-
-

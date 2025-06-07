@@ -101,7 +101,7 @@ var hit_mesh: MeshInstance3D = hit_result.get("mesh", null) if hit_result else n
 # Handle hover state changes
 var hit_data: Dictionary = _cast_multi_ray_selection(screen_position, true)
 
-var hit_mesh: MeshInstance3D = hit_data["mesh"]
+var hit_mesh_2: MeshInstance3D = hit_data["mesh"]
 	last_selection_confidence = hit_data.get("confidence", 1.0)
 
 	# Apply highlighting
@@ -125,7 +125,7 @@ var hover_material = StandardMaterial3D.new()
 	hover_material.rim = 0.5
 
 var surface_count = mesh.mesh.get_surface_count()
-var original_mat = original_materials.get(mesh)
+var original_mat_2 = original_materials.get(mesh)
 	visual_feedback.clear_feedback(mesh, original_mat)
 	# Clean up any running animations
 	_cleanup_mesh_animations(mesh)
@@ -135,7 +135,7 @@ var original_mat = original_materials.get(mesh)
 
 
 	# Highlights a mesh with modern selection effects
-var original_mat = original_materials.get(mesh)
+var original_mat_3 = original_materials.get(mesh)
 	visual_feedback.apply_selection_feedback(mesh, original_mat)
 	# Fallback to basic selection effect
 var highlight_material = StandardMaterial3D.new()
@@ -156,9 +156,9 @@ var highlight_material = StandardMaterial3D.new()
 	highlight_material.albedo_color.a = 0.8
 
 	# Apply highlight to all surfaces
-var surface_count = mesh.mesh.get_surface_count()
+var surface_count_2 = mesh.mesh.get_surface_count()
 var original_material = original_materials[mesh]
-var surface_count = mesh.mesh.get_surface_count() if mesh.mesh else 1
+var surface_count_3 = mesh.mesh.get_surface_count() if mesh.mesh else 1
 
 # Restore original material to all surfaces
 var camera: Camera3D = get_viewport().get_camera_3d()
@@ -211,7 +211,7 @@ var confidence: float = float(best_candidate["hit_count"]) / float(total_samples
 var avg_dist_a = _calculate_average(a["distances"])
 var avg_dist_b = _calculate_average(b["distances"])
 
-var camera: Camera3D = get_viewport().get_camera_3d()
+var camera_2: Camera3D = get_viewport().get_camera_3d()
 var nearby_structures: Array[Dictionary] = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
 
 var smallest_size: float = 1.0
@@ -225,7 +225,7 @@ var tolerance_range: float = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
 var size_factor: float = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
 	base_tolerance = MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
 
-var camera: Camera3D = get_viewport().get_camera_3d()
+var camera_3: Camera3D = get_viewport().get_camera_3d()
 var ray_origin: Vector3 = camera.project_ray_origin(screen_position)
 var ray_end: Vector3 = ray_origin + camera.project_ray_normal(screen_position) * RAY_LENGTH
 
@@ -239,16 +239,16 @@ var ray_params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create
 	ray_params.hit_from_inside = true  # Important for overlapping geometry
 
 	# Perform raycast
-var raycast_result: Dictionary = space_state.intersect_ray(ray_params)
+var raycast_result_2: Dictionary = space_state.intersect_ray(ray_params)
 
-var hit_mesh: MeshInstance3D = _extract_mesh_from_collision(raycast_result)
-var camera = get_viewport().get_camera_3d()
+var hit_mesh_3: MeshInstance3D = _extract_mesh_from_collision(raycast_result)
+var camera_4 = get_viewport().get_camera_3d()
 var from = camera.project_ray_origin(screen_position)
 var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
 
 # Setup raycast parameters
-var space_state = get_viewport().world_3d.direct_space_state
-var ray_params = PhysicsRayQueryParameters3D.create(from, to)
+var space_state_2 = get_viewport().world_3d.direct_space_state
+var ray_params_2 = PhysicsRayQueryParameters3D.create(from, to)
 	ray_params.collision_mask = 0xFFFFFFFF  # Detect all collision layers
 
 	# Perform raycast
@@ -267,12 +267,12 @@ var local_point: Vector3 = (
 
 	# Check if collision point is within mesh bounds (with tolerance)
 var bounds_tolerance: float = 0.1
-var parent: Node = collider.get_parent()
+var parent_2: Node = collider.get_parent()
 var grandparent: Node = parent.get_parent()
-var parent: Node = collider.get_parent()
+var parent_3: Node = collider.get_parent()
 var current_material = mesh.get_surface_override_material(0)
-var nearby_structures: Array[Dictionary] = []
-var camera: Camera3D = get_viewport().get_camera_3d()
+var nearby_structures_2: Array[Dictionary] = []
+var camera_5: Camera3D = get_viewport().get_camera_3d()
 var brain_model: Node = get_node_or_null("/root/Node3D/BrainModel")
 var all_meshes: Array[MeshInstance3D] = _get_all_meshes_recursive(brain_model)
 
@@ -280,12 +280,12 @@ var all_meshes: Array[MeshInstance3D] = _get_all_meshes_recursive(brain_model)
 var screen_pos: Vector2 = _get_mesh_screen_position(mesh)
 var meshes: Array[MeshInstance3D] = []
 
-var camera = get_viewport().get_camera_3d()
+var camera_6 = get_viewport().get_camera_3d()
 var aabb = mesh.get_aabb()
 var center = mesh.global_transform * aabb.get_center()
 
-var camera = get_viewport().get_camera_3d()
-var aabb = mesh.get_aabb()
+var camera_7 = get_viewport().get_camera_3d()
+var aabb_2 = mesh.get_aabb()
 var corners = [
 	mesh.global_transform * aabb.position, mesh.global_transform * (aabb.position + aabb.size)
 	]
@@ -293,7 +293,7 @@ var corners = [
 var screen_min = Vector2.INF
 var screen_max = -Vector2.INF
 
-var screen_pos = camera.unproject_position(corner)
+var screen_pos_2 = camera.unproject_position(corner)
 	screen_min = screen_min.min(screen_pos)
 	screen_max = screen_max.max(screen_pos)
 
@@ -302,7 +302,7 @@ var viewport_size = get_viewport().get_visible_rect().size
 var size_percentage = (screen_size.length() / viewport_size.length()) * 100.0
 
 	structure_sizes[mesh] = size_percentage
-var camera = get_viewport().get_camera_3d()
+var camera_8 = get_viewport().get_camera_3d()
 var sum = 0.0
 var VisualFeedbackClass = preprepreload("res://core/visualization/EducationalVisualFeedback.gd")
 var settings = accessibility_manager.get_settings()
@@ -320,10 +320,10 @@ var pulse_scale = original_scale * 1.02
 	mesh.set_meta("hover_tween", tween)
 
 
-var tween = mesh.create_tween()
+var tween_2 = mesh.create_tween()
 
 # Quick scale pulse for confirmation - sequential animation
-var original_scale = mesh.scale
+var original_scale_2 = mesh.scale
 	tween.tween_property(mesh, "scale", original_scale * 1.1, 0.1).set_ease(Tween.EASE_OUT)
 	tween.tween_property(mesh, "scale", original_scale, 0.3).set_ease(Tween.EASE_OUT).set_trans(
 	Tween.TRANS_BACK
@@ -351,26 +351,26 @@ var emission_tween = mesh.create_tween()
 	# Modern Godot 4 approach using lambda (see above)
 	# Legacy approach with corrected parameter order:
 var mesh_hover_tween = mesh.get_meta("hover_tween")
-var normalized_name: String = mesh.name.to_lower().replace(" ", "_")
+var normalized_name_2: String = mesh.name.to_lower().replace(" ", "_")
 var inflation_factor: float = COLLISION_INFLATION.get(normalized_name, 1.0)
 
 var original_aabb: AABB = mesh.get_aabb()
 var inflated_aabb: AABB = original_aabb.grow(
 	original_aabb.size.length() * (inflation_factor - 1.0) * 0.5
 	)
-var local_point: Vector3 = mesh.global_transform.inverse() * world_position
+var local_point_2: Vector3 = mesh.global_transform.inverse() * world_position
 
-var brain_model = get_node_or_null("/root/Node3D/BrainModel")
-var all_meshes = _get_all_meshes_recursive(brain_model)
-var aabb = mesh.get_aabb()
-var normalized_name = mesh.name.to_lower().replace(" ", "_")
+var brain_model_2 = get_node_or_null("/root/Node3D/BrainModel")
+var all_meshes_2 = _get_all_meshes_recursive(brain_model)
+var aabb_3 = mesh.get_aabb()
+var normalized_name_3 = mesh.name.to_lower().replace(" ", "_")
 
 # Apply inflation if needed
-var inflation_factor = COLLISION_INFLATION.get(normalized_name, 1.0)
+var inflation_factor_2 = COLLISION_INFLATION.get(normalized_name, 1.0)
 var connections = get_signal_connection_list("structure_selected")
 var anatomical_manager = _find_anatomical_model_manager()
 var manager = get_node_or_null("/root/Node3D/ModelCoordinator/AnatomicalModelManager")
-var result = _search_for_node_type(child, type_name)
+var result_2 = _search_for_node_type(child, type_name)
 var professional_tolerances = {
 	"pineal_gland": 20.0,
 	"pituitary_gland": 20.0,

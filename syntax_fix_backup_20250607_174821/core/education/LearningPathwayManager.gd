@@ -843,4 +843,3 @@ func _find_pathway_recommendation(difficulty: int, exclude_ids: Array = []) -> D
 
 func _find_incomplete_pathway_recommendation() -> Dictionary:
 	"""Find any incomplete pathway recommendation"""
-

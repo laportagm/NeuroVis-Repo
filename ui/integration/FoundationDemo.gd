@@ -116,7 +116,7 @@ component_demos.add_child(button)
 
 
 var all_flags = FeatureFlags.get_all_flags()
-var status = "✅" if all_flags[flag_name] else "❌"
+var status_2 = "✅" if all_flags[flag_name] else "❌"
 _log_to_results("%s %s" % [status, flag_name])
 _log_to_results("")
 
@@ -137,7 +137,7 @@ var config = {"structure_name": "hippocampus", "theme": "enhanced"}
 var panel = ComponentRegistry.create_component("info_panel", config)
 
 var component_id = "demo_cached_panel"
-var config = {"title": "Cached Panel Demo"}
+var config_2 = {"title": "Cached Panel Demo"}
 
 # First creation
 var start_time = Time.get_ticks_msec()
@@ -161,7 +161,7 @@ _log_to_results("📊 Cache hit ratio: %.1f%%" % (stats.hit_ratio * 100))
 ComponentRegistry.release_component(component_id)
 
 
-var component_id = "demo_state_component"
+var component_id_2 = "demo_state_component"
 var test_state = {
 "scroll_position": 150,
 "expanded_sections": ["functions", "clinical"],
@@ -184,12 +184,12 @@ _log_to_results("   State age: %.3f seconds" % state_age)
 _log_to_results("❌ Failed to restore state")
 
 # Show state stats
-var stats = ComponentStateManager.get_state_stats()
+var stats_2 = ComponentStateManager.get_state_stats()
 _log_to_results("📊 Total states: %d" % stats.total_states)
 _log_to_results("📊 Saves performed: %d" % stats.saves_performed)
 
 
-var stats = ComponentRegistry.get_registry_stats()
+var stats_3 = ComponentRegistry.get_registry_stats()
 
 _log_to_results("Components created: %d" % stats.total_created)
 _log_to_results("Cache hits: %d" % stats.cache_hits)

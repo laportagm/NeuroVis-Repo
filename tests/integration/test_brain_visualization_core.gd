@@ -14,7 +14,7 @@ assert_greater_than(core.structure_map.size(), 0)
 it(
 "should correctly map mesh names to structure IDs",
 func():
-var core = BrainVisualizationCore.new()
+var core_2 = BrainVisualizationCore.new()
 
 # Test exact match
 var hippocampus_id = core.map_mesh_name_to_structure_id("Hippocampus")
@@ -37,7 +37,7 @@ var invalid_id = core.map_mesh_name_to_structure_id("InvalidStructure")
 	it(
 	"should emit neural_net_ready signal",
 	func():
-var core = BrainVisualizationCore.new()
+var core_3 = BrainVisualizationCore.new()
 var signal_received = false
 
 	core.neural_net_ready.connect(func(): signal_received = true)
@@ -59,7 +59,7 @@ var kb = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	it(
 	"should retrieve structure data",
 	func():
-var kb = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
+var kb_2 = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	kb.load_knowledge_base("res://data/anatomical_data.json")
 
 var hippocampus_data = kb.get_structure("hippocampus")
@@ -71,7 +71,7 @@ var hippocampus_data = kb.get_structure("hippocampus")
 
 
 	# Test error handling
-var core = BrainVisualizationCore.new()
+var core_4 = BrainVisualizationCore.new()
 var result = core.map_mesh_name_to_structure_id("")
 	assert_equals(result, "")
 	)
@@ -79,7 +79,7 @@ var result = core.map_mesh_name_to_structure_id("")
 	it(
 	"should handle invalid knowledge base path",
 	func():
-var kb = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
+var kb_3 = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	kb.load_knowledge_base("res://invalid/path.json")
 	assert_false(kb.is_loaded)
 	)

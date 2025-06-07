@@ -96,4 +96,3 @@ func _ready():
 	print("\n" + "=".repeat(70))
 	print("NEUROVIS REFACTORING VALIDATION")
 	print("=".repeat(70))
-

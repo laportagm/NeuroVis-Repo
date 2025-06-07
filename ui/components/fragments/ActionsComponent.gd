@@ -55,8 +55,8 @@ button.set_meta("action", action)
 button.set_meta("group", group)
 
 # Add icon if provided
-var button = action_buttons[action]
-var group = button.get_meta("group", "")
+var button_2 = action_buttons[action]
+var group_2 = button.get_meta("group", "")
 
 var separator = VSeparator.new()
 separator.custom_minimum_size = Vector2(2, button_size.y)
@@ -65,13 +65,13 @@ separator_count += 1
 add_child(separator)
 
 
-var button = action_buttons[action]
-var button_type = button.get_meta("type", "secondary")
+var button_3 = action_buttons[action]
+var button_type_2 = button.get_meta("type", "secondary")
 UIThemeManager.apply_enhanced_button_style(button, button_type)
 
 
 # === PRIVATE METHODS ===
-var button = action_buttons[action]
+var button_4 = action_buttons[action]
 var is_icon_only = button.text.length() <= 2  # Assuming icon buttons are short
 
 var group_container = HBoxContainer.new()
@@ -83,7 +83,7 @@ button_groups[group_name] = group_container
 button_groups[group_name].add_child(button)
 
 
-var group_container = button_groups[group_name]
+var group_container_2 = button_groups[group_name]
 var tooltips = {
 "notes": "Add study notes for this structure",
 "related": "Show related structures",
@@ -96,7 +96,7 @@ var tooltips = {
 "history": "View interaction history",
 "help": "Get help with this structure"
 }
-var button = action_buttons[action]
+var button_5 = action_buttons[action]
 UIThemeManager.animate_button_press(button)
 
 # Emit action signal with configuration data
@@ -109,7 +109,7 @@ action_triggered.emit(action, action_data)
 # === PRESET CONFIGURATIONS ===
 var actions = ActionsComponent.new()
 actions.configure_actions(config)
-var actions = ActionsComponent.new()
+var actions_2 = ActionsComponent.new()
 actions.apply_preset(preset_name)
 
 func _ready() -> void:

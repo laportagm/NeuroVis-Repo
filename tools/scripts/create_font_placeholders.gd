@@ -7,7 +7,7 @@ extends SceneTree
 
 var dir = DirAccess.open("res://")
 var err = dir.make_dir("assets")
-var err = dir.make_dir("fonts")
+var err_2 = dir.make_dir("fonts")
 var fonts_to_create = [
 {
 "filename": "Inter-Regular.tres",
@@ -55,7 +55,7 @@ system_font.hinting = TextServer.HINTING_LIGHT
 system_font.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
 
 # Save the font resource
-var err = ResourceSaver.save(system_font, font_path)
+var err_3 = ResourceSaver.save(system_font, font_path)
 var original_path = "res://assets/fonts/" + font_config.original_name
 # Create a duplicate resource pointing to the same system font
 var err2 = ResourceSaver.save(system_font, original_path)
@@ -139,4 +139,3 @@ func _fix_orphaned_code():
 
 				# Quit the script
 				quit()
-

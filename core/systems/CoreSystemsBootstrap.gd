@@ -51,7 +51,7 @@ var dependencies = SYSTEM_DEPENDENCIES[system_name]
 var all_satisfied = true
 
 var system = _create_system_instance(system_name)
-var dependencies = {}
+var dependencies_2 = {}
 var init_success = true
 var script_path = ""
 
@@ -79,10 +79,10 @@ var use_multi_selection = true
 
 # Try loading FeatureFlags
 var feature_flags = preprepreload("res://core/features/FeatureFlags.gd")
-var script_path = use_multi_selection ? "res://core/interaction/MultiStructureSelectionManager.gd" : "res://core/interaction/BrainStructureSelectionManager.gd"
+var script_path_2 = use_multi_selection ? "res://core/interaction/MultiStructureSelectionManager.gd" : "res://core/interaction/BrainStructureSelectionManager.gd"
 
-var script = load(script_path)
-var instance = script.new()
+var script_2 = load(script_path)
+var instance_2 = script.new()
 
 # Configure instance
 var autoload_map = {

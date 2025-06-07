@@ -279,7 +279,7 @@ var tween = create_tween()
 	)
 
 	# Stagger content animations
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.set_parallel(true)
 
 	# Fade out everything

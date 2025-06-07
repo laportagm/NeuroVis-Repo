@@ -47,25 +47,25 @@ var success = educational_coordinator.switch_brain_system(system)
 var dropdown = comparative_ui.get_node("ComparisonDropdown")
 var selected_id = dropdown.get_selected_metadata()
 
-var success = educational_coordinator.start_comparative_study(selected_id)
+var success_2 = educational_coordinator.start_comparative_study(selected_id)
 
-var dropdown = pathway_ui.get_node("PathwayDropdown")
-var selected_id = dropdown.get_selected_metadata()
+var dropdown_2 = pathway_ui.get_node("PathwayDropdown")
+var selected_id_2 = dropdown.get_selected_metadata()
 
-var success = educational_coordinator.start_learning_pathway(selected_id)
+var success_3 = educational_coordinator.start_learning_pathway(selected_id)
 
-var success = educational_coordinator.advance_learning_step()
+var success_4 = educational_coordinator.advance_learning_step()
 
 var step = educational_coordinator.get_current_learning_step()
 var mode = mode_selector.get_item_id(index)
 current_mode = mode
 
-var success = educational_coordinator.set_educational_mode(mode)
+var success_5 = educational_coordinator.set_educational_mode(mode)
 
-var brain_switcher = educational_coordinator.get_module("brain_system_switcher")
-var pathway = educational_coordinator.get_module("learning_pathway")
-var brain_switcher = educational_coordinator.get_module("brain_system_switcher")
-var comparative = educational_coordinator.get_module("comparative_anatomy")
+var brain_switcher_2 = educational_coordinator.get_module("brain_system_switcher")
+var pathway_2 = educational_coordinator.get_module("learning_pathway")
+var brain_switcher_3 = educational_coordinator.get_module("brain_system_switcher")
+var comparative_2 = educational_coordinator.get_module("comparative_anatomy")
 
 @onready var ui_container = $UI/Container
 @onready var system_switcher_ui = $UI/Container/SystemSwitcherPanel

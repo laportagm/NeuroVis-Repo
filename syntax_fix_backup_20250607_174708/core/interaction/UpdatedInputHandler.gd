@@ -205,4 +205,3 @@ func _update_camera_transform() -> void:
 func _handle_selection(mouse_position: Vector2) -> void:
 	if not camera_3d:
 		return
-

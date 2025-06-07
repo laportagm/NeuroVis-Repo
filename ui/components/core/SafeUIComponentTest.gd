@@ -24,7 +24,7 @@ vbox.add_child(test_label)
 
 # Apply safe theming
 var theme_applied = SafeAutoloadAccess.apply_theme_safely(test_label, "label")
-var theme_applied = SafeAutoloadAccess.apply_theme_safely(self, "panel")
+var theme_applied_2 = SafeAutoloadAccess.apply_theme_safely(self, "panel")
 var test_names = ["Striatum", "Striatum (good)", "Ventricles", "NonExistent"]
 var structure = SafeAutoloadAccess.get_structure_safely(name)
 var result_text = (
@@ -54,7 +54,7 @@ var all_safe = true
 
 # Test SafeAutoloadAccess
 var status = SafeAutoloadAccess.get_autoload_status()
-var structure = SafeAutoloadAccess.get_structure_safely("TestStructure")
+var structure_2 = SafeAutoloadAccess.get_structure_safely("TestStructure")
 var dummy_label = Label.new()
 var themed = SafeAutoloadAccess.apply_theme_safely(dummy_label, "label")
 dummy_label.queue_free()

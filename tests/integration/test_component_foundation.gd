@@ -126,7 +126,7 @@ var custom = ComponentRegistry.create_component("custom_test", {"custom_text": "
 
 
 	# === STATE MANAGER TESTS ===
-var component_id = "test_component_state"
+var component_id_2 = "test_component_state"
 var test_state = {
 	"scroll_position": 150,
 	"expanded_sections": ["functions", "clinical"],
@@ -150,7 +150,7 @@ var age = ComponentStateManager.get_state_age(component_id)
 	_end_test()
 
 
-var component_id = "persistent_test_component"
+var component_id_3 = "persistent_test_component"
 var persistent_state = {
 	"theme_preference": "minimal", "bookmarked_structures": ["hippocampus", "cortex"]
 	}
@@ -170,7 +170,7 @@ var state_info = ComponentStateManager.get_component_state_info(component_id)
 	_end_test()
 
 
-var component_id = "cleanup_test_" + str(i)
+var component_id_4 = "cleanup_test_" + str(i)
 var state = {"test_data": i}
 	ComponentStateManager.save_component_state(component_id, state)
 
@@ -191,15 +191,15 @@ var stats_before = ComponentStateManager.get_state_stats()
 
 
 	# === INTEGRATION TESTS ===
-var component_id = "integration_test_panel"
-var config = {"structure_name": "hippocampus", "theme": "enhanced"}
+var component_id_5 = "integration_test_panel"
+var config_2 = {"structure_name": "hippocampus", "theme": "enhanced"}
 
 # Step 1: Create component through registry
-var panel = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+var panel_2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
 	assert_not_null(panel, "Should create panel")
 
 	# Step 2: Save component state
-var state = {
+var state_2 = {
 	"selected_structure": "hippocampus",
 	"expanded_sections": ["functions"],
 	"scroll_position": 100
@@ -207,11 +207,11 @@ var state = {
 	ComponentStateManager.save_component_state(component_id, state)
 
 	# Step 3: Simulate component recreation (cache hit)
-var panel2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+var panel2_2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
 	assert_equal(panel, panel2, "Should return cached component")
 
 	# Step 4: Restore state
-var restored_state = ComponentStateManager.restore_component_state(component_id)
+var restored_state_2 = ComponentStateManager.restore_component_state(component_id)
 	assert_equal(restored_state.selected_structure, "hippocampus", "Should restore structure")
 	assert_equal(restored_state.scroll_position, 100, "Should restore scroll position")
 
@@ -224,11 +224,11 @@ var restored_state = ComponentStateManager.restore_component_state(component_id)
 
 var error_msg = "Assertion failed: " + message
 	test_results.append({"type": "assertion_error", "message": error_msg})
-var error_msg = "Expected: %s, Got: %s - %s" % [expected, actual, message]
+var error_msg_2 = "Expected: %s, Got: %s - %s" % [expected, actual, message]
 	test_results.append({"type": "assertion_error", "message": error_msg})
-var error_msg = "Values should not be equal: %s - %s" % [actual, message]
+var error_msg_3 = "Values should not be equal: %s - %s" % [actual, message]
 	test_results.append({"type": "assertion_error", "message": error_msg})
-var error_msg = "Value should not be null - " + message
+var error_msg_4 = "Value should not be null - " + message
 	test_results.append({"type": "assertion_error", "message": error_msg})
 var tester = new()
 

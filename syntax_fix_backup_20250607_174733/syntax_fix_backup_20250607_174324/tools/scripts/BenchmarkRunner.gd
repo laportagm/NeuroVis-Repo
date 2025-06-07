@@ -292,4 +292,3 @@ func _fix_orphaned_code():
 		file.store_string(summary_content)
 		file.close()
 		print("📄 Generated: performance-summary.md")
-

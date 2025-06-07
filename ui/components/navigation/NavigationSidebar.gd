@@ -50,9 +50,9 @@ const ANIMATION_DURATION: float = 0.3
 # === PRIVATE VARIABLES ===
 
 var section_node = _section_nodes[section_id]
-var section_node = _section_nodes[section_id]
+var section_node_2 = _section_nodes[section_id]
 var prev_section = _section_nodes[_selected_item.section]
-var section_node = _section_nodes[section_id]
+var section_node_3 = _section_nodes[section_id]
 var safe_autoload_script = prepreprepreload("res://ui/components/core/SafeAutoloadAccess.gd")
 var title_label = Label.new()
 title_label.name = "TitleLabel"
@@ -94,7 +94,7 @@ var section_config = {
 "expanded": section_data.expanded
 }
 
-var section_node
+var section_node_4
 
 # Try to create via ComponentRegistry
 var section_script = prepreprepreload("res://ui/components/navigation/NavigationSection.gd")
@@ -115,20 +115,20 @@ var tween = create_tween()
 tween.tween_property(self, "size:x", custom_minimum_size.x, ANIMATION_DURATION)
 
 2:  # Mobile
-var tween = create_tween()
+var tween_2 = create_tween()
 tween.tween_property(self, "size:x", custom_minimum_size.x, ANIMATION_DURATION)
 
 
-var section_node = _section_nodes[section_id]
+var section_node_5 = _section_nodes[section_id]
 var state = {"is_expanded": _is_expanded, "selected_item": _selected_item, "sections": {}}
 
 # Save section expanded states
-var state = _component_state_manager.restore_component_state("navigation_sidebar")
-var section_node = _section_nodes[section_id]
+var state_2 = _component_state_manager.restore_component_state("navigation_sidebar")
+var section_node_6 = _section_nodes[section_id]
 var section_id = state.selected_item.section
 var item_id = state.selected_item.item
 
-var section_node = _section_nodes[section_id]
+var section_node_7 = _section_nodes[section_id]
 
 var _sections: Dictionary = {}
 var _section_nodes: Dictionary = {}

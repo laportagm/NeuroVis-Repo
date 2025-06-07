@@ -81,4 +81,3 @@ func test_autoloads():
 
 func test_scene_structure():
 	print("\n3. Testing main scene...")
-

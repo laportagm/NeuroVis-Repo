@@ -77,7 +77,7 @@ var tween = create_tween()
 tween.tween_property(content_container, "modulate", Color.WHITE, 0.2)
 
 
-var tween = create_tween()
+var tween_2 = create_tween()
 tween.tween_property(content_container, "modulate", Color.TRANSPARENT, 0.15)
 tween.tween_callback(func(): content_container.visible = false)
 
@@ -94,7 +94,7 @@ content_changed.emit(section_name, {"action": "link_clicked", "link": str(meta)}
 var description = data.get("shortDescription", data.get("description", ""))
 content_type = "rich"
 
-var formatted = description
+var formatted_2 = description
 var first_sentence = formatted.split(".")[0] + "."
 formatted = "[b]" + first_sentence + "[/b]" + formatted.substr(first_sentence.length())
 set_content(formatted)
@@ -107,13 +107,13 @@ var content = ""
 var connections = data.get("connections", [])
 content_type = "rich"
 
-var content = ""
+var content_2 = ""
 var clinical = data.get("clinicalNotes", data.get("clinicalRelevance", ""))
 content_type = "rich"
 
-var formatted = clinical
+var formatted_3 = clinical
 var keywords = ["pathology", "disease", "disorder", "syndrome", "damage", "lesion"]
-var regex = RegEx.new()
+var regex_2 = RegEx.new()
 regex.compile("(?i)\\b" + keyword + "\\b")
 formatted = regex.sub(formatted, "[i]" + keyword + "[/i]", true)
 set_content(formatted)

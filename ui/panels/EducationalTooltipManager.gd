@@ -223,7 +223,7 @@ var tips = {
 var category_data = educational_tooltips.get(category, {})
 	tooltip_data = category_data.get(tooltip_id, {})
 
-var description = tooltip_data.get("description", "")
+var description_2 = tooltip_data.get("description", "")
 var quick_facts = tooltip_data.get("quick_facts", [])
 var learning_tip = tooltip_data.get("learning_tip", "")
 
@@ -269,7 +269,7 @@ var tween = create_tween()
 	)
 
 
-var tween = create_tween()
+var tween_2 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0.0, UIThemeManager.ANIM_DURATION_FAST).set_ease(
 	Tween.EASE_IN
@@ -293,9 +293,9 @@ var tween = create_tween()
 var tooltip_entry = educational_tooltips["brain_structures"][structure_id]
 
 # Update with new data
-var display_name = structure_data.get("displayName", structure_id)
-var description = structure_data.get("shortDescription", "Brain structure")
-var functions = structure_data.get("functions", [])
+var display_name_2 = structure_data.get("displayName", structure_id)
+var description_3 = structure_data.get("shortDescription", "Brain structure")
+var functions_2 = structure_data.get("functions", [])
 
 	tooltip_entry["title"] = "🧠 " + display_name
 	tooltip_entry["description"] = description

@@ -1,0 +1,50 @@
+{
+    "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
+    "godot_tools.gdscript_lsp_server_port": 6005,
+    "godot_tools.editor_version": "4.x",
+    
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.minimap.enabled": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.inlayHints.enabled": "on",
+    
+    "files.exclude": {
+        ".godot/": true,
+        "**/*.import": true,
+        "**/*.uid": true,
+        "**/.DS_Store": true
+    },
+    "files.associations": {
+        "*.gd": "gdscript",
+        "*.tscn": "godot-scene",
+        "*.tres": "godot-resource"
+    },
+    
+    "[gdscript]": {
+        "editor.insertSpaces": false,
+        "editor.detectIndentation": false,
+        "editor.tabSize": 4,
+        "editor.wordWrap": "bounded",
+        "editor.wordWrapColumn": 100
+    },
+    
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    
+    "files.watcherExclude": {
+        ".godot/": true,
+        "**/logs/**": true
+    },
+    
+    "github.copilot.enable": {
+        "*": true,
+        "gdscript": true,
+        "godot-scene": true,
+        "godot-resource": true,
+        "plaintext": true,
+        "markdown": true
+    }
+}

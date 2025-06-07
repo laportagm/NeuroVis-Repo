@@ -42,7 +42,7 @@ mouse_event.button_index = MOUSE_BUTTON_RIGHT
 mouse_event.pressed = true
 mouse_event.position = Vector2(100, 100)
 
-var handled = test_router._handle_mouse_button_input(mouse_event)
+var handled_2 = test_router._handle_mouse_button_input(mouse_event)
 
 assert_true(handled, "Selection input should be handled")
 await get_tree().process_frame
@@ -55,14 +55,14 @@ test_router.hover_position_changed.connect(func(position: Vector2): hover_change
 var motion_event = InputEventMouseMotion.new()
 motion_event.position = Vector2(150, 150)
 
-var handled = test_router._handle_mouse_motion_input(motion_event)
+var handled_3 = test_router._handle_mouse_motion_input(motion_event)
 
 assert_true(handled, "Hover input should be handled")
 await get_tree().process_frame
 assert_true(hover_changed, "Hover position changed signal should be emitted")
 
 
-var status = test_router.get_input_status()
+var status_2 = test_router.get_input_status()
 assert_false(status.has_camera_controller, "Should not have camera controller initially")
 assert_false(status.has_selection_manager, "Should not have selection manager initially")
 
@@ -74,7 +74,7 @@ assert_true(status.has_camera_controller, "Should have camera controller after u
 assert_true(status.has_selection_manager, "Should have selection manager after update")
 
 
-var status = test_router.get_input_status()
+var status_3 = test_router.get_input_status()
 
 assert_true(status.has("input_enabled"), "Status should include input_enabled")
 assert_true(

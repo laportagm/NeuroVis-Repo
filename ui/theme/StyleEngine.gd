@@ -101,7 +101,7 @@ var base_sizes = {"small": 12, "body": 14, "title": 18, "heading": 24, "display"
 
 var base_size = base_sizes.get(size_category, 14)
 var screen_width = DisplayServer.screen_get_size().x
-var screen_width = DisplayServer.screen_get_size().x
+var screen_width_2 = DisplayServer.screen_get_size().x
 var base_duration = ANIMATION_DURATIONS.get(duration_type, 0.2)
 
 # Adjust for accessibility
@@ -109,12 +109,12 @@ var tween = control.create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 
-var tween = control.create_tween()
+var tween_2 = control.create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.tween_property(control, "position", to_pos, duration)
 
-var tween = control.create_tween()
+var tween_3 = control.create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(control, "scale", to_scale, duration)
@@ -123,7 +123,7 @@ var component_type = style_config.get("type", "generic")
 var theme_variant = style_config.get("variant", "default")
 
 # Cache key for this style combination
-var cache_key = "style_%s_%s_%s" % [component_type, theme_variant, _current_theme]
+var cache_key_2 = "style_%s_%s_%s" % [component_type, theme_variant, _current_theme]
 
 var computed_style = _compute_component_style(component_type, theme_variant, style_config)
 	_component_styles[cache_key] = computed_style
@@ -147,7 +147,7 @@ var style = {}
 				_:
 					style = _compute_generic_style(variant, config)
 
-var style = {
+var style_2 = {
 	"background_color": get_color("surface"),
 	"border_color": get_color("primary"),
 	"border_width": 2 if _current_theme == ThemeMode.ENHANCED else 1,
@@ -164,7 +164,7 @@ var style = {
 				style.border_color = get_color("accent")
 				style.corner_radius = 16
 
-var style = {
+var style_3 = {
 	"background_color": get_color("primary"),
 	"text_color": get_color("text_primary"),
 	"hover_color": get_color("primary").lightened(0.2),
@@ -184,7 +184,7 @@ var style = {
 				style.border_width = 2
 				style.text_color = get_color("primary")
 
-var style = {
+var style_4 = {
 	"text_color": get_color("text_primary"),
 	"font_size": get_font_size("body"),
 	"line_spacing": 1.2
@@ -198,7 +198,7 @@ var style = {
 			"secondary":
 				style.text_color = get_color("text_secondary")
 
-var style = {
+var style_5 = {
 	"background_color": get_color("primary"),
 	"text_color": get_color("text_primary"),
 	"font_size": get_font_size("title"),

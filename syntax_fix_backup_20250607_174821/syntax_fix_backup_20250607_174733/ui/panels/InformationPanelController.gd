@@ -224,5 +224,3 @@ func _create_function_item(text: String, index: int) -> Control:
 func _on_close_pressed() -> void:
 	"""Handle close button press"""
 	hide_panel()
-
-

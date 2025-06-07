@@ -83,8 +83,8 @@ _movement_buttons[directions[i]] = button
 grid.add_child(button)
 
 section.add_child(grid)
-var section = VBoxContainer.new()
-var label = Label.new()
+var section_2 = VBoxContainer.new()
+var label_2 = Label.new()
 label.text = "Rotation"
 section.add_child(label)
 
@@ -118,8 +118,8 @@ yaw_container.add_child(yaw_label)
 yaw_container.add_child(yaw_slider)
 section.add_child(yaw_container)
 
-var section = VBoxContainer.new()
-var label = Label.new()
+var section_3 = VBoxContainer.new()
+var label_3 = Label.new()
 label.text = "Zoom"
 section.add_child(label)
 
@@ -145,17 +145,17 @@ container.add_child(zoom_out)
 container.add_child(zoom_reset)
 section.add_child(container)
 
-var section = VBoxContainer.new()
-var label = Label.new()
+var section_4 = VBoxContainer.new()
+var label_4 = Label.new()
 label.text = "Presets"
 section.add_child(label)
 
-var container = GridContainer.new()
+var container_2 = GridContainer.new()
 container.columns = 2
 
 var presets = ["Front", "Back", "Left", "Right", "Top", "Bottom", "Default"]
 
-var button = Button.new()
+var button_2 = Button.new()
 button.text = preset
 button.pressed.connect(_on_preset_selected.bind(preset.to_lower()))
 _preset_buttons[preset] = button

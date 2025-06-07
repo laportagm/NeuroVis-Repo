@@ -32,7 +32,7 @@ var fps = 1.0 / delta if delta > 0 else 60.0
 _frame_times.append(fps)
 
 # Check for FPS drops
-var elapsed = (Time.get_ticks_msec() - _test_start_time) / 1000.0
+var elapsed_2 = (Time.get_ticks_msec() - _test_start_time) / 1000.0
 var current_memory = OS.get_static_memory_usage()
 _memory_samples.append(current_memory)
 _results["memory_peak"] = max(_results["memory_peak"], current_memory)

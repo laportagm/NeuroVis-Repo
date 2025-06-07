@@ -175,4 +175,3 @@ func test_file(file_path: String) -> Dictionary:
 
 func check_migration_patterns() -> Dictionary:
 	"""Check for specific Godot 3 to 4 migration patterns"""
-

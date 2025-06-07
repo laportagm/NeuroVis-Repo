@@ -65,7 +65,7 @@ var content = {
 	]
 	}
 
-var content = {
+var content_2 = {
 	"type": "diagnostic",
 	"title": "Diagnostic Information",
 	"data": diagnostic_data,
@@ -117,8 +117,8 @@ var rich_text = RichTextLabel.new()
 
 
 var actions = content_data.get("actions", [])
-var title = content_data.get("title", "")
-var description = content_data.get("description", "")
+var title_2 = content_data.get("title", "")
+var description_2 = content_data.get("description", "")
 var functions = content_data.get("functions", [])
 
 # Title
@@ -150,8 +150,8 @@ var more_label = UIComponentFactory.create_label(
 	content_area.add_child(more_label)
 
 	# Action buttons
-var actions = content_data.get("actions", [])
-var title = content_data.get("title", "Diagnostic Info")
+var actions_2 = content_data.get("actions", [])
+var title_3 = content_data.get("title", "Diagnostic Info")
 var data = content_data.get("data", {})
 var timestamp = content_data.get("timestamp", "")
 
@@ -201,14 +201,14 @@ var tooltip_size = Vector2(max_width, 100)  # Estimated size
 # Horizontal adjustment
 var mouse_event = event as InputEventMouseButton
 var action = action_data.get("action", "")
-var data = action_data.get("data", {})
+var data_2 = action_data.get("data", {})
 
 	tooltip_action_triggered.emit(action, data)
 
 	# Hide tooltip after action unless it's a persistent action
-var tooltip = InteractiveTooltip.new()
+var tooltip_2 = InteractiveTooltip.new()
 	tooltip.tooltip_type = tooltip_type
-var content = control.get_meta("tooltip_content", {})
+var content_3 = control.get_meta("tooltip_content", {})
 
 func _fix_orphaned_code():
 	return tooltip

@@ -111,4 +111,3 @@ func _fix_orphaned_code():
 
 	# Force engine to pause
 	get_tree().paused = true
-

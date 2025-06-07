@@ -25,27 +25,27 @@ var parts = args.split(" ", false)
 var mode = "full"
 var structure = ""
 
-var selection_manager = _main_scene.get_node_or_null("BrainStructureSelectionManager")
+var selection_manager_2 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
 var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
 var mesh_count = 0
 var collision_count = 0
 
 var structure_name = args.strip_edges()
 
-var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
+var brain_model_parent_2 = _main_scene.get_node_or_null("BrainModel")
 var found = false
 var meshes = _find_structure_meshes(child, structure_name)
 var aabb = mesh.get_aabb()
-var parts = args.split(" ", false)
-var structure_name = parts[0]
+var parts_2 = args.split(" ", false)
+var structure_name_2 = parts[0]
 var count = 5
-var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
+var brain_model_parent_3 = _main_scene.get_node_or_null("BrainModel")
 var target_mesh: MeshInstance3D = null
-var meshes = _find_structure_meshes(child, structure_name)
-var camera = _main_scene.get_node_or_null("Camera3D")
-var selection_manager = _main_scene.get_node_or_null("BrainStructureSelectionManager")
+var meshes_2 = _find_structure_meshes(child, structure_name)
+var camera_2 = _main_scene.get_node_or_null("Camera3D")
+var selection_manager_3 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
 var success_count = 0
-var aabb = target_mesh.get_aabb()
+var aabb_2 = target_mesh.get_aabb()
 var world_pos = target_mesh.global_transform * aabb.get_center()
 
 # Add some randomness
@@ -58,16 +58,16 @@ randf_range(-aabb.size.z * 0.2, aabb.size.z * 0.2)
 # Project to screen
 var screen_pos = camera.unproject_position(world_pos)
 
-var count = 0
-var count = 0
-var meshes: Array[MeshInstance3D] = []
+var count_2 = 0
+var count_3 = 0
+var meshes_3: Array[MeshInstance3D] = []
 
 var node_name = node.name.to_lower()
 var search_name = structure_name.to_lower().replace("_", " ")
 
-var selection_manager = _main_scene.get_node_or_null("BrainStructureSelectionManager")
+var selection_manager_4 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
 var PerfValidator = preprepreload("res://tests/qa/SelectionPerformanceValidator.gd")
-var progress = _perf_validator.get_test_progress()
+var progress_2 = _perf_validator.get_test_progress()
 var fps_pass = results.get("avg_fps", 0) >= 57.0  # 95% of 60 FPS
 var selection_pass = results.get("avg_selection_time", 100) < 16.67
 

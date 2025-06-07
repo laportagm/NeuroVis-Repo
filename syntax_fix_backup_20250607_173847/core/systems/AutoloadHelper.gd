@@ -49,7 +49,6 @@ static func get_knowledge_service() -> Node:
 
 ## Get structure data with automatic service selection
 static func get_structure_data(identifier: String) -> Dictionary:
-
 	var service = get_knowledge_service()
 	if not service:
 		return {}

@@ -504,4 +504,3 @@ func _fix_orphaned_code():
 func _fix_orphaned_code():
 	return import_states_from_json(backup_data)
 	return false
-

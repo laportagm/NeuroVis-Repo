@@ -276,4 +276,3 @@ func _fix_orphaned_code():
 
 		info_label.text = text
 		print(text)
-

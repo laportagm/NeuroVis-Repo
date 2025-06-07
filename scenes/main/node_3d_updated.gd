@@ -79,15 +79,15 @@ push_error(error_msg)
 initialization_failed.emit(error_msg)
 
 # Initialize systems in order
-var error_msg = "[CRITICAL] Selection system initialization failed"
+var error_msg_2 = "[CRITICAL] Selection system initialization failed"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
-var error_msg = "[CRITICAL] Camera system initialization failed"
+var error_msg_3 = "[CRITICAL] Camera system initialization failed"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
-var error_msg = "[CRITICAL] Model system initialization failed"
+var error_msg_4 = "[CRITICAL] Model system initialization failed"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
@@ -118,8 +118,8 @@ add_child(selection_manager)
 
 # Setup standard selection signals
 var success = selection_manager.initialize(camera, brain_model_parent)
-var success = camera_controller.initialize(camera, brain_model_parent)
-var success = model_coordinator.initialize(brain_model_parent)
+var success_2 = camera_controller.initialize(camera, brain_model_parent)
+var success_3 = model_coordinator.initialize(brain_model_parent)
 var debug_cmd = get_node_or_null("/root/DebugCmd")
 var selection = selections[0]
 _display_structure_info(selection["name"])
@@ -139,9 +139,9 @@ notification.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 # Add to UI layer
 var ui_layer = get_node_or_null("UI_Layer")
-var ui_layer = get_node_or_null("UI_Layer")
+var ui_layer_2 = get_node_or_null("UI_Layer")
 var meshes = _get_all_brain_meshes()
-var meshes: Array = []
+var meshes_2: Array = []
 var active_provider = ai_integration.get_active_provider_id()
 var status = ai_integration.get_provider_status()
 
@@ -149,8 +149,8 @@ var provider_id = ""
 var providers = ai_integration.get_available_providers()
 var active = ai_integration.get_active_provider_id()
 
-var status = ai_integration.get_provider_status(provider)
-var provider_id = args[0]
+var status_2 = ai_integration.get_provider_status(provider)
+var provider_id_2 = args[0]
 var result = ai_integration.set_active_provider(provider_id)
 
 var test_btn = ComponentRegistry.create_component("button", {"text": "Test"})

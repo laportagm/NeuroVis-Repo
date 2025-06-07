@@ -38,16 +38,16 @@ var MinimalPanelScript = load(minimal_path)
 var panel = MinimalPanelScript.new()
 var enhanced_path = "res://ui/panels/EnhancedInformationPanel.gd"
 var EnhancedPanelScript = load(enhanced_path)
-var panel = EnhancedPanelScript.new()
+var panel_2 = EnhancedPanelScript.new()
 var unified_path = "res://scenes/ui_info_panel_unified.gd"
 var UnifiedPanelScript = load(unified_path)
-var panel = UnifiedPanelScript.new()
+var panel_3 = UnifiedPanelScript.new()
 var basic_path = "res://scenes/ui_info_panel.gd"
 var BasicPanelScript = load(basic_path)
 var fallback = PanelContainer.new()
 	fallback.name = "FallbackPanel"
 var config = ConfigFile.new()
-var config = ConfigFile.new()
+var config_2 = ConfigFile.new()
 	config.set_value("ui", "theme_mode", current_theme)
 	config.save("user://ui_settings.cfg")
 

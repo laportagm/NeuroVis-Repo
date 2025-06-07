@@ -56,7 +56,7 @@ var result = {}
 var changes_made = false
 
 # Update each provided value
-var old_value = _state.get(key)
+var old_value_2 = _state.get(key)
 var config = ConfigFile.new()
 
 # Save each group to its own section
@@ -65,14 +65,14 @@ var value = _state[key]
 # Special handling for certain types
 var error = config.save(STATE_FILE_PATH)
 
-var config = ConfigFile.new()
-var error = config.load(STATE_FILE_PATH)
+var config_2 = ConfigFile.new()
+var error_2 = config.load(STATE_FILE_PATH)
 
 var changed_keys = []
 var changed_groups = {}
 
 # Load each saved value
-var old_value = _state.get(key)
+var old_value_3 = _state.get(key)
 var new_value = config.get_value(section, key)
 
 # Only update if different
@@ -82,7 +82,7 @@ _initialize_default_state()
 default_state = _state.duplicate(true)
 
 # Reset all or just specified group
-var old_value = _state.get(key)
+var old_value_4 = _state.get(key)
 _state[key] = default_state[key]
 _notify_listeners(key, old_value, _state[key])
 
@@ -109,7 +109,7 @@ var duration = current_time - start_time
 # Update duration in state
 set_state("session_duration", duration)
 
-var viewed = get_state("viewed_structures", [])
+var viewed_2 = get_state("viewed_structures", [])
 var interactions = get_state("interactions_count", 0)
 
 var hours = int(seconds) / 3600.0

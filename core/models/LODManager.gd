@@ -60,7 +60,7 @@ var model_data = _lod_models[model_name]
 var distance = _calculate_model_distance(model_data.root_node)
 var target_lod = _determine_lod_level(distance)
 
-var model_data = {
+var model_data_2 = {
 	"root_node": model, "lod_meshes": {}, "original_meshes": {}, "lod_variants": lod_variants
 	}
 
@@ -68,7 +68,7 @@ var model_data = {
 	_store_original_meshes(model, model_data)
 
 	# If LOD variants provided, store them
-var model_data = _lod_models[model_name]
+var model_data_3 = _lod_models[model_name]
 var tween = _transition_tweens[model_name]
 var cameras = get_tree().get_nodes_in_group("Cameras")
 var camera_paths = [
@@ -82,10 +82,10 @@ var aabb = model.mesh.get_aabb()
 	model_pos = model.global_position + model.global_transform.basis * aabb.get_center()
 
 	# Calculate distance
-var model_data = _lod_models[model_name]
+var model_data_4 = _lod_models[model_name]
 var current_level = _current_lod_levels.get(model_name, 0)
 
-var tween = _transition_tweens[model_name]
+var tween_2 = _transition_tweens[model_name]
 var material = node.get_surface_override_material(i)
 	mesh_dict[node.get_path()].materials.append(material)
 
@@ -112,7 +112,7 @@ var simplified_mesh = _simplify_mesh(original_data.mesh, quality_factor)
 	model_data.lod_meshes[level] = lod_meshes
 
 
-var simplified_mesh
+var simplified_mesh_2
 
 var array_mesh = ArrayMesh.new()
 
@@ -141,8 +141,8 @@ var b = original_indices[i + 1]
 var c = original_indices[i + 2]
 
 # Skip triangles that use vertices we've excluded
-var material = original_mesh.surface_get_material(surface_idx)
-var lod_meshes = model_data.lod_meshes[level]
+var material_2 = original_mesh.surface_get_material(surface_idx)
+var lod_meshes_2 = model_data.lod_meshes[level]
 
 var node_path = NodePath(node_path_str)
 var node = model_data.root_node.get_node_or_null(node_path)
@@ -151,19 +151,19 @@ var mesh_data = lod_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply materials
-var original_meshes = model_data.original_meshes
+var original_meshes_2 = model_data.original_meshes
 
-var node_path = NodePath(node_path_str)
-var node = model_data.root_node.get_node_or_null(node_path)
+var node_path_2 = NodePath(node_path_str)
+var node_2 = model_data.root_node.get_node_or_null(node_path)
 
-var mesh_data = original_meshes[node_path_str]
+var mesh_data_2 = original_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply original materials
-var current_level = _current_lod_levels.get(model_name, 0)
+var current_level_2 = _current_lod_levels.get(model_name, 0)
 
 # Create a tween for smooth transition
-var tween = create_tween()
+var tween_3 = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.set_ease(Tween.EASE_IN_OUT)
 
@@ -173,10 +173,10 @@ var tween = create_tween()
 	# Apply target meshes immediately
 var transition_duration = transition_time
 var node_paths
-var node_path = NodePath(node_path_str)
-var node = model_data.root_node.get_node_or_null(node_path)
+var node_path_3 = NodePath(node_path_str)
+var node_3 = model_data.root_node.get_node_or_null(node_path)
 
-var material = node.get_surface_override_material(i)
+var material_3 = node.get_surface_override_material(i)
 
 var start_alpha = 0.7
 var end_alpha = 1.0
@@ -199,25 +199,25 @@ var end_alpha = 1.0
 	)
 
 
-var model_data = _lod_models[model_name]
-var distance = _calculate_model_distance(model_data.root_node)
-var target_lod = _determine_lod_level(distance)
+var model_data_5 = _lod_models[model_name]
+var distance_2 = _calculate_model_distance(model_data.root_node)
+var target_lod_2 = _determine_lod_level(distance)
 
-var model_data = _lod_models[model_name]
-var current_level = _current_lod_levels.get(model_name, 0)
+var model_data_6 = _lod_models[model_name]
+var current_level_3 = _current_lod_levels.get(model_name, 0)
 
 # Keep only current LOD level and adjacent levels
-var model_data = _lod_models[model_name]
+var model_data_7 = _lod_models[model_name]
 
 # Regenerate any missing LOD levels
-var quality_factor = (
+var quality_factor_2 = (
 	quality_reduction_factors[level]
-var lod_meshes = {}
+var lod_meshes_3 = {}
 
-var original_data = model_data.original_meshes[node_path]
+var original_data_2 = model_data.original_meshes[node_path]
 
 # Create simplified mesh
-var simplified_mesh = _simplify_mesh(original_data.mesh, quality_factor)
+var simplified_mesh_3 = _simplify_mesh(original_data.mesh, quality_factor)
 
 # Store simplified mesh and materials
 	lod_meshes[node_path] = {

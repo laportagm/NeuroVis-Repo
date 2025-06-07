@@ -83,14 +83,14 @@ var dialog = dialog_script.new()
 
 	# Connect signals
 	dialog.setup_completed.connect(func(successful, _api_key):
-var output = test_panel.get_meta("output")
-var output = test_panel.get_meta("output")
+var output_2 = test_panel.get_meta("output")
+var output_3 = test_panel.get_meta("output")
 	output.text += "\nError: GeminiSetupDialog not found."
 
-var output = test_panel.get_meta("output")
+var output_4 = test_panel.get_meta("output")
 	output.text += "\n\nA: " + response
 
-var output = test_panel.get_meta("output")
+var output_5 = test_panel.get_meta("output")
 	output.text += "\n\nError: " + error
 
 func _ready():
@@ -219,4 +219,3 @@ func _on_ai_response(question: String, response: String):
 func _on_ai_error(error: String):
 	if not is_instance_valid(test_panel):
 		return
-

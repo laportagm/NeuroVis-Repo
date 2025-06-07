@@ -49,7 +49,7 @@ var file_exists = FileAccess.file_exists(script_path)
 
 var directories = ["res://config", "res://config/presets"]
 
-var current_autoloads = {}
+var current_autoloads_2 = {}
 
 var config = ConfigFile.new()
 var err = config.load(AUTOLOAD_CONFIG_PATH)
@@ -57,11 +57,11 @@ var err = config.load(AUTOLOAD_CONFIG_PATH)
 var keys = config.get_section_keys(AUTOLOAD_SECTION)
 var value = config.get_value(AUTOLOAD_SECTION, key)
 current_autoloads[key] = value
-var config = ConfigFile.new()
-var err = config.load(AUTOLOAD_CONFIG_PATH)
+var config_2 = ConfigFile.new()
+var err_2 = config.load(AUTOLOAD_CONFIG_PATH)
 
 var autoload_name = AUTOLOAD_NAMES[component]
-var script_path = SCRIPT_PATHS[component]
+var script_path_2 = SCRIPT_PATHS[component]
 var autoload_value = "*" + script_path
 
 var preload_path = "res://config/preload_resources.cfg"

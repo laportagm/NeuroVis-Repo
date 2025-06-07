@@ -52,7 +52,7 @@ tween.tween_property(self, "scale", Vector2.ONE, 0.4)
 
 
 ## Dismiss the notification
-var tween = create_tween()
+var tween_2 = create_tween()
 tween.tween_property(self, "modulate", Color.TRANSPARENT, FADE_DURATION)
 tween.tween_callback(_on_notification_dismissed)
 
@@ -123,7 +123,7 @@ _background_panel.add_theme_stylebox_override("panel", style)
 var color: Color
 
 # Handle case when UIThemeManager is not available
-var theme_manager = UIThemeManagerScript
+var theme_manager_2 = UIThemeManagerScript
 NotificationType.ERROR:
 	color = theme_manager.ACCENT_RED
 	NotificationType.WARNING:
@@ -136,17 +136,17 @@ NotificationType.ERROR:
 					color = theme_manager.ACCENT_RED
 
 					# Apply color to icon
-var style = _background_panel.get_theme_stylebox("panel").duplicate()
+var style_2 = _background_panel.get_theme_stylebox("panel").duplicate()
 var notification = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.ERROR)
-var notification = ErrorNotification.new()
+var notification_2 = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.WARNING)
-var notification = ErrorNotification.new()
+var notification_3 = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.INFO)
-var notification = ErrorNotification.new()
+var notification_4 = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.SUCCESS)
 

@@ -168,4 +168,3 @@ func _fix_orphaned_code():
 	for i in range(120): # 2 seconds at 60fps
 	fps_samples.append(Engine.get_frames_per_second())
 	await wait_frames(1)
-

@@ -50,4 +50,3 @@ func _fix_orphaned_code():
 			print("   You may need to set flags manually in your main scene")
 
 			quit()
-

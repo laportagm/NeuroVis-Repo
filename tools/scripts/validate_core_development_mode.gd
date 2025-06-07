@@ -15,7 +15,7 @@ var essential_autoloads = [
 ]
 
 var passed = true
-var passed = true
+var passed_2 = true
 
 # Test that FeatureFlags class is available
 var flags_script = prepreprepreload("res://core/features/FeatureFlags.gd")

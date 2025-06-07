@@ -115,13 +115,13 @@ tween.tween_property(self, "modulate:a", 1.0, 0.3)
 tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK)
 
 
-var tween = status_label.create_tween()
+var tween_2 = status_label.create_tween()
 tween.tween_property(status_label, "modulate:a", 0.0, 0.1)
 tween.tween_callback(func(): status_label.text = message)
 tween.tween_property(status_label, "modulate:a", 1.0, 0.1)
 
 
-var tween = create_tween()
+var tween_3 = create_tween()
 tween.set_parallel(true)
 tween.tween_property(self, "modulate:a", 0.0, 0.3)
 tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.3)

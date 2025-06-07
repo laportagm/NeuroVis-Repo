@@ -67,8 +67,8 @@ details = "Failed to load AIConfigurationManager script"
 log_result("Configuration Manager", success, details)
 
 
-var success = false
-var details = ""
+var success_2 = false
+var details_2 = ""
 
 # Load class
 var AIProviderRegistryScript = preprepreload("res://core/ai/AIProviderRegistry.gd")
@@ -82,8 +82,8 @@ details = "Failed to load AIProviderRegistry script"
 log_result("Provider Registry", success, details)
 
 
-var success = false
-var details = ""
+var success_3 = false
+var details_3 = ""
 
 # Get mock provider from registry
 mock_provider = provider_registry.get_provider("mock_provider")
@@ -92,8 +92,8 @@ var setup_status = mock_provider.check_setup_status()
 var response_connected = false
 
 # Connect to signals
-var success = false
-var details = ""
+var success_4 = false
+var details_4 = ""
 
 # Load class
 var GeminiAIProviderScript = preprepreload("res://core/ai/providers/GeminiAIProvider.gd")
@@ -105,9 +105,9 @@ success = gemini_provider.http_request != null and init_result
 details = "Successfully created and initialized Gemini provider"
 
 # Register with registry
-var providers = provider_registry.get_all_provider_ids()
-var success = false
-var details = ""
+var providers_2 = provider_registry.get_all_provider_ids()
+var success_5 = false
+var details_5 = ""
 
 var initial_provider = provider_registry.get_active_provider_id()
 

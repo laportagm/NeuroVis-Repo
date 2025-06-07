@@ -186,7 +186,7 @@ const ANIM_DURATION_SLOW = 0.4
 
 var dir = DirAccess.open("res://")
 var err = dir.make_dir("assets")
-var err = dir.make_dir("fonts")
+var err_2 = dir.make_dir("fonts")
 var cache_key = "%s_%d" % [path, size]
 var font: Font = null
 
@@ -195,7 +195,7 @@ var tres_path = path.replace(".ttf", ".tres")
 var system_font = SystemFont.new()
 
 # Configure system font based on requested font name
-var cache_key = "glass_%d_%.2f" % [current_mode, opacity_override]
+var cache_key_2 = "glass_%d_%.2f" % [current_mode, opacity_override]
 
 # Check cache first
 var style = StyleBoxFlat.new()
@@ -219,8 +219,8 @@ var radius = effects.get("border_radius", 12)
 	style.corner_radius_bottom_right = radius
 
 	# Enhanced shadow
-var style = create_enhanced_glass_style(0.8)
-var colors = get_current_colors()
+var style_2 = create_enhanced_glass_style(0.8)
+var colors_2 = get_current_colors()
 
 "primary":
 	style.bg_color = colors.get("button_primary", ACCENT_BLUE)
@@ -232,7 +232,7 @@ var colors = get_current_colors()
 				style.bg_color = colors.get("interactive_default", Color(1, 1, 1, 0.4))
 
 				style.bg_color.a = 0.8
-var style = create_enhanced_glass_style()
+var style_3 = create_enhanced_glass_style()
 
 "elevated":
 	style.shadow_size = 16
@@ -246,7 +246,7 @@ var style = create_enhanced_glass_style()
 		pass
 
 var typography = get_current_typography()
-var colors = get_current_colors()
+var colors_3 = get_current_colors()
 
 # Set content if provided
 var style_data = typography.get(
@@ -258,7 +258,7 @@ var style_data = typography.get(
 	)
 
 	"subheading", "section_heading", "caption":
-var style_data = typography.get(
+var style_data_2 = typography.get(
 	"section_heading", typography.get("caption", {"size": 14})
 	)
 	control.add_theme_font_size_override("font_size", style_data.get("size", 14))
@@ -268,14 +268,14 @@ var style_data = typography.get(
 	)
 
 	"body", "body_text":
-var style_data = typography.get("body_text", typography.get("body", {"size": 14}))
+var style_data_3 = typography.get("body_text", typography.get("body", {"size": 14}))
 	control.add_theme_font_size_override("font_size", style_data.get("size", 14))
 	control.add_theme_color_override(
 	"font_color", colors.get("text_body", colors.get("text_primary", TEXT_PRIMARY))
 	)
 
 	"small", "function_item", "micro":
-var style_data = typography.get("function_item", typography.get("small", {"size": 13}))
+var style_data_4 = typography.get("function_item", typography.get("small", {"size": 13}))
 	control.add_theme_font_size_override("font_size", style_data.get("size", 13))
 	control.add_theme_color_override(
 	"font_color", colors.get("text_body", colors.get("text_secondary", TEXT_SECONDARY))
@@ -300,29 +300,29 @@ var pressed_style = create_enhanced_button_style(button_type)
 	button.add_theme_stylebox_override("pressed", pressed_style)
 
 	# Apply text color
-var colors = get_current_colors()
+var colors_4 = get_current_colors()
 	button.add_theme_color_override("font_color", colors.get("text_primary", TEXT_PRIMARY))
 
 
 	# === ENHANCED ANIMATIONS ===
 	static func animate_enhanced_entrance(control: Control, delay: float = 0.0) -> void:
-var effects = get_current_effects()
+var effects_2 = get_current_effects()
 var duration = ANIMATION.get("entrance_duration", 0.4)
 var tween = control.create_tween()
 	tween.set_parallel(true)
 
-var effects = get_current_effects()
+var effects_3 = get_current_effects()
 var scale = effects.get("hover_scale", 1.02)
 var glow_color = effects.get("glow_color", ACCENT_BLUE)
 
-var tween = control.create_tween()
+var tween_2 = control.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(control, "scale", Vector2(scale, scale), ANIMATION.hover_duration)
 	tween.tween_property(control, "modulate", glow_color.lightened(0.1), ANIMATION.hover_duration)
 
 
 	static func animate_enhanced_hover_out(control: Control) -> void:
-var tween = control.create_tween()
+var tween_3 = control.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(control, "scale", Vector2.ONE, ANIMATION.hover_duration)
 	tween.tween_property(control, "modulate", Color.WHITE, ANIMATION.hover_duration)
@@ -333,7 +333,7 @@ var tween = control.create_tween()
 var width = viewport_size.x
 
 var responsive_data = get_responsive_panel_size(viewport_size)
-var width = viewport_size.x * responsive_data.get("width_percent", 0.25)
+var width_2 = viewport_size.x * responsive_data.get("width_percent", 0.25)
 
 # Apply constraints
 var height = viewport_size.y * responsive_data.get("height_percent", 0.5)
@@ -344,11 +344,11 @@ var height = viewport_size.y * responsive_data.get("height_percent", 0.5)
 	# === LEGACY COMPATIBILITY METHODS ===
 	# Keep existing method signatures for backward compatibility
 	static func create_glass_style() -> StyleBoxFlat:
-var style = create_enhanced_glass_style(0.8)
+var style_4 = create_enhanced_glass_style(0.8)
 	style.bg_color = color
 var delay = 0.0
-var duration = ANIMATION.exit_duration
-var tween = control.create_tween()
+var duration_2 = ANIMATION.exit_duration
+var tween_4 = control.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(control, "modulate", Color.TRANSPARENT, duration)
 	tween.tween_property(control, "scale", Vector2(0.8, 0.8), duration)
@@ -356,7 +356,7 @@ var tween = control.create_tween()
 
 
 	static func add_hover_effect(control: Control) -> void:
-var tween = label.create_tween()
+var tween_5 = label.create_tween()
 	tween.tween_property(label, "modulate:a", 0.0, duration * 0.5)
 	tween.tween_callback(func(): label.text = new_text)
 	tween.tween_property(label, "modulate:a", 1.0, duration * 0.5)
@@ -364,9 +364,9 @@ var tween = label.create_tween()
 
 	# === UTILITY METHODS ===
 	static func set_theme_mode(mode: ThemeMode) -> void:
-var colors = get_current_colors()
-var colors = get_current_colors()
-var style = StyleBoxFlat.new()
+var colors_5 = get_current_colors()
+var colors_6 = get_current_colors()
+var style_5 = StyleBoxFlat.new()
 
 # Background styling
 	style.bg_color = colors.get("surface_bg", Color(1, 1, 1, 0.04))
@@ -411,8 +411,8 @@ var fill_style = StyleBoxFlat.new()
 
 	static func create_educational_card_style(style_type: String = "default") -> StyleBoxFlat:
 		"""Create educational card styles for different content types"""
-var style = create_enhanced_glass_style()
-var colors = get_current_colors()
+var style_6 = create_enhanced_glass_style()
+var colors_7 = get_current_colors()
 
 "info":
 	style.bg_color = Color(ACCENT_BLUE.r, ACCENT_BLUE.g, ACCENT_BLUE.b, 0.1)
@@ -427,7 +427,7 @@ var colors = get_current_colors()
 				style.bg_color = colors.get("panel_bg", COLORS.enhanced.panel_bg)
 				style.border_color = colors.get("border", COLORS.enhanced.border)
 
-var colors = get_current_colors()
+var colors_8 = get_current_colors()
 	rich_text.add_theme_font_size_override("normal_font_size", font_size)
 	rich_text.add_theme_color_override("default_color", colors.get("text_body", TEXT_PRIMARY))
 
@@ -438,7 +438,7 @@ var colors = get_current_colors()
 
 	static func animate_button_press(button: Button, color: Color = ACCENT_BLUE) -> void:
 		"""Animate button press with enhanced effects"""
-var tween = button.create_tween()
+var tween_6 = button.create_tween()
 	tween.set_parallel(true)
 
 	# Quick scale and color pulse
@@ -454,15 +454,15 @@ var tween = button.create_tween()
 	control: Control, color: Color = ACCENT_BLUE, intensity: float = 0.2
 	) -> void:
 		"""Add hover glow effect to controls"""
-var tween = control.create_tween()
-var glow_color = color
+var tween_7 = control.create_tween()
+var glow_color_2 = color
 	glow_color.a = intensity
 	tween.tween_property(control, "modulate", glow_color, ANIMATION.hover_duration)
 
 
 	static func animate_hover_glow_off(control: Control) -> void:
 		"""Remove hover glow effect"""
-var tween = control.create_tween()
+var tween_8 = control.create_tween()
 	tween.tween_property(control, "modulate", Color.WHITE, ANIMATION.hover_duration)
 
 

@@ -40,7 +40,7 @@ var state_entry = {
 	}
 
 	# Store in appropriate location
-var state_entry = _component_states.get(component_id, {})
+var state_entry_2 = _component_states.get(component_id, {})
 
 var current_time = Time.get_unix_time_from_system()
 var age = current_time - state_entry.get("timestamp", 0)
@@ -48,27 +48,27 @@ var age = current_time - state_entry.get("timestamp", 0)
 var restored_data = state_entry.get("data", {})
 	_notify_state_listeners(component_id, "restored", restored_data)
 
-var state_entry = _component_states.get(component_id, {})
-var current_time = Time.get_unix_time_from_system()
+var state_entry_3 = _component_states.get(component_id, {})
+var current_time_2 = Time.get_unix_time_from_system()
 var restored_states = {}
 var state = restore_component_state(component_id)
-var state_entry = _component_states[component_id]
+var state_entry_4 = _component_states[component_id]
 var filtered_states = {}
 
-var state_entry = _component_states[component_id]
+var state_entry_5 = _component_states[component_id]
 var recent_states = {}
-var current_time = Time.get_unix_time_from_system()
+var current_time_3 = Time.get_unix_time_from_system()
 
-var state_entry = _component_states[component_id]
-var age = current_time - state_entry.get("timestamp", 0)
+var state_entry_6 = _component_states[component_id]
+var age_2 = current_time - state_entry.get("timestamp", 0)
 
 var persistent_data = {}
 var config = ConfigFile.new()
 var loaded_states = config.get_value("persistence", "states", {})
 
 # Validate and migrate loaded states
-var state_entry = loaded_states[component_id]
-var config = ConfigFile.new()
+var state_entry_7 = loaded_states[component_id]
+var config_2 = ConfigFile.new()
 	config.set_value("persistence", "states", _persistent_states)
 	config.set_value("persistence", "saved_at", Time.get_unix_time_from_system())
 	config.save("user://component_states.cfg")
@@ -84,17 +84,17 @@ var config = ConfigFile.new()
 
 		static func cleanup_old_states() -> void:
 			"""Clean up old and invalid states"""
-var current_time = Time.get_unix_time_from_system()
+var current_time_4 = Time.get_unix_time_from_system()
 var cleaned_states = []
 
 # Clean up old session states
-var state_entry = _session_states[component_id]
-var age = current_time - state_entry.get("timestamp", 0)
+var state_entry_8 = _session_states[component_id]
+var age_3 = current_time - state_entry.get("timestamp", 0)
 
 var type_states = {}
 
 # Group states by type
-var state_entry = _component_states[component_id]
+var state_entry_9 = _component_states[component_id]
 var component_type = state_entry.get("component_type", "unknown")
 
 var states = type_states[component_type]
@@ -102,10 +102,10 @@ var states = type_states[component_type]
 var removed_count = 0
 var state_info = states[i]
 var stats = get_state_stats()
-var state_entry = _component_states.get(component_id, {})
+var state_entry_10 = _component_states.get(component_id, {})
 
-var current_time = Time.get_unix_time_from_system()
-var age = current_time - state_entry.get("timestamp", 0)
+var current_time_5 = Time.get_unix_time_from_system()
+var age_4 = current_time - state_entry.get("timestamp", 0)
 
 var export_data = {
 	"session_states": _session_states,
@@ -120,8 +120,8 @@ var parse_result = json.parse(json_string)
 var import_data = json.data
 var backup_data = export_states_to_json()
 var file = FileAccess.open("user://component_states_backup.json", FileAccess.WRITE)
-var file = FileAccess.open("user://component_states_backup.json", FileAccess.READ)
-var backup_data = file.get_as_text()
+var file_2 = FileAccess.open("user://component_states_backup.json", FileAccess.READ)
+var backup_data_2 = file.get_as_text()
 	file.close()
 
 var _type_counts = {}
@@ -504,4 +504,3 @@ func _fix_orphaned_code():
 func _fix_orphaned_code():
 	return import_states_from_json(backup_data)
 	return false
-

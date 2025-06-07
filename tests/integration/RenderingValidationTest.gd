@@ -90,8 +90,8 @@ _test_ui.add_child(progress_bar)
 # Make UI invisible until testing starts
 _test_ui.visible = false
 
-var progress_label = _test_ui.get_node("ProgressLabel")
-var progress_bar = _test_ui.get_node("ProgressBar")
+var progress_label_2 = _test_ui.get_node("ProgressLabel")
+var progress_bar_2 = _test_ui.get_node("ProgressBar")
 
 progress_label.text = "Test " + str(_test_counter) + "/" + str(_total_tests) + ": " + _current_test
 progress_bar.value = ((_test_counter - 1) / float(_total_tests)) * 100
@@ -100,7 +100,7 @@ progress_bar.value = ((_test_counter - 1) / float(_total_tests)) * 100
 var test_results = _calculate_test_results()
 results.tests[_current_test] = test_results
 
-var test_results = {}
+var test_results_2 = {}
 
 # Common metrics for all tests
 test_results["frame_count"] = _frame_times.size()
@@ -155,7 +155,7 @@ var views = [0, 1, 4, 6]  # Different anatomical views
 	# Start timer
 	_test_timer.start(TEST_DURATION)
 
-var test_meshes = _find_test_meshes()
+var test_meshes_2 = _find_test_meshes()
 var transition_timer = Timer.new()
 	add_child(transition_timer)
 	transition_timer.wait_time = TEST_DURATION / 4.0
@@ -177,17 +177,17 @@ var image = get_viewport().get_texture().get_image()
 var assessment = {}
 
 # Check if material library is available
-var assessment = {}
+var assessment_2 = {}
 
-var assessment = {}
+var assessment_3 = {}
 
-var assessment = {}
+var assessment_4 = {}
 
-var assessment = {}
+var assessment_5 = {}
 
-var assessment = {}
+var assessment_6 = {}
 
-var assessment = {}
+var assessment_7 = {}
 
 var final_memory = Performance.get_monitor(Performance.MEMORY_STATIC) + Performance.get_monitor(Performance.MEMORY_DYNAMIC)
 var memory_difference = final_memory - _memory_baseline

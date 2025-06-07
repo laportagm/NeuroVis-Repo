@@ -250,38 +250,38 @@ var json_body: String = JSON.stringify(request_body)
 	http_request.request(url, headers, HTTPClient.METHOD_POST, json_body)
 
 
-var url: String = "https://api.anthropic.com/v1/messages"
-var headers: Array[String] = [
+var url_2: String = "https://api.anthropic.com/v1/messages"
+var headers_2: Array[String] = [
 	"Content-Type: application/json", "x-api-key: " + api_key, "anthropic-version: 2023-06-01"
 	]
 
-var messages: Array = _build_conversation_context()
+var messages_2: Array = _build_conversation_context()
 	messages.append({"role": "user", "content": user_question})
 
-var request_body: Dictionary = {
+var request_body_2: Dictionary = {
 	"model": "claude-3-haiku-20240307", "max_tokens": max_tokens, "messages": messages
 	}
 
-var json_body: String = JSON.stringify(request_body)
+var json_body_2: String = JSON.stringify(request_body)
 	http_request.request(url, headers, HTTPClient.METHOD_POST, json_body)
 
 
-var url: String = (
+var url_3: String = (
 	"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key="
 	+ api_key
 	)
-var headers: Array[String] = ["Content-Type: application/json"]
+var headers_3: Array[String] = ["Content-Type: application/json"]
 
 var medical_prompt: String = _build_gemini_prompt(user_question)
-var request_body: Dictionary = {
+var request_body_3: Dictionary = {
 	"contents": [ {"parts": [ {"text": medical_prompt}]}],
 	"generationConfig": {"maxOutputTokens": max_tokens, "temperature": temperature}
 	}
 
-var json_body: String = JSON.stringify(request_body)
+var json_body_3: String = JSON.stringify(request_body)
 	http_request.request(url, headers, HTTPClient.METHOD_POST, json_body)
 	# Use dedicated GeminiService
-var medical_prompt: String = _build_gemini_prompt(user_question)
+var medical_prompt_2: String = _build_gemini_prompt(user_question)
 var api_result = await gemini_service.generate_content(medical_prompt)
 var json = JSON.new()
 var parse_result = json.parse(body.get_string_from_utf8())
@@ -305,25 +305,25 @@ var last_user_question: String = (
 
 
 var candidate = response_data.candidates[0]
-var last_user_question: String = (
+var last_user_question_2: String = (
 	conversation_history[-1].content if conversation_history.size() > 0 else ""
 	)
 	_add_to_history("assistant", ai_response_text)
 	response_received.emit(last_user_question, ai_response_text)
 
 
-var last_user_question: String = (
+var last_user_question_3: String = (
 	conversation_history[-1].content if conversation_history.size() > 0 else ""
 	)
 	_add_to_history("assistant", ai_response_text)
 	response_received.emit(last_user_question, ai_response_text)
 
 
-var messages: Array = []
+var messages_3: Array = []
 
 # Add medical system prompt
-var medical_prompt: String = educational_prompts.system_prompt
-var medical_prompt: String = educational_prompts.system_prompt
+var medical_prompt_3: String = educational_prompts.system_prompt
+var medical_prompt_4: String = educational_prompts.system_prompt
 
 var status: Dictionary = {
 	"initialized": is_initialized,

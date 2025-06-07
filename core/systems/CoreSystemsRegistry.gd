@@ -37,7 +37,7 @@ var status = {}
 # Gather all system names
 var all_systems = []
 var system_status = get_system_status()
-var status = system_status[system_name]
+var status_2 = system_status[system_name]
 var singleton_map = {
 "knowledge_service": "KnowledgeService",
 "ai_assistant": "AIAssistant",
@@ -49,7 +49,7 @@ var singleton_map = {
 }
 
 var autoload_name = singleton_map[system_name]
-var singleton_map = {
+var singleton_map_2 = {
 "knowledge_service": "KnowledgeService",
 "ai_assistant": "AIAssistant",
 "theme_manager": "UIThemeManager",
@@ -59,7 +59,7 @@ var singleton_map = {
 "knowledge_base": "KB"
 }
 
-var autoload_name = singleton_map[system_name]
+var autoload_name_2 = singleton_map[system_name]
 
 var _systems: Dictionary = {}
 

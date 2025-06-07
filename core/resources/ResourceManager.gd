@@ -38,7 +38,7 @@ var group_loaded_count = 0
 var group_total = resource_paths.size()
 
 # Preload each resource
-var resource = load(resource_path)
+var resource_2 = load(resource_path)
 var load_status = ResourceLoader.load_threaded_request(resource_path)
 var resources = _group_resources[group_name]
 var unloaded_count = 0
@@ -57,11 +57,11 @@ var completed_tasks = []
 var task = _loading_tasks[resource_path]
 
 # Check loading status
-var load_status = ResourceLoader.load_threaded_get_status(resource_path)
+var load_status_2 = ResourceLoader.load_threaded_get_status(resource_path)
 
 ResourceLoader.THREAD_LOAD_LOADED:
 	# Loading complete
-var resource = ResourceLoader.load_threaded_get(resource_path)
+var resource_3 = ResourceLoader.load_threaded_get(resource_path)
 
 var progress = []
 var progress_value = ResourceLoader.load_threaded_get_status(
@@ -80,7 +80,7 @@ var size_estimate = 0
 var total = _cache_hits + _cache_misses
 var config = ConfigFile.new()
 var groups = config.get_sections()
-var resources = config.get_value(group_name, "resources", [])
+var resources_2 = config.get_value(group_name, "resources", [])
 var auto_preload = config.get_value(group_name, "auto_preload", false)
 
 var _resource_cache: Dictionary = {}

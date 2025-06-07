@@ -12,9 +12,9 @@ var bootstrap = SystemBootstrap.new()
 var router = InputRouter.new()
 var status = router.get_input_status()
 var scene = MainSceneRefactored.new()
-var scene = MainSceneRefactored.new()
-var bootstrap = SystemBootstrap.new()
-var router = InputRouter.new()
+var scene_2 = MainSceneRefactored.new()
+var bootstrap_2 = SystemBootstrap.new()
+var router_2 = InputRouter.new()
 
 var signal_count = 0
 
@@ -104,4 +104,3 @@ func _fix_orphaned_code():
 				print("✓ Integration test completed")
 				else:
 					print("✗ Component integration test failed")
-

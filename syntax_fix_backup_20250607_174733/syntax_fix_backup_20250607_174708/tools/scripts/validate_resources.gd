@@ -147,4 +147,3 @@ func _check_fonts_directory() -> void:
 	"""Check if the fonts directory exists and list its contents"""
 	print("")
 	print("[ResourceValidator] Checking fonts directory structure...")
-

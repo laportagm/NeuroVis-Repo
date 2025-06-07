@@ -35,12 +35,12 @@ const SCENE_NAME: String = "{{SCENE_NAME}}"
 		ui_container,
 		content_area
 	]
-	
+
 	for node in required_nodes:
 		if not node:
 			_log_error("Required node missing: " + str(node))
 			return false
-	
+
 	return true
 
 			var button = component as Button
@@ -76,7 +76,7 @@ var _ui_components: Array[Control] = []
 func _ready() -> void:
 	"""Initialize the scene controller"""
 	name = SCENE_NAME + "Controller"
-	
+
 	if auto_initialize:
 		await _initialize_scene()
 
@@ -89,39 +89,39 @@ func _exit_tree() -> void:
 ## Initialize the scene manually
 func _initialize_scene() -> bool:
 	"""Initialize all scene components"""
-	
+
 	_log_debug("Initializing scene: " + SCENE_NAME)
-	
+
 	# Validate required nodes
 	if not _validate_required_nodes():
 		_log_error("Scene initialization failed - missing required nodes")
 		return false
-	
+
 	# Initialize UI components
 	_setup_ui_components()
-	
+
 	# Setup interactions
 	_setup_interactions()
-	
+
 	# Apply initial state
 	_apply_initial_state()
-	
+
 	# Connect signals
 	_connect_signals()
-	
+
 	_is_initialized = true
 	scene_ready.emit()
 	_log_debug("Scene initialized successfully")
-	
+
 	return true
 
 func _initialize_ui_component(component: Control) -> void:
 	"""Initialize a single UI component"""
-	
+
 	# Apply standard styling if available
 	if component.has_method("apply_theme"):
 		component.apply_theme()
-	
+
 	# Setup component-specific behavior
 	_setup_component_behavior(component)
 
@@ -135,7 +135,7 @@ func show_status(message: String, duration: float = 3.0) -> void:
 	if status_label:
 		status_label.text = message
 		status_label.visible = true
-		
+
 		if duration > 0:
 			await get_tree().create_timer(duration).timeout
 			if status_label:
@@ -159,31 +159,31 @@ func is_initialized() -> bool:
 
 func _validate_required_nodes() -> bool:
 	"""Validate that all required nodes are present"""
-	
+
 func _setup_ui_components() -> void:
 	"""Initialize and configure UI components"""
-	
+
 	# Find and register UI components
 	_ui_components.clear()
 	_find_ui_components(ui_container)
-	
+
 	# Initialize each component
 	for component in _ui_components:
 		_initialize_ui_component(component)
 
 func _find_ui_components(parent: Node) -> void:
 	"""Recursively find UI components in the scene"""
-	
+
 	for child in parent.get_children():
 		if child is Control:
 			_ui_components.append(child)
-		
+
 		# Recurse into children
 		_find_ui_components(child)
 
 func _setup_component_behavior(component: Control) -> void:
 	"""Setup behavior for specific component types"""
-	
+
 	match component.get_class():
 		"Button":
 			_setup_button_behavior(component as Button)
@@ -197,37 +197,37 @@ func _setup_component_behavior(component: Control) -> void:
 
 func _setup_button_behavior(button: Button) -> void:
 	"""Setup standard button behavior"""
-	
+
 	if not button.pressed.is_connected(_on_button_pressed):
 		button.pressed.connect(_on_button_pressed.bind(button))
 
 func _setup_input_behavior(input: LineEdit) -> void:
 	"""Setup standard input field behavior"""
-	
+
 	if not input.text_submitted.is_connected(_on_input_submitted):
 		input.text_submitted.connect(_on_input_submitted.bind(input))
 
 func _setup_list_behavior(list: ItemList) -> void:
 	"""Setup standard list behavior"""
-	
+
 	if not list.item_selected.is_connected(_on_list_item_selected):
 		list.item_selected.connect(_on_list_item_selected.bind(list))
 
 func _setup_interactions() -> void:
 	"""Setup scene-specific interactions"""
-	
+
 	# Override in derived classes for custom interactions
 	pass
 
 func _connect_signals() -> void:
 	"""Connect scene-specific signals"""
-	
+
 	# Override in derived classes for custom signal connections
 	pass
 
 func _apply_initial_state() -> void:
 	"""Apply the initial state of the scene"""
-	
+
 	_scene_state = {
 		"initialized_at": Time.get_unix_time_from_system(),
 		"scene_name": SCENE_NAME,
@@ -236,49 +236,49 @@ func _apply_initial_state() -> void:
 
 func _apply_scene_state() -> void:
 	"""Apply loaded scene state to components"""
-	
+
 	# Override in derived classes to apply specific state
 	pass
 
 func _cleanup_scene() -> void:
 	"""Clean up scene resources"""
-	
+
 	# Disconnect signals
 	for component in _ui_components:
 		_disconnect_component_signals(component)
-	
+
 	# Clear references
 	_ui_components.clear()
 	_scene_state.clear()
-	
+
 	_is_initialized = false
 
 func _disconnect_component_signals(component: Control) -> void:
 	"""Disconnect signals from a UI component"""
-	
+
 	match component.get_class():
 		"Button":
 func _on_button_pressed(button: Button) -> void:
 	"""Handle button press events"""
-	
+
 	_log_debug("Button pressed: " + button.name)
-	
+
 	# Override in derived classes for specific button handling
 	_handle_button_action(button)
 
 func _on_input_submitted(text: String, input: LineEdit) -> void:
 	"""Handle input submission events"""
-	
+
 	_log_debug("Input submitted: " + text + " from " + input.name)
-	
+
 	# Override in derived classes for specific input handling
 	_handle_input_action(text, input)
 
 func _on_list_item_selected(index: int, list: ItemList) -> void:
 	"""Handle list item selection events"""
-	
+
 	_log_debug("List item selected: " + str(index) + " from " + list.name)
-	
+
 	# Override in derived classes for specific list handling
 	_handle_list_selection(index, list)
 

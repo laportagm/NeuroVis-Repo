@@ -96,7 +96,7 @@ ComponentStateManager.save_component_state(component_id, state)
 state_changed.emit(state)
 
 
-var state = ComponentStateManager.restore_component_state(component_id)
+var state_2 = ComponentStateManager.restore_component_state(component_id)
 var hover_tween = StyleEngine.create_scale_animation(
 self, Vector2.ONE, Vector2.ONE * 1.02, StyleEngine.get_animation_duration("micro")
 )
@@ -109,7 +109,7 @@ self, scale, Vector2.ONE, StyleEngine.get_animation_duration("micro")
 exit_tween.play()
 
 
-var gesture_mappings = get_meta("gesture_mappings", {})
+var gesture_mappings_2 = get_meta("gesture_mappings", {})
 var action = gesture_mappings.get(gesture_name, "")
 
 var expand_tween = StyleEngine.create_scale_animation(

@@ -59,7 +59,7 @@ const DEFAULT_HIGHLIGHT_COLOR: Color = Color(0.0, 0.8, 1.0, 0.5)
 
 var structure_data = _get_structure_data(id)
 var found = false
-var structure_data = _knowledge_service.get_structure(structure_id)
+var structure_data_2 = _knowledge_service.get_structure(structure_id)
 var annotations = {
 "title": _get_comparison_title(comparison_type),
 "description": _get_comparison_description(comparison_type),
@@ -111,7 +111,7 @@ var report = {
 	}
 
 	# Add structure information
-var structure = _active_comparison.structures[id]
+var structure_2 = _active_comparison.structures[id]
 	report.structures.append(
 	{
 	"id": id,

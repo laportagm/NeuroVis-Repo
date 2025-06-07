@@ -56,4 +56,3 @@ func _fix_orphaned_code():
 			print("\n⚠️  IMPORTANT: Restart NeuroVis for changes to take effect!")
 
 			quit()
-

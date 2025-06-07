@@ -63,25 +63,25 @@ log_error("AI Assistant service not found"),
 "Show AI Assistant status")
 
 register_command("ai_provider", func(provider: String):
-var ai_service = get_node_or_null("/root/AIAssistant")
+var ai_service_2 = get_node_or_null("/root/AIAssistant")
 var providers = {
 	"gemini": AIAssistantService.AIProvider.GOOGLE_GEMINI,
 	"gemini_user": AIAssistantService.AIProvider.GEMINI_USER,
 	"mock": AIAssistantService.AIProvider.MOCK_RESPONSES
 	}
-var ai_service = get_node_or_null("/root/AIAssistant")
-var gemini = get_node_or_null("/root/GeminiAI")
+var ai_service_3 = get_node_or_null("/root/AIAssistant")
+var gemini_2 = get_node_or_null("/root/GeminiAI")
 var rate = gemini.get_rate_limit_status()
 	log_info("Rate limit: %d/%d" % [rate.used, rate.limit])
 var main_scene = get_node_or_null("/root/Node3D")
-var gemini = get_node_or_null("/root/GeminiAI")
+var gemini_3 = get_node_or_null("/root/GeminiAI")
 var node = get_node_or_null(node_path)
-var vd = get_visual_debugger()
-var node = get_node_or_null(node_path)
-var vd = get_visual_debugger()
-var node = get_node_or_null(node_path)
-var vd = get_visual_debugger()
-var vd = get_visual_debugger()
+var vd_2 = get_visual_debugger()
+var node_2 = get_node_or_null(node_path)
+var vd_3 = get_visual_debugger()
+var node_3 = get_node_or_null(node_path)
+var vd_4 = get_visual_debugger()
+var vd_5 = get_visual_debugger()
 var kb = get_node_or_null("/root/KB")
 var model_switcher = get_node_or_null("/root/ModelSwitcherGlobal")
 var models = model_switcher.get_available_models()
@@ -92,11 +92,11 @@ var models = model_switcher.get_available_models()
 var error_tracker = get_node_or_null("/root/ErrorTracker")
 var health_monitor = get_node_or_null("/root/HealthMonitor")
 var test_framework = get_node_or_null("/root/TestFramework")
-var error_tracker = get_node_or_null("/root/ErrorTracker")
-var health_monitor = get_node_or_null("/root/HealthMonitor")
+var error_tracker_2 = get_node_or_null("/root/ErrorTracker")
+var health_monitor_2 = get_node_or_null("/root/HealthMonitor")
 var brain_debugger = get_node_or_null("/root/BrainVisDebugger")
-var model_switcher = get_node_or_null("/root/ModelSwitcherGlobal")
-var models = model_switcher.get_available_models()
+var model_switcher_2 = get_node_or_null("/root/ModelSwitcherGlobal")
+var models_2 = model_switcher.get_available_models()
 	log_info("   - Found %d models: %s" % [models.size(), str(models)])
 
 var success = model_switcher.switch_to_model(model_name)
@@ -131,7 +131,7 @@ var critical_resources = [
 	"res://core/models/ModelVisibilityManager.gd"
 	]
 
-var missing = []
+var missing_2 = []
 var test_path = _args if _args != "" else "res://scenes/main/node_3d.tscn"
 
 	log_info("⚡ Testing preload: %s" % test_path)
@@ -147,8 +147,8 @@ var core_files = [
 	"res://ui/panels/UIThemeManager.gd"
 	]
 
-var errors = 0
-var script = load(file_path)
+var errors_2 = 0
+var script_2 = load(file_path)
 var version_info = Engine.get_version_info()
 	log_info("   Version: %d.%d.%d %s" % [
 	version_info.major,
@@ -172,17 +172,17 @@ var required_nodes = {
 	"BrainModel": "$BrainModel"
 	}
 
-var missing = []
+var missing_3 = []
 var path = required_nodes[node_name]
 var current = _qa_debug_viz._show_rays if "_show_rays" in _qa_debug_viz else false
 	_qa_debug_viz.set_show_rays(not current)
 	log_info("Ray visualization: %s" % ("ENABLED" if not current else "DISABLED"))
 
-var current = _qa_debug_viz._show_click_positions if "_show_click_positions" in _qa_debug_viz else false
+var current_2 = _qa_debug_viz._show_click_positions if "_show_click_positions" in _qa_debug_viz else false
 	_qa_debug_viz.set_show_clicks(not current)
 	log_info("Click markers: %s" % ("ENABLED" if not current else "DISABLED"))
 
-var status = _qa_debug_viz.get_status()
+var status_2 = _qa_debug_viz.get_status()
 	log_info("=== QA Visualization Status ===")
 	log_info("Enabled: %s" % str(status.get("enabled", false)))
 	log_info("Bounds: %s (%d active)" % [str(status.get("bounds", false)), status.get("active_bounds", 0)])
@@ -191,19 +191,19 @@ var status = _qa_debug_viz.get_status()
 	log_info("Click Markers: %s (%d active)" % [str(status.get("clicks", false)), status.get("active_clicks", 0)])
 	log_info("==============================")
 
-var main_scene = get_node_or_null("/root/Node3D")
+var main_scene_2 = get_node_or_null("/root/Node3D")
 var DebugVizScript = preprepreload("res://tests/qa/SelectionDebugVisualizer.gd")
-var main_scene = get_node_or_null("/root/MainScene")
+var main_scene_3 = get_node_or_null("/root/MainScene")
 var selection_manager = main_scene.get_node_or_null("MultiStructureSelectionManager")
 var selections = selection_manager.get_selection_info()
-var main_scene = get_node_or_null("/root/MainScene")
-var selection_manager = main_scene.get_node_or_null("MultiStructureSelectionManager")
-var main_scene = get_node_or_null("/root/MainScene")
-var selection_manager = main_scene.get_node_or_null("MultiStructureSelectionManager")
+var main_scene_4 = get_node_or_null("/root/MainScene")
+var selection_manager_2 = main_scene.get_node_or_null("MultiStructureSelectionManager")
+var main_scene_5 = get_node_or_null("/root/MainScene")
+var selection_manager_3 = main_scene.get_node_or_null("MultiStructureSelectionManager")
 var count = selection_manager.get_selection_count()
 	log_info("Total selections: %d/%d" % [count, 3])
 
-var selections = selection_manager.get_selection_info()
+var selections_2 = selection_manager.get_selection_info()
 var sel = selections[i]
 var state_color = ""
 	0: state_color = "FFD700"  # Gold
@@ -214,19 +214,19 @@ var state_color = ""
 
 	# Check comparison mode
 var mode = "SINGLE"
-var main_scene = get_node_or_null("/root/MainScene")
-var selection_manager = main_scene.get_node_or_null("MultiStructureSelectionManager")
+var main_scene_6 = get_node_or_null("/root/MainScene")
+var selection_manager_4 = main_scene.get_node_or_null("MultiStructureSelectionManager")
 var ai_assistant = get_node_or_null("/root/AIAssistant")
-var status = ai_assistant.get_service_status()
+var status_3 = ai_assistant.get_service_status()
 	log_info("📊 Service Status:")
 var gemini_service = get_node_or_null("/root/GeminiAI")
 var rate_status = gemini_service.get_rate_limit_status()
 	log_info("📊 Rate Limit Status:")
-var ai_assistant = get_node_or_null("/root/AIAssistant")
-var ai_assistant = get_node_or_null("/root/AIAssistant")
-var status = ai_assistant.get_service_status()
-var gemini_service = get_node_or_null("/root/GeminiAI")
-var rate_status = gemini_service.get_rate_limit_status()
+var ai_assistant_2 = get_node_or_null("/root/AIAssistant")
+var ai_assistant_3 = get_node_or_null("/root/AIAssistant")
+var status_4 = ai_assistant.get_service_status()
+var gemini_service_2 = get_node_or_null("/root/GeminiAI")
+var rate_status_2 = gemini_service.get_rate_limit_status()
 var knowledge_service = SafeAutoloadAccess.get_autoload("KnowledgeService")
 var theme_manager = SafeAutoloadAccess.get_autoload("UIThemeManager")
 var non_existent = SafeAutoloadAccess.get_autoload("NonExistentAutoload")

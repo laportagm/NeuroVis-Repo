@@ -92,27 +92,27 @@ var new_material = _create_default_material()
 var preset = _material_presets[preset_name]
 
 # Apply preset settings to all materials
-var material = _materials_cache[material_name]
+var material_2 = _materials_cache[material_name]
 	_apply_preset_to_material(material, preset)
 
 	# Emit signal
 	preset_applied.emit(preset_name)
-var material = get_material(material_name)
+var material_3 = get_material(material_name)
 var mesh_name = mesh_instance.name.to_lower()
-var material_name = "generic_brain_tissue"
+var material_name_2 = "generic_brain_tissue"
 
 # Determine appropriate material based on mesh name
-var material
+var material_4
 
-var material = _materials_cache[material_name]
-var file_path = MATERIALS_BASE_PATH + material_name + ".tres"
+var material_5 = _materials_cache[material_name]
+var file_path_2 = MATERIALS_BASE_PATH + material_name + ".tres"
 
 var dir = DirAccess.open("res://assets/materials")
 var result = ResourceSaver.save(material, file_path)
-var material = _materials_cache[material_name]
+var material_6 = _materials_cache[material_name]
 
 # Handle standard material properties
-var dir = DirAccess.open("res://assets")
+var dir_2 = DirAccess.open("res://assets")
 var gray_matter = _create_brain_material(Color(0.85, 0.71, 0.65), 0.8, 0.0, true)  # Pinkish gray  # Higher roughness  # Non-metallic  # Enable subsurface scattering
 	_materials_cache["gray_matter"] = gray_matter
 
@@ -157,7 +157,7 @@ var highlighted = _create_brain_material(Color(0.9, 0.9, 0.2), 0.5, 0.1, false) 
 	_materials_cache["highlighted_structure"] = highlighted
 
 
-var material = StandardMaterial3D.new()
+var material_7 = StandardMaterial3D.new()
 
 # Basic properties
 	material.albedo_color = color
@@ -165,7 +165,7 @@ var material = StandardMaterial3D.new()
 	material.metallic = metallic
 
 var globals = preset.global_settings
-var material_name = ""
+var material_name_3 = ""
 var settings = preset[material_name]
 
 var material_names = _materials_cache.keys()
@@ -177,7 +177,7 @@ var metallic = old_material.metallic
 var enable_sss = old_material.subsurf_scatter_enabled
 
 # Create new material with current quality settings
-var new_material = _create_brain_material(color, roughness, metallic, enable_sss)
+var new_material_2 = _create_brain_material(color, roughness, metallic, enable_sss)
 
 # Copy additional properties if needed
 

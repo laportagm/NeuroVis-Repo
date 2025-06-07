@@ -30,13 +30,13 @@ test_bootstrap.is_system_initialized("debug_systems"),
 )
 
 
-var result = await test_bootstrap._initialize_knowledge_base(mock_main_scene)
+var result_2 = await test_bootstrap._initialize_knowledge_base(mock_main_scene)
 
-var result = await test_bootstrap._initialize_neural_net(mock_main_scene)
+var result_3 = await test_bootstrap._initialize_neural_net(mock_main_scene)
 
-var result = await test_bootstrap._initialize_selection_manager(mock_main_scene)
+var result_4 = await test_bootstrap._initialize_selection_manager(mock_main_scene)
 
-var result = await test_bootstrap._initialize_camera_controller(mock_main_scene)
+var result_5 = await test_bootstrap._initialize_camera_controller(mock_main_scene)
 
 var signal_received = false
 var system_name = ""
@@ -66,7 +66,7 @@ var initial_count = test_bootstrap.initialization_attempt_count
 	)
 
 
-var result = await test_bootstrap.initialize_all_systems(mock_main_scene)
+var result_6 = await test_bootstrap.initialize_all_systems(mock_main_scene)
 
 	assert_false(result, "Should fail when max attempts exceeded")
 
@@ -191,5 +191,3 @@ func _fix_orphaned_code():
 		)
 		else:
 			print("[TEST] Camera controller initialization failed (expected in isolated test)")
-
-

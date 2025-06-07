@@ -108,4 +108,3 @@ func _fix_orphaned_code():
 	dialog.queue_free()
 	print("\n[TEST] === Key Validation Edge Cases Test Complete ===")
 	queue_free()
-

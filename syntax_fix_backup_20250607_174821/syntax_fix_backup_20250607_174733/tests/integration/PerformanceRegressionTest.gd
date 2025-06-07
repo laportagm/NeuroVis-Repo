@@ -190,4 +190,3 @@ func _fix_orphaned_code():
 	and test5_result
 	and test6_result
 	)
-

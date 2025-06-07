@@ -16,7 +16,7 @@ pass_test("Expected 3 brain models to be available: " + str(expected_models))
 var event_bus = Engine.get_singleton("EventBus")
 var ai_assistant = Engine.get_singleton("AIAssistant")
 var knowledge_service = Engine.get_singleton("KnowledgeService")
-var theme_manager = Engine.get_singleton("UIThemeManager")
+var theme_manager_2 = Engine.get_singleton("UIThemeManager")
 var passed = 0
 var failed = 0
 var warnings = 0

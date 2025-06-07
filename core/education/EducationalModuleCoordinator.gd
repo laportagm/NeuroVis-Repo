@@ -142,10 +142,10 @@ var pathways = _find_pathways_with_structure(base_content.id)
 var recommendations = []
 
 # Recommend related structures
-var related = _get_related_structures(structure_id)
-var pathways = _find_pathways_with_structure(structure_id)
+var related_2 = _get_related_structures(structure_id)
+var pathways_2 = _find_pathways_with_structure(structure_id)
 var recommended_system = _get_recommended_system_for_structure(structure_id)
-var related_structures = {
+var related_structures_2 = {
 	"hippocampus": ["amygdala", "fornix", "thalamus"],
 	"amygdala": ["hippocampus", "hypothalamus", "thalamus"],
 	"thalamus": ["hypothalamus", "basal_ganglia", "subthalamic_nucleus"],
@@ -193,7 +193,7 @@ var structures_count = session.structures_viewed.size()
 var interactions_count = session.interactions.size()
 var duration_minutes = session.duration / 60.0
 
-var structure_id = ""
+var structure_id_2 = ""
 
 var _brain_system_switcher: BrainSystemSwitcher
 var _comparative_anatomy: ComparativeAnatomyService

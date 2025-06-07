@@ -47,7 +47,7 @@ var mesh_instance = MeshInstance3D.new()
 	mesh_instance.mesh = immediate_mesh
 	mesh_instance.material_override = material
 
-var current_scene = Engine.get_main_loop().current_scene
+var current_scene_2 = Engine.get_main_loop().current_scene
 	current_scene.add_child(mesh_instance)
 
 	debug_objects.append(mesh_instance)
@@ -67,18 +67,18 @@ var timer = Timer.new()
 var box_mesh = BoxMesh.new()
 	box_mesh.size = size
 
-var mesh_instance = MeshInstance3D.new()
+var mesh_instance_2 = MeshInstance3D.new()
 	mesh_instance.mesh = box_mesh
 	mesh_instance.position = position
 	mesh_instance.material_override = debug_material.duplicate()
 
-var current_scene = Engine.get_main_loop().current_scene
+var current_scene_3 = Engine.get_main_loop().current_scene
 	current_scene.add_child(mesh_instance)
 
 	debug_objects.append(mesh_instance)
 
 	# Set up removal timer
-var timer = Timer.new()
+var timer_2 = Timer.new()
 	mesh_instance.add_child(timer)
 	timer.wait_time = duration
 	timer.one_shot = true
@@ -93,18 +93,18 @@ var sphere_mesh = SphereMesh.new()
 	sphere_mesh.radius = radius
 	sphere_mesh.height = radius * 2.0
 
-var mesh_instance = MeshInstance3D.new()
+var mesh_instance_3 = MeshInstance3D.new()
 	mesh_instance.mesh = sphere_mesh
 	mesh_instance.position = position
 	mesh_instance.material_override = debug_material.duplicate()
 
-var current_scene = Engine.get_main_loop().current_scene
+var current_scene_4 = Engine.get_main_loop().current_scene
 	current_scene.add_child(mesh_instance)
 
 	debug_objects.append(mesh_instance)
 
 	# Set up removal timer
-var timer = Timer.new()
+var timer_3 = Timer.new()
 	mesh_instance.add_child(timer)
 	timer.wait_time = duration
 	timer.one_shot = true
@@ -122,7 +122,7 @@ var highlight_material = StandardMaterial3D.new()
 	highlight_material.albedo_color = color
 
 	# Apply to all surfaces
-var timer = Timer.new()
+var timer_4 = Timer.new()
 	mesh_instance.add_child(timer)
 	timer.wait_time = duration
 	timer.one_shot = true
@@ -150,7 +150,7 @@ var to = from + camera.project_ray_normal(click_position) * length
 var should_add_label = filter_class.is_empty() or child.get_class() == filter_class
 
 var shape = node.shape
-var mesh_instance = null
+var mesh_instance_4 = null
 
 var original_method = main_scene._handle_selection
 

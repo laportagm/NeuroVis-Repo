@@ -75,7 +75,7 @@ var control = get_control_at_position(mouse_position)
 _ui_has_focus = control != null
 
 # If mouse position changed, invalidate cache for next time
-var control = _ui_elements[i]
+var control_2 = _ui_elements[i]
 var ui_root = root.get_node_or_null("SceneManager/UIController/UI")
 
 var _current_mode: InputMode = InputMode.NORMAL

@@ -63,9 +63,9 @@ var hit_data = _cast_multi_ray_selection(screen_position, false)  # No tolerance
 var hit_mesh = hit_data["mesh"] if hit_data else null
 
 # Handle hover state changes
-var hit_data = _cast_multi_ray_selection(screen_position, true)
+var hit_data_2 = _cast_multi_ray_selection(screen_position, true)
 
-var hit_mesh = hit_data["mesh"]
+var hit_mesh_2 = hit_data["mesh"]
 last_selection_confidence = hit_data["confidence"]
 
 # Apply highlighting
@@ -80,7 +80,7 @@ var smallest_size = 1.0
 var size = struct_data["screen_size"]
 var tolerance_range = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
 var size_factor = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
-var camera = get_viewport().get_camera_3d()
+var camera_2 = get_viewport().get_camera_3d()
 var candidates: Array[Dictionary] = []
 var tolerance = get_adaptive_tolerance(screen_position) if use_tolerance else 0.0
 
@@ -106,7 +106,7 @@ var confidence = float(best_candidate["hit_count"]) / float(total_samples)
 var avg_dist_a = _calculate_average(a["distances"])
 var avg_dist_b = _calculate_average(b["distances"])
 
-var camera = get_viewport().get_camera_3d()
+var camera_3 = get_viewport().get_camera_3d()
 var from = camera.project_ray_origin(screen_position)
 var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
 
@@ -122,7 +122,7 @@ var result = space_state.intersect_ray(ray_params)
 
 var mesh = _extract_mesh_from_collision(result)
 var nearby: Array = []
-var camera = get_viewport().get_camera_3d()
+var camera_4 = get_viewport().get_camera_3d()
 var brain_model = get_node_or_null("/root/Node3D/BrainModel")
 var all_meshes = _get_all_meshes_recursive(brain_model)
 
@@ -130,12 +130,12 @@ var all_meshes = _get_all_meshes_recursive(brain_model)
 var screen_pos = _get_mesh_screen_position(mesh)
 var meshes: Array[MeshInstance3D] = []
 
-var camera = get_viewport().get_camera_3d()
+var camera_5 = get_viewport().get_camera_3d()
 var aabb = mesh.get_aabb()
 var center = mesh.global_transform * aabb.get_center()
 
-var camera = get_viewport().get_camera_3d()
-var aabb = mesh.get_aabb()
+var camera_6 = get_viewport().get_camera_3d()
+var aabb_2 = mesh.get_aabb()
 var corners = [
 mesh.global_transform * aabb.position, mesh.global_transform * (aabb.position + aabb.size)
 ]
@@ -143,7 +143,7 @@ mesh.global_transform * aabb.position, mesh.global_transform * (aabb.position + 
 var screen_min = Vector2.INF
 var screen_max = -Vector2.INF
 
-var screen_pos = camera.unproject_position(corner)
+var screen_pos_2 = camera.unproject_position(corner)
 screen_min = screen_min.min(screen_pos)
 screen_max = screen_max.max(screen_pos)
 
@@ -152,19 +152,19 @@ var viewport_size = get_viewport().get_visible_rect().size
 var size_percentage = (screen_size.length() / viewport_size.length()) * 100.0
 
 structure_sizes[mesh] = size_percentage
-var camera = get_viewport().get_camera_3d()
+var camera_7 = get_viewport().get_camera_3d()
 var sum = 0.0
 var collider = collision_result.collider
 
 # Direct mesh instance hit
 var parent = collider.get_parent()
-var aabb = sibling.get_aabb()
+var aabb_3 = sibling.get_aabb()
 var collision_point = collision_result.get("position", Vector3.ZERO)
 var local_point = sibling.global_transform.inverse() * collision_point
 
 # Check if collision point is within mesh bounds (with tolerance)
-var tolerance = 0.1
-var parent = collider.get_parent()
+var tolerance_2 = 0.1
+var parent_2 = collider.get_parent()
 var hover_material = StandardMaterial3D.new()
 hover_material.albedo_color = hover_color.lightened(0.3)
 hover_material.emission_enabled = true
@@ -191,9 +191,9 @@ highlight_material.rim = 0.5
 highlight_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 highlight_material.albedo_color.a = 0.8
 
-var surface_count = mesh.mesh.get_surface_count()
+var surface_count_2 = mesh.mesh.get_surface_count()
 var original_material = original_materials[mesh]
-var surface_count = mesh.mesh.get_surface_count() if mesh.mesh else 1
+var surface_count_3 = mesh.mesh.get_surface_count() if mesh.mesh else 1
 
 var tween = mesh.create_tween()
 tween.set_loops()
@@ -207,10 +207,10 @@ tween.tween_property(mesh, "scale", original_scale, 0.8)
 mesh.set_meta("hover_tween", tween)
 
 
-var tween = mesh.create_tween()
+var tween_2 = mesh.create_tween()
 tween.set_parallel(true)
 
-var original_scale = mesh.scale
+var original_scale_2 = mesh.scale
 tween.tween_property(mesh, "scale", original_scale * 1.1, 0.1).set_ease(Tween.EASE_OUT)
 tween.tween_property(mesh, "scale", original_scale, 0.3).set_ease(Tween.EASE_OUT).set_trans(
 Tween.TRANS_BACK

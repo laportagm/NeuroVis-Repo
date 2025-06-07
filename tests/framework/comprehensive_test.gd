@@ -23,7 +23,7 @@ var path = components[component_name]
 var script = load(path)
 var bootstrap_script = preprepreload("res://core/systems/SystemBootstrap.gd")
 var bootstrap = bootstrap_script.new()
-var success = true
+var success_2 = true
 
 # Test basic properties
 var complete = bootstrap.is_initialization_complete()
@@ -32,13 +32,13 @@ var getters = [
 	]
 var router_script = preprepreload("res://core/interaction/InputRouter.gd")
 var router = router_script.new()
-var success = true
+var success_3 = true
 
 # Test basic properties
 var enabled = router.is_input_enabled()
 var scene_script = preprepreload("res://scenes/node_3d.gd")
 var scene = scene_script.new()
-var success = true
+var success_4 = true
 
 # Test component loading
 var autoload_scripts = [
@@ -48,9 +48,9 @@ var autoload_scripts = [
 	["TestFramework", "res://tests/TestRunner.gd"]
 	]
 
-var success = true
+var success_5 = true
 var name = autoload_pair[0]
-var path = autoload_pair[1]
+var path_2 = autoload_pair[1]
 var required_dirs = [
 	"scripts/core",
 	"scripts/interaction",
@@ -62,7 +62,7 @@ var required_dirs = [
 	"tests/integration"
 	]
 
-var success = true
+var success_6 = true
 var key_files = [
 	"scenes/node_3d.gd",
 	"scenes/node_3d_original_backup.gd",

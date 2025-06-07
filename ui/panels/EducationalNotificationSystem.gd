@@ -135,15 +135,15 @@ var notification_data = {
 	achievement_unlocked.emit(achievement_id)
 
 
-var title = "📊 Progress Update"
-var message = ""
+var title_2 = "📊 Progress Update"
+var message_2 = ""
 
 "structures_viewed":
 	message = "You've explored %d brain structures! " % current_value
-var title = "🔍 New Discovery!"
-var message = "You discovered: " + structure_name
+var title_3 = "🔍 New Discovery!"
+var message_3 = "You discovered: " + structure_name
 
-var notification_data = {
+var notification_data_2 = {
 	"type": type,
 	"title": title,
 	"message": message,
@@ -157,7 +157,7 @@ var notification_data = {
 	_process_notification_queue()
 
 
-var notification_data = notification_queue.pop_front()
+var notification_data_3 = notification_queue.pop_front()
 	_create_notification(notification_data)
 
 
@@ -178,7 +178,7 @@ var timer = Timer.new()
 	notification.add_child(timer)
 	timer.start()
 
-var notification = PanelContainer.new()
+var notification_2 = PanelContainer.new()
 	notification.name = "Notification_" + data["id"]
 	notification.custom_minimum_size = Vector2(320, 0)
 
@@ -262,7 +262,7 @@ var tween = notification.create_tween()
 	)
 
 
-var tween = notification.create_tween()
+var tween_2 = notification.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(notification, "position:x", 400, SLIDE_OUT_DURATION).set_ease(
 	Tween.EASE_IN

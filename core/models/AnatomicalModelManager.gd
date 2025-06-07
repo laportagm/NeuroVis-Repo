@@ -72,7 +72,7 @@ mesh.set_surface_override_material(i, enhanced_mat)
 material_count += 1
 
 materials_enhanced.emit(model.name, material_count)
-var meshes = _find_all_mesh_instances(model)
+var meshes_2 = _find_all_mesh_instances(model)
 var lod_parent = Node3D.new()
 lod_parent.name = model.name + "_LOD"
 
@@ -98,20 +98,20 @@ var aabb = _calculate_model_aabb(model)
 var center_offset = aabb.get_center()
 
 # Offset all child meshes
-var meshes = _find_all_mesh_instances(model)
+var meshes_3 = _find_all_mesh_instances(model)
 var combined_aabb = AABB()
-var meshes = _find_all_mesh_instances(model)
+var meshes_4 = _find_all_mesh_instances(model)
 
 var mesh_instance = meshes[i]
 var mesh_aabb = mesh_instance.mesh.get_aabb()
 mesh_aabb = mesh_instance.transform * mesh_aabb
 
-var meshes: Array[MeshInstance3D] = []
+var meshes_5: Array[MeshInstance3D] = []
 
 var enhanced = StandardMaterial3D.new()
 
 # Copy basic properties if original is StandardMaterial3D
-var lod_mesh = MeshInstance3D.new()
+var lod_mesh_2 = MeshInstance3D.new()
 lod_mesh.name = original_mesh.name + "_LOD" + str(lod_level)
 lod_mesh.transform = original_mesh.transform
 

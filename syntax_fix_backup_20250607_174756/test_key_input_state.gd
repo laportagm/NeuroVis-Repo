@@ -57,4 +57,3 @@ func _fix_orphaned_code():
 		await get_tree().create_timer(5.0).timeout
 		print("[TEST] Test complete")
 		queue_free()
-

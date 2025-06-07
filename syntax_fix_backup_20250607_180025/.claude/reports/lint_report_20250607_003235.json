@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-06-07T04:32:40Z",
+  "project": "NeuroVis",
+  "version": "1.0.0",
+  "summary": {
+    "total_files": 10,
+    "modified_files": 5,
+    "error_files": 3,
+    "syntax_errors": 2,
+    "duration_seconds": 5
+  },
+  "configuration": {
+    "line_length": 100,
+    "indent_size": 4,
+    "gdtoolkit_version": "4.3.1",
+    "parallel_jobs": 12
+  }
+}
