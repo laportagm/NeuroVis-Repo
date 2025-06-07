@@ -1,0 +1,177 @@
+# Pre-commit hooks configuration for NeuroVis
+# Educational medical visualization platform
+#
+# Install: pre-commit install
+# Run manually: pre-commit run --all-files
+
+default_language_version:
+  python: python3
+
+repos:
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=5000']  # 5MB limit for medical models
+        exclude: '^assets/models/.*\.glb$'  # Exclude 3D brain models
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+        exclude: '^assets/data/anatomical_data\.json$'  # Validated separately
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-yaml
+      - id: end-of-file-fixer
+        exclude: '^assets/models/.*\.glb$'
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+      - id: trailing-whitespace
+        exclude: '^assets/models/.*\.glb$'
+
+  # Shell script linting
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        args: ['--severity=warning']
+
+  # Python code quality (for tools and scripts)
+  - repo: https://github.com/psf/black
+    rev: 24.1.1
+    hooks:
+      - id: black
+        files: '^(tools|scripts)/.*\.py$'
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        files: '^(tools|scripts)/.*\.py$'
+        args: ['--max-line-length=100', '--ignore=E203,W503']
+
+  # Security checks
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: '^(\.secrets\.baseline|assets/data/anatomical_data\.json)$'
+
+  # Custom GDScript hooks
+  - repo: local
+    hooks:
+      # GDScript formatting
+      - id: gdformat
+        name: Format GDScript files
+        entry: .claude/hooks/gdformat-hook.sh
+        language: script
+        types: [file]
+        files: '\.gd$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # GDScript syntax validation
+      - id: gdparse
+        name: Validate GDScript syntax
+        entry: .claude/hooks/gdparse-hook.sh
+        language: script
+        types: [file]
+        files: '\.gd$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Scene file validation
+      - id: validate-scenes
+        name: Validate Godot scene files
+        entry: .claude/hooks/validate-scenes.py
+        language: python
+        types: [text]
+        files: '\.tscn$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Resource file validation
+      - id: validate-resources
+        name: Validate Godot resource files
+        entry: .claude/hooks/validate-resources.py
+        language: python
+        types: [text]
+        files: '\.(tres|res)$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Medical terminology validation
+      - id: medical-terms
+        name: Validate medical terminology
+        entry: .claude/hooks/validate-medical-terms.py
+        language: python
+        files: '\.(gd|md|json)$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Autoload usage validation
+      - id: autoload-usage
+        name: Check autoload service usage
+        entry: .claude/hooks/check-autoload-usage.py
+        language: python
+        types: [file]
+        files: '\.gd$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Performance annotations
+      - id: performance-checks
+        name: Check performance annotations
+        entry: .claude/hooks/check-performance.py
+        language: python
+        types: [file]
+        files: '\.gd$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Accessibility compliance
+      - id: accessibility-checks
+        name: Check accessibility compliance
+        entry: .claude/hooks/check-accessibility.py
+        language: python
+        files: '^ui/.*\.gd$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+      # Educational metadata
+      - id: educational-metadata
+        name: Check educational metadata
+        entry: .claude/hooks/check-educational-metadata.py
+        language: python
+        files: '\.(gd|json)$'
+        exclude: '^(addons|\.godot|temp_syntax_check|backups_)/.*'
+
+# Configuration for specific hooks
+files: |
+  (?x)^(
+    .*\.(gd|tscn|tres|res|cfg|json|md|sh|py)|
+    .gitignore|
+    .gdignore|
+    project\.godot
+  )$
+
+exclude: |
+  (?x)^(
+    \.godot/|
+    \.import/|
+    addons/gut/|
+    addons/script-ide/|
+    backups_.*?/|
+    temp_syntax_check/|
+    \.claude/\.venv/|
+    \.claude/\.cache/|
+    tmp/|
+    exports/|
+    build/|
+    .*\.tmp$|
+    .*\.backup$
+  )
+
+# Performance optimizations
+ci:
+  autofix_prs: false
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit hooks
+
+    for more information, see https://pre-commit.ci
+
+default_stages: [pre-commit]

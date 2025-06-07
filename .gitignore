@@ -97,3 +97,7 @@ secrets.json
 # User-specific Godot settings
 project_settings.tres
 input_map.tres
+
+# Font files - explicitly include font placeholders
+!/assets/fonts/*.ttf
+!/assets/fonts/*.tres

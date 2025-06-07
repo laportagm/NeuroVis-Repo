@@ -1,0 +1,109 @@
+# Python Dependencies for NeuroVis Educational Platform Development
+# Medical visualization and educational software quality assurance tools
+
+# ============================================================================
+# GDSCRIPT TOOLS - Educational Code Quality
+# ============================================================================
+
+# GDScript toolkit for formatting and linting educational code
+gdtoolkit==4.3.1
+
+# ============================================================================
+# CODE QUALITY - Medical Software Standards
+# ============================================================================
+
+# Pre-commit framework for educational development workflow
+pre-commit>=3.6.0
+
+# Python code formatting for development tools
+black>=24.1.1
+
+# Python linting for educational scripts
+flake8>=7.0.0
+pylint>=3.0.0
+
+# Import sorting for educational utility scripts
+isort>=5.13.0
+
+# ============================================================================
+# MEDICAL/EDUCATIONAL VALIDATION - Domain-Specific Tools
+# ============================================================================
+
+# Spell checking for medical terminology and educational content
+pyspellchecker>=0.8.1
+
+# Medical terminology validation
+# medspacy>=1.0.0  # Uncomment if needed for advanced medical text processing
+
+# ============================================================================
+# SECURITY - Medical Compliance
+# ============================================================================
+
+# Secret detection for medical data protection
+detect-secrets>=1.4.0
+
+# Security linting for educational platform
+bandit>=1.7.5
+
+# ============================================================================
+# DOCUMENTATION - Educational Platform
+# ============================================================================
+
+# Markdown linting for educational documentation
+markdownlint-cli2>=0.11.0
+
+# Documentation generation for medical APIs
+# mkdocs>=1.5.0  # Uncomment if using mkdocs for documentation
+
+# ============================================================================
+# TESTING - Educational Quality Assurance
+# ============================================================================
+
+# Testing framework for educational Python tools
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# ============================================================================
+# PERFORMANCE - 60fps Educational Platform
+# ============================================================================
+
+# Performance profiling for educational scripts
+memory-profiler>=0.61.0
+
+# ============================================================================
+# ACCESSIBILITY - WCAG 2.1 AA Compliance
+# ============================================================================
+
+# Color contrast validation for educational UI
+colour-science>=0.4.3
+
+# ============================================================================
+# DEVELOPMENT UTILITIES - Educational Platform
+# ============================================================================
+
+# YAML processing for configuration files
+pyyaml>=6.0.1
+
+# JSON validation for anatomical data
+jsonschema>=4.20.0
+
+# File watching for educational development
+watchdog>=3.0.0
+
+# ============================================================================
+# OPTIONAL MEDICAL EXTENSIONS
+# ============================================================================
+
+# Uncomment based on specific educational needs:
+
+# Medical image processing
+# nibabel>=5.2.0  # For DICOM/NIfTI medical imaging
+# pydicom>=2.4.0  # For DICOM file handling
+
+# Educational data analysis
+# pandas>=2.1.0   # For educational analytics
+# numpy>=1.26.0   # For anatomical data processing
+
+# Natural language processing for educational content
+# spacy>=3.7.0    # For medical text processing
+# nltk>=3.8.1     # For educational content analysis

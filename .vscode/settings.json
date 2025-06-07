@@ -15,8 +15,9 @@
     "// === EDITOR BEHAVIOR ===": "",
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.insertSpaces": false,
+    "editor.insertSpaces": true,
     "editor.tabSize": 4,
+    "editor.rulers": [100],
     "editor.detectIndentation": false,
     "editor.trimAutoWhitespace": true,
     "editor.minimap.enabled": true,
@@ -60,7 +61,7 @@
 
     "// === GDSCRIPT SPECIFIC ===": "",
     "[gdscript]": {
-        "editor.insertSpaces": false,
+        "editor.insertSpaces": true,
         "editor.detectIndentation": false,
         "editor.tabSize": 4,
         "editor.wordWrap": "bounded",
@@ -140,9 +141,22 @@
         "editor.detectIndentation": true
     },
 
+    "// === PYTHON SETTINGS FOR VALIDATION ===": "",
+    "python.defaultInterpreterPath": "${workspaceFolder}/.claude/.venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--max-line-length=100",
+        "--ignore=E203,W503"
+    ],
+
     "// === TERMINAL ===": "",
     "terminal.integrated.env.osx": {
-        "GODOT_PATH": "/Applications/Godot.app/Contents/MacOS/Godot"
+        "GODOT_PATH": "/Applications/Godot.app/Contents/MacOS/Godot",
+        "PYTHONPATH": "${workspaceFolder}/.claude",
+        "NEUROVIS_PROJECT_ROOT": "${workspaceFolder}"
     },
 
     "// === ERROR HIGHLIGHTING ===": "",
@@ -150,10 +164,14 @@
     "errorLens.enabledDiagnosticLevels": ["error", "warning"],
 
     "// === NEUROVIS PROJECT SPECIFIC ===": "",
-    "neurovis.project.path": "/Users/gagelaporta/1NeuroPro/NeuroVisProject/1/(4)NeuroVis copy",
+    "neurovis.project.path": "${workspaceFolder}",
     "neurovis.debug.enabled": true,
     "neurovis.autoload.validate": true,
     "neurovis.standards.enforce": true,
+    "neurovis.linting.enabled": true,
+    "neurovis.linting.autoFix": true,
+    "neurovis.linting.validateOnSave": true,
+    "neurovis.linting.medicalTermsValidation": true,
 
     "// === STRICT CODE QUALITY ENFORCEMENT ===" : "",
     "neurovis.codeQuality.enforceTypeHints": true,
