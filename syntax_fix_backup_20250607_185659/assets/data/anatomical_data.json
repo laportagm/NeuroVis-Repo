@@ -1,0 +1,306 @@
+{
+  "version": "1.2",
+  "lastUpdated": "2025-05-25",
+  "structures": [
+    {
+      "id": "Striatum",
+      "displayName": "Striatum",
+      "shortDescription": "A subcortical part of the forebrain and a critical component of the basal ganglia. It consists of the caudate nucleus and putamen, and receives input from the cerebral cortex. The striatum plays a key role in motor planning, decision-making, motivation, and reward perception.",
+      "functions": [
+        "Coordinating multiple aspects of cognition, including motor and action planning",
+        "Regulating movement execution and inhibiting unwanted movements",
+        "Processing reward-related information and reinforcement learning",
+        "Contributing to decision-making processes and habit formation",
+        "Working with other basal ganglia structures to maintain movement control"
+      ]
+    },
+    {
+      "id": "Ventricles",
+      "displayName": "Ventricles",
+      "shortDescription": "Cavities within the brain that are filled with cerebrospinal fluid (CSF). There are four ventricles: two lateral ventricles (one in each cerebral hemisphere), the third ventricle in the diencephalon, and the fourth ventricle in the hindbrain.",
+      "functions": [
+        "Containing and circulating cerebrospinal fluid (CSF)",
+        "Providing physical protection to the brain by acting as a fluid cushion",
+        "Contributing to waste clearance from the brain",
+        "Helping maintain homeostasis of the brain environment",
+        "Serving as landmarks for neuroanatomical orientation"
+      ]
+    },
+    {
+      "id": "Thalamus",
+      "displayName": "Thalamus",
+      "shortDescription": "A large, egg-shaped structure of gray matter located in the diencephalon, near the center of the brain. It acts as a major relay station for sensory and motor information between the body and the cerebral cortex, and plays a role in consciousness, sleep, and alertness.",
+      "functions": [
+        "Relaying sensory information (except smell) to the cerebral cortex",
+        "Relaying motor information from the cerebellum and basal ganglia to the cerebral cortex",
+        "Playing a role in regulating consciousness, sleep, and wakefulness",
+        "Involvement in learning and memory, particularly episodic memory",
+        "Processing and modulating information received from other thalamic nuclei"
+      ]
+    },
+    {
+      "id": "Hippocampus",
+      "displayName": "Hippocampus",
+      "shortDescription": "A complex C-shaped structure embedded deep in the temporal lobe, playing a major role in learning and memory. It is crucial for the formation of new declarative memories (facts and events) and for spatial navigation.",
+      "functions": [
+        "Consolidation of new memories (converting short-term to long-term memory)",
+        "Spatial memory and navigation",
+        "Learning new information",
+        "Emotional behavior and regulation (working with amygdala)",
+        "Formation of explicit (declarative) memories"
+      ]
+    },
+    {
+      "id": "Amygdala",
+      "displayName": "Amygdala",
+      "shortDescription": "An almond-shaped set of neurons located deep in the brain's medial temporal lobe. It is a key component of the limbic system and is primarily involved in processing emotions such as fear, anxiety, and pleasure, as well as emotional memory.",
+      "functions": [
+        "Processing emotions, especially fear and anxiety",
+        "Formation and storage of memories associated with emotional events (emotional memory)",
+        "Role in fear conditioning and learning",
+        "Regulating aggression and social cognition",
+        "Activating the 'fight-or-flight' response"
+      ]
+    },
+    {
+      "id": "Midbrain",
+      "displayName": "Midbrain (Mesencephalon)",
+      "shortDescription": "The most superior part of the brainstem, connecting the forebrain (cerebrum and diencephalon) to the hindbrain (pons and medulla). It is involved in motor control, eye movement, and processing auditory and visual information.",
+      "functions": [
+        "Controlling eye movements and visual reflexes",
+        "Processing auditory information and auditory reflexes",
+        "Motor control and coordination",
+        "Relaying sensory and motor signals",
+        "Regulation of consciousness and sleep-wake cycles (via reticular formation)"
+      ]
+    },
+    {
+      "id": "Pons",
+      "displayName": "Pons",
+      "shortDescription": "A part of the brainstem situated above the medulla oblongata and below the midbrain. It serves as a major relay station for signals between the cerebrum and the cerebellum and is involved in functions like sleep, respiration, swallowing, bladder control, hearing, equilibrium, taste, eye movement, facial expressions, and posture.",
+      "functions": [
+        "Relaying signals between the forebrain and the cerebellum",
+        "Influencing sleep-wake cycles and REM sleep",
+        "Playing a role in regulating breathing",
+        "Involved in control of facial movements and sensations",
+        "Processing sensory information related to hearing and balance"
+      ]
+    },
+    {
+      "id": "Medulla",
+      "displayName": "Medulla Oblongata",
+      "shortDescription": "The lowest part of the brainstem, connecting the brain to the spinal cord. It controls vital autonomic functions such as heartbeat, breathing, and blood pressure, as well as reflexes like vomiting, coughing, sneezing, and swallowing.",
+      "functions": [
+        "Regulating vital autonomic functions (heartbeat, respiration, blood pressure)",
+        "Controlling reflexes such as coughing, sneezing, swallowing, and vomiting",
+        "Relaying nerve signals between the brain and spinal cord",
+        "Housing cranial nerve nuclei (IX, X, XI, XII)",
+        "Site of decussation (crossing over) of major motor pathways"
+      ]
+    },
+    {
+      "id": "Corpus_Callosum",
+      "displayName": "Corpus Callosum",
+      "shortDescription": "A large bundle of nerve fibers (white matter) connecting the left and right cerebral hemispheres, facilitating communication between them. It is crucial for integrating sensory, motor, and cognitive information processed by the two hemispheres.",
+      "functions": [
+        "Connecting the left and right cerebral hemispheres",
+        "Facilitating interhemispheric communication",
+        "Integrating sensory, motor, and cognitive information from both hemispheres",
+        "Playing a role in coordinating movement and higher cognitive functions",
+        "Transfer of visual, auditory, and somatosensory information between hemispheres"
+      ]
+    },
+    {
+      "id": "Brainstem",
+      "displayName": "Brainstem",
+      "shortDescription": "The stem-like part of the brain connecting the cerebral hemispheres with the spinal cord. It consists of the midbrain, pons, and medulla oblongata and controls autonomic functions essential for survival.",
+      "functions": [
+        "Regulating vital autonomic functions (heartbeat, breathing, blood pressure)",
+        "Conveying sensory and motor signals between brain and body",
+        "Controlling wakefulness and consciousness levels",
+        "Coordinating posture and balance",
+        "Processing information from cranial nerves"
+      ]
+    },
+    {
+      "id": "Cerebellum",
+      "displayName": "Cerebellum",
+      "shortDescription": "Located at the back of the brain beneath the occipital and temporal lobes, the cerebellum is a distinct structure with a heavily folded surface. It contains more neurons than the rest of the brain combined and plays a key role in motor control and coordination.",
+      "functions": [
+        "Coordinating voluntary movements and fine motor skills",
+        "Maintaining balance and posture",
+        "Motor learning and skill acquisition",
+        "Timing and sequencing of movements",
+        "Contribution to certain cognitive functions like attention and language"
+      ]
+    },
+    {
+      "id": "Frontal_Lobe",
+      "displayName": "Frontal Lobe",
+      "shortDescription": "The largest lobe of the brain, located at the front of each cerebral hemisphere and responsible for executive functions such as decision-making, problem-solving, planning, and self-control. It houses the primary motor cortex that controls voluntary movements.",
+      "functions": [
+        "Executive functions (decision-making, planning, problem-solving)",
+        "Impulse control and inhibition of inappropriate behaviors",
+        "Working memory and attention",
+        "Motor function and movement planning",
+        "Speech production (Broca's area)"
+      ]
+    },
+    {
+      "id": "Temporal_Lobe",
+      "displayName": "Temporal Lobe",
+      "shortDescription": "Located on the sides of the brain, beneath the lateral fissure, the temporal lobes are involved in processing auditory information, understanding language, and forming and retrieving memories. They also play a role in emotion and visual perception.",
+      "functions": [
+        "Auditory processing and language comprehension",
+        "Visual memory and object recognition",
+        "Long-term memory formation and retrieval",
+        "Emotion processing (with limbic system)",
+        "Music appreciation and face recognition"
+      ]
+    },
+    {
+      "id": "Parietal_Lobe",
+      "displayName": "Parietal Lobe",
+      "shortDescription": "Located behind the frontal lobe and above the temporal lobe, the parietal lobe processes sensory information from various parts of the body. It is involved in spatial navigation, attention, and integrating different sensory inputs.",
+      "functions": [
+        "Processing sensory information from the skin (touch, temperature, pain)",
+        "Spatial awareness and navigation",
+        "Attention and visuospatial processing",
+        "Manipulation of objects and hand-eye coordination",
+        "Integration of multiple sensory inputs"
+      ]
+    },
+    {
+      "id": "Occipital_Lobe",
+      "displayName": "Occipital Lobe",
+      "shortDescription": "The smallest lobe of the brain, located at the back of each cerebral hemisphere. It is primarily responsible for visual processing, including color recognition, motion perception, and depth perception.",
+      "functions": [
+        "Processing visual information from the eyes",
+        "Color recognition and discrimination",
+        "Motion detection and perception",
+        "Depth perception and spatial relationships",
+        "Visual pattern and face recognition"
+      ]
+    },
+    {
+      "id": "Insular_Cortex",
+      "displayName": "Insular Cortex (Insula)",
+      "shortDescription": "A small region of the cerebral cortex located deep within the lateral sulcus, beneath the frontal, parietal, and temporal lobes. The insula is involved in consciousness, emotion, regulation, perception, motor control, and cognitive function.",
+      "functions": [
+        "Interoceptive awareness (awareness of internal bodily signals)",
+        "Emotional processing and empathy",
+        "Taste and olfactory processing",
+        "Pain perception and processing",
+        "Social cognition and moral decision-making"
+      ]
+    },
+    {
+      "id": "Cingulate_Cortex",
+      "displayName": "Cingulate Cortex",
+      "shortDescription": "A region of the cerebral cortex that forms a collar around the corpus callosum and is part of the limbic system. It plays important roles in emotion formation and processing, learning, and memory.",
+      "functions": [
+        "Emotion formation and processing",
+        "Learning and memory consolidation",
+        "Attention and cognitive control",
+        "Error monitoring and conflict detection",
+        "Social behavior and empathy"
+      ]
+    },
+    {
+      "id": "Caudate_Nucleus",
+      "displayName": "Caudate Nucleus",
+      "shortDescription": "A C-shaped structure in the basal ganglia that is part of the striatum. It plays important roles in learning, memory, reward, motivation, emotion, and romantic interaction, and is involved in movement control.",
+      "functions": [
+        "Motor control and movement planning",
+        "Goal-directed behavior and motivation",
+        "Learning and memory, particularly procedural learning",
+        "Reward processing and addiction pathways",
+        "Cognitive flexibility and behavioral adaptation"
+      ]
+    },
+    {
+      "id": "Putamen",
+      "displayName": "Putamen",
+      "shortDescription": "A round structure located at the base of the forebrain, forming part of the basal ganglia along with the caudate nucleus. It is involved in regulating movements and learning processes.",
+      "functions": [
+        "Movement regulation and motor control",
+        "Learning motor sequences and habits",
+        "Language articulation and rhythm",
+        "Cognitive functions including reinforcement learning",
+        "Processing of motor and sensory information"
+      ]
+    },
+    {
+      "id": "Globus_Pallidus",
+      "displayName": "Globus Pallidus",
+      "shortDescription": "A major component of the basal ganglia consisting of two parts: internal (GPi) and external (GPe). It acts as the main output nucleus of the basal ganglia and plays a crucial role in motor control.",
+      "functions": [
+        "Output control for the basal ganglia motor circuit",
+        "Fine-tuning and regulating voluntary movements",
+        "Inhibiting unwanted or excessive movements",
+        "Motor learning and skill acquisition",
+        "Coordination between different motor programs"
+      ]
+    },
+    {
+      "id": "Substantia_Nigra",
+      "displayName": "Substantia Nigra",
+      "shortDescription": "A basal ganglia structure located in the midbrain that plays an important role in reward and movement. Degeneration of this area is associated with Parkinson's disease.",
+      "functions": [
+        "Dopamine production for motor control",
+        "Reward processing and reinforcement learning",
+        "Voluntary movement initiation and control",
+        "Procedural learning and habit formation",
+        "Behavioral motivation and goal-directed actions"
+      ]
+    },
+    {
+      "id": "Subthalamic_Nucleus",
+      "displayName": "Subthalamic Nucleus",
+      "shortDescription": "A small lens-shaped nucleus in the diencephalon that is part of the basal ganglia motor circuit. It plays a critical role in motor control and is a target for deep brain stimulation in Parkinson's disease.",
+      "functions": [
+        "Modulating basal ganglia output",
+        "Fine motor control and movement precision",
+        "Inhibiting competing motor programs",
+        "Action selection and motor decision-making",
+        "Integration of cortical and limbic inputs"
+      ]
+    },
+    {
+      "id": "Pineal_Gland",
+      "displayName": "Pineal Gland",
+      "shortDescription": "A small endocrine gland located near the center of the brain, between the two hemispheres. It produces melatonin and plays a crucial role in regulating circadian rhythms and sleep-wake cycles.",
+      "functions": [
+        "Melatonin production and secretion",
+        "Regulating circadian rhythms and sleep-wake cycles",
+        "Seasonal adaptation and reproductive cycles",
+        "Antioxidant properties and neuroprotection",
+        "Modulating immune system function"
+      ]
+    },
+    {
+      "id": "Pituitary_Gland",
+      "displayName": "Pituitary Gland",
+      "shortDescription": "Often called the 'master gland,' this pea-sized endocrine gland is located at the base of the brain. It controls the function of most other endocrine glands and is divided into anterior and posterior lobes.",
+      "functions": [
+        "Hormone production and regulation (growth hormone, ACTH, TSH)",
+        "Control of other endocrine glands",
+        "Regulation of growth and development",
+        "Stress response and cortisol regulation",
+        "Reproductive hormone control (LH, FSH)"
+      ]
+    },
+    {
+      "id": "Hypothalamus",
+      "displayName": "Hypothalamus",
+      "shortDescription": "A small region at the base of the brain that links the nervous system to the endocrine system via the pituitary gland. It controls many automatic functions and maintains homeostasis.",
+      "functions": [
+        "Temperature regulation and thermostat function",
+        "Hunger, thirst, and appetite control",
+        "Sleep-wake cycle regulation",
+        "Hormone production and endocrine control",
+        "Emotional responses and stress management"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxnb51qa0xpw5"]
+
+[ext_resource type="Script" path="res://ui/components/navigation/NavigationSidebar.gd" id="1_0yoyo"]
+
+[node name="NavigationSidebar" type="PanelContainer"]
+custom_minimum_size = Vector2(260, 0)
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("1_0yoyo")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MainContainer/HeaderContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15, 0.82, 0.81, 1)
+theme_override_font_sizes/font_size = 24
+text = "NeuroVis"
+
+[node name="HeaderSpacer" type="Control" parent="MainContainer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ToggleButton" type="Button" parent="MainContainer/HeaderContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "≡"
+flat = true
+
+[node name="SectionsContainer" type="VBoxContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8

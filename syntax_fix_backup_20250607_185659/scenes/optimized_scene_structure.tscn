@@ -1,0 +1,233 @@
+[gd_scene load_steps=10 format=3 uid="uid://br5nuvn2o8ejv"]
+
+[ext_resource type="Script" path="res://scenes/main/optimized_neurovis_root.gd" id="1_8t3ds"]
+[ext_resource type="Script" path="res://core/systems/SceneManager.gd" id="2_dv8rq"]
+[ext_resource type="Script" path="res://core/models/StructureManager.gd" id="3_h5xd0"]
+[ext_resource type="Script" path="res://ui/components/core/UIComponentPool.gd" id="4_bsfkq"]
+[ext_resource type="Script" path="res://core/visualization/LODSystemEnhanced.gd" id="5_oqm7p"]
+[ext_resource type="Script" path="res://core/visualization/MaterialOptimizer.gd" id="6_k2pvj"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_hpn6r"]
+rayleigh_coefficient = 0.5
+mie_coefficient = 0.005
+ground_color = Color(0.25098, 0.2, 0.152941, 1)
+
+[sub_resource type="Sky" id="Sky_wwdjn"]
+sky_material = SubResource("PhysicalSkyMaterial_hpn6r")
+
+[sub_resource type="Environment" id="Environment_3s3l8"]
+background_mode = 2
+sky = SubResource("Sky_wwdjn")
+ambient_light_source = 3
+ambient_light_color = Color(0.588235, 0.588235, 0.588235, 1)
+tonemap_mode = 2
+
+[node name="NeuroVisRoot" type="Node"]
+script = ExtResource("1_8t3ds")
+
+[node name="Services" type="Node" parent="."]
+
+[node name="SceneManager" type="Node" parent="Services"]
+script = ExtResource("2_dv8rq")
+
+[node name="StructureManager" type="Node" parent="Services"]
+script = ExtResource("3_h5xd0")
+
+[node name="UIComponentPool" type="Node" parent="Services"]
+script = ExtResource("4_bsfkq")
+
+[node name="ResourceCache" type="Node" parent="."]
+
+[node name="Materials" type="Node" parent="ResourceCache"]
+
+[node name="Shaders" type="Node" parent="ResourceCache"]
+
+[node name="SceneManager" type="Node" parent="."]
+
+[node name="MainEducationalScene" type="Node3D" parent="SceneManager"]
+
+[node name="World" type="Node3D" parent="SceneManager/MainEducationalScene"]
+
+[node name="Environment" type="Node3D" parent="SceneManager/MainEducationalScene/World"]
+
+[node name="Camera3D" type="Camera3D" parent="SceneManager/MainEducationalScene/World/Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SceneManager/MainEducationalScene/World/Environment"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SceneManager/MainEducationalScene/World/Environment"]
+environment = SubResource("Environment_3s3l8")
+
+[node name="BrainModels" type="Node3D" parent="SceneManager/MainEducationalScene/World"]
+
+[node name="ModelSets" type="Node3D" parent="SceneManager/MainEducationalScene/World/BrainModels"]
+
+[node name="WholeBrain" type="Node3D" parent="SceneManager/MainEducationalScene/World/BrainModels/ModelSets"]
+visible = false
+
+[node name="HalfBrain" type="Node3D" parent="SceneManager/MainEducationalScene/World/BrainModels/ModelSets"]
+
+[node name="InternalStructures" type="Node3D" parent="SceneManager/MainEducationalScene/World/BrainModels/ModelSets"]
+
+[node name="SharedResources" type="Node" parent="SceneManager/MainEducationalScene/World/BrainModels"]
+
+[node name="Annotations" type="Node3D" parent="SceneManager/MainEducationalScene/World"]
+
+[node name="Systems" type="Node" parent="SceneManager/MainEducationalScene"]
+
+[node name="InteractionSystem" type="Node" parent="SceneManager/MainEducationalScene/Systems"]
+
+[node name="InputRouter" type="Node" parent="SceneManager/MainEducationalScene/Systems/InteractionSystem"]
+
+[node name="CameraController" type="Node" parent="SceneManager/MainEducationalScene/Systems/InteractionSystem"]
+
+[node name="GestureRecognizer" type="Node" parent="SceneManager/MainEducationalScene/Systems/InteractionSystem"]
+
+[node name="SelectionSystem" type="Node" parent="SceneManager/MainEducationalScene/Systems"]
+
+[node name="RaycastManager" type="Node" parent="SceneManager/MainEducationalScene/Systems/SelectionSystem"]
+
+[node name="StructureSelector" type="Node" parent="SceneManager/MainEducationalScene/Systems/SelectionSystem"]
+
+[node name="SelectionVisualizer" type="Node" parent="SceneManager/MainEducationalScene/Systems/SelectionSystem"]
+
+[node name="VisualizationSystem" type="Node" parent="SceneManager/MainEducationalScene/Systems"]
+
+[node name="LODSystem" type="Node" parent="SceneManager/MainEducationalScene/Systems/VisualizationSystem"]
+script = ExtResource("5_oqm7p")
+
+[node name="MaterialOptimizer" type="Node" parent="SceneManager/MainEducationalScene/Systems/VisualizationSystem"]
+script = ExtResource("6_k2pvj")
+
+[node name="HighlightManager" type="Node" parent="SceneManager/MainEducationalScene/Systems/VisualizationSystem"]
+
+[node name="CrossSectionManager" type="Node" parent="SceneManager/MainEducationalScene/Systems/VisualizationSystem"]
+
+[node name="AnnotationManager" type="Node" parent="SceneManager/MainEducationalScene/Systems/VisualizationSystem"]
+
+[node name="EducationalSystem" type="Node" parent="SceneManager/MainEducationalScene/Systems"]
+
+[node name="LearningPathManager" type="Node" parent="SceneManager/MainEducationalScene/Systems/EducationalSystem"]
+
+[node name="ComparisonManager" type="Node" parent="SceneManager/MainEducationalScene/Systems/EducationalSystem"]
+
+[node name="ProgressTracker" type="Node" parent="SceneManager/MainEducationalScene/Systems/EducationalSystem"]
+
+[node name="UIController" type="Node" parent="SceneManager"]
+
+[node name="UI" type="CanvasLayer" parent="SceneManager/UIController"]
+
+[node name="Regions" type="Control" parent="SceneManager/UIController/UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Header" type="PanelContainer" parent="SceneManager/UIController/UI/Regions"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SceneManager/UIController/UI/Regions/Header"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SceneManager/UIController/UI/Regions/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NeuroVis - Educational Brain Visualization"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ObjectNameLabel" type="Label" parent="SceneManager/UIController/UI/Regions/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Selected: None"
+horizontal_alignment = 1
+
+[node name="SidePanel_Left" type="PanelContainer" parent="SceneManager/UIController/UI/Regions"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 55.0
+offset_right = 300.0
+offset_bottom = -5.0
+grow_vertical = 2
+
+[node name="ModelControlContainer" type="VBoxContainer" parent="SceneManager/UIController/UI/Regions/SidePanel_Left"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SceneManager/UIController/UI/Regions/SidePanel_Left/ModelControlContainer"]
+layout_mode = 2
+text = "Brain Model Controls"
+horizontal_alignment = 1
+
+[node name="SidePanel_Right" type="PanelContainer" parent="SceneManager/UIController/UI/Regions"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = 55.0
+offset_right = 0.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="InfoPanelContainer" type="VBoxContainer" parent="SceneManager/UIController/UI/Regions/SidePanel_Right"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SceneManager/UIController/UI/Regions/SidePanel_Right/InfoPanelContainer"]
+layout_mode = 2
+text = "Structure Information"
+horizontal_alignment = 1
+
+[node name="Footer" type="PanelContainer" parent="SceneManager/UIController/UI/Regions"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SceneManager/UIController/UI/Regions/Footer"]
+layout_mode = 2
+
+[node name="Status" type="Label" parent="SceneManager/UIController/UI/Regions/Footer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Status: Ready"
+vertical_alignment = 1
+
+[node name="Version" type="Label" parent="SceneManager/UIController/UI/Regions/Footer/HBoxContainer"]
+layout_mode = 2
+text = "Version: 1.0"
+vertical_alignment = 1
+
+[node name="Components" type="Control" parent="SceneManager/UIController/UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Modals" type="Control" parent="SceneManager/UIController/UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Accessibility" type="Node" parent="SceneManager/UIController/UI"]
