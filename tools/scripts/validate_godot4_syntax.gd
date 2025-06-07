@@ -14,7 +14,13 @@ extends SceneTree
 
 const SCRIPT_EXTENSIONS: Array[String] = ["gd", "tres", "tscn"]
 const IGNORE_DIRS: Array[String] = [
-	".godot", ".git", "node_modules", "exports", "temp_syntax_check", "backups_", "syntax_fix_backup_"
+	".godot",
+	".git",
+	"node_modules",
+	"exports",
+	"temp_syntax_check",
+	"backups_",
+	"syntax_fix_backup_"
 ]
 
 # === PRIVATE VARIABLES ===
@@ -251,14 +257,14 @@ func _print_validation_report() -> void:
 
 		for file_data in _issues_found:
 			var file_path = file_data.file
-			var issues_3 = file_data.issues
+			var file_issues = file_data.issues
 
 			# Make path relative to project for readability
 			var relative_path = file_path.replace(ProjectSettings.globalize_path("res://"), "")
 
-			print("\n📄 " + relative_path + " (" + str(issues.size()) + " issues):")
+			print("\n📄 " + relative_path + " (" + str(file_issues.size()) + " issues):")
 
-			for issue in issues:
+			for issue in file_issues:
 				print("  Line " + str(issue.line) + ": " + issue.description)
 				print("    Pattern: " + issue.pattern)
 				print("    Fix: " + issue.suggestion)

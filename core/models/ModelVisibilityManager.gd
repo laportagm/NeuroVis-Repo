@@ -1,138 +1,91 @@
-class_name ModelVisibilityManager
 extends Node
 
-# Signal when model visibility changes
+## Educational Model Visibility Manager
+## Manages 3D model layer visibility for progressive learning
+## @version: 1.0
 
-signal model_visibility_changed(model_name: String, visibility: bool)
+# === SIGNALS ===
+signal visibility_changed(model_name: String, visible: bool)
+signal layer_switched(layer_name: String)
 
-# Dictionary to track loaded models and their visibility
+# === CONSTANTS ===
+const DEFAULT_MODELS = ["Half_Brain", "Internal_Structures", "Brainstem"]
 
-var models = {}
+# === VARIABLES ===
+var _model_registry: Dictionary = {}
+var _visible_models: Array = []
+var _current_layer: String = "default"
 
 
-var model_info = models[model_name]
-var new_visibility = not model_info.visible
-
-# Update visibility
-model_info.node.visible = new_visibility
-model_info.visible = new_visibility
-
-var model_info_2 = models[model_name]
-
-# Update visibility
-model_info.node.visible = visibility
-model_info.visible = visibility
-
-var model_info_3 = models[model_key]
-model_info.node.visible = (model_key == model_name)
-model_info.visible = (model_key == model_name)
-
-# Emit signal for each changed model
-model_visibility_changed.emit(model_key, model_info.visible)
-
-var model_info_4 = models[model_name]
-var new_visibility_2 = not model_info.visible
-
-# Update visibility
-model_info.node.visible = new_visibility
-model_info.visible = new_visibility
-
+# === LIFECYCLE ===
 func _ready() -> void:
-	print("ModelSwitcher initialized")
+	"""Initialize model visibility manager"""
+	_initialize_model_registry()
+	print("[ModelVisibilityManager] Model visibility system ready")
 
 
-	# Register a model with the switcher
-
-func register_model(model_node: Node3D, friendly_name: String) -> void:
-	if model_node == null:
-		printerr("ModelSwitcher Error: Attempted to register null model")
-		return
-
-		# Store model with friendly name and current visibility
-		models[friendly_name] = {"node": model_node, "visible": model_node.visible}
-
-		print("ModelSwitcher: Registered model '" + friendly_name + "'")
+# === PUBLIC METHODS ===
+func register_model(model_name: String, model_node: Node3D) -> void:
+	"""Register a 3D model for educational visibility management"""
+	_model_registry[model_name] = {
+		"node": model_node, "visible": model_node.visible, "layer": "default"
+	}
+	print("[ModelVisibilityManager] Registered model: " + model_name)
 
 
-		# Get list of all registered model names
-func get_model_names() -> Array:
-	return models.keys()
+func set_model_visible(model_name: String, visible: bool) -> void:
+	"""Set educational model visibility"""
+	if _model_registry.has(model_name):
+		var model_info = _model_registry[model_name]
+		model_info.node.visible = visible
+		model_info.visible = visible
+
+		if visible and model_name not in _visible_models:
+			_visible_models.append(model_name)
+		elif not visible and model_name in _visible_models:
+			_visible_models.erase(model_name)
+
+		visibility_changed.emit(model_name, visible)
 
 
-	# Get available models (alias for get_model_names for testing compatibility)
-func get_available_models() -> Array:
-	return get_model_names()
+func switch_to_layer(layer_name: String) -> void:
+	"""Switch to educational model layer"""
+	_current_layer = layer_name
+	_apply_layer_visibility()
+	layer_switched.emit(layer_name)
 
 
-	# Switch to a specific model (show only that model)
-func switch_to_model(model_name: String) -> bool:
-	if not models.has(model_name):
-		printerr("ModelSwitcher Warning: Cannot switch to unknown model '" + model_name + "'")
-		return false
-
-		show_only_model(model_name)
-		return true
+func get_visible_models() -> Array:
+	"""Get currently visible educational models"""
+	return _visible_models.duplicate()
 
 
-		# Get currently visible model (returns first visible model found)
-func get_current_model() -> String:
-	for model_name in models.keys():
-		if models[model_name].visible:
-			return model_name
-			return ""  # No model is currently visible
-
-
-			# Check if a model is visible
 func is_model_visible(model_name: String) -> bool:
-	if not models.has(model_name):
-		printerr("ModelSwitcher Warning: Unknown model name '" + model_name + "'")
-		return false
-
-		return models[model_name].visible
-
-
-		# Toggle a specific model's visibility
-func toggle_model_visibility(model_name: String) -> void:
-	if not models.has(model_name):
-		printerr("ModelSwitcher Warning: Cannot toggle unknown model '" + model_name + "'")
-		return
-
-func set_model_visibility(model_name: String, visibility: bool) -> void:
-	if not models.has(model_name):
-		printerr(
-		"ModelSwitcher Warning: Cannot set visibility for unknown model '" + model_name + "'"
-		)
-		return
-
-func show_only_model(model_name: String) -> void:
-	if not models.has(model_name):
-		printerr("ModelSwitcher Warning: Cannot show unknown model '" + model_name + "'")
-		return
-
-		# Hide all models first
-		for model_key in models.keys():
-
-func _fix_orphaned_code():
-	print("ModelSwitcher: Set '" + model_name + "' visibility to " + str(new_visibility))
-
-	# Emit signal
-	model_visibility_changed.emit(model_name, new_visibility)
+	"""Check if educational model is visible"""
+	if _model_registry.has(model_name):
+		return _model_registry[model_name].visible
+	return false
 
 
-	# Set specific model visibility
-func _fix_orphaned_code():
-	print("ModelSwitcher: Set '" + model_name + "' visibility to " + str(visibility))
+# === PRIVATE METHODS ===
+func _initialize_model_registry() -> void:
+	"""Initialize the educational model registry"""
+	for model_name in DEFAULT_MODELS:
+		_model_registry[model_name] = {"node": null, "visible": true, "layer": "default"}
 
-	# Emit signal
-	model_visibility_changed.emit(model_name, visibility)
+
+func _apply_layer_visibility() -> void:
+	"""Apply educational layer visibility rules"""
+	print("[ModelVisibilityManager] Applying layer: " + _current_layer)
+
+	for model_name in _model_registry:
+		var model_info = _model_registry[model_name]
+		if model_info.node:
+			var should_be_visible = _should_model_be_visible_in_layer(model_name, _current_layer)
+			set_model_visible(model_name, should_be_visible)
 
 
-	# Show only one model, hide all others
-func _fix_orphaned_code():
-	print("ModelSwitcher: Now showing only '" + model_name + "'")
-
-func _fix_orphaned_code():
-	print("ModelSwitcher: Set '" + model_name + "' visibility to " + str(new_visibility))
-
-	# Emit signal
-	model_visibility_changed.emit(model_name, new_visibility)
+func _should_model_be_visible_in_layer(model_name: String, layer: String) -> bool:
+	"""Determine if model should be visible in educational layer"""
+	# Educational visibility logic would be implemented here
+	return true
