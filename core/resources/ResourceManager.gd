@@ -39,20 +39,20 @@ var group_total = resource_paths.size()
 
 # Preload each resource
 var resource_2 = load(resource_path)
-var load_status = ResourceLoader.load_threaded_request(resource_path)
-var resources = _group_resources[group_name]
+# FIXED: Orphaned code - var load_status = ResourceLoader.load_threaded_request(resource_path)
+# FIXED: Orphaned code - var resources = _group_resources[group_name]
 var unloaded_count = 0
 
 # Unload each resource
 var cache_count = _resource_cache.size()
 _resource_cache.clear()
 
-var preloaded_count = _preloaded_resources.size()
+# FIXED: Orphaned code - var preloaded_count = _preloaded_resources.size()
 _preloaded_resources.clear()
 _group_resources.clear()
-var stats = get_cache_statistics()
+# FIXED: Orphaned code - var stats = get_cache_statistics()
 
-var completed_tasks = []
+# FIXED: Orphaned code - var completed_tasks = []
 
 var task = _loading_tasks[resource_path]
 
@@ -63,11 +63,11 @@ ResourceLoader.THREAD_LOAD_LOADED:
 	# Loading complete
 var resource_3 = ResourceLoader.load_threaded_get(resource_path)
 
-var progress = []
+# FIXED: Orphaned code - var progress = []
 var progress_value = ResourceLoader.load_threaded_get_status(
 	resource_path, progress
 	)
-var size_estimate = 0
+# FIXED: Orphaned code - var size_estimate = 0
 
 "Texture2D":
 	# Estimate texture memory (width * height * bytes per pixel)
@@ -79,14 +79,14 @@ var size_estimate = 0
 			# Rough estimate based on vertex count if available
 var total = _cache_hits + _cache_misses
 var config = ConfigFile.new()
-var groups = config.get_sections()
-var resources_2 = config.get_value(group_name, "resources", [])
-var auto_preload = config.get_value(group_name, "auto_preload", false)
+# FIXED: Orphaned code - var groups = config.get_sections()
+# FIXED: Orphaned code - var resources_2 = config.get_value(group_name, "resources", [])
+# FIXED: Orphaned code - var auto_preload = config.get_value(group_name, "auto_preload", false)
 
-var _resource_cache: Dictionary = {}
-var _preloaded_resources: Dictionary = {}
-var _loading_tasks: Dictionary = {}
-var _group_resources: Dictionary = {}
+# FIXED: Orphaned code - var _resource_cache: Dictionary = {}
+# FIXED: Orphaned code - var _preloaded_resources: Dictionary = {}
+# FIXED: Orphaned code - var _loading_tasks: Dictionary = {}
+# FIXED: Orphaned code - var _group_resources: Dictionary = {}
 
 # Resource statistics
 var _cache_hits: int = 0
@@ -200,233 +200,217 @@ func get_cache_statistics() -> Dictionary:
 func print_cache_statistics() -> void:
 	"""Print educational resource statistics for debugging"""
 
-func _fix_orphaned_code():
-	if use_sub_threads and ResourceLoader.has_cached(resource_path):
-		resource = ResourceLoader.load_threaded(resource_path)
-		else:
-			resource = load(resource_path)
+if use_sub_threads and ResourceLoader.has_cached(resource_path):
+	resource = ResourceLoader.load_threaded(resource_path)
+	else:
+		resource = load(resource_path)
 
-			if resource:
-				_cache_resource(resource_path, resource)
-				return resource
+		if resource:
+			_cache_resource(resource_path, resource)
+			return resource
+			else:
+				push_error("[ResourceManager] Failed to load resource: %s" % resource_path)
+				resource_load_failed.emit(resource_path, "Load failed")
 				else:
-					push_error("[ResourceManager] Failed to load resource: %s" % resource_path)
-					resource_load_failed.emit(resource_path, "Load failed")
-					else:
-						push_error("[ResourceManager] Resource does not exist: %s" % resource_path)
-						resource_load_failed.emit(resource_path, "Resource not found")
+					push_error("[ResourceManager] Resource does not exist: %s" % resource_path)
+					resource_load_failed.emit(resource_path, "Resource not found")
 
-						return null
+					return null
 
 
-						## Preload a set of resources for better performance
-						## @param resource_paths: Array of resource paths to preload
-						## @param group_name: Optional group name for bulk operations
-func _fix_orphaned_code():
-	for resource_path in resource_paths:
-		if ResourceLoader.exists(resource_path):
-func _fix_orphaned_code():
-	if resource:
-		_preloaded_resources[resource_path] = resource
-		_group_resources[group_name].append(resource_path)
-		_preloaded_count += 1
-		group_loaded_count += 1
+					## Preload a set of resources for better performance
+					## @param resource_paths: Array of resource paths to preload
+					## @param group_name: Optional group name for bulk operations
+for resource_path in resource_paths:
+	if ResourceLoader.exists(resource_path):
+if resource:
+	_preloaded_resources[resource_path] = resource
+	_group_resources[group_name].append(resource_path)
+	_preloaded_count += 1
+	group_loaded_count += 1
 
-		# Update memory usage estimate
-		_update_memory_usage(resource)
+	# Update memory usage estimate
+	_update_memory_usage(resource)
+
+	# Emit signal
+	resource_loaded.emit(resource_path, resource)
+	else:
+		push_warning("[ResourceManager] Failed to preload: %s" % resource_path)
+		else:
+			push_warning("[ResourceManager] Resource does not exist: %s" % resource_path)
+
+			print(
+			(
+			"[ResourceManager] Preloaded %d/%d resources in group '%s'"
+			% [group_loaded_count, group_total, group_name]
+			)
+			)
+
+			if group_loaded_count > 0:
+				resource_group_loaded.emit(group_name)
+
+
+				## Load a resource asynchronously
+				## @param resource_path: Path to the resource
+				## @param callback: Optional callback when resource is loaded
+				## @returns: true if async load was started, false otherwise
+if load_status == OK:
+	_loading_tasks[resource_path] = {
+	"path": resource_path, "callback": callback, "progress": 0.0
+	}
+	print("[ResourceManager] Started async load: %s" % resource_path)
+	return true
+	else:
+		push_error(
+		(
+		"[ResourceManager] Failed to start async load: %s (Error: %d)"
+		% [resource_path, load_status]
+		)
+		)
+		resource_load_failed.emit(resource_path, "Async load failed")
+		return false
+
+
+		## Unload resources by group to free memory
+		## @param group_name: Name of the group to unload
+for resource_path in resources:
+	if _preloaded_resources.has(resource_path):
+		_preloaded_resources.erase(resource_path)
+		unloaded_count += 1
+
+		if _resource_cache.has(resource_path):
+			_resource_cache.erase(resource_path)
+			unloaded_count += 1
+
+			# Remove group
+			_group_resources.erase(group_name)
+
+			print("[ResourceManager] Unloaded %d resources from group '%s'" % [unloaded_count, group_name])
+
+			# Force garbage collection
+			if unloaded_count > 0:
+				print("[ResourceManager] Requesting garbage collection")
+				OS.delay_msec(10)  # Small delay to allow frame to complete
+				ResourceLoader.load("res://empty.tres")  # Dummy load to trigger GC
+
+
+				## Clear all cached resources to free memory
+				## @param keep_preloaded: Whether to keep preloaded resources
+print("[ResourceManager] Cleared %d cached resources" % cache_count)
+
+if not keep_preloaded:
+print("[ResourceManager] Cleared %d preloaded resources" % preloaded_count)
+
+# Reset stats
+_cache_hits = 0
+_cache_misses = 0
+_memory_usage = 0
+
+# Force garbage collection
+print("[ResourceManager] Requesting garbage collection")
+OS.delay_msec(10)  # Small delay to allow frame to complete
+ResourceLoader.load("res://empty.tres")  # Dummy load to trigger GC
+
+
+## Get resource cache statistics
+## @returns: Dictionary with cache stats
+print("\n=== RESOURCE MANAGER STATISTICS ===")
+print("Cached resources: %d" % stats.cache_size)
+print("Preloaded resources: %d" % stats.preloaded_count)
+print("Cache hits: %d" % stats.cache_hits)
+print("Cache misses: %d" % stats.cache_misses)
+print("Hit ratio: %.1f%%" % (stats.hit_ratio * 100))
+print("Estimated memory usage: %.2f MB" % (stats.memory_usage_kb / 1024))
+print("Active async loads: %d" % stats.active_async_loads)
+print("Resource groups: %d" % stats.resource_groups)
+
+# Print group details
+if not _group_resources.is_empty():
+	print("\nResource groups:")
+	for group_name in _group_resources:
+		print("- %s: %d resources" % [group_name, _group_resources[group_name].size()])
+
+		print("===================================\n")
+
+
+		# === PRIVATE METHODS ===
+for resource_path in _loading_tasks:
+if resource:
+	# Cache resource
+	_cache_resource(resource_path, resource)
+
+	# Notify via callback
+	if task.callback.is_valid():
+		task.callback.call(resource_path, resource)
 
 		# Emit signal
-		resource_loaded.emit(resource_path, resource)
-		else:
-			push_warning("[ResourceManager] Failed to preload: %s" % resource_path)
-			else:
-				push_warning("[ResourceManager] Resource does not exist: %s" % resource_path)
-
-				print(
-				(
-				"[ResourceManager] Preloaded %d/%d resources in group '%s'"
-				% [group_loaded_count, group_total, group_name]
-				)
-				)
-
-				if group_loaded_count > 0:
-					resource_group_loaded.emit(group_name)
-
-
-					## Load a resource asynchronously
-					## @param resource_path: Path to the resource
-					## @param callback: Optional callback when resource is loaded
-					## @returns: true if async load was started, false otherwise
-func _fix_orphaned_code():
-	if load_status == OK:
-		_loading_tasks[resource_path] = {
-		"path": resource_path, "callback": callback, "progress": 0.0
-		}
-		print("[ResourceManager] Started async load: %s" % resource_path)
-		return true
+		resource_async_loaded.emit(resource_path, resource)
 		else:
 			push_error(
 			(
-			"[ResourceManager] Failed to start async load: %s (Error: %d)"
-			% [resource_path, load_status]
+			"[ResourceManager] Async load completed but resource is null: %s"
+			% resource_path
 			)
 			)
-			resource_load_failed.emit(resource_path, "Async load failed")
-			return false
+			resource_load_failed.emit(resource_path, "Async load returned null")
 
-
-			## Unload resources by group to free memory
-			## @param group_name: Name of the group to unload
-func _fix_orphaned_code():
-	for resource_path in resources:
-		if _preloaded_resources.has(resource_path):
-			_preloaded_resources.erase(resource_path)
-			unloaded_count += 1
-
-			if _resource_cache.has(resource_path):
-				_resource_cache.erase(resource_path)
-				unloaded_count += 1
-
-				# Remove group
-				_group_resources.erase(group_name)
-
-				print("[ResourceManager] Unloaded %d resources from group '%s'" % [unloaded_count, group_name])
-
-				# Force garbage collection
-				if unloaded_count > 0:
-					print("[ResourceManager] Requesting garbage collection")
-					OS.delay_msec(10)  # Small delay to allow frame to complete
-					ResourceLoader.load("res://empty.tres")  # Dummy load to trigger GC
-
-
-					## Clear all cached resources to free memory
-					## @param keep_preloaded: Whether to keep preloaded resources
-func _fix_orphaned_code():
-	print("[ResourceManager] Cleared %d cached resources" % cache_count)
-
-	if not keep_preloaded:
-func _fix_orphaned_code():
-	print("[ResourceManager] Cleared %d preloaded resources" % preloaded_count)
-
-	# Reset stats
-	_cache_hits = 0
-	_cache_misses = 0
-	_memory_usage = 0
-
-	# Force garbage collection
-	print("[ResourceManager] Requesting garbage collection")
-	OS.delay_msec(10)  # Small delay to allow frame to complete
-	ResourceLoader.load("res://empty.tres")  # Dummy load to trigger GC
-
-
-	## Get resource cache statistics
-	## @returns: Dictionary with cache stats
-func _fix_orphaned_code():
-	print("\n=== RESOURCE MANAGER STATISTICS ===")
-	print("Cached resources: %d" % stats.cache_size)
-	print("Preloaded resources: %d" % stats.preloaded_count)
-	print("Cache hits: %d" % stats.cache_hits)
-	print("Cache misses: %d" % stats.cache_misses)
-	print("Hit ratio: %.1f%%" % (stats.hit_ratio * 100))
-	print("Estimated memory usage: %.2f MB" % (stats.memory_usage_kb / 1024))
-	print("Active async loads: %d" % stats.active_async_loads)
-	print("Resource groups: %d" % stats.resource_groups)
-
-	# Print group details
-	if not _group_resources.is_empty():
-		print("\nResource groups:")
-		for group_name in _group_resources:
-			print("- %s: %d resources" % [group_name, _group_resources[group_name].size()])
-
-			print("===================================\n")
-
-
-			# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	for resource_path in _loading_tasks:
-func _fix_orphaned_code():
-	if resource:
-		# Cache resource
-		_cache_resource(resource_path, resource)
-
-		# Notify via callback
-		if task.callback.is_valid():
-			task.callback.call(resource_path, resource)
-
-			# Emit signal
-			resource_async_loaded.emit(resource_path, resource)
-			else:
-				push_error(
-				(
-				"[ResourceManager] Async load completed but resource is null: %s"
-				% resource_path
-				)
-				)
-				resource_load_failed.emit(resource_path, "Async load returned null")
-
-				# Mark for removal
-				completed_tasks.append(resource_path)
-
-				ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-					# Still loading, update progress
-func _fix_orphaned_code():
-	if not progress.is_empty():
-		task.progress = progress[0]
-
-		ResourceLoader.THREAD_LOAD_FAILED:
-			# Loading failed
-			push_error("[ResourceManager] Async load failed: %s" % resource_path)
-			resource_load_failed.emit(resource_path, "Async load failed")
+			# Mark for removal
 			completed_tasks.append(resource_path)
 
-			# Remove completed tasks
-			for resource_path in completed_tasks:
-				_loading_tasks.erase(resource_path)
+			ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+				# Still loading, update progress
+if not progress.is_empty():
+	task.progress = progress[0]
+
+	ResourceLoader.THREAD_LOAD_FAILED:
+		# Loading failed
+		push_error("[ResourceManager] Async load failed: %s" % resource_path)
+		resource_load_failed.emit(resource_path, "Async load failed")
+		completed_tasks.append(resource_path)
+
+		# Remove completed tasks
+		for resource_path in completed_tasks:
+			_loading_tasks.erase(resource_path)
 
 
-func _fix_orphaned_code():
-	if resource.has_method("get_faces_count"):
-		size_estimate = resource.get_faces_count() * 160  # ~160 bytes per triangle
-		else:
-			size_estimate = 1024 * 100  # 100KB base estimate
-			"AudioStream":
-				# Estimate based on length for AudioStreamWAV
-				if resource.has_method("get_length"):
-					size_estimate = int(resource.get_length() * 44100 * 2 * 2)  # 44.1kHz, 16-bit stereo
-					else:
-						size_estimate = 1024 * 200  # 200KB base estimate
-						_:
-							# Default estimate for other resource types
-							size_estimate = 1024  # 1KB base estimate
+if resource.has_method("get_faces_count"):
+	size_estimate = resource.get_faces_count() * 160  # ~160 bytes per triangle
+	else:
+		size_estimate = 1024 * 100  # 100KB base estimate
+		"AudioStream":
+			# Estimate based on length for AudioStreamWAV
+			if resource.has_method("get_length"):
+				size_estimate = int(resource.get_length() * 44100 * 2 * 2)  # 44.1kHz, 16-bit stereo
+				else:
+					size_estimate = 1024 * 200  # 200KB base estimate
+					_:
+						# Default estimate for other resource types
+						size_estimate = 1024  # 1KB base estimate
 
-							_memory_usage += size_estimate
-
-
-func _fix_orphaned_code():
-	if total == 0:
-		return 0.0
-		return float(_cache_hits) / float(total)
+						_memory_usage += size_estimate
 
 
-func _fix_orphaned_code():
-	if config.load(PRELOAD_CONFIG_PATH) != OK:
-		print("[ResourceManager] No preload configuration found at: %s" % PRELOAD_CONFIG_PATH)
-		return
+if total == 0:
+	return 0.0
+	return float(_cache_hits) / float(total)
 
-		print("[ResourceManager] Loading preload configuration...")
 
-		# Process each resource group
-func _fix_orphaned_code():
-	for group_name in groups:
-func _fix_orphaned_code():
-	if auto_preload:
-		print("[ResourceManager] Auto-preloading group: %s" % group_name)
-		preload_resources(resources, group_name)
-		else:
-			print("[ResourceManager] Registered group for manual preload: %s" % group_name)
-			# Just register the group for later loading
-			if not _group_resources.has(group_name):
-				_group_resources[group_name] = []
+if config.load(PRELOAD_CONFIG_PATH) != OK:
+	print("[ResourceManager] No preload configuration found at: %s" % PRELOAD_CONFIG_PATH)
+	return
+
+	print("[ResourceManager] Loading preload configuration...")
+
+	# Process each resource group
+for group_name in groups:
+if auto_preload:
+	print("[ResourceManager] Auto-preloading group: %s" % group_name)
+	preload_resources(resources, group_name)
+	else:
+		print("[ResourceManager] Registered group for manual preload: %s" % group_name)
+		# Just register the group for later loading
+		if not _group_resources.has(group_name):
+			_group_resources[group_name] = []
 
 func _update_async_loads() -> void:
 	"""Update async loading tasks"""

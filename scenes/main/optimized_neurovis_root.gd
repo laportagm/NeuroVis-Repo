@@ -39,24 +39,24 @@ enum AppState { INITIALIZING, LOADING_MODELS, RUNNING, ERROR }  # Systems being 
 var services_valid = true
 
 var interaction_system = _get_system_node("InteractionSystem")
-var selection_system = _get_system_node("SelectionSystem")
-var visualization_system = _get_system_node("VisualizationSystem")
-var educational_system = _get_system_node("EducationalSystem")
-var model_registry = get_node_or_null("/root/ModelRegistry")
-var brain_model_parent = _get_node_path("BrainModels/ModelSets")
-var theme_name = "Enhanced"
+# FIXED: Orphaned code - var selection_system = _get_system_node("SelectionSystem")
+# FIXED: Orphaned code - var visualization_system = _get_system_node("VisualizationSystem")
+# FIXED: Orphaned code - var educational_system = _get_system_node("EducationalSystem")
+# FIXED: Orphaned code - var model_registry = get_node_or_null("/root/ModelRegistry")
+# FIXED: Orphaned code - var brain_model_parent = _get_node_path("BrainModels/ModelSets")
+# FIXED: Orphaned code - var theme_name = "Enhanced"
 var ui = _get_node_path("UIController/UI")
-var header = ui.get_node_or_null("Regions/Header")
-var left_panel = ui.get_node_or_null("Regions/SidePanel_Left")
-var right_panel = ui.get_node_or_null("Regions/SidePanel_Right")
-var footer = ui.get_node_or_null("Regions/Footer")
-var object_label = ui.get_node_or_null("Regions/Header/HBoxContainer/ObjectNameLabel")
-var ui_2 = _get_node_path("UIController/UI")
-var ui_3 = _get_node_path("UIController/UI")
-var label = ui.get_node_or_null("Regions/Header/HBoxContainer/ObjectNameLabel")
-var ui_4 = _get_node_path("UIController/UI")
-var model_controls = ui.get_node_or_null("Regions/SidePanel_Left/ModelControlContainer")
-var button = Button.new()
+# FIXED: Orphaned code - var header = ui.get_node_or_null("Regions/Header")
+# FIXED: Orphaned code - var left_panel = ui.get_node_or_null("Regions/SidePanel_Left")
+# FIXED: Orphaned code - var right_panel = ui.get_node_or_null("Regions/SidePanel_Right")
+# FIXED: Orphaned code - var footer = ui.get_node_or_null("Regions/Footer")
+# FIXED: Orphaned code - var object_label = ui.get_node_or_null("Regions/Header/HBoxContainer/ObjectNameLabel")
+# FIXED: Orphaned code - var ui_2 = _get_node_path("UIController/UI")
+# FIXED: Orphaned code - var ui_3 = _get_node_path("UIController/UI")
+# FIXED: Orphaned code - var label = ui.get_node_or_null("Regions/Header/HBoxContainer/ObjectNameLabel")
+# FIXED: Orphaned code - var ui_4 = _get_node_path("UIController/UI")
+# FIXED: Orphaned code - var model_controls = ui.get_node_or_null("Regions/SidePanel_Left/ModelControlContainer")
+# FIXED: Orphaned code - var button = Button.new()
 button.text = model_name
 button.toggle_mode = true
 button.pressed.connect(func(): _on_model_selected(model_name))
@@ -191,154 +191,135 @@ func release_ui_component(component: Control) -> void:
 		# === PRIVATE METHODS ===
 		## Validate required services are available
 
-func _fix_orphaned_code():
-	if not _scene_manager:
-		push_error("[NeuroVisRoot] SceneManager service missing!")
+if not _scene_manager:
+	push_error("[NeuroVisRoot] SceneManager service missing!")
+	services_valid = false
+
+	if not _structure_manager:
+		push_error("[NeuroVisRoot] StructureManager service missing!")
 		services_valid = false
 
-		if not _structure_manager:
-			push_error("[NeuroVisRoot] StructureManager service missing!")
+		if not _ui_pool:
+			push_error("[NeuroVisRoot] UIComponentPool service missing!")
 			services_valid = false
 
-			if not _ui_pool:
-				push_error("[NeuroVisRoot] UIComponentPool service missing!")
-				services_valid = false
-
-				return services_valid
+			return services_valid
 
 
-				## Initialize all required systems
-func _fix_orphaned_code():
-	if interaction_system and interaction_system.has_method("initialize"):
-		interaction_system.initialize()
+			## Initialize all required systems
+if interaction_system and interaction_system.has_method("initialize"):
+	interaction_system.initialize()
 
-		# Initialize selection system
-func _fix_orphaned_code():
-	if selection_system and selection_system.has_method("initialize"):
-		selection_system.initialize()
+	# Initialize selection system
+if selection_system and selection_system.has_method("initialize"):
+	selection_system.initialize()
 
-		# Initialize visualization system
-func _fix_orphaned_code():
-	if visualization_system and visualization_system.has_method("initialize"):
-		visualization_system.initialize()
+	# Initialize visualization system
+if visualization_system and visualization_system.has_method("initialize"):
+	visualization_system.initialize()
 
-		# Initialize educational system
-func _fix_orphaned_code():
-	if educational_system and educational_system.has_method("initialize"):
-		educational_system.initialize()
+	# Initialize educational system
+if educational_system and educational_system.has_method("initialize"):
+	educational_system.initialize()
 
-		# Initialize model loading
-		_initialize_models()
+	# Initialize model loading
+	_initialize_models()
 
-		# Set running state
-		_app_state = AppState.RUNNING
+	# Set running state
+	_app_state = AppState.RUNNING
 
-		# Emit ready signal
-		application_ready.emit()
+	# Emit ready signal
+	application_ready.emit()
 
-		print("[NeuroVisRoot] All systems initialized")
-		_print_instructions()
+	print("[NeuroVisRoot] All systems initialized")
+	_print_instructions()
 
 
-		## Initialize 3D brain models
-func _fix_orphaned_code():
-	if model_registry:
-		# Set brain model parent
-func _fix_orphaned_code():
-	if brain_model_parent:
-		model_registry.set_model_parent(brain_model_parent)
+	## Initialize 3D brain models
+if model_registry:
+	# Set brain model parent
+if brain_model_parent:
+	model_registry.set_model_parent(brain_model_parent)
 
-		# Connect signals
-		if not model_registry.models_loaded.is_connected(_on_models_loaded):
-			model_registry.models_loaded.connect(_on_models_loaded)
+	# Connect signals
+	if not model_registry.models_loaded.is_connected(_on_models_loaded):
+		model_registry.models_loaded.connect(_on_models_loaded)
 
-			if not model_registry.model_load_failed.is_connected(_on_model_load_failed):
-				model_registry.model_load_failed.connect(_on_model_load_failed)
+		if not model_registry.model_load_failed.is_connected(_on_model_load_failed):
+			model_registry.model_load_failed.connect(_on_model_load_failed)
 
-				# Start loading
-				model_registry.load_brain_models()
+			# Start loading
+			model_registry.load_brain_models()
+			else:
+				push_error("[NeuroVisRoot] BrainModels node not found")
 				else:
-					push_error("[NeuroVisRoot] BrainModels node not found")
-					else:
-						push_error("[NeuroVisRoot] ModelRegistry not found - cannot load models")
-						# Continue anyway - set to running state
-						_app_state = AppState.RUNNING
+					push_error("[NeuroVisRoot] ModelRegistry not found - cannot load models")
+					# Continue anyway - set to running state
+					_app_state = AppState.RUNNING
 
 
-						## Apply educational theme mode
-func _fix_orphaned_code():
-	if mode == 1:
-		UIThemeManager.set_theme_mode(UIThemeManager.ThemeMode.MINIMAL)
-		theme_name = "Minimal"
-		else:
-			UIThemeManager.set_theme_mode(UIThemeManager.ThemeMode.ENHANCED)
+					## Apply educational theme mode
+if mode == 1:
+	UIThemeManager.set_theme_mode(UIThemeManager.ThemeMode.MINIMAL)
+	theme_name = "Minimal"
+	else:
+		UIThemeManager.set_theme_mode(UIThemeManager.ThemeMode.ENHANCED)
 
-			print("[NeuroVisRoot] Applied " + theme_name + " educational theme")
+		print("[NeuroVisRoot] Applied " + theme_name + " educational theme")
 
-			# Update theme-dependent UI elements
-			_refresh_themed_components()
-
-
-			## Refresh components after theme change
-func _fix_orphaned_code():
-	if ui:
-		# Update header
-func _fix_orphaned_code():
-	if header and header is Control:
-		UIThemeManager.apply_glass_panel(header)
-
-		# Update panels
-func _fix_orphaned_code():
-	if left_panel and left_panel is Control:
-		UIThemeManager.apply_glass_panel(left_panel)
-
-func _fix_orphaned_code():
-	if right_panel and right_panel is Control:
-		UIThemeManager.apply_glass_panel(right_panel)
-
-		# Update footer
-func _fix_orphaned_code():
-	if footer and footer is Control:
-		UIThemeManager.apply_glass_panel(footer)
-
-		# Update labels
-func _fix_orphaned_code():
-	if object_label and object_label is Label:
-		UIThemeManager.apply_modern_label(
-		object_label, UIThemeManager.FONT_SIZE_MEDIUM, UIThemeManager.TEXT_PRIMARY
-		)
+		# Update theme-dependent UI elements
+		_refresh_themed_components()
 
 
-		## Get a system node by name
-func _fix_orphaned_code():
-	if ui:
-		# TODO: Create error notification
-		pass
+		## Refresh components after theme change
+if ui:
+	# Update header
+if header and header is Control:
+	UIThemeManager.apply_glass_panel(header)
+
+	# Update panels
+if left_panel and left_panel is Control:
+	UIThemeManager.apply_glass_panel(left_panel)
+
+if right_panel and right_panel is Control:
+	UIThemeManager.apply_glass_panel(right_panel)
+
+	# Update footer
+if footer and footer is Control:
+	UIThemeManager.apply_glass_panel(footer)
+
+	# Update labels
+if object_label and object_label is Label:
+	UIThemeManager.apply_modern_label(
+	object_label, UIThemeManager.FONT_SIZE_MEDIUM, UIThemeManager.TEXT_PRIMARY
+	)
 
 
-		## Print user instructions
-func _fix_orphaned_code():
-	if ui:
-func _fix_orphaned_code():
-	if label and label is Label:
-		label.text = "Selected: " + structure_name
-
-		# Forward signal
-		structure_selected.emit(structure_name, structure_data)
+	## Get a system node by name
+if ui:
+	# TODO: Create error notification
+	pass
 
 
-		## Handle related structures found
-func _fix_orphaned_code():
-	if ui:
-func _fix_orphaned_code():
-	if model_controls and model_controls is Control:
-		# Clear existing controls
-		for child in model_controls.get_children():
-			if child.name != "Label":  # Keep the label
-			child.queue_free()
+	## Print user instructions
+if ui:
+if label and label is Label:
+	label.text = "Selected: " + structure_name
 
-			# Add model buttons
-			for model_name in model_names:
+	# Forward signal
+	structure_selected.emit(structure_name, structure_data)
+
+
+	## Handle related structures found
+if ui:
+if model_controls and model_controls is Control:
+	# Clear existing controls
+	for child in model_controls.get_children():
+		if child.name != "Label":  # Keep the label
+		child.queue_free()
+
+		# Add model buttons
+		for model_name in model_names:
 func _validate_services() -> bool:
 	"""Validate that all essential services are available"""
 func _apply_theme(mode: int) -> void:

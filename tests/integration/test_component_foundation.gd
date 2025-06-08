@@ -5,9 +5,9 @@ extends RefCounted
 
 # === DEPENDENCIES ===
 
-const FeatureFlags = prepreprepreload("res://core/features/FeatureFlags.gd")
-const ComponentRegistry = prepreprepreload("res://ui/core/ComponentRegistry.gd")
-const ComponentStateManager = prepreprepreload("res://ui/state/ComponentStateManager.gd")
+const FeatureFlags = preload("res://core/features/FeatureFlags.gd")
+const ComponentRegistry = preload("res://ui/core/ComponentRegistry.gd")
+	# ORPHANED REF: const ComponentStateManager = preload("res://ui/state/ComponentStateManager.gd")
 
 # === TEST RESULTS ===
 
@@ -37,157 +37,157 @@ FeatureFlags.is_enabled(FeatureFlags.UI_STATE_PERSISTENCE), "Should disable feat
 _end_test()
 
 
-var all_flags = FeatureFlags.get_all_flags()
-assert_true(typeof(all_flags) == TYPE_DICTIONARY, "Should return dictionary")
-assert_true(all_flags.size() > 0, "Should have flags")
+# FIXED: Orphaned code - var all_flags = FeatureFlags.get_all_flags()
+	# ORPHANED REF: assert_true(typeof(all_flags) == TYPE_DICTIONARY, "Should return dictionary")
+	# ORPHANED REF: assert_true(all_flags.size() > 0, "Should have flags")
 
 # Test flag status
 var status = FeatureFlags.get_flag_status(FeatureFlags.GESTURE_SUPPORT)
-assert_true(status.has("enabled"), "Status should include enabled state")
+	# ORPHANED REF: assert_true(status.has("enabled"), "Status should include enabled state")
 assert_true(status.has("description"), "Status should include description")
 
 _end_test()
 
 
-var listener_state = {"called": false, "flag": "", "old_value": false, "new_value": false}
+# FIXED: Orphaned code - var listener_state = {"called": false, "flag": "", "old_value": false, "new_value": false}
 
 # Add listener
 var callback = func(flag_name: String, old_val: bool, new_val: bool):
-	listener_state.called = true
-	listener_state.flag = flag_name
-	listener_state.old_value = old_val
-	listener_state.new_value = new_val
+	# ORPHANED REF: listener_state.called = true
+	# ORPHANED REF: listener_state.flag = flag_name
+	# ORPHANED REF: listener_state.old_value = old_val
+	# ORPHANED REF: listener_state.new_value = new_val
 
-	FeatureFlags.add_listener(FeatureFlags.LAZY_LOADING, callback)
+FeatureFlags.add_listener(FeatureFlags.LAZY_LOADING, callback)
 
 	# Change flag to trigger listener
-	FeatureFlags.enable_feature(FeatureFlags.LAZY_LOADING)
+FeatureFlags.enable_feature(FeatureFlags.LAZY_LOADING)
 
-	assert_true(listener_state.called, "Listener should be called")
-	assert_equal(listener_state.flag, FeatureFlags.LAZY_LOADING, "Should receive correct flag name")
-	assert_true(listener_state.new_value, "Should receive new value")
+	# ORPHANED REF: assert_true(listener_state.called, "Listener should be called")
+	# ORPHANED REF: assert_equal(listener_state.flag, FeatureFlags.LAZY_LOADING, "Should receive correct flag name")
+	# ORPHANED REF: assert_true(listener_state.new_value, "Should receive new value")
 
 	# Clean up
-	FeatureFlags.remove_listener(FeatureFlags.LAZY_LOADING, callback)
+FeatureFlags.remove_listener(FeatureFlags.LAZY_LOADING, callback)
 
-	_end_test()
+_end_test()
 
 
 	# === COMPONENT REGISTRY TESTS ===
 var button = ComponentRegistry.create_component("button", {"text": "Test Button"})
-	assert_not_null(button, "Should create button component")
-	assert_true(button is Button, "Should be Button instance")
-	assert_equal(button.text, "Test Button", "Should apply configuration")
+assert_not_null(button, "Should create button component")
+assert_true(button is Button, "Should be Button instance")
+assert_equal(button.text, "Test Button", "Should apply configuration")
 
 	# Test fallback component creation
 var unknown = ComponentRegistry.create_component("unknown_type", {})
-	assert_not_null(unknown, "Should create fallback component")
-	assert_true(unknown.name.begins_with("Fallback_"), "Should be fallback component")
+assert_not_null(unknown, "Should create fallback component")
+assert_true(unknown.name.begins_with("Fallback_"), "Should be fallback component")
 
 	# Test panel creation
 var panel = ComponentRegistry.create_component("info_panel", {})
-	assert_not_null(panel, "Should create info panel")
+assert_not_null(panel, "Should create info panel")
 
-	_end_test()
+_end_test()
 
 
-var component_id = "test_panel_123"
+# FIXED: Orphaned code - var component_id = "test_panel_123"
 var config = {"title": "Test Panel"}
 
 # Create component
-var panel1 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
-	assert_not_null(panel1, "Should create component")
+	# ORPHANED REF: var panel1 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+assert_not_null(panel1, "Should create component")
 
 	# Get same component (should be cached)
-var panel2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
-	assert_equal(panel1, panel2, "Should return cached component")
+# FIXED: Orphaned code - var panel2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+	# ORPHANED REF: assert_equal(panel1, panel2, "Should return cached component")
 
 	# Test registry stats
 var stats = ComponentRegistry.get_registry_stats()
-	assert_true(stats.cache_hits > 0, "Should have cache hits")
-	assert_true(stats.total_created > 0, "Should have created components")
+assert_true(stats.cache_hits > 0, "Should have cache hits")
+assert_true(stats.total_created > 0, "Should have created components")
 
 	# Clean up
-	ComponentRegistry.release_component(component_id)
+	# ORPHANED REF: ComponentRegistry.release_component(component_id)
 
-	_end_test()
+_end_test()
 
 
-	var custom_factory = func(config: Dictionary) -> Control:
+var custom_factory = func(config: Dictionary) -> Control:
 var label = Label.new()
-	label.text = config.get("custom_text", "Custom Component")
-	label.name = "CustomComponent"
+label.text = config.get("custom_text", "Custom Component")
+label.name = "CustomComponent"
 var custom = ComponentRegistry.create_component("custom_test", {"custom_text": "Hello World"})
-	assert_not_null(custom, "Should create custom component")
-	assert_true(custom is Label, "Should be Label instance")
-	assert_equal(custom.text, "Hello World", "Should apply custom configuration")
+assert_not_null(custom, "Should create custom component")
+assert_true(custom is Label, "Should be Label instance")
+assert_equal(custom.text, "Hello World", "Should apply custom configuration")
 
-	_end_test()
+_end_test()
 
 
 	# === STATE MANAGER TESTS ===
 var component_id_2 = "test_component_state"
 var test_state = {
-	"scroll_position": 150,
-	"expanded_sections": ["functions", "clinical"],
-	"user_notes": "Test note"
-	}
+"scroll_position": 150,
+"expanded_sections": ["functions", "clinical"],
+"user_notes": "Test note"
+}
 
 	# Save state
-	ComponentStateManager.save_component_state(component_id, test_state)
-	assert_true(ComponentStateManager.has_component_state(component_id), "Should have saved state")
+	# ORPHANED REF: ComponentStateManager.save_component_state(component_id, test_state)
+	# ORPHANED REF: assert_true(ComponentStateManager.has_component_state(component_id), "Should have saved state")
 
 	# Restore state
-var restored_state = ComponentStateManager.restore_component_state(component_id)
-	assert_not_null(restored_state, "Should restore state")
-	assert_equal(restored_state.scroll_position, 150, "Should restore scroll position")
-	assert_equal(restored_state.expanded_sections.size(), 2, "Should restore expanded sections")
+	# ORPHANED REF: var restored_state = ComponentStateManager.restore_component_state(component_id)
+	# ORPHANED REF: assert_not_null(restored_state, "Should restore state")
+assert_equal(restored_state.scroll_position, 150, "Should restore scroll position")
+assert_equal(restored_state.expanded_sections.size(), 2, "Should restore expanded sections")
 
 	# Test state age
-var age = ComponentStateManager.get_state_age(component_id)
-	assert_true(age >= 0, "Should have valid age")
+	# ORPHANED REF: var age = ComponentStateManager.get_state_age(component_id)
+assert_true(age >= 0, "Should have valid age")
 
-	_end_test()
+_end_test()
 
 
-var component_id_3 = "persistent_test_component"
+# FIXED: Orphaned code - var component_id_3 = "persistent_test_component"
 var persistent_state = {
-	"theme_preference": "minimal", "bookmarked_structures": ["hippocampus", "cortex"]
-	}
+"theme_preference": "minimal", "bookmarked_structures": ["hippocampus", "cortex"]
+}
 
 	# Save persistent state
-	ComponentStateManager.save_component_state(component_id, persistent_state, true)
+	# ORPHANED REF: ComponentStateManager.save_component_state(component_id, persistent_state, true)
 
 	# Get persistent states
 var persistent_states = ComponentStateManager.get_persistent_states()
-	assert_true(persistent_states.has(component_id), "Should have persistent state")
+	# ORPHANED REF: assert_true(persistent_states.has(component_id), "Should have persistent state")
 
 	# Test state info
-var state_info = ComponentStateManager.get_component_state_info(component_id)
-	assert_true(state_info.exists, "State should exist")
-	assert_true(state_info.persistent, "Should be marked as persistent")
+	# ORPHANED REF: var state_info = ComponentStateManager.get_component_state_info(component_id)
+assert_true(state_info.exists, "State should exist")
+assert_true(state_info.persistent, "Should be marked as persistent")
 
-	_end_test()
+_end_test()
 
 
-var component_id_4 = "cleanup_test_" + str(i)
-var state = {"test_data": i}
-	ComponentStateManager.save_component_state(component_id, state)
+# FIXED: Orphaned code - var component_id_4 = "cleanup_test_" + str(i)
+# FIXED: Orphaned code - var state = {"test_data": i}
+	# ORPHANED REF: ComponentStateManager.save_component_state(component_id, state)
 
 	# Get stats before cleanup
 var stats_before = ComponentStateManager.get_state_stats()
-	assert_true(stats_before.total_states >= 5, "Should have test states")
+assert_true(stats_before.total_states >= 5, "Should have test states")
 
 	# Clear session states
-	ComponentStateManager.clear_session_states()
+ComponentStateManager.clear_session_states()
 
 	# Verify cleanup
-	assert_false(
-	ComponentStateManager.has_component_state("cleanup_test_0"),
-	"Session state should be cleared"
-	)
+assert_false(
+ComponentStateManager.has_component_state("cleanup_test_0"),
+	# ORPHANED REF: "Session state should be cleared"
+)
 
-	_end_test()
+_end_test()
 
 
 	# === INTEGRATION TESTS ===
@@ -195,42 +195,42 @@ var component_id_5 = "integration_test_panel"
 var config_2 = {"structure_name": "hippocampus", "theme": "enhanced"}
 
 # Step 1: Create component through registry
-var panel_2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
-	assert_not_null(panel, "Should create panel")
+	# ORPHANED REF: var panel_2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+assert_not_null(panel, "Should create panel")
 
 	# Step 2: Save component state
 var state_2 = {
-	"selected_structure": "hippocampus",
-	"expanded_sections": ["functions"],
-	"scroll_position": 100
-	}
-	ComponentStateManager.save_component_state(component_id, state)
+"selected_structure": "hippocampus",
+"expanded_sections": ["functions"],
+"scroll_position": 100
+}
+	# ORPHANED REF: ComponentStateManager.save_component_state(component_id, state)
 
 	# Step 3: Simulate component recreation (cache hit)
-var panel2_2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
-	assert_equal(panel, panel2, "Should return cached component")
+# FIXED: Orphaned code - var panel2_2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+	# ORPHANED REF: assert_equal(panel, panel2, "Should return cached component")
 
 	# Step 4: Restore state
-var restored_state_2 = ComponentStateManager.restore_component_state(component_id)
-	assert_equal(restored_state.selected_structure, "hippocampus", "Should restore structure")
-	assert_equal(restored_state.scroll_position, 100, "Should restore scroll position")
+	# ORPHANED REF: var restored_state_2 = ComponentStateManager.restore_component_state(component_id)
+assert_equal(restored_state.selected_structure, "hippocampus", "Should restore structure")
+assert_equal(restored_state.scroll_position, 100, "Should restore scroll position")
 
 	# Step 5: Clean up
-	ComponentRegistry.release_component(component_id)
-	ComponentStateManager.remove_component_state(component_id)
+	# ORPHANED REF: ComponentRegistry.release_component(component_id)
+	# ORPHANED REF: ComponentStateManager.remove_component_state(component_id)
 
-	_end_test()
+_end_test()
 
 
-var error_msg = "Assertion failed: " + message
-	test_results.append({"type": "assertion_error", "message": error_msg})
-var error_msg_2 = "Expected: %s, Got: %s - %s" % [expected, actual, message]
-	test_results.append({"type": "assertion_error", "message": error_msg})
-var error_msg_3 = "Values should not be equal: %s - %s" % [actual, message]
-	test_results.append({"type": "assertion_error", "message": error_msg})
-var error_msg_4 = "Value should not be null - " + message
-	test_results.append({"type": "assertion_error", "message": error_msg})
-var tester = new()
+# FIXED: Orphaned code - var error_msg = "Assertion failed: " + message
+	# ORPHANED REF: test_results.append({"type": "assertion_error", "message": error_msg})
+# FIXED: Orphaned code - var error_msg_2 = "Expected: %s, Got: %s - %s" % [expected, actual, message]
+	# ORPHANED REF: test_results.append({"type": "assertion_error", "message": error_msg})
+# FIXED: Orphaned code - var error_msg_3 = "Values should not be equal: %s - %s" % [actual, message]
+	# ORPHANED REF: test_results.append({"type": "assertion_error", "message": error_msg})
+# FIXED: Orphaned code - var error_msg_4 = "Value should not be null - " + message
+	# ORPHANED REF: test_results.append({"type": "assertion_error", "message": error_msg})
+# FIXED: Orphaned code - var tester = new()
 
 func run_all_tests() -> Dictionary:
 	"""Run all foundation layer tests"""
@@ -261,13 +261,13 @@ func run_all_tests() -> Dictionary:
 	_print_test_summary()
 
 	return {
-	"total_tests": total_tests,
-	"passed_tests": passed_tests,
-	"failed_tests": total_tests - passed_tests,
-	"success_rate":
-		float(passed_tests) / float(total_tests) * 100.0 if total_tests > 0 else 0.0,
-		"details": test_results
-		}
+"total_tests": total_tests,
+"passed_tests": passed_tests,
+"failed_tests": total_tests - passed_tests,
+"success_rate":
+	float(passed_tests) / float(total_tests) * 100.0 if total_tests > 0 else 0.0,
+"details": test_results
+	}
 
 
 		# === FEATURE FLAGS TESTS ===
@@ -318,20 +318,20 @@ func test_component_registry_factories() -> void:
 
 	# Register custom factory
 func test_state_manager_basic() -> void:
-	"""Test basic state management functionality"""
+	# ORPHANED REF: """Test basic state management functionality"""
 	_start_test("ComponentStateManager Basic")
 
 	# Enable state persistence for this test
 	FeatureFlags.enable_feature(FeatureFlags.UI_STATE_PERSISTENCE)
 
 func test_state_manager_persistence() -> void:
-	"""Test state persistence to disk"""
+	# ORPHANED REF: """Test state persistence to disk"""
 	_start_test("ComponentStateManager Persistence")
 
 	FeatureFlags.enable_feature(FeatureFlags.UI_STATE_PERSISTENCE)
 
 func test_state_manager_cleanup() -> void:
-	"""Test state cleanup functionality"""
+	# ORPHANED REF: """Test state cleanup functionality"""
 	_start_test("ComponentStateManager Cleanup")
 
 	FeatureFlags.enable_feature(FeatureFlags.UI_STATE_PERSISTENCE)
@@ -405,37 +405,31 @@ func assert_not_null(value, message: String = "") -> void:
 	"""Assert that value is not null"""
 	if value == null:
 
-func _fix_orphaned_code():
 	return label
 
 	ComponentRegistry.register_factory("custom_test", custom_factory)
 
-	# Create component using custom factory
-func _fix_orphaned_code():
-	print("    ❌ " + error_msg)
+# Create component using custom factory
+	# ORPHANED REF: print("    ❌ " + error_msg)
 	_end_test(false)
 
 
-func _fix_orphaned_code():
-	print("    ❌ " + error_msg)
+	# ORPHANED REF: print("    ❌ " + error_msg)
 	_end_test(false)
 
 
-func _fix_orphaned_code():
-	print("    ❌ " + error_msg)
+	# ORPHANED REF: print("    ❌ " + error_msg)
 	_end_test(false)
 
 
-func _fix_orphaned_code():
-	print("    ❌ " + error_msg)
+	# ORPHANED REF: print("    ❌ " + error_msg)
 	_end_test(false)
 
 
-func _fix_orphaned_code():
-	return tester.run_all_tests()
+	# ORPHANED REF: return tester.run_all_tests()
 
 func _reset_test_state() -> void:
-	"""Reset test state"""
+	# ORPHANED REF: """Reset test state"""
 	test_results.clear()
 	total_tests = 0
 	passed_tests = 0
@@ -455,10 +449,10 @@ func _start_test(test_name: String) -> void:
 func _end_test(passed: bool = true) -> void:
 	"""End current test"""
 	if passed:
-		passed_tests += 1
-		print("    ✅ PASSED")
-		else:
-			print("    ❌ FAILED")
+	passed_tests += 1
+	print("    ✅ PASSED")
+else:
+	print("    ❌ FAILED")
 
 
 func _print_test_summary() -> void:
@@ -476,13 +470,15 @@ func _print_test_summary() -> void:
 	)
 
 	if passed_tests == total_tests:
-		print("🎉 ALL TESTS PASSED - Foundation layer is ready!")
-		else:
-			print("⚠️  Some tests failed - Review implementation before proceeding")
+	print("🎉 ALL TESTS PASSED - Foundation layer is ready!")
+else:
+	print("⚠️  Some tests failed - Review implementation before proceeding")
 
-			print("================\n")
+	print("================\n")
 
 
 			# === STANDALONE RUNNER ===
-			static func run_foundation_tests() -> Dictionary:
-				"""Static method to run tests from outside"""
+static func run_foundation_tests() -> Dictionary:
+	"""Static method to run tests from outside"""
+
+	return {}

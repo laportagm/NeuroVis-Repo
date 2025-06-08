@@ -38,27 +38,27 @@ enum HighlightType { PRIMARY, SECONDARY, RELATED, PATHWAY }  # Main educational 
 # === PRIVATE VARIABLES ===
 
 var knowledge_service = get_node("/root/KnowledgeService")
-var normalized_name = _normalize_structure_name(structure_name)
+# FIXED: Orphaned code - var normalized_name = _normalize_structure_name(structure_name)
 
 # Try to get data from knowledge service
 var structure_data = {}
 
-var knowledge_service_2 = get_node("/root/KnowledgeService")
-var search_results = knowledge_service.search_structures(normalized_name)
-var kb = get_node("/root/KB")
-var structure_id = _find_structure_id_legacy(normalized_name)
-var structure_data_2 = get_structure_data(structure_name)
-var highlight_type_str = HighlightType.keys()[highlight_type].to_lower()
+# FIXED: Orphaned code - var knowledge_service_2 = get_node("/root/KnowledgeService")
+# FIXED: Orphaned code - var search_results = knowledge_service.search_structures(normalized_name)
+# FIXED: Orphaned code - var kb = get_node("/root/KB")
+# FIXED: Orphaned code - var structure_id = _find_structure_id_legacy(normalized_name)
+# FIXED: Orphaned code - var structure_data_2 = get_structure_data(structure_name)
+# FIXED: Orphaned code - var highlight_type_str = HighlightType.keys()[highlight_type].to_lower()
 highlight_structure(structure_name, highlight_type_str)
 
 # Find related structures
 find_related_structures(structure_name)
 
-var cache_key = structure_name
+# FIXED: Orphaned code - var cache_key = structure_name
 var related = _relationship_cache[cache_key]
 related_structures_found.emit(structure_name, related)
-var structure_data_3 = get_structure_data(structure_name)
-var related_structures = []
+# FIXED: Orphaned code - var structure_data_3 = get_structure_data(structure_name)
+# FIXED: Orphaned code - var related_structures = []
 
 var pathologies = structure_data["commonPathologies"]
 var affected = _find_structures_with_pathology(pathology, [structure_name])
@@ -75,13 +75,13 @@ structure_comparison_started.emit(structure_names)
 
 ## End active comparison mode
 var knowledge_service_3 = get_node("/root/KnowledgeService")
-var results = []
+# FIXED: Orphaned code - var results = []
 var kb_2 = get_node("/root/KB")
-var structure_ids = kb.get_all_structure_ids()
+# FIXED: Orphaned code - var structure_ids = kb.get_all_structure_ids()
 
-var structure = kb.get_structure(id)
-var match_score = _calculate_search_match(structure, query)
-var clean_name = name.replace("(good)", "").strip_edges()
+# FIXED: Orphaned code - var structure = kb.get_structure(id)
+# FIXED: Orphaned code - var match_score = _calculate_search_match(structure, query)
+# FIXED: Orphaned code - var clean_name = name.replace("(good)", "").strip_edges()
 
 # Remove common suffixes
 clean_name = clean_name.replace(" (left)", "").replace(" (right)", "")
@@ -105,36 +105,36 @@ var name_map = {
 
 # Check for direct mapping
 var lower_name = clean_name.to_lower()
-var kb_3 = get_node("/root/KB")
-var lower_name_2 = mesh_name.to_lower()
-var structure_ids_2 = kb.get_all_structure_ids()
+# FIXED: Orphaned code - var kb_3 = get_node("/root/KB")
+# FIXED: Orphaned code - var lower_name_2 = mesh_name.to_lower()
+# FIXED: Orphaned code - var structure_ids_2 = kb.get_all_structure_ids()
 
 # Try exact match first
 var structure_2 = kb.get_structure(id)
-var structure_3 = kb.get_structure(id)
-var display_name = structure.displayName.to_lower()
-var affected_structures = []
+# FIXED: Orphaned code - var structure_3 = kb.get_structure(id)
+# FIXED: Orphaned code - var display_name = structure.displayName.to_lower()
+# FIXED: Orphaned code - var affected_structures = []
 
 var knowledge_service_4 = get_node("/root/KnowledgeService")
-var kb_4 = get_node("/root/KB")
-var structure_ids_3 = kb.get_all_structure_ids()
+# FIXED: Orphaned code - var kb_4 = get_node("/root/KB")
+# FIXED: Orphaned code - var structure_ids_3 = kb.get_all_structure_ids()
 
-var structure_4 = kb.get_structure(id)
-var pathologies_2 = structure.commonPathologies
+# FIXED: Orphaned code - var structure_4 = kb.get_structure(id)
+# FIXED: Orphaned code - var pathologies_2 = structure.commonPathologies
 var score = 0.0
 var lower_query = query.to_lower()
 
 # Check display name
 var display_name_2 = structure.displayName.to_lower()
-var description = structure.shortDescription.to_lower()
-var clinical = structure.clinicalRelevance.to_lower()
-var current_data = get_structure_data(_current_structure, true)
+# FIXED: Orphaned code - var description = structure.shortDescription.to_lower()
+# FIXED: Orphaned code - var clinical = structure.clinicalRelevance.to_lower()
+# FIXED: Orphaned code - var current_data = get_structure_data(_current_structure, true)
 
-var _structure_cache: Dictionary = {}
-var _relationship_cache: Dictionary = {}
-var _current_structure: String = ""
+# FIXED: Orphaned code - var _structure_cache: Dictionary = {}
+# FIXED: Orphaned code - var _relationship_cache: Dictionary = {}
+# FIXED: Orphaned code - var _current_structure: String = ""
 var _highlighted_structures: Dictionary = {}
-var _comparison_active: bool = false
+# FIXED: Orphaned code - var _comparison_active: bool = false
 var _comparison_structures: Array = []
 
 
@@ -237,281 +237,244 @@ func search_structures(query: String, limit: int = 5) -> Array:
 
 		if has_node("/root/KnowledgeService"):
 
-func _fix_orphaned_code():
-	if knowledge_service.has_signal("knowledge_base_loaded"):
-		knowledge_service.knowledge_base_loaded.connect(_on_knowledge_base_loaded)
+if knowledge_service.has_signal("knowledge_base_loaded"):
+	knowledge_service.knowledge_base_loaded.connect(_on_knowledge_base_loaded)
+	else:
+		push_warning(
+		"[StructureManager] Warning: KnowledgeService does not have knowledge_base_loaded signal"
+		)
+		else:
+			push_warning("[StructureManager] Warning: KnowledgeService not available")
+
+
+			# === PUBLIC METHODS ===
+			## Get structure data with optimized caching
+			## @param structure_name: The name of the structure to retrieve
+			## @param force_refresh: If true, bypasses cache and forces fresh data retrieval
+			## @returns: Dictionary containing structure data
+if has_node("/root/KnowledgeService"):
+if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+	if knowledge_service.has_method("get_structure"):
+		structure_data = knowledge_service.get_structure(normalized_name)
 		else:
 			push_warning(
-			"[StructureManager] Warning: KnowledgeService does not have knowledge_base_loaded signal"
+			"[StructureManager] Warning: KnowledgeService.get_structure not available"
+			)
+
+			# Attempt fuzzy search if exact match fails
+			if structure_data.is_empty() and knowledge_service.has_method("search_structures"):
+if not search_results.is_empty():
+	structure_data = search_results[0]
+	else:
+		push_warning("[StructureManager] Warning: KnowledgeService not initialized")
+		else:
+			push_warning("[StructureManager] Warning: KnowledgeService not available")
+
+			# Fallback to legacy knowledge base if needed
+			if structure_data.is_empty() and has_node("/root/KB"):
+if kb.has_method("is_loaded") and kb.is_loaded:
+if not structure_id.is_empty() and kb.has_method("get_structure"):
+	structure_data = kb.get_structure(structure_id)
+	else:
+		push_warning("[StructureManager] Warning: KB not loaded")
+
+		# Cache the result if valid
+		if not structure_data.is_empty():
+			_structure_cache[structure_name] = structure_data
+			structure_data_ready.emit(structure_name)
+			else:
+				push_warning("[StructureManager] No data found for structure: " + structure_name)
+
+				return structure_data
+
+
+				## Select a structure for educational focus
+				## @param structure_name: Name of the structure to select
+				## @param highlight_type: Type of highlighting to apply (from HighlightType enum)
+				## @returns: Whether the selection was successful
+if structure_data.is_empty():
+	push_warning("[StructureManager] Cannot select structure with no data: " + structure_name)
+	return false
+
+	# Update current structure
+	_current_structure = structure_name
+
+	# Emit selection signal with data
+	structure_selected.emit(structure_name, structure_data)
+
+	# Trigger highlighting based on type
+return true
+
+
+## Highlight a structure without full selection
+## @param structure_name: Name of the structure to highlight
+## @param highlight_type: String indicating highlight style
+if relationship_type >= 0:
+	cache_key += "_" + str(relationship_type)
+
+	if _relationship_cache.has(cache_key):
+return related
+
+# Get structure data
+if structure_data.is_empty():
+	return []
+
+	# Extract relationships based on type
+if relationship_type < 0 or relationship_type == RelationshipType.FUNCTIONAL:
+	# Functional relationships
+	if structure_data.has("functionalConnections"):
+		related_structures.append_array(structure_data["functionalConnections"])
+		elif structure_data.has("related") and structure_data["related"] is Array:
+			related_structures.append_array(structure_data["related"])
+
+			if relationship_type < 0 or relationship_type == RelationshipType.ANATOMICAL:
+				# Anatomical relationships
+				if structure_data.has("anatomicalConnections"):
+					related_structures.append_array(structure_data["anatomicalConnections"])
+
+					if relationship_type < 0 or relationship_type == RelationshipType.PATHOLOGICAL:
+						# Pathological relationships
+						if structure_data.has("commonPathologies") and structure_data["commonPathologies"] is Array:
+for pathology in pathologies:
+	# Find other structures with the same pathology
+for item in related_structures:
+	if not item in unique_related and item != structure_name:
+		unique_related.append(item)
+
+		# Cache the result
+		_relationship_cache[cache_key] = unique_related
+
+		# Emit signal
+		related_structures_found.emit(structure_name, unique_related)
+
+		return unique_related
+
+
+		## Start a comparison between multiple structures
+		## @param structure_names: Array of structure names to compare
+if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+	if knowledge_service.has_method("search_structures"):
+		return knowledge_service.search_structures(query, limit)
+		else:
+			push_warning(
+			"[StructureManager] Warning: KnowledgeService.search_structures not available"
 			)
 			else:
-				push_warning("[StructureManager] Warning: KnowledgeService not available")
+				push_warning("[StructureManager] Warning: KnowledgeService not initialized")
 
+				# Fallback search implementation for legacy KB
+if has_node("/root/KB"):
+if kb.has_method("is_loaded") and kb.is_loaded:
+	if kb.has_method("get_all_structure_ids"):
+for id in structure_ids:
+	if kb.has_method("get_structure"):
+if structure is Dictionary:
+if match_score > 0:
+	structure["match_score"] = match_score
+	results.append(structure)
 
-				# === PUBLIC METHODS ===
-				## Get structure data with optimized caching
-				## @param structure_name: The name of the structure to retrieve
-				## @param force_refresh: If true, bypasses cache and forces fresh data retrieval
-				## @returns: Dictionary containing structure data
-func _fix_orphaned_code():
-	if has_node("/root/KnowledgeService"):
-func _fix_orphaned_code():
-	if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
-		if knowledge_service.has_method("get_structure"):
-			structure_data = knowledge_service.get_structure(normalized_name)
-			else:
-				push_warning(
-				"[StructureManager] Warning: KnowledgeService.get_structure not available"
-				)
+	# Sort by match score
+	results.sort_custom(func(a, b): return a.match_score > b.match_score)
 
-				# Attempt fuzzy search if exact match fails
-				if structure_data.is_empty() and knowledge_service.has_method("search_structures"):
-func _fix_orphaned_code():
-	if not search_results.is_empty():
-		structure_data = search_results[0]
+	# Limit results
+	if results.size() > limit:
+		results = results.slice(0, limit)
 		else:
-			push_warning("[StructureManager] Warning: KnowledgeService not initialized")
+			push_warning("[StructureManager] Warning: KB.get_all_structure_ids not available")
 			else:
-				push_warning("[StructureManager] Warning: KnowledgeService not available")
+				push_warning("[StructureManager] Warning: KB not loaded")
 
-				# Fallback to legacy knowledge base if needed
-				if structure_data.is_empty() and has_node("/root/KB"):
-func _fix_orphaned_code():
-	if kb.has_method("is_loaded") and kb.is_loaded:
-func _fix_orphaned_code():
-	if not structure_id.is_empty() and kb.has_method("get_structure"):
-		structure_data = kb.get_structure(structure_id)
-		else:
-			push_warning("[StructureManager] Warning: KB not loaded")
-
-			# Cache the result if valid
-			if not structure_data.is_empty():
-				_structure_cache[structure_name] = structure_data
-				structure_data_ready.emit(structure_name)
-				else:
-					push_warning("[StructureManager] No data found for structure: " + structure_name)
-
-					return structure_data
+				return results
 
 
-					## Select a structure for educational focus
-					## @param structure_name: Name of the structure to select
-					## @param highlight_type: Type of highlighting to apply (from HighlightType enum)
-					## @returns: Whether the selection was successful
-func _fix_orphaned_code():
-	if structure_data.is_empty():
-		push_warning("[StructureManager] Cannot select structure with no data: " + structure_name)
-		return false
+				# === PRIVATE METHODS ===
+				## Normalize structure name for consistent lookup
+if name_map.has(lower_name):
+	return name_map[lower_name]
 
-		# Update current structure
-		_current_structure = structure_name
-
-		# Emit selection signal with data
-		structure_selected.emit(structure_name, structure_data)
-
-		# Trigger highlighting based on type
-func _fix_orphaned_code():
-	return true
+	return clean_name
 
 
-	## Highlight a structure without full selection
-	## @param structure_name: Name of the structure to highlight
-	## @param highlight_type: String indicating highlight style
-func _fix_orphaned_code():
-	if relationship_type >= 0:
-		cache_key += "_" + str(relationship_type)
+	## Find structure ID in legacy knowledge base
+if not kb.has_method("is_loaded") or not kb.is_loaded:
+	return ""
 
-		if _relationship_cache.has(cache_key):
-func _fix_orphaned_code():
-	return related
-
-	# Get structure data
-func _fix_orphaned_code():
-	if structure_data.is_empty():
-		return []
-
-		# Extract relationships based on type
-func _fix_orphaned_code():
-	if relationship_type < 0 or relationship_type == RelationshipType.FUNCTIONAL:
-		# Functional relationships
-		if structure_data.has("functionalConnections"):
-			related_structures.append_array(structure_data["functionalConnections"])
-			elif structure_data.has("related") and structure_data["related"] is Array:
-				related_structures.append_array(structure_data["related"])
-
-				if relationship_type < 0 or relationship_type == RelationshipType.ANATOMICAL:
-					# Anatomical relationships
-					if structure_data.has("anatomicalConnections"):
-						related_structures.append_array(structure_data["anatomicalConnections"])
-
-						if relationship_type < 0 or relationship_type == RelationshipType.PATHOLOGICAL:
-							# Pathological relationships
-							if structure_data.has("commonPathologies") and structure_data["commonPathologies"] is Array:
-func _fix_orphaned_code():
-	for pathology in pathologies:
-		# Find other structures with the same pathology
-func _fix_orphaned_code():
-	for item in related_structures:
-		if not item in unique_related and item != structure_name:
-			unique_related.append(item)
-
-			# Cache the result
-			_relationship_cache[cache_key] = unique_related
-
-			# Emit signal
-			related_structures_found.emit(structure_name, unique_related)
-
-			return unique_related
-
-
-			## Start a comparison between multiple structures
-			## @param structure_names: Array of structure names to compare
-func _fix_orphaned_code():
-	if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
-		if knowledge_service.has_method("search_structures"):
-			return knowledge_service.search_structures(query, limit)
-			else:
-				push_warning(
-				"[StructureManager] Warning: KnowledgeService.search_structures not available"
-				)
-				else:
-					push_warning("[StructureManager] Warning: KnowledgeService not initialized")
-
-					# Fallback search implementation for legacy KB
-func _fix_orphaned_code():
-	if has_node("/root/KB"):
-func _fix_orphaned_code():
-	if kb.has_method("is_loaded") and kb.is_loaded:
-		if kb.has_method("get_all_structure_ids"):
-func _fix_orphaned_code():
-	for id in structure_ids:
-		if kb.has_method("get_structure"):
-func _fix_orphaned_code():
-	if structure is Dictionary:
-func _fix_orphaned_code():
-	if match_score > 0:
-		structure["match_score"] = match_score
-		results.append(structure)
-
-		# Sort by match score
-		results.sort_custom(func(a, b): return a.match_score > b.match_score)
-
-		# Limit results
-		if results.size() > limit:
-			results = results.slice(0, limit)
-			else:
-				push_warning("[StructureManager] Warning: KB.get_all_structure_ids not available")
-				else:
-					push_warning("[StructureManager] Warning: KB not loaded")
-
-					return results
-
-
-					# === PRIVATE METHODS ===
-					## Normalize structure name for consistent lookup
-func _fix_orphaned_code():
-	if name_map.has(lower_name):
-		return name_map[lower_name]
-
-		return clean_name
-
-
-		## Find structure ID in legacy knowledge base
-func _fix_orphaned_code():
-	if not kb.has_method("is_loaded") or not kb.is_loaded:
+	if not kb.has_method("get_all_structure_ids") or not kb.has_method("get_structure"):
+		push_warning("[StructureManager] Warning: KB missing required methods")
 		return ""
 
-		if not kb.has_method("get_all_structure_ids") or not kb.has_method("get_structure"):
-			push_warning("[StructureManager] Warning: KB missing required methods")
-			return ""
-
-func _fix_orphaned_code():
-	for id in structure_ids:
-func _fix_orphaned_code():
-	if structure is Dictionary and structure.has("displayName"):
-		if structure.displayName.to_lower() == lower_name:
-			return id
-
-			# Try partial match
-			for id in structure_ids:
-func _fix_orphaned_code():
-	if structure is Dictionary and structure.has("displayName"):
-func _fix_orphaned_code():
-	if lower_name.contains(display_name) or display_name.contains(lower_name):
+for id in structure_ids:
+if structure is Dictionary and structure.has("displayName"):
+	if structure.displayName.to_lower() == lower_name:
 		return id
 
-		return ""
+		# Try partial match
+		for id in structure_ids:
+if structure is Dictionary and structure.has("displayName"):
+if lower_name.contains(display_name) or display_name.contains(lower_name):
+	return id
+
+	return ""
 
 
-		## Find structures associated with a specific pathology
-func _fix_orphaned_code():
-	if has_node("/root/KnowledgeService"):
-func _fix_orphaned_code():
-	if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
-		# Use new KnowledgeService API if available
-		if knowledge_service.has_method("get_structures_by_pathology"):
-			return knowledge_service.get_structures_by_pathology(pathology, exclude)
+	## Find structures associated with a specific pathology
+if has_node("/root/KnowledgeService"):
+if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+	# Use new KnowledgeService API if available
+	if knowledge_service.has_method("get_structures_by_pathology"):
+		return knowledge_service.get_structures_by_pathology(pathology, exclude)
 
-			# Fallback implementation for legacy KB
-			if has_node("/root/KB"):
-func _fix_orphaned_code():
-	if kb.has_method("is_loaded") and kb.is_loaded:
-		if kb.has_method("get_all_structure_ids") and kb.has_method("get_structure"):
-func _fix_orphaned_code():
-	for id in structure_ids:
-		if id in exclude:
-			continue
+		# Fallback implementation for legacy KB
+		if has_node("/root/KB"):
+if kb.has_method("is_loaded") and kb.is_loaded:
+	if kb.has_method("get_all_structure_ids") and kb.has_method("get_structure"):
+for id in structure_ids:
+	if id in exclude:
+		continue
 
-func _fix_orphaned_code():
-	if structure is Dictionary and structure.has("commonPathologies"):
-func _fix_orphaned_code():
-	if pathologies is Array and pathology in pathologies:
-		affected_structures.append(structure.get("displayName", id))
+if structure is Dictionary and structure.has("commonPathologies"):
+if pathologies is Array and pathology in pathologies:
+	affected_structures.append(structure.get("displayName", id))
 
-		return affected_structures
+	return affected_structures
 
 
-		## Calculate search match score for a structure
-func _fix_orphaned_code():
-	if structure.has("displayName"):
-func _fix_orphaned_code():
-	if display_name == lower_query:
-		score += 100.0  # Exact match
-		elif display_name.begins_with(lower_query):
-			score += 50.0  # Begins with query
-			elif display_name.contains(lower_query):
-				score += 25.0  # Contains query
+	## Calculate search match score for a structure
+if structure.has("displayName"):
+if display_name == lower_query:
+	score += 100.0  # Exact match
+	elif display_name.begins_with(lower_query):
+		score += 50.0  # Begins with query
+		elif display_name.contains(lower_query):
+			score += 25.0  # Contains query
 
-				# Check description
-				if structure.has("shortDescription"):
-func _fix_orphaned_code():
-	if description.contains(lower_query):
-		score += 10.0
+			# Check description
+			if structure.has("shortDescription"):
+if description.contains(lower_query):
+	score += 10.0
 
-		# Check functions
-		if structure.has("functions") and structure.functions is Array:
-			for function in structure.functions:
-				if function.to_lower().contains(lower_query):
-					score += 15.0
-					break
+	# Check functions
+	if structure.has("functions") and structure.functions is Array:
+		for function in structure.functions:
+			if function.to_lower().contains(lower_query):
+				score += 15.0
+				break
 
-					# Check clinical relevance
-					if structure.has("clinicalRelevance"):
-func _fix_orphaned_code():
-	if clinical.contains(lower_query):
-		score += 5.0
+				# Check clinical relevance
+				if structure.has("clinicalRelevance"):
+if clinical.contains(lower_query):
+	score += 5.0
 
-		return score
+	return score
 
 
-		## Handle knowledge base loaded event
-func _fix_orphaned_code():
-	if not current_data.is_empty():
-		structure_data_ready.emit(_current_structure)
+	## Handle knowledge base loaded event
+if not current_data.is_empty():
+	structure_data_ready.emit(_current_structure)
 
-		# Refresh comparison if active
-		if _comparison_active and not _comparison_structures.is_empty():
-			start_comparison(_comparison_structures)
+	# Refresh comparison if active
+	if _comparison_active and not _comparison_structures.is_empty():
+		start_comparison(_comparison_structures)
 
 func _normalize_structure_name(name: String) -> String:
 	"""Normalize structure names for consistent educational mapping"""

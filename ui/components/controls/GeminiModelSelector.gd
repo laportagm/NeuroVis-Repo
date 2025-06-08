@@ -47,7 +47,7 @@ add_child(status_indicator)
 _set_status("unknown")
 
 
-var is_configured = gemini_service.is_api_key_valid()
+# FIXED: Orphaned code - var is_configured = gemini_service.is_api_key_valid()
 _set_status("configured" if is_configured else "unconfigured")
 
 # Connect signals from Gemini service
@@ -88,7 +88,7 @@ var image = Image.create(16, 16, false, Image.FORMAT_RGBA8)
 
 	# Draw circle with given color
 var distance = Vector2(x - 8, y - 8).length()
-var texture = ImageTexture.create_from_image(image)
+# FIXED: Orphaned code - var texture = ImageTexture.create_from_image(image)
 	status_indicator.texture = texture
 	status_indicator.tooltip_text = tooltip
 
@@ -130,32 +130,29 @@ func refresh_status() -> void:
 			else:
 				_set_status("unconfigured")
 
-func _fix_orphaned_code():
-	if models.is_empty():
-		models = []
-		for key in gemini_service.MODEL_NAMES:
-			models.append(gemini_service.MODEL_NAMES[key])
+if models.is_empty():
+	models = []
+	for key in gemini_service.MODEL_NAMES:
+		models.append(gemini_service.MODEL_NAMES[key])
 
-			# Add models to dropdown
-			for model_name in models:
-				model_dropdown.add_item(model_name)
+		# Add models to dropdown
+		for model_name in models:
+			model_dropdown.add_item(model_name)
 
-				# Select current model
-				if model_name == current_model:
-					model_dropdown.select(model_dropdown.item_count - 1)
-					else:
-						# Fallback models if service not available
-						model_dropdown.add_item("gemini-pro")
-						model_dropdown.add_item("gemini-pro-vision")
-						model_dropdown.add_item("gemini-flash")
+			# Select current model
+			if model_name == current_model:
+				model_dropdown.select(model_dropdown.item_count - 1)
+				else:
+					# Fallback models if service not available
+					model_dropdown.add_item("gemini-pro")
+					model_dropdown.add_item("gemini-pro-vision")
+					model_dropdown.add_item("gemini-flash")
 
 
-func _fix_orphaned_code():
-	for x in range(16):
-		for y in range(16):
-func _fix_orphaned_code():
-	if distance <= 6:
-		image.set_pixel(x, y, color)
+for x in range(16):
+	for y in range(16):
+if distance <= 6:
+	image.set_pixel(x, y, color)
 
 func _create_component() -> void:
 	"""Create the component UI"""

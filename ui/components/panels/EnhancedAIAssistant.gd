@@ -78,7 +78,7 @@ source_panel = _create_source_panel()
 add_child(source_panel)
 
 
-var header_2 = HBoxContainer.new()
+# FIXED: Orphaned code - var header_2 = HBoxContainer.new()
 header.add_theme_constant_override("separation", 12)
 
 # Title
@@ -112,7 +112,7 @@ settings_btn.custom_minimum_size = Vector2(32, 32)
 settings_btn.pressed.connect(_on_settings_pressed)
 header.add_child(settings_btn)
 
-var scroll = ScrollContainer.new()
+# FIXED: Orphaned code - var scroll = ScrollContainer.new()
 scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 scroll.custom_minimum_size.y = 400
 
@@ -126,7 +126,7 @@ _add_system_message(
 "Hello! I'm your AI assistant for learning about brain anatomy. Select a structure and ask me anything!"
 )
 
-var container = HBoxContainer.new()
+# FIXED: Orphaned code - var container = HBoxContainer.new()
 container.add_theme_constant_override("separation", 8)
 
 # Suggestions label
@@ -160,18 +160,18 @@ style.corner_radius_top_left = 8
 style.corner_radius_top_right = 8
 panel.add_theme_stylebox_override("panel", style)
 
-var content = VBoxContainer.new()
+# FIXED: Orphaned code - var content = VBoxContainer.new()
 content.add_theme_constant_override("separation", 4)
 
-var header_3 = HBoxContainer.new()
-var title_2 = Label.new()
+# FIXED: Orphaned code - var header_3 = HBoxContainer.new()
+# FIXED: Orphaned code - var title_2 = Label.new()
 title.text = "Sources"
 title.add_theme_font_size_override("font_size", 14)
 header.add_child(title)
 
 header.add_spacer(false)
 
-var close_btn = Button.new()
+# FIXED: Orphaned code - var close_btn = Button.new()
 close_btn.text = "✕"
 close_btn.pressed.connect(func(): panel.visible = false)
 header.add_child(close_btn)
@@ -181,8 +181,8 @@ content.add_child(HSeparator.new())
 
 panel.add_child(content)
 
-var question = input_field.text.strip_edges()
-var typing_indicator = _add_typing_indicator()
+# FIXED: Orphaned code - var question = input_field.text.strip_edges()
+# FIXED: Orphaned code - var typing_indicator = _add_typing_indicator()
 
 # Build context
 var context = _build_context(question)
@@ -192,7 +192,7 @@ question_asked.emit(question, context)
 
 # Send to AI service
 ai_service.send_message(question, context)
-var response = await ai_service.response_received
+# FIXED: Orphaned code - var response = await ai_service.response_received
 
 # Remove typing indicator
 typing_indicator.queue_free()
@@ -207,9 +207,9 @@ send_button.disabled = false
 _update_suggestions()
 
 
-var lower_question = question.to_lower()
+# FIXED: Orphaned code - var lower_question = question.to_lower()
 
-var formatted_response = response_formatter.format_response(response, current_mode)
+# FIXED: Orphaned code - var formatted_response = response_formatter.format_response(response, current_mode)
 
 # Add AI message
 _add_ai_message(formatted_response.text)
@@ -223,19 +223,19 @@ btn.pressed.connect(_on_suggestion_pressed.bind(suggestion))
 suggestions_container.add_child(btn)
 
 
-var suggestions = []
+# FIXED: Orphaned code - var suggestions = []
 
 var message = _create_message_bubble(text, true)
 chat_messages.add_child(message)
 _scroll_to_bottom()
 
 
-var message_2 = _create_message_bubble(text, false)
+# FIXED: Orphaned code - var message_2 = _create_message_bubble(text, false)
 chat_messages.add_child(message)
 _scroll_to_bottom()
 
 
-var message_3 = Label.new()
+# FIXED: Orphaned code - var message_3 = Label.new()
 message.text = text
 message.add_theme_color_override("font_color", DesignSystem.get_color("text_muted"))
 message.add_theme_font_size_override("font_size", 12)
@@ -244,14 +244,14 @@ chat_messages.add_child(message)
 _scroll_to_bottom()
 
 
-var container_3 = HBoxContainer.new()
+# FIXED: Orphaned code - var container_3 = HBoxContainer.new()
 
-var bubble = PanelContainer.new()
+# FIXED: Orphaned code - var bubble = PanelContainer.new()
 bubble.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 bubble.custom_minimum_size.x = 100
 
 var style_2 = StyleBoxFlat.new()
-var label_2 = RichTextLabel.new()
+# FIXED: Orphaned code - var label_2 = RichTextLabel.new()
 label.bbcode_enabled = true
 label.fit_content = true
 label.text = text
@@ -259,18 +259,18 @@ bubble.add_child(label)
 
 container.add_child(bubble)
 
-var indicator = _create_message_bubble("...", false)
+# FIXED: Orphaned code - var indicator = _create_message_bubble("...", false)
 chat_messages.add_child(indicator)
 
 # Animate dots
 var label_3 = indicator.get_node("PanelContainer/RichTextLabel")
-var tween = create_tween()
+# FIXED: Orphaned code - var tween = create_tween()
 tween.set_loops()
 tween.tween_callback(func(): label.text = ".").set_delay(0.3)
 tween.tween_callback(func(): label.text = "..").set_delay(0.3)
 tween.tween_callback(func(): label.text = "...").set_delay(0.3)
 
-var dialog = AcceptDialog.new()
+# FIXED: Orphaned code - var dialog = AcceptDialog.new()
 dialog.title = "AI Assistant Settings"
 dialog.dialog_hide_on_ok = true
 
@@ -297,11 +297,11 @@ func(pressed):
 
 	# Language selector
 var lang_container = HBoxContainer.new()
-var lang_label = Label.new()
+# FIXED: Orphaned code - var lang_label = Label.new()
 	lang_label.text = "Language:"
 	lang_container.add_child(lang_label)
 
-var lang_selector = OptionButton.new()
+# FIXED: Orphaned code - var lang_selector = OptionButton.new()
 	lang_selector.add_item("English", 0)
 	lang_selector.add_item("Spanish", 1)
 	lang_selector.add_item("French", 2)
@@ -317,8 +317,8 @@ var lang_selector = OptionButton.new()
 
 	# === UTILITY METHODS ===
 var data = KnowledgeService.get_structure(structure_id)
-var start = max(0, conversation_history.size() - count)
-var style_3 = StyleBoxFlat.new()
+# FIXED: Orphaned code - var start = max(0, conversation_history.size() - count)
+# FIXED: Orphaned code - var style_3 = StyleBoxFlat.new()
 	style.bg_color = DesignSystem.get_color("surface_light")
 	style.corner_radius_top_left = 16
 	style.corner_radius_top_right = 16
@@ -337,7 +337,7 @@ var label_4 = Label.new()
 	content.add_child(label)
 
 
-var context_2 = {
+# FIXED: Orphaned code - var context_2 = {
 	"timestamp": Time.get_unix_time_from_system(),
 	"structure": params.get("structure", ""),
 	"educational_mode": params.get("mode", EducationalMode.STUDENT),
@@ -348,7 +348,7 @@ var context_2 = {
 
 	# Add conversation history
 var structure_data = KnowledgeService.get_structure(context.structure)
-var formatted = {
+# FIXED: Orphaned code - var formatted = {
 	"text": response.get("content", ""), "metadata": response.get("metadata", {})
 	}
 
@@ -359,14 +359,14 @@ var formatted = {
 			formatted.text = _convert_to_bullet_points(formatted.text)
 			EducationalMode.RESEARCH:
 var lines = text.split("\n")
-var bullet_text = ""
+# FIXED: Orphaned code - var bullet_text = ""
 
 var cited_text = text
 
 func _initialize_services() -> void:
 	"""Initialize AI and support services"""
 	# AI Service
-	ai_service = preprepreprepreload("res://core/services/AIService.gd").new()
+	ai_service = preload("res://core/services/AIService.gd").new()
 	add_child(ai_service)
 
 	# Context Builder
@@ -425,233 +425,211 @@ func clear_history() -> void:
 func build_context(params: Dictionary) -> Dictionary:
 func format_response(response: Dictionary, mode: EducationalMode) -> Dictionary:
 
-func _fix_orphaned_code():
-	return header
+return header
 
 
-func _fix_orphaned_code():
-	return scroll
+return scroll
 
 
-func _fix_orphaned_code():
+return container
+
+
+if enable_voice:
+	voice_button = Button.new()
+	voice_button.text = "🎤"
+	voice_button.tooltip_text = "Voice input"
+	voice_button.custom_minimum_size = Vector2(40, 40)
+	voice_button.pressed.connect(_on_voice_pressed)
+	container.add_child(voice_button)
+
+	# Send button
+	send_button = Button.new()
+	send_button.text = "Send"
+	send_button.pressed.connect(_on_send_pressed)
+	container.add_child(send_button)
+
 	return container
 
 
-func _fix_orphaned_code():
-	if enable_voice:
-		voice_button = Button.new()
-		voice_button.text = "🎤"
-		voice_button.tooltip_text = "Voice input"
-		voice_button.custom_minimum_size = Vector2(40, 40)
-		voice_button.pressed.connect(_on_voice_pressed)
-		container.add_child(voice_button)
-
-		# Send button
-		send_button = Button.new()
-		send_button.text = "Send"
-		send_button.pressed.connect(_on_send_pressed)
-		container.add_child(send_button)
-
-		return container
+return panel
 
 
-func _fix_orphaned_code():
-	return panel
+# === PUBLIC API ===
+if question.is_empty() or is_processing:
+	return
+
+	_process_question(question)
+	input_field.clear()
 
 
-	# === PUBLIC API ===
-func _fix_orphaned_code():
-	if question.is_empty() or is_processing:
-		return
-
-		_process_question(question)
-		input_field.clear()
-
-
-func _fix_orphaned_code():
-	if "how does" in lower_question or "function" in lower_question:
-		return QuestionType.FUNCTION
-		elif (
-		"disease" in lower_question or "disorder" in lower_question or "clinical" in lower_question
-		):
-			return QuestionType.CLINICAL
-			elif "compare" in lower_question or "difference" in lower_question:
-				return QuestionType.COMPARISON
-				elif "pathway" in lower_question or "connection" in lower_question:
-					return QuestionType.PATHWAY
-					elif "develop" in lower_question or "growth" in lower_question:
-						return QuestionType.DEVELOPMENT
-						elif "research" in lower_question or "study" in lower_question:
-							return QuestionType.RESEARCH
-							else:
-								return QuestionType.GENERAL
+if "how does" in lower_question or "function" in lower_question:
+	return QuestionType.FUNCTION
+	elif (
+	"disease" in lower_question or "disorder" in lower_question or "clinical" in lower_question
+	):
+		return QuestionType.CLINICAL
+		elif "compare" in lower_question or "difference" in lower_question:
+			return QuestionType.COMPARISON
+			elif "pathway" in lower_question or "connection" in lower_question:
+				return QuestionType.PATHWAY
+				elif "develop" in lower_question or "growth" in lower_question:
+					return QuestionType.DEVELOPMENT
+					elif "research" in lower_question or "study" in lower_question:
+						return QuestionType.RESEARCH
+						else:
+							return QuestionType.GENERAL
 
 
-func _fix_orphaned_code():
-	if formatted_response.has("sources") and show_sources:
-		_show_sources(formatted_response.sources)
+if formatted_response.has("sources") and show_sources:
+	_show_sources(formatted_response.sources)
 
-		# Add to history
-		conversation_history.append(
-		{
-		"role": "assistant",
-		"content": formatted_response.text,
-		"metadata": formatted_response.get("metadata", {})
-		}
-		)
+	# Add to history
+	conversation_history.append(
+	{
+	"role": "assistant",
+	"content": formatted_response.text,
+	"metadata": formatted_response.get("metadata", {})
+	}
+	)
 
-		# Emit signal
-		answer_received.emit(formatted_response.text, formatted_response.get("metadata", {}))
+	# Emit signal
+	answer_received.emit(formatted_response.text, formatted_response.get("metadata", {}))
 
 
-		# === SUGGESTIONS SYSTEM ===
-func _fix_orphaned_code():
-	if current_structure.is_empty():
-		# General suggestions
-		suggestions = [
-		"What is the hippocampus?",
-		"How does memory formation work?",
-		"What are the main parts of the brain?",
-		"Explain neural pathways"
-		]
-		else:
-			# Structure-specific suggestions based on mode
-			match current_mode:
-				EducationalMode.BEGINNER:
+	# === SUGGESTIONS SYSTEM ===
+if current_structure.is_empty():
+	# General suggestions
+	suggestions = [
+	"What is the hippocampus?",
+	"How does memory formation work?",
+	"What are the main parts of the brain?",
+	"Explain neural pathways"
+	]
+	else:
+		# Structure-specific suggestions based on mode
+		match current_mode:
+			EducationalMode.BEGINNER:
+				suggestions = [
+				"What does the " + current_structure + " do?",
+				"Why is the " + current_structure + " important?",
+				"Can you explain this simply?",
+				"What happens if it's damaged?"
+				]
+				EducationalMode.STUDENT:
 					suggestions = [
-					"What does the " + current_structure + " do?",
-					"Why is the " + current_structure + " important?",
-					"Can you explain this simply?",
-					"What happens if it's damaged?"
+					"Explain the function of " + current_structure,
+					"What are the neural connections?",
+					"Clinical significance of " + current_structure,
+					"Related anatomical structures?"
 					]
-					EducationalMode.STUDENT:
+					EducationalMode.PROFESSIONAL:
 						suggestions = [
-						"Explain the function of " + current_structure,
-						"What are the neural connections?",
-						"Clinical significance of " + current_structure,
-						"Related anatomical structures?"
+						"Pathophysiology involving " + current_structure,
+						"Diagnostic approaches for " + current_structure + " disorders",
+						"Recent research on " + current_structure,
+						"Surgical considerations?"
 						]
-						EducationalMode.PROFESSIONAL:
+						EducationalMode.RESEARCH:
 							suggestions = [
-							"Pathophysiology involving " + current_structure,
-							"Diagnostic approaches for " + current_structure + " disorders",
-							"Recent research on " + current_structure,
-							"Surgical considerations?"
+							"Latest findings on " + current_structure + " function",
+							"Molecular mechanisms in " + current_structure,
+							"Experimental models for studying this region",
+							"Open research questions?"
 							]
-							EducationalMode.RESEARCH:
+							EducationalMode.QUICK_FACTS:
 								suggestions = [
-								"Latest findings on " + current_structure + " function",
-								"Molecular mechanisms in " + current_structure,
-								"Experimental models for studying this region",
-								"Open research questions?"
+								"Key facts about " + current_structure,
+								"Quick summary of functions",
+								"Main connections",
+								"Clinical relevance summary"
 								]
-								EducationalMode.QUICK_FACTS:
-									suggestions = [
-									"Key facts about " + current_structure,
-									"Quick summary of functions",
-									"Main connections",
-									"Clinical relevance summary"
-									]
 
-									return suggestions
+								return suggestions
 
 
-func _fix_orphaned_code():
-	if is_user:
-		container.add_spacer(false)
+if is_user:
+	container.add_spacer(false)
 
-func _fix_orphaned_code():
-	if is_user:
-		style.bg_color = DesignSystem.get_color("primary")
-		style.bg_color.a = 0.2
-		else:
-			style.bg_color = DesignSystem.get_color("surface_light")
+if is_user:
+	style.bg_color = DesignSystem.get_color("primary")
+	style.bg_color.a = 0.2
+	else:
+		style.bg_color = DesignSystem.get_color("surface_light")
 
-			style.corner_radius_top_left = 12
-			style.corner_radius_top_right = 12
-			style.corner_radius_bottom_left = 12 if not is_user else 4
-			style.corner_radius_bottom_right = 12 if is_user else 4
-			style.content_margin_left = 12
-			style.content_margin_right = 12
-			style.content_margin_top = 8
-			style.content_margin_bottom = 8
+		style.corner_radius_top_left = 12
+		style.corner_radius_top_right = 12
+		style.corner_radius_bottom_left = 12 if not is_user else 4
+		style.corner_radius_bottom_right = 12 if is_user else 4
+		style.content_margin_left = 12
+		style.content_margin_right = 12
+		style.content_margin_top = 8
+		style.content_margin_bottom = 8
 
-			bubble.add_theme_stylebox_override("panel", style)
+		bubble.add_theme_stylebox_override("panel", style)
 
-func _fix_orphaned_code():
-	if not is_user:
-		container.add_spacer(false)
+if not is_user:
+	container.add_spacer(false)
 
-		return container
+	return container
 
 
-func _fix_orphaned_code():
-	return indicator
+return indicator
 
 
-func _fix_orphaned_code():
-	if data and data.has("displayName"):
-		return data.displayName
-		return structure_id.capitalize()
+if data and data.has("displayName"):
+	return data.displayName
+	return structure_id.capitalize()
 
 
-func _fix_orphaned_code():
-	return conversation_history.slice(start)
+return conversation_history.slice(start)
 
 
-func _fix_orphaned_code():
-	return style
+return style
 
 
-func _fix_orphaned_code():
-	for child in content.get_children():
-		if child is Label and child.text != "Sources":
-			child.queue_free()
+for child in content.get_children():
+	if child is Label and child.text != "Sources":
+		child.queue_free()
 
-			# Add sources
-			for source in sources:
-func _fix_orphaned_code():
-	if params.has("conversation_history"):
-		context["history"] = params.conversation_history
+		# Add sources
+		for source in sources:
+if params.has("conversation_history"):
+	context["history"] = params.conversation_history
 
-		# Add structure data if available
-		if context.structure != "" and KnowledgeService and KnowledgeService.is_ready():
-func _fix_orphaned_code():
-	if structure_data:
-		context["structure_data"] = {
-		"name": structure_data.get("displayName", ""),
-		"functions": structure_data.get("functions", []),
-		"connections": structure_data.get("connections", [])
-		}
+	# Add structure data if available
+	if context.structure != "" and KnowledgeService and KnowledgeService.is_ready():
+if structure_data:
+	context["structure_data"] = {
+	"name": structure_data.get("displayName", ""),
+	"functions": structure_data.get("functions", []),
+	"connections": structure_data.get("connections", [])
+	}
 
-		return context
+	return context
 
 
-		class ResponseFormatter:
-			"""Formats AI responses based on mode"""
+	class ResponseFormatter:
+		"""Formats AI responses based on mode"""
 
-func _fix_orphaned_code():
-	if response.has("citations"):
-		formatted.text = _add_citations(formatted.text, response.citations)
+if response.has("citations"):
+	formatted.text = _add_citations(formatted.text, response.citations)
 
-		# Extract sources if present
-		if response.has("sources"):
-			formatted["sources"] = response.sources
+	# Extract sources if present
+	if response.has("sources"):
+		formatted["sources"] = response.sources
 
-			return formatted
+		return formatted
 
-func _fix_orphaned_code():
-	for line in lines:
-		if line.strip_edges() != "":
-			bullet_text += "• " + line.strip_edges() + "\n"
+for line in lines:
+	if line.strip_edges() != "":
+		bullet_text += "• " + line.strip_edges() + "\n"
 
-			return bullet_text
+		return bullet_text
 
-func _fix_orphaned_code():
-	for i in range(citations.size()):
-		cited_text += "\n[" + str(i + 1) + "] " + citations[i]
+for i in range(citations.size()):
+	cited_text += "\n[" + str(i + 1) + "] " + citations[i]
 
-		return cited_text
+	return cited_text
 
 func _setup_component() -> void:
 	"""Setup enhanced AI assistant interface"""

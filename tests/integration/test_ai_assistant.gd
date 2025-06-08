@@ -10,7 +10,7 @@ var response_delay: float = 0.5
 var should_fail: bool = false
 var mock_response: String = "This is a test response about the hippocampus."
 
-var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
 
 	assert_not_null(panel)
 	assert_equals(panel.panel_title, "AI Assistant")
@@ -22,7 +22,7 @@ var panel = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").n
 	it(
 	"should update context when structure changes",
 	func():
-var panel_2 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_2 = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
 	panel.initialize_component()
 
 	panel.set_current_structure("hippocampus")
@@ -36,12 +36,12 @@ var panel_2 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd")
 	it(
 	"should handle user messages",
 	func():
-var panel_3 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
-var mock_service = MockAIService.new()
+var panel_3 = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
+# FIXED: Orphaned code - var mock_service = MockAIService.new()
 	panel.ai_service = mock_service
 	panel.initialize_component()
 
-var message_sent = false
+# FIXED: Orphaned code - var message_sent = false
 	panel.question_asked.connect(func(q): message_sent = true)
 
 	panel._on_send_pressed()
@@ -50,8 +50,8 @@ var message_sent = false
 
 
 	# Test AI Service error handling
-var panel_4 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
-var mock_service_2 = MockAIService.new()
+var panel_4 = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
+# FIXED: Orphaned code - var mock_service_2 = MockAIService.new()
 	mock_service.should_fail = true
 	panel.ai_service = mock_service
 
@@ -65,8 +65,8 @@ var mock_service_2 = MockAIService.new()
 	it(
 	"should retry failed requests",
 	func():
-var panel_5 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
-var mock_service_3 = MockAIService.new()
+var panel_5 = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
+# FIXED: Orphaned code - var mock_service_3 = MockAIService.new()
 	mock_service.should_fail = true
 	panel.ai_service = mock_service
 	panel.max_retries = 3
@@ -82,7 +82,7 @@ var retry_count = 0
 
 
 	# Test conversation history
-var panel_6 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_6 = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
 	panel.initialize_component()
 
 	panel._add_message_to_history("user", "Question 1")
@@ -97,12 +97,12 @@ var panel_6 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd")
 	it(
 	"should limit history size",
 	func():
-var panel_7 = prepreprepreload("res://ui/components/panels/AIAssistantPanel.gd").new()
+var panel_7 = preload("res://ui/components/panels/AIAssistantPanel.gd").new()
 	panel.max_message_history = 5
 	panel.initialize_component()
 
 	# Add more than max messages
-var ai_service = prepreprepreload("res://core/services/AIService.gd").new()
+var ai_service = preload("res://core/services/AIService.gd").new()
 
 	ai_service.set_provider("openai")
 	assert_equals(ai_service.current_provider, "openai")
@@ -117,7 +117,7 @@ var ai_service = prepreprepreload("res://core/services/AIService.gd").new()
 	it(
 	"should handle invalid provider gracefully",
 	func():
-var ai_service_2 = prepreprepreload("res://core/services/AIService.gd").new()
+var ai_service_2 = preload("res://core/services/AIService.gd").new()
 
 	ai_service.set_provider("invalid_provider")
 	# Should fallback to default
@@ -160,14 +160,13 @@ func test_provider_switching() -> void:
 	"should switch between providers",
 	func():
 
-func _fix_orphaned_code():
-	for i in range(10):
-		panel._add_message_to_history("user", "Message " + str(i))
+for i in range(10):
+	panel._add_message_to_history("user", "Message " + str(i))
 
-		assert_equals(panel.message_history.size(), 5)
-		# Should keep most recent messages
-		assert_equals(panel.message_history[-1].content, "Message 9")
-		)
+	assert_equals(panel.message_history.size(), 5)
+	# Should keep most recent messages
+	assert_equals(panel.message_history[-1].content, "Message 9")
+	)
 
 
-		# Test provider switching
+	# Test provider switching

@@ -11,7 +11,7 @@ signal model_loaded(model_name: String)
 signal model_load_failed(error: String)
 signal all_models_loaded(model_names: Array)
 
-var model_coordinator: Node = null
+# FIXED: Orphaned code - var model_coordinator: Node = null
 
 # Current model state
 var current_models: Array = []
@@ -181,47 +181,43 @@ func print_status() -> void:
 	print("=== MODEL SYSTEM STATUS ===")
 
 
-func _fix_orphaned_code():
-	print("[MODEL_SYSTEM] Error: ", error)
-	model_load_failed.emit(error)
-	return false
+print("[MODEL_SYSTEM] Error: ", error)
+model_load_failed.emit(error)
+return false
 
-	# Add model definition to coordinator
-	if model_coordinator.has_method("add_model_definition"):
-		model_coordinator.add_model_definition(path)
-		print("[MODEL_SYSTEM] Added model definition: ", path)
+# Add model definition to coordinator
+if model_coordinator.has_method("add_model_definition"):
+	model_coordinator.add_model_definition(path)
+	print("[MODEL_SYSTEM] Added model definition: ", path)
 
-		# Load the models (this will load all defined models)
-		if model_coordinator.has_method("load_brain_models"):
-			model_coordinator.load_brain_models()
-			return true
+	# Load the models (this will load all defined models)
+	if model_coordinator.has_method("load_brain_models"):
+		model_coordinator.load_brain_models()
+		return true
 
-			return false
-
-
-func _fix_orphaned_code():
-	if not model_path.is_empty():
-		error_msg += " for " + model_path
-		if not error.is_empty():
-			error_msg += ": " + error
-
-			print("[MODEL_SYSTEM] Coordinator reported model load failed: ", error_msg)
-			model_load_failed.emit(error_msg)
-
-			## Status and debugging
+		return false
 
 
-func _fix_orphaned_code():
-	for key in status.keys():
-		print("  ", key, ": ", status[key])
+if not model_path.is_empty():
+	error_msg += " for " + model_path
+	if not error.is_empty():
+		error_msg += ": " + error
 
-		## Cleanup
+		print("[MODEL_SYSTEM] Coordinator reported model load failed: ", error_msg)
+		model_load_failed.emit(error_msg)
+
+		## Status and debugging
 
 
-func _fix_orphaned_code():
-	if model_coordinator and model_coordinator.has_method("add_model_definition"):
-		model_coordinator.add_model_definition(path, position, rotation, scale)
-		print("[MODEL_SYSTEM] Added model definition: ", path)
+for key in status.keys():
+	print("  ", key, ": ", status[key])
+
+	## Cleanup
+
+
+if model_coordinator and model_coordinator.has_method("add_model_definition"):
+	model_coordinator.add_model_definition(path, position, rotation, scale)
+	print("[MODEL_SYSTEM] Added model definition: ", path)
 
 
 func _on_coordinator_models_loaded(model_names: Array) -> void:

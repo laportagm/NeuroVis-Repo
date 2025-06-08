@@ -9,7 +9,7 @@ signal test_passed(test_name)
 signal test_failed(test_name, reason)
 signal suite_completed
 
-const TestFrameworkScript = prepreprepreload("res://tests/framework/TestFramework.gd")
+const TestFrameworkScript = preload("res://tests/framework/TestFramework.gd")
 
 # Test suites to run
 const TEST_SUITES = [
@@ -35,9 +35,9 @@ var test_results: Array = []
 
 
 var FeatureFlagsRef = Engine.get_singleton("FeatureFlags")
-var suite_path = TEST_SUITES[current_suite_index]
+# FIXED: Orphaned code - var suite_path = TEST_SUITES[current_suite_index]
 var suite_script = load(suite_path)
-var suite_instance = suite_script.new()
+# FIXED: Orphaned code - var suite_instance = suite_script.new()
 # Use the wrapper to add the suite
 	test_framework_wrapper.add_child_suite(suite_instance)
 
@@ -45,14 +45,14 @@ var suite_instance = suite_script.new()
 var test_name = method.name
 	test_framework_wrapper.framework.start_test(test_name)
 	suite_instance.call(test_name)
-var success = test_framework_wrapper.framework.end_test()
+# FIXED: Orphaned code - var success = test_framework_wrapper.framework.end_test()
 
 # Forward result to appropriate signal
 var success_rate = (
 	(float(passed_tests) / float(total_tests)) * 100.0 if total_tests > 0 else 0.0
 	)
-var file = FileAccess.open("user://test_results.json", FileAccess.WRITE)
-var results_data = {
+# FIXED: Orphaned code - var file = FileAccess.open("user://test_results.json", FileAccess.WRITE)
+# FIXED: Orphaned code - var results_data = {
 	"timestamp": Time.get_datetime_string_from_system(),
 	"total_tests": total_tests,
 	"passed": passed_tests,
@@ -77,74 +77,66 @@ func add_child_suite(suite):
 	add_child(suite)
 
 
-func _fix_orphaned_code():
-	if FeatureFlagsRef.call("is_core_development_mode"):
-		print("🔧 Core Development Mode Active")
-		print("   Simplified test suite for core architecture work\n")
+if FeatureFlagsRef.call("is_core_development_mode"):
+	print("🔧 Core Development Mode Active")
+	print("   Simplified test suite for core architecture work\n")
 
-		# Create wrapper node for TestFramework
-		test_framework_wrapper = TestFrameworkWrapper.new()
-		add_child(test_framework_wrapper)
+	# Create wrapper node for TestFramework
+	test_framework_wrapper = TestFrameworkWrapper.new()
+	add_child(test_framework_wrapper)
 
-		# Connect to test signals
-		test_framework_wrapper.test_passed.connect(_on_test_passed)
-		test_framework_wrapper.test_failed.connect(_on_test_failed)
-		test_framework_wrapper.suite_completed.connect(_on_suite_completed)
+	# Connect to test signals
+	test_framework_wrapper.test_passed.connect(_on_test_passed)
+	test_framework_wrapper.test_failed.connect(_on_test_failed)
+	test_framework_wrapper.suite_completed.connect(_on_suite_completed)
 
-		# Start running test suites
-		_run_next_suite()
+	# Start running test suites
+	_run_next_suite()
 
 
-func _fix_orphaned_code():
-	print("\n📁 Running: " + suite_path.get_file())
-	print("-".repeat(40))
+print("\n📁 Running: " + suite_path.get_file())
+print("-".repeat(40))
 
-func _fix_orphaned_code():
-	if suite_script:
-func _fix_orphaned_code():
-	for method in suite_instance.get_method_list():
-		if method.name.begins_with("test_"):
-			# Call test method and forward results to our wrapper
-func _fix_orphaned_code():
-	if success:
-		test_framework_wrapper.test_passed.emit(test_name)
+if suite_script:
+for method in suite_instance.get_method_list():
+	if method.name.begins_with("test_"):
+		# Call test method and forward results to our wrapper
+if success:
+	test_framework_wrapper.test_passed.emit(test_name)
+	else:
+		test_framework_wrapper.test_failed.emit(test_name, "Test assertions failed")
 		else:
-			test_framework_wrapper.test_failed.emit(test_name, "Test assertions failed")
-			else:
-				push_error("Failed to load test suite: " + suite_path)
+			push_error("Failed to load test suite: " + suite_path)
 
-				current_suite_index += 1
+			current_suite_index += 1
 
-				# Emit suite completion
-				test_framework_wrapper.suite_completed.emit()
+			# Emit suite completion
+			test_framework_wrapper.suite_completed.emit()
 
 
-func _fix_orphaned_code():
-	print("Success Rate: " + "%.1f%%" % success_rate)
+print("Success Rate: " + "%.1f%%" % success_rate)
 
-	if failed_tests > 0:
-		print("\n⚠️  Failed Tests:")
-		for result in test_results:
-			if result.status == "failed":
-				print("  - " + result.suite + " :: " + result.name)
-				print("    " + result.reason)
+if failed_tests > 0:
+	print("\n⚠️  Failed Tests:")
+	for result in test_results:
+		if result.status == "failed":
+			print("  - " + result.suite + " :: " + result.name)
+			print("    " + result.reason)
 
-				# Save results to file
-				_save_test_results()
+			# Save results to file
+			_save_test_results()
 
-				# Exit with appropriate code
-				if failed_tests > 0:
-					print("\n❌ Tests failed! Please fix issues before proceeding.")
-					get_tree().quit(1)
-					else:
-						print("\n✅ All tests passed! Ready to proceed.")
-						get_tree().quit(0)
+			# Exit with appropriate code
+			if failed_tests > 0:
+				print("\n❌ Tests failed! Please fix issues before proceeding.")
+				get_tree().quit(1)
+				else:
+					print("\n✅ All tests passed! Ready to proceed.")
+					get_tree().quit(0)
 
 
-func _fix_orphaned_code():
-	if file:
-func _fix_orphaned_code():
-	print("\n📄 Test results saved to: user://test_results.json")
+if file:
+print("\n📄 Test results saved to: user://test_results.json")
 
 func _run_next_suite() -> void:
 	if current_suite_index >= TEST_SUITES.size():

@@ -90,7 +90,7 @@ var performance_stats: Dictionary = {
 var mesh_instances = []
 	_collect_mesh_instances(model, mesh_instances)
 
-var needs_culling_update = false
+# FIXED: Orphaned code - var needs_culling_update = false
 var needs_material_update = false
 var needs_lod_update = false
 
@@ -104,25 +104,25 @@ var stats = performance_stats.duplicate(true)
 	stats["physics_thread_time"] = Performance.get_monitor(Performance.PHYSICS_TOTAL_PHYSICS_TIME)
 	stats["frametime_avg"] = _calculate_average_frametime()
 
-var cameras = get_tree().get_nodes_in_group("Cameras")
-var camera_paths = [
+# FIXED: Orphaned code - var cameras = get_tree().get_nodes_in_group("Cameras")
+# FIXED: Orphaned code - var camera_paths = [
 	"/root/Main/Camera3D", "/root/Main/CameraRig/Camera3D", "/root/Node3D/Camera3D"
 	]
 
 var lod_nodes = get_tree().get_nodes_in_group("LODManagers")
-var nodes = get_tree().get_nodes_in_group("autoload")
-var mesh_instances_2 = []
+# FIXED: Orphaned code - var nodes = get_tree().get_nodes_in_group("autoload")
+# FIXED: Orphaned code - var mesh_instances_2 = []
 	_collect_mesh_instances(get_tree().root, mesh_instances)
 
 	_scene_objects = mesh_instances
 	_visible_objects = mesh_instances.duplicate()
 
-var initial_level = 0
+# FIXED: Orphaned code - var initial_level = 0
 var frustum = _camera.get_frustum()
-var culled_count = 0
+# FIXED: Orphaned code - var culled_count = 0
 
 var aabb = obj.mesh.get_aabb()
-var global_aabb = AABB(
+# FIXED: Orphaned code - var global_aabb = AABB(
 	obj.global_transform * aabb.position, obj.global_transform.basis * aabb.size
 	)
 
@@ -140,7 +140,7 @@ var distance = _camera.global_position.distance_to(center)
 	sorted_groups.sort_custom(func(a, b): return a.distance < b.distance)
 
 	# Apply occlusion (hide objects beyond occlusion_depth)
-var visible_groups = occlusion_depth
+# FIXED: Orphaned code - var visible_groups = occlusion_depth
 var current_group = 0
 
 var group_2 = group_data.group
@@ -148,7 +148,7 @@ var is_visible = current_group < visible_groups
 
 # Update visibility of all objects in this group
 var parent = obj.get_parent()
-var group_name = "default"
+# FIXED: Orphaned code - var group_name = "default"
 var priority = 0
 
 # Try to find a meaningful parent name
@@ -157,8 +157,8 @@ var center_2 = Vector3.ZERO
 
 var material_groups = {}
 
-var material = obj.get_surface_override_material(i)
-var signature = _generate_material_signature(material)
+# FIXED: Orphaned code - var material = obj.get_surface_override_material(i)
+# FIXED: Orphaned code - var signature = _generate_material_signature(material)
 
 # Check if similar material already exists
 var found_group = false
@@ -185,8 +185,8 @@ var surface_idx = mesh_info.surface_idx
 
 var material_groups_2 = {}
 
-var material_2 = obj.get_surface_override_material(i)
-var signature_2 = _generate_material_signature(material)
+# FIXED: Orphaned code - var material_2 = obj.get_surface_override_material(i)
+# FIXED: Orphaned code - var signature_2 = _generate_material_signature(material)
 
 # Check if similar material already exists
 var found_group_2 = false
@@ -217,19 +217,19 @@ var priority_2 = 0
 var center_3 = Vector3.ZERO
 var signature_3 = {}
 
-var params = []
+# FIXED: Orphaned code - var params = []
 # In a complete implementation, we would enumerate shader parameters
 	signature.param_count = 0  # Placeholder
 
 var param_similarity = (
 	1.0 - abs(sig1.param_count - sig2.param_count) / max(sig1.param_count, 1.0)
 	)
-var matches = 0
+# FIXED: Orphaned code - var matches = 0
 var total = 0
 
 # Essential properties
 var distance_2 = color1.distance_to(color2)
-var base_material = materials[0]
+# FIXED: Orphaned code - var base_material = materials[0]
 
 var batched = StandardMaterial3D.new()
 
@@ -260,21 +260,21 @@ var target_fps_min = target_framerate * 0.9  # 90% of target
 
 # Determine if LOD adjustment is needed
 var models = _lod_manager.get_method("get_managed_model_names")
-var model_names = models.call()
-var update_method = _lod_manager.get_method("force_update")
+# FIXED: Orphaned code - var model_names = models.call()
+# FIXED: Orphaned code - var update_method = _lod_manager.get_method("force_update")
 
-var _scene_objects: Array = []
+# FIXED: Orphaned code - var _scene_objects: Array = []
 var _visible_objects: Array = []
 var _batched_materials: Dictionary = {}
-var _occlusion_objects: Dictionary = {}
-var _optimization_timer: Timer
+# FIXED: Orphaned code - var _occlusion_objects: Dictionary = {}
+# FIXED: Orphaned code - var _optimization_timer: Timer
 var _lod_manager: LODManager
 var _initialized: bool = false
 var _camera: Camera3D
 var _last_auto_lod_adjustment: float = 0
 var _frame_times: Array = []
 var _culling_info: Dictionary = {}
-var _batching_groups: Dictionary = {}
+# FIXED: Orphaned code - var _batching_groups: Dictionary = {}
 
 
 # === LIFECYCLE METHODS ===
@@ -386,554 +386,504 @@ func reset_optimizations() -> bool:
 
 										# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if _optimization_timer:
-		_optimization_timer.wait_time = optimization_interval
-		optimization_setting_changed.emit("optimization_interval")
+if _optimization_timer:
+	_optimization_timer.wait_time = optimization_interval
+	optimization_setting_changed.emit("optimization_interval")
 
-		# === PUBLIC VARIABLES ===
-		## Current performance statistics
+	# === PUBLIC VARIABLES ===
+	## Current performance statistics
 
-func _fix_orphaned_code():
-	if mesh_instances.is_empty():
-		push_warning("[RenderingOptimizer] No mesh instances found in model: " + model_name)
-		return false
+if mesh_instances.is_empty():
+	push_warning("[RenderingOptimizer] No mesh instances found in model: " + model_name)
+	return false
 
-		# Apply material batching if enabled
-		if material_batching_enabled:
-			_batch_model_materials(mesh_instances, model_name)
+	# Apply material batching if enabled
+	if material_batching_enabled:
+		_batch_model_materials(mesh_instances, model_name)
 
-			# Set up occlusion and frustum culling data
-			if occlusion_culling_enabled or frustum_culling_enabled:
-				_setup_culling_for_model(model, mesh_instances, model_name)
+		# Set up occlusion and frustum culling data
+		if occlusion_culling_enabled or frustum_culling_enabled:
+			_setup_culling_for_model(model, mesh_instances, model_name)
 
-				# Update object lists
-				for mesh in mesh_instances:
-					if not _scene_objects.has(mesh):
-						_scene_objects.append(mesh)
+			# Update object lists
+			for mesh in mesh_instances:
+				if not _scene_objects.has(mesh):
+					_scene_objects.append(mesh)
 
-						print(
-						(
-						"[RenderingOptimizer] Optimized model: "
-						+ model_name
-						+ " with "
-						+ str(mesh_instances.size())
-						+ " meshes"
-						)
-						)
-						return true
+					print(
+					(
+					"[RenderingOptimizer] Optimized model: "
+					+ model_name
+					+ " with "
+					+ str(mesh_instances.size())
+					+ " meshes"
+					)
+					)
+					return true
 
 
-						## Force immediate optimization update
-						## @returns: bool indicating success
-func _fix_orphaned_code():
-	if settings.has("frustum_culling_enabled"):
-		frustum_culling_enabled = settings.frustum_culling_enabled
+					## Force immediate optimization update
+					## @returns: bool indicating success
+if settings.has("frustum_culling_enabled"):
+	frustum_culling_enabled = settings.frustum_culling_enabled
+	needs_culling_update = true
+
+	if settings.has("occlusion_culling_enabled"):
+		occlusion_culling_enabled = settings.occlusion_culling_enabled
 		needs_culling_update = true
 
-		if settings.has("occlusion_culling_enabled"):
-			occlusion_culling_enabled = settings.occlusion_culling_enabled
-			needs_culling_update = true
+		if settings.has("material_batching_enabled"):
+			material_batching_enabled = settings.material_batching_enabled
+			needs_material_update = true
 
-			if settings.has("material_batching_enabled"):
-				material_batching_enabled = settings.material_batching_enabled
-				needs_material_update = true
+			if settings.has("occlusion_depth"):
+				occlusion_depth = settings.occlusion_depth
+				needs_culling_update = true
 
-				if settings.has("occlusion_depth"):
-					occlusion_depth = settings.occlusion_depth
-					needs_culling_update = true
+				if settings.has("material_similarity_threshold"):
+					material_similarity_threshold = settings.material_similarity_threshold
+					needs_material_update = true
 
-					if settings.has("material_similarity_threshold"):
-						material_similarity_threshold = settings.material_similarity_threshold
-						needs_material_update = true
+					if settings.has("auto_lod_enabled"):
+						auto_lod_enabled = settings.auto_lod_enabled
+						needs_lod_update = true
 
-						if settings.has("auto_lod_enabled"):
-							auto_lod_enabled = settings.auto_lod_enabled
+						if settings.has("target_framerate"):
+							target_framerate = settings.target_framerate
 							needs_lod_update = true
 
-							if settings.has("target_framerate"):
-								target_framerate = settings.target_framerate
-								needs_lod_update = true
+							if settings.has("optimization_interval"):
+								optimization_interval = settings.optimization_interval
+								if _optimization_timer:
+									_optimization_timer.wait_time = optimization_interval
 
-								if settings.has("optimization_interval"):
-									optimization_interval = settings.optimization_interval
-									if _optimization_timer:
-										_optimization_timer.wait_time = optimization_interval
+									# Apply changes if needed
+									if needs_culling_update:
+										_update_culling_settings()
 
-										# Apply changes if needed
-										if needs_culling_update:
-											_update_culling_settings()
+										if needs_material_update:
+											_update_material_settings()
 
-											if needs_material_update:
-												_update_material_settings()
+											if needs_lod_update:
+												_update_lod_settings()
 
-												if needs_lod_update:
-													_update_lod_settings()
-
-													return true
+												return true
 
 
-													## Get detailed performance statistics
-													## @returns: Dictionary with detailed performance data
-func _fix_orphaned_code():
-	return stats
+												## Get detailed performance statistics
+												## @returns: Dictionary with detailed performance data
+return stats
 
 
-	## Reset all optimizations to default state
-	## @returns: bool indicating success
-func _fix_orphaned_code():
-	if not cameras.is_empty():
-		_camera = cameras[0]
+## Reset all optimizations to default state
+## @returns: bool indicating success
+if not cameras.is_empty():
+	_camera = cameras[0]
+	else:
+		# Try to find camera by node path
+for path in camera_paths:
+	if get_node_or_null(path) != null:
+		_camera = get_node(path)
+		break
+
+		if not _camera:
+			push_warning("[RenderingOptimizer] No camera found. Some optimizations will be limited.")
+
+			# Find LOD manager
+if not lod_nodes.is_empty():
+	_lod_manager = lod_nodes[0]
+	else:
+		# Try to find LOD manager by node path or type
+for node in nodes:
+	if node is LODManager:
+		_lod_manager = node
+		break
+
+		if not _lod_manager:
+			push_warning(
+			"[RenderingOptimizer] No LOD manager found. LOD optimizations will be disabled."
+			)
+
+
+print("[RenderingOptimizer] Collected " + str(_scene_objects.size()) + " scene objects")
+
+
+if _scene_objects.size() > 200:
+	initial_level = 1
+	if _scene_objects.size() > 500:
+		initial_level = 2
+
+		_adjust_lod_level(initial_level)
 		else:
-			# Try to find camera by node path
-func _fix_orphaned_code():
-	for path in camera_paths:
-		if get_node_or_null(path) != null:
-			_camera = get_node(path)
-			break
-
-			if not _camera:
-				push_warning("[RenderingOptimizer] No camera found. Some optimizations will be limited.")
-
-				# Find LOD manager
-func _fix_orphaned_code():
-	if not lod_nodes.is_empty():
-		_lod_manager = lod_nodes[0]
-		else:
-			# Try to find LOD manager by node path or type
-func _fix_orphaned_code():
-	for node in nodes:
-		if node is LODManager:
-			_lod_manager = node
-			break
-
-			if not _lod_manager:
-				push_warning(
-				"[RenderingOptimizer] No LOD manager found. LOD optimizations will be disabled."
-				)
+			# Reset to highest detail
+			_adjust_lod_level(0)
 
 
-func _fix_orphaned_code():
-	print("[RenderingOptimizer] Collected " + str(_scene_objects.size()) + " scene objects")
+for obj in _scene_objects:
+	if not obj or not obj.is_inside_tree() or not obj is MeshInstance3D or not obj.mesh:
+		continue
 
+		# Skip objects already hidden by other optimizations
+		if _culling_info.has(obj) and _culling_info[obj].hidden_by != "":
+			continue
 
-func _fix_orphaned_code():
-	if _scene_objects.size() > 200:
-		initial_level = 1
-		if _scene_objects.size() > 500:
-			initial_level = 2
+			# Get object bounds
+for i in range(frustum.size()):
+if plane.is_point_over(global_aabb.get_center()):
+	in_frustum = true
+	break
 
-			_adjust_lod_level(initial_level)
+	# Update visibility
+	if not in_frustum:
+		obj.visible = false
+		culled_count += 1
+
+		# Update culling info
+		if not _culling_info.has(obj):
+			_culling_info[obj] = {"hidden_by": "frustum", "distance": 0.0, "priority": 0}
 			else:
-				# Reset to highest detail
-				_adjust_lod_level(0)
-
-
-func _fix_orphaned_code():
-	for obj in _scene_objects:
-		if not obj or not obj.is_inside_tree() or not obj is MeshInstance3D or not obj.mesh:
-			continue
-
-			# Skip objects already hidden by other optimizations
-			if _culling_info.has(obj) and _culling_info[obj].hidden_by != "":
-				continue
-
-				# Get object bounds
-func _fix_orphaned_code():
-	for i in range(frustum.size()):
-func _fix_orphaned_code():
-	if plane.is_point_over(global_aabb.get_center()):
-		in_frustum = true
-		break
-
-		# Update visibility
-		if not in_frustum:
-			obj.visible = false
-			culled_count += 1
-
-			# Update culling info
-			if not _culling_info.has(obj):
-				_culling_info[obj] = {"hidden_by": "frustum", "distance": 0.0, "priority": 0}
-				else:
-					_culling_info[obj].hidden_by = "frustum"
-					elif _culling_info.has(obj) and _culling_info[obj].hidden_by == "frustum":
-						obj.visible = true
-						_culling_info[obj].hidden_by = ""
-
-						# Update stats
-						performance_stats.culled_objects = culled_count
-
-
-func _fix_orphaned_code():
-	for group_name in _occlusion_objects:
-func _fix_orphaned_code():
-	for group_data in sorted_groups:
-func _fix_orphaned_code():
-	for obj in group.objects:
-		if not obj or not obj.is_inside_tree():
-			continue
-
-			# Skip objects already hidden by frustum culling
-			if _culling_info.has(obj) and _culling_info[obj].hidden_by == "frustum":
-				continue
-
-				if is_visible:
+				_culling_info[obj].hidden_by = "frustum"
+				elif _culling_info.has(obj) and _culling_info[obj].hidden_by == "frustum":
 					obj.visible = true
-					if _culling_info.has(obj) and _culling_info[obj].hidden_by == "occlusion":
-						_culling_info[obj].hidden_by = ""
-						else:
-							obj.visible = false
+					_culling_info[obj].hidden_by = ""
 
-							# Update culling info
-							if not _culling_info.has(obj):
-								_culling_info[obj] = {
-								"hidden_by": "occlusion",
-								"distance": group_data.distance,
-								"priority": group.priority
-								}
-								else:
-									_culling_info[obj].hidden_by = "occlusion"
-									_culling_info[obj].distance = group_data.distance
-
-									current_group += 1
+					# Update stats
+					performance_stats.culled_objects = culled_count
 
 
-func _fix_orphaned_code():
-	while parent:
-		if (
-		parent.name.contains("Model")
-		or parent.name.contains("Brain")
-		or parent.name.contains("Structure")
-		):
-			group_name = parent.name
-			break
-			parent = parent.get_parent()
+for group_name in _occlusion_objects:
+for group_data in sorted_groups:
+for obj in group.objects:
+	if not obj or not obj.is_inside_tree():
+		continue
 
-			# Assign priority based on naming
-			if obj.name.to_lower().contains("important") or group_name.to_lower().contains("important"):
-				priority = 10
-				elif obj.name.to_lower().contains("major") or group_name.to_lower().contains("major"):
-					priority = 5
-
-					# Add to occlusion group
-					if not _occlusion_objects.has(group_name):
-						_occlusion_objects[group_name] = {
-						"objects": [], "center": Vector3.ZERO, "priority": priority
-						}
-
-						_occlusion_objects[group_name].objects.append(obj)
-
-						# Calculate center point for each group
-						for group_name in _occlusion_objects:
-func _fix_orphaned_code():
-	for obj in group.objects:
-		center += obj.global_position
-
-		if not group.objects.is_empty():
-			center /= group.objects.size()
-
-			group.center = center
-
-
-func _fix_orphaned_code():
-	for obj in _scene_objects:
-		if not obj or not obj.is_inside_tree() or not obj is MeshInstance3D:
+		# Skip objects already hidden by frustum culling
+		if _culling_info.has(obj) and _culling_info[obj].hidden_by == "frustum":
 			continue
 
-			for i in range(obj.get_surface_override_material_count()):
-func _fix_orphaned_code():
-	if not material:
-		continue
+			if is_visible:
+				obj.visible = true
+				if _culling_info.has(obj) and _culling_info[obj].hidden_by == "occlusion":
+					_culling_info[obj].hidden_by = ""
+					else:
+						obj.visible = false
 
-		# Generate material signature for similarity comparison
-func _fix_orphaned_code():
-	for group_id in material_groups:
-func _fix_orphaned_code():
+						# Update culling info
+						if not _culling_info.has(obj):
+							_culling_info[obj] = {
+							"hidden_by": "occlusion",
+							"distance": group_data.distance,
+							"priority": group.priority
+							}
+							else:
+								_culling_info[obj].hidden_by = "occlusion"
+								_culling_info[obj].distance = group_data.distance
+
+								current_group += 1
+
+
+while parent:
 	if (
-	_compare_material_signatures(signature, group.signature)
-	>= material_similarity_threshold
+	parent.name.contains("Model")
+	or parent.name.contains("Brain")
+	or parent.name.contains("Structure")
 	):
-		group.materials.append(material)
-		group.meshes.append({"mesh": obj, "surface_idx": i})
-		found_group = true
+		group_name = parent.name
 		break
+		parent = parent.get_parent()
 
-		# Create new group if no similar material found
-		if not found_group:
-func _fix_orphaned_code():
-	for group_id in material_groups:
-func _fix_orphaned_code():
-	if group.materials.size() < 2:
-		continue  # Skip groups with only one material
+		# Assign priority based on naming
+		if obj.name.to_lower().contains("important") or group_name.to_lower().contains("important"):
+			priority = 10
+			elif obj.name.to_lower().contains("major") or group_name.to_lower().contains("major"):
+				priority = 5
 
-		# Create batched material
-func _fix_orphaned_code():
-	for mesh_info in group.meshes:
-func _fix_orphaned_code():
-	if not mesh or not mesh.is_inside_tree():
+				# Add to occlusion group
+				if not _occlusion_objects.has(group_name):
+					_occlusion_objects[group_name] = {
+					"objects": [], "center": Vector3.ZERO, "priority": priority
+					}
+
+					_occlusion_objects[group_name].objects.append(obj)
+
+					# Calculate center point for each group
+					for group_name in _occlusion_objects:
+for obj in group.objects:
+	center += obj.global_position
+
+	if not group.objects.is_empty():
+		center /= group.objects.size()
+
+		group.center = center
+
+
+for obj in _scene_objects:
+	if not obj or not obj.is_inside_tree() or not obj is MeshInstance3D:
 		continue
 
-		# Store original material for later restoration
-		original_materials.append(mesh.get_surface_override_material(surface_idx))
+		for i in range(obj.get_surface_override_material_count()):
+if not material:
+	continue
 
-		# Apply batched material
-		mesh.set_surface_override_material(surface_idx, batched_material)
-		affected_meshes.append(mesh)
+	# Generate material signature for similarity comparison
+for group_id in material_groups:
+if (
+_compare_material_signatures(signature, group.signature)
+>= material_similarity_threshold
+):
+	group.materials.append(material)
+	group.meshes.append({"mesh": obj, "surface_idx": i})
+	found_group = true
+	break
 
-		# Store batching information
-		_batched_materials[group_id] = {
-		"batched_material": batched_material,
-		"affected_meshes": affected_meshes,
-		"original_materials": original_materials
-		}
+	# Create new group if no similar material found
+	if not found_group:
+for group_id in material_groups:
+if group.materials.size() < 2:
+	continue  # Skip groups with only one material
 
-		# Update statistics
-		_batching_groups[group_id] = {
-		"material_count": group.materials.size(), "mesh_count": affected_meshes.size()
-		}
+	# Create batched material
+for mesh_info in group.meshes:
+if not mesh or not mesh.is_inside_tree():
+	continue
+
+	# Store original material for later restoration
+	original_materials.append(mesh.get_surface_override_material(surface_idx))
+
+	# Apply batched material
+	mesh.set_surface_override_material(surface_idx, batched_material)
+	affected_meshes.append(mesh)
+
+	# Store batching information
+	_batched_materials[group_id] = {
+	"batched_material": batched_material,
+	"affected_meshes": affected_meshes,
+	"original_materials": original_materials
+	}
+
+	# Update statistics
+	_batching_groups[group_id] = {
+	"material_count": group.materials.size(), "mesh_count": affected_meshes.size()
+	}
 
 
-func _fix_orphaned_code():
-	for obj in mesh_instances:
-		if not obj or not obj.is_inside_tree() or not obj is MeshInstance3D:
-			continue
-
-			for i in range(obj.get_surface_override_material_count()):
-func _fix_orphaned_code():
-	if not material:
+for obj in mesh_instances:
+	if not obj or not obj.is_inside_tree() or not obj is MeshInstance3D:
 		continue
 
-		# Generate material signature for similarity comparison
-func _fix_orphaned_code():
-	for group_id in material_groups:
-func _fix_orphaned_code():
-	if (
-	_compare_material_signatures(signature, group.signature)
-	>= material_similarity_threshold
-	):
-		group.materials.append(material)
-		group.meshes.append({"mesh": obj, "surface_idx": i})
-		found_group = true
-		break
+		for i in range(obj.get_surface_override_material_count()):
+if not material:
+	continue
 
-		# Create new group if no similar material found
-		if not found_group:
-func _fix_orphaned_code():
-	for group_id in material_groups:
-func _fix_orphaned_code():
-	if group.materials.size() < 2:
-		continue  # Skip groups with only one material
+	# Generate material signature for similarity comparison
+for group_id in material_groups:
+if (
+_compare_material_signatures(signature, group.signature)
+>= material_similarity_threshold
+):
+	group.materials.append(material)
+	group.meshes.append({"mesh": obj, "surface_idx": i})
+	found_group = true
+	break
 
-		# Create batched material
-func _fix_orphaned_code():
-	for mesh_info in group.meshes:
-func _fix_orphaned_code():
-	if not mesh or not mesh.is_inside_tree():
-		continue
+	# Create new group if no similar material found
+	if not found_group:
+for group_id in material_groups:
+if group.materials.size() < 2:
+	continue  # Skip groups with only one material
 
-		# Store original material for later restoration
-		original_materials.append(mesh.get_surface_override_material(surface_idx))
+	# Create batched material
+for mesh_info in group.meshes:
+if not mesh or not mesh.is_inside_tree():
+	continue
 
-		# Apply batched material
-		mesh.set_surface_override_material(surface_idx, batched_material)
-		affected_meshes.append(mesh)
+	# Store original material for later restoration
+	original_materials.append(mesh.get_surface_override_material(surface_idx))
 
-		# Store batching information
-		_batched_materials[group_id] = {
-		"batched_material": batched_material,
-		"affected_meshes": affected_meshes,
-		"original_materials": original_materials
-		}
+	# Apply batched material
+	mesh.set_surface_override_material(surface_idx, batched_material)
+	affected_meshes.append(mesh)
 
-		# Update statistics
-		_batching_groups[group_id] = {
-		"material_count": group.materials.size(), "mesh_count": affected_meshes.size()
-		}
+	# Store batching information
+	_batched_materials[group_id] = {
+	"batched_material": batched_material,
+	"affected_meshes": affected_meshes,
+	"original_materials": original_materials
+	}
+
+	# Update statistics
+	_batching_groups[group_id] = {
+	"material_count": group.materials.size(), "mesh_count": affected_meshes.size()
+	}
 
 
-func _fix_orphaned_code():
-	if model_name.to_lower().contains("important"):
-		priority = 10
-		elif model_name.to_lower().contains("major"):
-			priority = 5
+if model_name.to_lower().contains("important"):
+	priority = 10
+	elif model_name.to_lower().contains("major"):
+		priority = 5
 
-			# Calculate center point
-func _fix_orphaned_code():
-	for obj in mesh_instances:
-		center += obj.global_position
-		center /= mesh_instances.size()
+		# Calculate center point
+for obj in mesh_instances:
+	center += obj.global_position
+	center /= mesh_instances.size()
 
-		# Add to occlusion groups
-		_occlusion_objects[model_name] = {
-		"objects": mesh_instances.duplicate(), "center": center, "priority": priority
-		}
+	# Add to occlusion groups
+	_occlusion_objects[model_name] = {
+	"objects": mesh_instances.duplicate(), "center": center, "priority": priority
+	}
 
 
-func _fix_orphaned_code():
-	if material is StandardMaterial3D:
-		# Add properties that identify the material
-		signature.albedo_color = material.albedo_color
-		signature.metallic = material.metallic
-		signature.roughness = material.roughness
-		signature.emission_enabled = material.emission_enabled
+if material is StandardMaterial3D:
+	# Add properties that identify the material
+	signature.albedo_color = material.albedo_color
+	signature.metallic = material.metallic
+	signature.roughness = material.roughness
+	signature.emission_enabled = material.emission_enabled
 
-		if material.emission_enabled:
-			signature.emission = material.emission
+	if material.emission_enabled:
+		signature.emission = material.emission
 
-			signature.transparency = material.transparency
-			signature.cull_mode = material.cull_mode
+		signature.transparency = material.transparency
+		signature.cull_mode = material.cull_mode
 
-			# Additional properties for more specific matching
-			if material.normal_enabled:
-				signature.normal_enabled = true
+		# Additional properties for more specific matching
+		if material.normal_enabled:
+			signature.normal_enabled = true
 
-				if material.subsurf_scatter_enabled:
-					signature.subsurf_scatter_enabled = true
+			if material.subsurf_scatter_enabled:
+				signature.subsurf_scatter_enabled = true
 
-					elif material is ShaderMaterial:
-						# For shader materials, use shader and parameter count as signature
-						signature.shader = material.shader
+				elif material is ShaderMaterial:
+					# For shader materials, use shader and parameter count as signature
+					signature.shader = material.shader
 
-func _fix_orphaned_code():
-	return signature
+return signature
 
 
-func _fix_orphaned_code():
-	return param_similarity
+return param_similarity
 
-	# For standard materials, check key properties
-func _fix_orphaned_code():
-	if sig1.transparency == sig2.transparency:
+# For standard materials, check key properties
+if sig1.transparency == sig2.transparency:
+	matches += 1
+	total += 1
+
+	if sig1.cull_mode == sig2.cull_mode:
 		matches += 1
 		total += 1
 
-		if sig1.cull_mode == sig2.cull_mode:
+		# Compare colors with tolerance
+		if _colors_similar(sig1.albedo_color, sig2.albedo_color):
 			matches += 1
 			total += 1
 
-			# Compare colors with tolerance
-			if _colors_similar(sig1.albedo_color, sig2.albedo_color):
+			# Compare numeric properties with tolerance
+			if abs(sig1.metallic - sig2.metallic) < 0.1:
 				matches += 1
 				total += 1
 
-				# Compare numeric properties with tolerance
-				if abs(sig1.metallic - sig2.metallic) < 0.1:
+				if abs(sig1.roughness - sig2.roughness) < 0.1:
 					matches += 1
 					total += 1
 
-					if abs(sig1.roughness - sig2.roughness) < 0.1:
+					# Compare boolean properties
+					if sig1.emission_enabled == sig2.emission_enabled:
 						matches += 1
-						total += 1
 
-						# Compare boolean properties
-						if sig1.emission_enabled == sig2.emission_enabled:
-							matches += 1
+						if sig1.emission_enabled and sig2.emission_enabled:
+							if _colors_similar(sig1.emission, sig2.emission):
+								matches += 1
+								total += 1
+								total += 1
 
-							if sig1.emission_enabled and sig2.emission_enabled:
-								if _colors_similar(sig1.emission, sig2.emission):
+								# Optional properties
+								if sig1.has("normal_enabled") == sig2.has("normal_enabled"):
 									matches += 1
 									total += 1
-									total += 1
 
-									# Optional properties
-									if sig1.has("normal_enabled") == sig2.has("normal_enabled"):
+									if sig1.has("subsurf_scatter_enabled") == sig2.has("subsurf_scatter_enabled"):
 										matches += 1
 										total += 1
 
-										if sig1.has("subsurf_scatter_enabled") == sig2.has("subsurf_scatter_enabled"):
-											matches += 1
-											total += 1
-
-											return float(matches) / total
+										return float(matches) / total
 
 
-func _fix_orphaned_code():
-	return distance < 0.2
+return distance < 0.2
 
 
-func _fix_orphaned_code():
-	if base_material is StandardMaterial3D:
-func _fix_orphaned_code():
-	if base_material.emission_enabled:
-		batched.emission = base_material.emission
-		batched.emission_energy_multiplier = base_material.emission_energy_multiplier
+if base_material is StandardMaterial3D:
+if base_material.emission_enabled:
+	batched.emission = base_material.emission
+	batched.emission_energy_multiplier = base_material.emission_energy_multiplier
 
-		batched.transparency = base_material.transparency
-		batched.cull_mode = base_material.cull_mode
+	batched.transparency = base_material.transparency
+	batched.cull_mode = base_material.cull_mode
 
-		return batched
-		elif base_material is ShaderMaterial:
-			# For shader materials, create a duplicate
-func _fix_orphaned_code():
-	for param in base_material.get_shader_parameter_list():
-		batched.set_shader_parameter(param, base_material.get_shader_parameter(param))
+	return batched
+	elif base_material is ShaderMaterial:
+		# For shader materials, create a duplicate
+for param in base_material.get_shader_parameter_list():
+	batched.set_shader_parameter(param, base_material.get_shader_parameter(param))
 
-		return batched
+	return batched
 
-		return base_material
+	return base_material
 
 
-func _fix_orphaned_code():
-	for obj in _scene_objects:
-		if obj and obj.is_inside_tree() and obj.visible:
-			visible_count += 1
+for obj in _scene_objects:
+	if obj and obj.is_inside_tree() and obj.visible:
+		visible_count += 1
 
-			performance_stats.visible_objects = visible_count
-			performance_stats.culled_objects = _scene_objects.size() - visible_count
+		performance_stats.visible_objects = visible_count
+		performance_stats.culled_objects = _scene_objects.size() - visible_count
 
-			# Count batched materials
-			performance_stats.batched_materials = _batched_materials.size()
+		# Count batched materials
+		performance_stats.batched_materials = _batched_materials.size()
 
-			# Get LOD level if available
-			if _lod_manager:
-				# In a real implementation, we would get the average LOD level
-				# For now, use a placeholder
-				performance_stats.lod_level = 0
+		# Get LOD level if available
+		if _lod_manager:
+			# In a real implementation, we would get the average LOD level
+			# For now, use a placeholder
+			performance_stats.lod_level = 0
 
-				# Get memory usage
-				performance_stats.memory_usage = (
-				Performance.get_monitor(Performance.MEMORY_STATIC)
-				+ Performance.get_monitor(Performance.MEMORY_DYNAMIC)
-				)
+			# Get memory usage
+			performance_stats.memory_usage = (
+			Performance.get_monitor(Performance.MEMORY_STATIC)
+			+ Performance.get_monitor(Performance.MEMORY_DYNAMIC)
+			)
 
-				# Emit signal
-				optimization_stats_updated.emit(performance_stats)
-
-
-func _fix_orphaned_code():
-	for time in _frame_times:
-		sum += time
-
-		return sum / _frame_times.size()
+			# Emit signal
+			optimization_stats_updated.emit(performance_stats)
 
 
-func _fix_orphaned_code():
-	if current_fps < target_fps_min:
-		# Performance is below target, increase LOD level (reduce quality)
-		if current_fps < target_fps_min * 0.7:
-			# Significant performance issue, jump to higher LOD
-			_adjust_lod_level(2)
-			else:
-				_adjust_lod_level(1)
-				elif current_fps > target_framerate * 1.2 and performance_stats.lod_level > 0:
-					# Performance is well above target, decrease LOD level (increase quality)
-					_adjust_lod_level(performance_stats.lod_level - 1)
+for time in _frame_times:
+	sum += time
+
+	return sum / _frame_times.size()
 
 
-func _fix_orphaned_code():
-	if models:
-func _fix_orphaned_code():
-	for model_name in model_names:
-		_lod_manager.set_lod_level(model_name, level)
-
-		# Otherwise try to apply globally
+if current_fps < target_fps_min:
+	# Performance is below target, increase LOD level (reduce quality)
+	if current_fps < target_fps_min * 0.7:
+		# Significant performance issue, jump to higher LOD
+		_adjust_lod_level(2)
 		else:
-			# Force update LOD level
-func _fix_orphaned_code():
-	if update_method:
-		update_method.call()
+			_adjust_lod_level(1)
+			elif current_fps > target_framerate * 1.2 and performance_stats.lod_level > 0:
+				# Performance is well above target, decrease LOD level (increase quality)
+				_adjust_lod_level(performance_stats.lod_level - 1)
 
-		performance_stats.lod_level = level
+
+if models:
+for model_name in model_names:
+	_lod_manager.set_lod_level(model_name, level)
+
+	# Otherwise try to apply globally
+	else:
+		# Force update LOD level
+if update_method:
+	update_method.call()
+
+	performance_stats.lod_level = level
 
 
 func _setup_timers() -> void:

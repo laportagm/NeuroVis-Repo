@@ -58,9 +58,9 @@ const DEFAULT_HIGHLIGHT_COLOR: Color = Color(0.0, 0.8, 1.0, 0.5)
 # === PRIVATE VARIABLES ===
 
 var structure_data = _get_structure_data(id)
-var found = false
+# FIXED: Orphaned code - var found = false
 var structure_data_2 = _knowledge_service.get_structure(structure_id)
-var annotations = {
+# FIXED: Orphaned code - var annotations = {
 "title": _get_comparison_title(comparison_type),
 "description": _get_comparison_description(comparison_type),
 "structures": _active_structure_ids,
@@ -87,11 +87,11 @@ ComparisonType.FUNCTIONAL:
 				annotations_available.emit(annotations)
 
 
-var structure_ids = _active_comparison.structures.keys()
+# FIXED: Orphaned code - var structure_ids = _active_comparison.structures.keys()
 
 # Track functional similarities and differences
 var all_functions = {}
-var shared_functions = []
+# FIXED: Orphaned code - var shared_functions = []
 var unique_functions = {}
 
 # Initialize unique functions dictionary
@@ -131,8 +131,8 @@ var _model_registry: ModelRegistry
 var _selection_manager: Node
 var _is_initialized: bool = false
 var _active_comparison: Dictionary = {}
-var _current_annotations: Dictionary = {}
-var _active_structure_ids: Array = []
+# FIXED: Orphaned code - var _current_annotations: Dictionary = {}
+# FIXED: Orphaned code - var _active_structure_ids: Array = []
 var _annotation_nodes: Array = []
 
 
@@ -208,187 +208,174 @@ func highlight_difference(difference_id: String) -> bool:
 	if _current_annotations.is_empty() or not _current_annotations.has("differences"):
 		return false
 
-func _fix_orphaned_code():
-	if not structure_data.is_empty():
-		_active_comparison.structures[id] = structure_data
+if not structure_data.is_empty():
+	_active_comparison.structures[id] = structure_data
 
-		# Ensure we have valid data
-		if _active_comparison.structures.size() < 2:
-			push_error("[ComparativeAnatomyService] Failed to load enough valid structures")
-			_clear_current_comparison()
-			return false
-
-			# Generate annotations based on comparison type and style
-			_generate_annotations(comparison_type, annotation_style)
-
-			# Generate educational report if enabled
-			if auto_generate_report:
-				_generate_educational_report()
-
-				# Emit comparison started signal
-				comparison_started.emit(_get_comparison_type_name(comparison_type), structure_ids)
-
-				return true
-
-
-				## End the current comparison and clean up
-func _fix_orphaned_code():
-	for diff in _current_annotations.differences:
-		if diff.id == difference_id:
-			# Would implement highlighting logic here
-			found = true
-			break
-
-			return found
-
-
-			# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if structure_data.is_empty():
-		push_warning("[ComparativeAnatomyService] Structure not found: " + structure_id)
-		return {}
-
-		return structure_data
-
-
-func _fix_orphaned_code():
-	for id in structure_ids:
-		unique_functions[id] = []
-
-		# Collect all functions
-		for id in structure_ids:
-func _fix_orphaned_code():
-	if structure.has("functions") and structure.functions is Array:
-		for function in structure.functions:
-			if not all_functions.has(function):
-				all_functions[function] = []
-				all_functions[function].append(id)
-
-				# Identify shared and unique functions
-				for function in all_functions.keys():
-func _fix_orphaned_code():
-	if structures_with_function.size() == structure_ids.size():
-		# Function is shared by all structures
-		shared_functions.append(function)
-		else:
-			# Function is unique to some structures
-			for id in structures_with_function:
-				unique_functions[id].append(function)
-
-				# Add similarity annotations
-				for function in shared_functions:
-					annotations.similarities.append(
-					{
-					"id": "shared_function_" + function.replace(" ", "_").to_lower(),
-					"title": "Shared Function: " + function,
-					"description": "All compared structures participate in " + function,
-					"educational_note":
-						"This shared function suggests anatomical and evolutionary relationships."
-						}
-						)
-
-						# Add difference annotations
-func _fix_orphaned_code():
-	for id in structure_ids:
-func _fix_orphaned_code():
-	for function in unique_functions[id]:
-		if not function.is_empty():
-			difference_id += 1
-			annotations.differences.append(
-			{
-			"id": "diff_" + str(difference_id),
-			"structure_id": id,
-			"title": "Unique Function in " + structure_name,
-			"description": structure_name + " uniquely contributes to " + function,
-			"educational_note":
-				"This specialized function reflects the structure's distinct role."
-				}
-				)
-
-				# Add educational context
-				annotations.educational_notes = [
-				"Functional comparisons help understand the integrated operations of neural systems",
-				"Structures with similar functions often have related developmental origins",
-				"Clinical disorders may affect multiple functionally related structures"
-				]
-
-
-func _fix_orphaned_code():
-	for id in _active_structure_ids:
-		if _active_comparison.structures.has(id):
-func _fix_orphaned_code():
-	for diff in _current_annotations.differences:
-		report.key_differences.append({"title": diff.title, "description": diff.description})
-
-		for sim in _current_annotations.similarities:
-			report.key_similarities.append({"title": sim.title, "description": sim.description})
-
-			# Generate educational summary based on comparison type
-			report.educational_summary = _generate_educational_summary(_active_comparison.type)
-
-			# Generate clinical relevance
-			report.clinical_relevance = _generate_clinical_relevance(_active_comparison.type)
-
-			# Emit report generated signal
-			report_generated.emit(report)
-
-			return report
-
-
-func _fix_orphaned_code():
-	for id in _active_structure_ids:
-		if _active_comparison.structures.has(id):
-			structure_names.append(_active_comparison.structures[id].displayName)
-
-func _fix_orphaned_code():
-	if structure_names.size() == 2:
-		return title_prefix + structure_names[0] + " vs. " + structure_names[1]
-		else:
-			return title_prefix + "Multiple Structures"
-
-
-func _fix_orphaned_code():
-	if not _is_initialized:
-		push_error("[ComparativeAnatomyService] Not initialized")
+	# Ensure we have valid data
+	if _active_comparison.structures.size() < 2:
+		push_error("[ComparativeAnatomyService] Failed to load enough valid structures")
+		_clear_current_comparison()
 		return false
 
-		if structure_ids.size() < 2:
-			push_error("[ComparativeAnatomyService] Need at least 2 structures to compare")
-			return false
+		# Generate annotations based on comparison type and style
+		_generate_annotations(comparison_type, annotation_style)
 
-			if structure_ids.size() > MAX_COMPARISON_STRUCTURES:
-				push_warning(
-				(
-				"[ComparativeAnatomyService] Too many structures, limiting to "
-				+ str(MAX_COMPARISON_STRUCTURES)
-				)
-				)
-				structure_ids = structure_ids.slice(0, MAX_COMPARISON_STRUCTURES)
+		# Generate educational report if enabled
+		if auto_generate_report:
+			_generate_educational_report()
 
-				# Use defaults if not specified
-				if comparison_type < 0:
-					comparison_type = default_comparison_type
+			# Emit comparison started signal
+			comparison_started.emit(_get_comparison_type_name(comparison_type), structure_ids)
 
-					if annotation_style < 0:
-						annotation_style = default_annotation_style
+			return true
 
-						# Clear any existing comparison
-						_clear_current_comparison()
 
-						# Store active structure IDs
-						_active_structure_ids = structure_ids.duplicate()
+			## End the current comparison and clean up
+for diff in _current_annotations.differences:
+	if diff.id == difference_id:
+		# Would implement highlighting logic here
+		found = true
+		break
 
-						# Initialize comparison data
-						_active_comparison = {
-						"type": comparison_type,
-						"annotation_style": annotation_style,
-						"structures": {},
-						"start_time": Time.get_unix_time_from_system(),
-						"educational_level": educational_detail
-						}
+		return found
 
-						# Collect structure data
-						for id in structure_ids:
+
+		# === PRIVATE METHODS ===
+if structure_data.is_empty():
+	push_warning("[ComparativeAnatomyService] Structure not found: " + structure_id)
+	return {}
+
+	return structure_data
+
+
+for id in structure_ids:
+	unique_functions[id] = []
+
+	# Collect all functions
+	for id in structure_ids:
+if structure.has("functions") and structure.functions is Array:
+	for function in structure.functions:
+		if not all_functions.has(function):
+			all_functions[function] = []
+			all_functions[function].append(id)
+
+			# Identify shared and unique functions
+			for function in all_functions.keys():
+if structures_with_function.size() == structure_ids.size():
+	# Function is shared by all structures
+	shared_functions.append(function)
+	else:
+		# Function is unique to some structures
+		for id in structures_with_function:
+			unique_functions[id].append(function)
+
+			# Add similarity annotations
+			for function in shared_functions:
+				annotations.similarities.append(
+				{
+				"id": "shared_function_" + function.replace(" ", "_").to_lower(),
+				"title": "Shared Function: " + function,
+				"description": "All compared structures participate in " + function,
+				"educational_note":
+					"This shared function suggests anatomical and evolutionary relationships."
+					}
+					)
+
+					# Add difference annotations
+for id in structure_ids:
+for function in unique_functions[id]:
+	if not function.is_empty():
+		difference_id += 1
+		annotations.differences.append(
+		{
+		"id": "diff_" + str(difference_id),
+		"structure_id": id,
+		"title": "Unique Function in " + structure_name,
+		"description": structure_name + " uniquely contributes to " + function,
+		"educational_note":
+			"This specialized function reflects the structure's distinct role."
+			}
+			)
+
+			# Add educational context
+			annotations.educational_notes = [
+			"Functional comparisons help understand the integrated operations of neural systems",
+			"Structures with similar functions often have related developmental origins",
+			"Clinical disorders may affect multiple functionally related structures"
+			]
+
+
+for id in _active_structure_ids:
+	if _active_comparison.structures.has(id):
+for diff in _current_annotations.differences:
+	report.key_differences.append({"title": diff.title, "description": diff.description})
+
+	for sim in _current_annotations.similarities:
+		report.key_similarities.append({"title": sim.title, "description": sim.description})
+
+		# Generate educational summary based on comparison type
+		report.educational_summary = _generate_educational_summary(_active_comparison.type)
+
+		# Generate clinical relevance
+		report.clinical_relevance = _generate_clinical_relevance(_active_comparison.type)
+
+		# Emit report generated signal
+		report_generated.emit(report)
+
+		return report
+
+
+for id in _active_structure_ids:
+	if _active_comparison.structures.has(id):
+		structure_names.append(_active_comparison.structures[id].displayName)
+
+if structure_names.size() == 2:
+	return title_prefix + structure_names[0] + " vs. " + structure_names[1]
+	else:
+		return title_prefix + "Multiple Structures"
+
+
+if not _is_initialized:
+	push_error("[ComparativeAnatomyService] Not initialized")
+	return false
+
+	if structure_ids.size() < 2:
+		push_error("[ComparativeAnatomyService] Need at least 2 structures to compare")
+		return false
+
+		if structure_ids.size() > MAX_COMPARISON_STRUCTURES:
+			push_warning(
+			(
+			"[ComparativeAnatomyService] Too many structures, limiting to "
+			+ str(MAX_COMPARISON_STRUCTURES)
+			)
+			)
+			structure_ids = structure_ids.slice(0, MAX_COMPARISON_STRUCTURES)
+
+			# Use defaults if not specified
+			if comparison_type < 0:
+				comparison_type = default_comparison_type
+
+				if annotation_style < 0:
+					annotation_style = default_annotation_style
+
+					# Clear any existing comparison
+					_clear_current_comparison()
+
+					# Store active structure IDs
+					_active_structure_ids = structure_ids.duplicate()
+
+					# Initialize comparison data
+					_active_comparison = {
+					"type": comparison_type,
+					"annotation_style": annotation_style,
+					"structures": {},
+					"start_time": Time.get_unix_time_from_system(),
+					"educational_level": educational_detail
+					}
+
+					# Collect structure data
+					for id in structure_ids:
 func _validate_setup() -> bool:
 	"""Validate that all required dependencies are available"""
 

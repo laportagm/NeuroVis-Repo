@@ -1,9 +1,0 @@
-================================================================================
-NeuroVis GDScript Code Quality Report
-Generated: Sat Jun  7 00:18:55 EDT 2025
-Project: /Users/gagelaporta/Desktop/Neuro/NeuroVis-Repo
-================================================================================
-
-
-[0;35m==== Checking Python Installation ====[0m
-[0;31m[ERROR][0m Python 3.8 or higher is required but not found

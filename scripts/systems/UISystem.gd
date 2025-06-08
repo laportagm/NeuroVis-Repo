@@ -17,7 +17,7 @@ var object_name_label: Label = null
 var info_panel: Control = null
 
 # Dependencies (injected during initialization)
-var system_bootstrap: Node = null
+# FIXED: Orphaned code - var system_bootstrap: Node = null
 var ModernInfoDisplay = null
 
 # Current UI state
@@ -36,35 +36,35 @@ object_name_label.text = hover_text
 
 var modern_theme = Theme.new()
 
-var tween = object_name_label.create_tween()
+# FIXED: Orphaned code - var tween = object_name_label.create_tween()
 tween.tween_property(object_name_label, "modulate:a", 0.0, 0.1)
 tween.tween_callback(func(): object_name_label.text = text)
 tween.tween_property(object_name_label, "modulate:a", 1.0, 0.1)
 
 
-var knowledge_base = system_bootstrap.get_knowledge_base()
-var structure_id = _find_structure_id_by_name(structure_name)
-var structure_data = knowledge_base.get_structure(structure_id)
-var modern_info = ModernInfoDisplay.new()
+# FIXED: Orphaned code - var knowledge_base = system_bootstrap.get_knowledge_base()
+# FIXED: Orphaned code - var structure_id = _find_structure_id_by_name(structure_name)
+# FIXED: Orphaned code - var structure_data = knowledge_base.get_structure(structure_id)
+# FIXED: Orphaned code - var modern_info = ModernInfoDisplay.new()
 modern_info.name = "ModernInfoDisplay"
 modern_info.position = Vector2(get_viewport().size.x - 360, 100)
 
 ui_layer.add_child(modern_info)
 modern_info.display_structure_data(structure_data)
-var existing_display = ui_layer.get_node_or_null("ModernInfoDisplay")
-var neural_net = system_bootstrap.get_neural_net()
-var knowledge_base_2 = system_bootstrap.get_knowledge_base()
+# FIXED: Orphaned code - var existing_display = ui_layer.get_node_or_null("ModernInfoDisplay")
+# FIXED: Orphaned code - var neural_net = system_bootstrap.get_neural_net()
+# FIXED: Orphaned code - var knowledge_base_2 = system_bootstrap.get_knowledge_base()
 
 # Try neural net mapping first
 var mapped_id = neural_net.map_mesh_name_to_structure_id(mesh_name)
-var structure_ids = knowledge_base.get_all_structure_ids()
-var lower_mesh_name = mesh_name.to_lower()
+# FIXED: Orphaned code - var structure_ids = knowledge_base.get_all_structure_ids()
+# FIXED: Orphaned code - var lower_mesh_name = mesh_name.to_lower()
 
 # Try exact match first
 var structure = knowledge_base.get_structure(id)
-var structure_2 = knowledge_base.get_structure(id)
-var display_name = structure.displayName.to_lower()
-var script_path = "res://ui/panels/ModernInfoDisplay.gd"
+# FIXED: Orphaned code - var structure_2 = knowledge_base.get_structure(id)
+# FIXED: Orphaned code - var display_name = structure.displayName.to_lower()
+# FIXED: Orphaned code - var script_path = "res://ui/panels/ModernInfoDisplay.gd"
 var status = get_ui_status()
 
 func _ready() -> void:
@@ -174,118 +174,102 @@ func print_ui_status() -> void:
 	"""Print current UI status for debugging"""
 	print("=== UI SYSTEM STATUS ===")
 
-func _fix_orphaned_code():
-	print("[UI_SYSTEM] Displaying structure info for: ", structure_name)
+print("[UI_SYSTEM] Displaying structure info for: ", structure_name)
 
-	# Update object name label with animation
-	_update_object_label("Selected: " + structure_name)
+# Update object name label with animation
+_update_object_label("Selected: " + structure_name)
 
-	# Display detailed info using modern display
-	_display_structure_info_modern(structure_name)
+# Display detailed info using modern display
+_display_structure_info_modern(structure_name)
 
-	info_display_visible = true
-	structure_info_displayed.emit(structure_name)
-
-
-func _fix_orphaned_code():
-	for child in ui_layer.get_children():
-		if child is Control:
-			child.set_theme(modern_theme)
-
-			print("[UI_SYSTEM] Modern theme applied")
+info_display_visible = true
+structure_info_displayed.emit(structure_name)
 
 
-			## Configuration and setup
+for child in ui_layer.get_children():
+	if child is Control:
+		child.set_theme(modern_theme)
+
+		print("[UI_SYSTEM] Modern theme applied")
 
 
-func _fix_orphaned_code():
-	if not knowledge_base or not knowledge_base.is_loaded:
-		print("[UI_SYSTEM] Knowledge base not ready for structure info")
-		return
-
-		# Find structure ID
-func _fix_orphaned_code():
-	if structure_id.is_empty():
-		print("[UI_SYSTEM] No structure found for: ", structure_name)
-		return
-
-		# Get structure data
-func _fix_orphaned_code():
-	if structure_data.is_empty():
-		print("[UI_SYSTEM] No data found for structure: ", structure_id)
-		return
-
-		# Create modern info display
-		_hide_modern_info_display()  # Clear any existing display
-
-		if ModernInfoDisplay and ui_layer:
-func _fix_orphaned_code():
-	print("[UI_SYSTEM] Modern info display created")
-	else:
-		print("[UI_SYSTEM] ModernInfoDisplay not available, using fallback")
-		_display_fallback_info(structure_data)
+		## Configuration and setup
 
 
-func _fix_orphaned_code():
-	if existing_display:
-		existing_display.queue_free()
+if not knowledge_base or not knowledge_base.is_loaded:
+	print("[UI_SYSTEM] Knowledge base not ready for structure info")
+	return
+
+	# Find structure ID
+if structure_id.is_empty():
+	print("[UI_SYSTEM] No structure found for: ", structure_name)
+	return
+
+	# Get structure data
+if structure_data.is_empty():
+	print("[UI_SYSTEM] No data found for structure: ", structure_id)
+	return
+
+	# Create modern info display
+	_hide_modern_info_display()  # Clear any existing display
+
+	if ModernInfoDisplay and ui_layer:
+print("[UI_SYSTEM] Modern info display created")
+else:
+	print("[UI_SYSTEM] ModernInfoDisplay not available, using fallback")
+	_display_fallback_info(structure_data)
 
 
-func _fix_orphaned_code():
-	if neural_net:
-func _fix_orphaned_code():
-	if not mapped_id.is_empty():
-		return mapped_id
+if existing_display:
+	existing_display.queue_free()
 
-		# Fallback to knowledge base search
-		if knowledge_base:
-func _fix_orphaned_code():
+
+if neural_net:
+if not mapped_id.is_empty():
+	return mapped_id
+
+	# Fallback to knowledge base search
+	if knowledge_base:
+for id in structure_ids:
+if structure.has("displayName") and structure.displayName.to_lower() == lower_mesh_name:
+	return id
+
+	# Try partial match
 	for id in structure_ids:
-func _fix_orphaned_code():
-	if structure.has("displayName") and structure.displayName.to_lower() == lower_mesh_name:
-		return id
+if structure.has("displayName"):
+if lower_mesh_name.contains(display_name) or display_name.contains(lower_mesh_name):
+	return id
 
-		# Try partial match
-		for id in structure_ids:
-func _fix_orphaned_code():
-	if structure.has("displayName"):
-func _fix_orphaned_code():
-	if lower_mesh_name.contains(display_name) or display_name.contains(lower_mesh_name):
-		return id
-
-		return ""
+	return ""
 
 
-func _fix_orphaned_code():
-	if ResourceLoader.exists(script_path):
-		ModernInfoDisplay = load(script_path)
-		print("[UI_SYSTEM] ModernInfoDisplay script loaded")
-		else:
-			print("[UI_SYSTEM] ModernInfoDisplay script not found, using fallback")
+if ResourceLoader.exists(script_path):
+	ModernInfoDisplay = load(script_path)
+	print("[UI_SYSTEM] ModernInfoDisplay script loaded")
+	else:
+		print("[UI_SYSTEM] ModernInfoDisplay script not found, using fallback")
 
 
-			## Status and debugging
+		## Status and debugging
 
 
-func _fix_orphaned_code():
-	for key in status.keys():
-		print("  ", key, ": ", status[key])
+for key in status.keys():
+	print("  ", key, ": ", status[key])
 
 
-		## Cleanup
+	## Cleanup
 
 
-func _fix_orphaned_code():
-	print("[UI_SYSTEM] Initialized with UI components")
+print("[UI_SYSTEM] Initialized with UI components")
 
-	# Setup initial UI state
-	if object_name_label:
-		object_name_label.text = "Selected: None"
+# Setup initial UI state
+if object_name_label:
+	object_name_label.text = "Selected: None"
 
-		# Load ModernInfoDisplay script
-		_load_modern_info_display()
+	# Load ModernInfoDisplay script
+	_load_modern_info_display()
 
-		ui_initialized.emit()
+	ui_initialized.emit()
 
 
 func _update_object_label(text: String) -> void:

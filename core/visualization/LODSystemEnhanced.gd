@@ -95,8 +95,8 @@ var update_timer = Timer.new()
 	_initialized = true
 var structure_data = _structure_data[structure_name]
 var distance = _cached_structure_distances.get(structure_name, 0.0)
-var priority = _structure_priorities.get(structure_name, StructurePriority.BACKGROUND)
-var target_lod = _determine_lod_level(distance, priority)
+# FIXED: Orphaned code - var priority = _structure_priorities.get(structure_name, StructurePriority.BACKGROUND)
+# FIXED: Orphaned code - var target_lod = _determine_lod_level(distance, priority)
 
 # Switch LOD if needed
 var structure_data_2 = {
@@ -116,11 +116,11 @@ var structure_data_2 = {
 var structure_data_3 = _structure_data[structure_name]
 var tween = _transition_tweens[structure_name]
 var distance_2 = _cached_structure_distances.get(structure_name, 0.0)
-var target_lod_2 = _determine_lod_level(distance, priority)
+# FIXED: Orphaned code - var target_lod_2 = _determine_lod_level(distance, priority)
 	_switch_lod_level(structure_name, target_lod)
 
-var distance_3 = _cached_structure_distances.get(structure_name, 0.0)
-var target_lod_3 = _determine_lod_level(distance, StructurePriority.PRIMARY)
+# FIXED: Orphaned code - var distance_3 = _cached_structure_distances.get(structure_name, 0.0)
+# FIXED: Orphaned code - var target_lod_3 = _determine_lod_level(distance, StructurePriority.PRIMARY)
 	_switch_lod_level(structure_name, target_lod, true)  # Force instant transition for focus
 
 var structure = _structure_data[structure_name]
@@ -135,7 +135,7 @@ var info = {
 
 	# Calculate vertex reduction per level
 var cameras = get_tree().get_nodes_in_group("Cameras")
-var camera_paths = [
+# FIXED: Orphaned code - var camera_paths = [
 	"/root/MainScene/Camera3D",
 	"/root/NeuroVisRoot/SceneManager/MainEducationalScene/Camera3D",
 	"/root/Main/CameraRig/Camera3D",
@@ -177,7 +177,7 @@ var adjusted_factor = lerp(1.0, priority_factor, educational_focus_bias)
 var structure_3 = _structure_data[structure_name]
 var current_level = _current_lod_levels.get(structure_name, 0)
 
-var time_now = Time.get_ticks_msec() / 1000.0
+# FIXED: Orphaned code - var time_now = Time.get_ticks_msec() / 1000.0
 var time_since_change = time_now - structure.last_lod_change
 
 # Rate limit LOD changes to prevent thrashing
@@ -191,7 +191,7 @@ var count = 0
 var arrays = mesh.surface_get_arrays(surface_idx)
 	count += arrays[Mesh.ARRAY_VERTEX].size()
 
-var original_count = 0
+# FIXED: Orphaned code - var original_count = 0
 var lod_count = 0
 
 # Sum vertices in original meshes
@@ -202,9 +202,9 @@ var cache_key = structure_name + "_lod_meshes"
 var quality_factor = (
 	quality_reduction_factors[level] if level < quality_reduction_factors.size() else 0.25
 	)
-var lod_meshes = {}
+# FIXED: Orphaned code - var lod_meshes = {}
 
-var original_data = original_meshes[node_path]
+# FIXED: Orphaned code - var original_data = original_meshes[node_path]
 
 # Create simplified mesh
 var simplified_mesh = _simplify_mesh(original_data.mesh, quality_factor)
@@ -225,49 +225,49 @@ var vertex_count = _get_vertex_count(simplified_mesh)
 	# Cache the generated LOD meshes for future reuse
 	_mesh_cache[cache_key] = structure_data.lod_meshes.duplicate(true)
 
-var array_mesh = ArrayMesh.new()
+# FIXED: Orphaned code - var array_mesh = ArrayMesh.new()
 
-var arrays_2 = original_mesh.surface_get_arrays(surface_idx)
-var vertex_count_2 = arrays[Mesh.ARRAY_VERTEX].size()
+# FIXED: Orphaned code - var arrays_2 = original_mesh.surface_get_arrays(surface_idx)
+# FIXED: Orphaned code - var vertex_count_2 = arrays[Mesh.ARRAY_VERTEX].size()
 
 # If mesh is small enough, don't simplify further
 var stride = int(1.0 / quality_factor)
 	stride = max(1, stride)
 
-var new_arrays = []
+# FIXED: Orphaned code - var new_arrays = []
 	new_arrays.resize(Mesh.ARRAY_MAX)
 
 	# Keep every Nth vertex
 var vertices = PackedVector3Array()
-var normals = PackedVector3Array()
-var uvs = PackedVector2Array()
+# FIXED: Orphaned code - var normals = PackedVector3Array()
+# FIXED: Orphaned code - var uvs = PackedVector2Array()
 
-var indices = PackedInt32Array()
-var original_indices = arrays[Mesh.ARRAY_INDEX]
+# FIXED: Orphaned code - var indices = PackedInt32Array()
+# FIXED: Orphaned code - var original_indices = arrays[Mesh.ARRAY_INDEX]
 
 # Create a mapping from original vertices to simplified vertices
 var vertex_map = {}
-var a = original_indices[i]
+# FIXED: Orphaned code - var a = original_indices[i]
 var b = original_indices[i + 1]
 var c = original_indices[i + 2]
 
 # Skip triangles that use vertices we've excluded
 var material_2 = original_mesh.surface_get_material(surface_idx)
-var lod_meshes_2 = structure_data.lod_meshes[level]
+# FIXED: Orphaned code - var lod_meshes_2 = structure_data.lod_meshes[level]
 
 var node_path = NodePath(node_path_str)
-var node = structure_data.root_node.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node = structure_data.root_node.get_node_or_null(node_path)
 
-var mesh_data = lod_meshes[node_path_str]
+# FIXED: Orphaned code - var mesh_data = lod_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply materials
 var original_meshes_2 = structure_data.original_meshes
 
 var node_path_2 = NodePath(node_path_str)
-var node_2 = structure_data.root_node.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node_2 = structure_data.root_node.get_node_or_null(node_path)
 
-var mesh_data_2 = original_meshes[node_path_str]
+# FIXED: Orphaned code - var mesh_data_2 = original_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply original materials
@@ -285,11 +285,11 @@ var tween_3 = create_tween()
 var transition_duration = transition_time
 var node_paths
 var node_path_3 = NodePath(node_path_str)
-var node_3 = structure_data.root_node.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node_3 = structure_data.root_node.get_node_or_null(node_path)
 
-var material_3 = node.get_surface_override_material(i)
+# FIXED: Orphaned code - var material_3 = node.get_surface_override_material(i)
 
-var start_alpha = 0.7
+# FIXED: Orphaned code - var start_alpha = 0.7
 var end_alpha = 1.0
 
 	material.albedo_color.a = start_alpha
@@ -310,14 +310,14 @@ var end_alpha = 1.0
 	)
 
 
-var variant_scene = structure_data.lod_variants[level]
+# FIXED: Orphaned code - var variant_scene = structure_data.lod_variants[level]
 
 # Hide current model
 	structure_data.root_node.visible = false
 
 	# Instantiate variant if needed
 var variant_key = "variant_instance_" + str(level)
-var variant_instance = variant_scene.instantiate()
+# FIXED: Orphaned code - var variant_instance = variant_scene.instantiate()
 	variant_instance.name = structure_data.root_node.name + "_LOD" + str(level)
 	structure_data.root_node.get_parent().add_child(variant_instance)
 	structure_data[variant_key] = variant_instance
@@ -330,10 +330,10 @@ var variant_instance = variant_scene.instantiate()
 
 var structure_4 = _structure_data[structure_name]
 var distance_5 = _cached_structure_distances.get(structure_name, 0.0)
-var priority_2 = _structure_priorities.get(structure_name, StructurePriority.BACKGROUND)
-var target_lod_4 = _determine_lod_level(distance, priority)
+# FIXED: Orphaned code - var priority_2 = _structure_priorities.get(structure_name, StructurePriority.BACKGROUND)
+# FIXED: Orphaned code - var target_lod_4 = _determine_lod_level(distance, priority)
 
-var structure_5 = _structure_data[structure_name]
+# FIXED: Orphaned code - var structure_5 = _structure_data[structure_name]
 var current_level_3 = _current_lod_levels.get(structure_name, 0)
 
 # Keep only current LOD level and adjacent levels
@@ -341,19 +341,19 @@ var keep_keys = []
 var priority_3 = _structure_priorities.get(
 	structure_name, StructurePriority.BACKGROUND
 	)
-var cached_keys = _mesh_cache.keys()
-var structure_6 = _structure_data[structure_name]
+# FIXED: Orphaned code - var cached_keys = _mesh_cache.keys()
+# FIXED: Orphaned code - var structure_6 = _structure_data[structure_name]
 
 # Regenerate any missing LOD levels
 var quality_factor_2 = (
 	quality_reduction_factors[level]
 var lod_meshes_3 = {}
 
-var original_data_2 = structure.original_meshes[node_path]
+# FIXED: Orphaned code - var original_data_2 = structure.original_meshes[node_path]
 
 # Create simplified mesh
 var simplified_mesh_2 = _simplify_mesh(original_data.mesh, quality_factor)
-var vertex_count_3 = _get_vertex_count(simplified_mesh)
+# FIXED: Orphaned code - var vertex_count_3 = _get_vertex_count(simplified_mesh)
 
 # Store simplified mesh and materials
 	lod_meshes[node_path] = {
@@ -391,16 +391,16 @@ var level = _current_lod_levels[structure_name]
 			lod_metrics_updated.emit(_performance_metrics)
 
 
-var memory_saved = 0
+# FIXED: Orphaned code - var memory_saved = 0
 var draw_calls_saved = 0
 
 var structure_7 = _structure_data[structure_name]
 var current_level_4 = _current_lod_levels.get(structure_name, 0)
 
-var reduction = _calculate_vertex_reduction(structure, current_level)
+# FIXED: Orphaned code - var reduction = _calculate_vertex_reduction(structure, current_level)
 
 # Estimate memory savings (very approximate)
-var original_vertex_count = 0
+# FIXED: Orphaned code - var original_vertex_count = 0
 var current_fps = _performance_metrics.avg_fps
 var target_fps_min = target_framerate * 0.9  # 90% of target
 
@@ -415,12 +415,12 @@ var cache_key_3 = structure_name + "_lod_meshes"
 # Generate LOD meshes if not already cached
 
 var _structure_data: Dictionary = {}
-var _current_lod_levels: Dictionary = {}
-var _structure_priorities: Dictionary = {}
-var _transition_tweens: Dictionary = {}
-var _initialized: bool = false
+# FIXED: Orphaned code - var _current_lod_levels: Dictionary = {}
+# FIXED: Orphaned code - var _structure_priorities: Dictionary = {}
+# FIXED: Orphaned code - var _transition_tweens: Dictionary = {}
+# FIXED: Orphaned code - var _initialized: bool = false
 var _mesh_cache: Dictionary = {}
-var _performance_metrics: Dictionary = {
+# FIXED: Orphaned code - var _performance_metrics: Dictionary = {
 	"avg_fps": 0.0,
 	"draw_calls_saved": 0,
 	"memory_saved": 0,
@@ -428,7 +428,7 @@ var _performance_metrics: Dictionary = {
 	"mid_detail_structures": 0,
 	"low_detail_structures": 0
 	}
-var _frame_times: Array = []
+# FIXED: Orphaned code - var _frame_times: Array = []
 var _focus_structure: String = ""
 var _last_metrics_update: float = 0.0
 var _cached_structure_distances: Dictionary = {}
@@ -664,485 +664,420 @@ func configure_for_educational_scene(is_educational: bool) -> bool:
 			)
 			return true
 
-func _fix_orphaned_code():
-	if _initialized:
-		_update_lod_state()
+if _initialized:
+	_update_lod_state()
 
-		## Distance thresholds for LOD levels (in world units)
-func _fix_orphaned_code():
-	print(
-	"[LODSystemEnhanced] Initialized with educational focus bias: %.2f" % educational_focus_bias
-	)
+	## Distance thresholds for LOD levels (in world units)
+print(
+"[LODSystemEnhanced] Initialized with educational focus bias: %.2f" % educational_focus_bias
+)
 
 
-func _fix_orphaned_code():
-	if not structure_data.root_node or not structure_data.root_node.is_inside_tree():
-		continue
+if not structure_data.root_node or not structure_data.root_node.is_inside_tree():
+	continue
 
-		# Get distance and calculate target LOD
-func _fix_orphaned_code():
-	if target_lod != _current_lod_levels.get(structure_name, 0):
-		_switch_lod_level(structure_name, target_lod)
+	# Get distance and calculate target LOD
+if target_lod != _current_lod_levels.get(structure_name, 0):
+	_switch_lod_level(structure_name, target_lod)
 
 
-		# === PUBLIC METHODS ===
-		## Register a structure for LOD management
-		## @param structure: Node3D root node of the structure
-		## @param structure_name: String name of the structure
-		## @param lod_variants: Array of PackedScene LOD variants (optional)
-		## @returns: bool indicating success
-func _fix_orphaned_code():
-	if structure_data.has_variants:
-		# Add variant data
-		pass
-		else:
-			# Generate simplified meshes or use cached versions
-			_generate_simplified_meshes(structure_data, structure_name)
+	# === PUBLIC METHODS ===
+	## Register a structure for LOD management
+	## @param structure: Node3D root node of the structure
+	## @param structure_name: String name of the structure
+	## @param lod_variants: Array of PackedScene LOD variants (optional)
+	## @returns: bool indicating success
+if structure_data.has_variants:
+	# Add variant data
+	pass
+	else:
+		# Generate simplified meshes or use cached versions
+		_generate_simplified_meshes(structure_data, structure_name)
 
-			# Add to managed structures
-			_structure_data[structure_name] = structure_data
-			_current_lod_levels[structure_name] = 0  # Start at highest detail
+		# Add to managed structures
+		_structure_data[structure_name] = structure_data
+		_current_lod_levels[structure_name] = 0  # Start at highest detail
 
-			# Set initial priority (default to BACKGROUND)
-			_structure_priorities[structure_name] = StructurePriority.BACKGROUND
+		# Set initial priority (default to BACKGROUND)
+		_structure_priorities[structure_name] = StructurePriority.BACKGROUND
 
-			print("[LODSystem] Registered structure: " + structure_name)
-			return true
-
-
-			## Unregister a structure from LOD management
-			## @param structure_name: String name of the structure
-			## @returns: bool indicating success
-func _fix_orphaned_code():
-	if _current_lod_levels.get(structure_name, 0) != 0:
-		_restore_original_meshes(structure_data)
-
-		# Clear any active transitions
-		if _transition_tweens.has(structure_name):
-func _fix_orphaned_code():
-	if tween and tween.is_valid():
-		tween.kill()
-		_transition_tweens.erase(structure_name)
-
-		# Remove from managed structures
-		_structure_data.erase(structure_name)
-		_current_lod_levels.erase(structure_name)
-		_structure_priorities.erase(structure_name)
-		_cached_structure_distances.erase(structure_name)
-
-		print("[LODSystem] Unregistered structure: " + structure_name)
+		print("[LODSystem] Registered structure: " + structure_name)
 		return true
 
 
-		## Set LOD level manually for a structure
+		## Unregister a structure from LOD management
 		## @param structure_name: String name of the structure
-		## @param lod_level: int LOD level to set
-		## @param force_instant: bool whether to force instant transition
 		## @returns: bool indicating success
-func _fix_orphaned_code():
-	print("[LODSystem] Updated priority for %s: %d" % [structure_name, priority])
+if _current_lod_levels.get(structure_name, 0) != 0:
+	_restore_original_meshes(structure_data)
+
+	# Clear any active transitions
+	if _transition_tweens.has(structure_name):
+if tween and tween.is_valid():
+	tween.kill()
+	_transition_tweens.erase(structure_name)
+
+	# Remove from managed structures
+	_structure_data.erase(structure_name)
+	_current_lod_levels.erase(structure_name)
+	_structure_priorities.erase(structure_name)
+	_cached_structure_distances.erase(structure_name)
+
+	print("[LODSystem] Unregistered structure: " + structure_name)
 	return true
 
 
-	## Set educational focus structure
-	## @param structure_name: String name of the focus structure
+	## Set LOD level manually for a structure
+	## @param structure_name: String name of the structure
+	## @param lod_level: int LOD level to set
+	## @param force_instant: bool whether to force instant transition
 	## @returns: bool indicating success
-func _fix_orphaned_code():
-	print("[LODSystem] Set focus structure: " + structure_name)
-	return true
+print("[LODSystem] Updated priority for %s: %d" % [structure_name, priority])
+return true
 
 
-	## Update distance thresholds
-	## @param thresholds: Array of float distance thresholds
-	## @returns: bool indicating success
-func _fix_orphaned_code():
+## Set educational focus structure
+## @param structure_name: String name of the focus structure
+## @returns: bool indicating success
+print("[LODSystem] Set focus structure: " + structure_name)
+return true
+
+
+## Update distance thresholds
+## @param thresholds: Array of float distance thresholds
+## @returns: bool indicating success
+for level in range(1, MAX_LOD_LEVELS):
+	if structure.lod_meshes.has(level):
+		info.vertex_reduction[level] = _calculate_vertex_reduction(structure, level)
+
+		return info
+
+
+		## Get LOD system metrics
+		## @returns: Dictionary with system metrics
+if not cameras.is_empty():
+	return cameras[0]
+
+	# Try to find by node path
+for path in camera_paths:
+	if get_node_or_null(path) != null:
+		return get_node(path)
+
+		push_warning("[LODSystem] No camera found. LOD system needs a camera reference.")
+		return null
+
+
+if not structure.root_node or not structure.root_node.is_inside_tree():
+	continue
+
+if model is MeshInstance3D and model.mesh != null:
+return camera.global_position.distance_to(model_pos)
+
+
+if priority != StructurePriority.BACKGROUND:
+for i in range(distance_thresholds.size()):
+	if effective_distance < distance_thresholds[i]:
+		return i
+
+		return min(distance_thresholds.size(), MAX_LOD_LEVELS - 1)
+
+
+if current_level == level:
+	return true  # Already at this level
+
+	# Calculate time since last change (for rate limiting)
+if not force_instant and time_since_change < 0.1:
+	return false  # Too soon since last change
+
+	# Cancel any active transition
+	if _transition_tweens.has(structure_name):
+if tween and tween.is_valid():
+	tween.kill()
+	_transition_tweens.erase(structure_name)
+
+	# Determine transition approach
+	if structure.has_variants:
+		# Switch between variant models
+		_switch_variant_model(structure, level)
+		else:
+			# Apply simplified meshes or transition between them
+			if smooth_transitions and not force_instant:
+				_transition_to_level(structure, structure_name, level)
+				else:
+					_apply_lod_level(structure, level)
+
+					# Update current level and last change time
+					_current_lod_levels[structure_name] = level
+					structure.last_lod_change = time_now
+
+					# Emit signal
+					lod_level_changed.emit(structure_name, level)
+
+					# Update performance metrics based on the change
+					_calculate_performance_impact()
+
+					return true
+
+
+for child in node.get_children():
+	_process_structure_node(child, mesh_dict)
+
+
+if mesh is ArrayMesh:
+	for surface_idx in range(mesh.get_surface_count()):
+return count
+
+
+for path_str in structure.original_meshes:
+	original_count += structure.original_meshes[path_str].vertex_count
+
+	# Sum vertices in LOD meshes
+	for path_str in structure.lod_meshes[lod_level]:
+		if structure.lod_meshes[lod_level][path_str].has("vertex_count"):
+			lod_count += structure.lod_meshes[lod_level][path_str].vertex_count
+
+			if original_count == 0:
+				return 0.0
+
+				return 1.0 - (float(lod_count) / original_count)
+
+
+if _mesh_cache.has(cache_key):
+	structure_data.lod_meshes = _mesh_cache[cache_key].duplicate(true)
+	print("[LODSystem] Using cached LOD meshes for: " + structure_name)
+	return
+
+	# Generate LOD meshes for each level
 	for level in range(1, MAX_LOD_LEVELS):
+for node_path in original_meshes:
+print("[LODSystem] Generated LOD meshes for: " + structure_name)
+
+
+for surface_idx in range(original_mesh.get_surface_count()):
+if vertex_count < 100:
+	array_mesh.add_surface_from_arrays(
+	original_mesh.surface_get_primitive_type(surface_idx), arrays
+	)
+	continue
+
+	# Simplify by skipping vertices
+for i in range(0, vertex_count, stride):
+	if i < arrays[Mesh.ARRAY_VERTEX].size():
+		vertices.append(arrays[Mesh.ARRAY_VERTEX][i])
+
+		if arrays[Mesh.ARRAY_NORMAL].size() > i:
+			normals.append(arrays[Mesh.ARRAY_NORMAL][i])
+
+			if arrays[Mesh.ARRAY_TEX_UV].size() > i:
+				uvs.append(arrays[Mesh.ARRAY_TEX_UV][i])
+
+				new_arrays[Mesh.ARRAY_VERTEX] = vertices
+
+				if not normals.is_empty():
+					new_arrays[Mesh.ARRAY_NORMAL] = normals
+
+					if not uvs.is_empty():
+						new_arrays[Mesh.ARRAY_TEX_UV] = uvs
+
+						# Create simplified indices if present
+						if arrays[Mesh.ARRAY_INDEX].size() > 0:
+for i in range(vertices.size()):
+	vertex_map[i * stride] = i
+
+	# Remap triangle indices
+	for i in range(0, original_indices.size(), 3):
+		if i + 2 < original_indices.size():
+if vertex_map.has(a) and vertex_map.has(b) and vertex_map.has(c):
+	indices.append(vertex_map[a])
+	indices.append(vertex_map[b])
+	indices.append(vertex_map[c])
+
+	new_arrays[Mesh.ARRAY_INDEX] = indices
+
+	# Add the simplified surface
+	array_mesh.add_surface_from_arrays(
+	original_mesh.surface_get_primitive_type(surface_idx), new_arrays
+	)
+
+	# Copy material if present
+if material:
+	array_mesh.surface_set_material(surface_idx, material)
+
+	return array_mesh
+	else:
+		# For other mesh types, create a simplified placeholder
+		return original_mesh
+
+
+for node_path_str in lod_meshes:
+if node and node is MeshInstance3D:
+for i in range(mesh_data.materials.size()):
+	if i < node.get_surface_override_material_count():
+		node.set_surface_override_material(i, mesh_data.materials[i])
+
+
+for node_path_str in original_meshes:
+if node and node is MeshInstance3D:
+for i in range(mesh_data.materials.size()):
+	if i < node.get_surface_override_material_count():
+		node.set_surface_override_material(i, mesh_data.materials[i])
+
+
+if target_level == 0:
+	_restore_original_meshes(structure_data)
+	else:
+		_apply_lod_level(structure_data, target_level)
+
+		# If transitioning to higher detail, make it faster
+if target_level < current_level:
+	transition_duration *= 0.7
+
+	# Apply material transition for all affected meshes
+if target_level == 0:
+	node_paths = structure_data.original_meshes.keys()
+	else:
+		node_paths = structure_data.lod_meshes[target_level].keys()
+
+		for node_path_str in node_paths:
+if node and node is MeshInstance3D:
+	# Fade in the new LOD level
+	if node.get_surface_override_material_count() > 0:
+		for i in range(node.get_surface_override_material_count()):
+if material is StandardMaterial3D:
+	# Start with slight transparency
+if not structure_data.has(variant_key):
+if not structure.root_node or not structure.root_node.is_inside_tree():
+	continue
+
+if lod_enabled:
+	_switch_lod_level(structure_name, target_lod, true)
+	else:
+		# Force highest detail if LOD is disabled
+		_switch_lod_level(structure_name, 0, true)
+
+		return true
+
+
+for level in range(MAX_LOD_LEVELS):
+	if (
+	level != current_level
+	and level != current_level - 1
+	and level != current_level + 1
+	):
 		if structure.lod_meshes.has(level):
-			info.vertex_reduction[level] = _calculate_vertex_reduction(structure, level)
+			structure.lod_meshes.erase(level)
 
-			return info
+			# Also clear mesh cache for structures not in focus
+for structure_name in _structure_data:
+if priority == StructurePriority.PRIMARY or priority == StructurePriority.SECONDARY:
+	keep_keys.append(structure_name + "_lod_meshes")
 
+for key in cached_keys:
+	if not key in keep_keys:
+		_mesh_cache.erase(key)
 
-			## Get LOD system metrics
-			## @returns: Dictionary with system metrics
-func _fix_orphaned_code():
-	if not cameras.is_empty():
-		return cameras[0]
+		1:  # Balanced
+		# Default strategy, no special handling
+		pass
 
-		# Try to find by node path
-func _fix_orphaned_code():
-	for path in camera_paths:
-		if get_node_or_null(path) != null:
-			return get_node(path)
-
-			push_warning("[LODSystem] No camera found. LOD system needs a camera reference.")
-			return null
-
-
-func _fix_orphaned_code():
-	if not structure.root_node or not structure.root_node.is_inside_tree():
-		continue
-
-func _fix_orphaned_code():
-	if model is MeshInstance3D and model.mesh != null:
-func _fix_orphaned_code():
-	return camera.global_position.distance_to(model_pos)
+		2:  # Quality
+		# Ensure all LOD levels are loaded
+		for structure_name in _structure_data:
+for level in range(1, MAX_LOD_LEVELS):
+	if not structure.lod_meshes.has(level):
+if level < quality_reduction_factors.size()
+else 0.25
+)
+for node_path in structure.original_meshes:
+if not _mesh_cache.has(cache_key):
+	_mesh_cache[cache_key] = {}
+	_mesh_cache[cache_key][level] = lod_meshes
 
 
-func _fix_orphaned_code():
-	if priority != StructurePriority.BACKGROUND:
-func _fix_orphaned_code():
-	for i in range(distance_thresholds.size()):
-		if effective_distance < distance_thresholds[i]:
-			return i
+for time in _frame_times:
+	avg_frame_time += time
+	avg_frame_time /= _frame_times.size()
+	_performance_metrics.avg_fps = 1.0 / avg_frame_time if avg_frame_time > 0 else 0
+	else:
+		_performance_metrics.avg_fps = Engine.get_frames_per_second()
 
-			return min(distance_thresholds.size(), MAX_LOD_LEVELS - 1)
+		# Count structures at each detail level
+for structure_name in _current_lod_levels:
+for structure_name in _structure_data:
+if current_level == 0:
+	continue  # No savings for highest detail
 
+	# Calculate vertex reduction
+for path_str in structure.original_meshes:
+	if structure.original_meshes[path_str].has("vertex_count"):
+		original_vertex_count += structure.original_meshes[path_str].vertex_count
 
-func _fix_orphaned_code():
-	if current_level == level:
-		return true  # Already at this level
+		# Rough estimate: 32 bytes per vertex (position, normal, uv, etc)
+		memory_saved += int(original_vertex_count * reduction * 32)
 
-		# Calculate time since last change (for rate limiting)
-func _fix_orphaned_code():
-	if not force_instant and time_since_change < 0.1:
-		return false  # Too soon since last change
+		# Estimate draw call savings (1 per mesh that's been simplified significantly)
+		if reduction > 0.5:  # If we've reduced by more than half
+		draw_calls_saved += structure.original_meshes.size()
 
-		# Cancel any active transition
-		if _transition_tweens.has(structure_name):
-func _fix_orphaned_code():
-	if tween and tween.is_valid():
-		tween.kill()
-		_transition_tweens.erase(structure_name)
-
-		# Determine transition approach
-		if structure.has_variants:
-			# Switch between variant models
-			_switch_variant_model(structure, level)
-			else:
-				# Apply simplified meshes or transition between them
-				if smooth_transitions and not force_instant:
-					_transition_to_level(structure, structure_name, level)
-					else:
-						_apply_lod_level(structure, level)
-
-						# Update current level and last change time
-						_current_lod_levels[structure_name] = level
-						structure.last_lod_change = time_now
-
-						# Emit signal
-						lod_level_changed.emit(structure_name, level)
-
-						# Update performance metrics based on the change
-						_calculate_performance_impact()
-
-						return true
+		_performance_metrics.memory_saved = memory_saved
+		_performance_metrics.draw_calls_saved = draw_calls_saved
 
 
-func _fix_orphaned_code():
-	for child in node.get_children():
-		_process_structure_node(child, mesh_dict)
-
-
-func _fix_orphaned_code():
-	if mesh is ArrayMesh:
-		for surface_idx in range(mesh.get_surface_count()):
-func _fix_orphaned_code():
-	return count
-
-
-func _fix_orphaned_code():
-	for path_str in structure.original_meshes:
-		original_count += structure.original_meshes[path_str].vertex_count
-
-		# Sum vertices in LOD meshes
-		for path_str in structure.lod_meshes[lod_level]:
-			if structure.lod_meshes[lod_level][path_str].has("vertex_count"):
-				lod_count += structure.lod_meshes[lod_level][path_str].vertex_count
-
-				if original_count == 0:
-					return 0.0
-
-					return 1.0 - (float(lod_count) / original_count)
-
-
-func _fix_orphaned_code():
-	if _mesh_cache.has(cache_key):
-		structure_data.lod_meshes = _mesh_cache[cache_key].duplicate(true)
-		print("[LODSystem] Using cached LOD meshes for: " + structure_name)
-		return
-
-		# Generate LOD meshes for each level
-		for level in range(1, MAX_LOD_LEVELS):
-func _fix_orphaned_code():
-	for node_path in original_meshes:
-func _fix_orphaned_code():
-	print("[LODSystem] Generated LOD meshes for: " + structure_name)
-
-
-func _fix_orphaned_code():
-	for surface_idx in range(original_mesh.get_surface_count()):
-func _fix_orphaned_code():
-	if vertex_count < 100:
-		array_mesh.add_surface_from_arrays(
-		original_mesh.surface_get_primitive_type(surface_idx), arrays
-		)
-		continue
-
-		# Simplify by skipping vertices
-func _fix_orphaned_code():
-	for i in range(0, vertex_count, stride):
-		if i < arrays[Mesh.ARRAY_VERTEX].size():
-			vertices.append(arrays[Mesh.ARRAY_VERTEX][i])
-
-			if arrays[Mesh.ARRAY_NORMAL].size() > i:
-				normals.append(arrays[Mesh.ARRAY_NORMAL][i])
-
-				if arrays[Mesh.ARRAY_TEX_UV].size() > i:
-					uvs.append(arrays[Mesh.ARRAY_TEX_UV][i])
-
-					new_arrays[Mesh.ARRAY_VERTEX] = vertices
-
-					if not normals.is_empty():
-						new_arrays[Mesh.ARRAY_NORMAL] = normals
-
-						if not uvs.is_empty():
-							new_arrays[Mesh.ARRAY_TEX_UV] = uvs
-
-							# Create simplified indices if present
-							if arrays[Mesh.ARRAY_INDEX].size() > 0:
-func _fix_orphaned_code():
-	for i in range(vertices.size()):
-		vertex_map[i * stride] = i
-
-		# Remap triangle indices
-		for i in range(0, original_indices.size(), 3):
-			if i + 2 < original_indices.size():
-func _fix_orphaned_code():
-	if vertex_map.has(a) and vertex_map.has(b) and vertex_map.has(c):
-		indices.append(vertex_map[a])
-		indices.append(vertex_map[b])
-		indices.append(vertex_map[c])
-
-		new_arrays[Mesh.ARRAY_INDEX] = indices
-
-		# Add the simplified surface
-		array_mesh.add_surface_from_arrays(
-		original_mesh.surface_get_primitive_type(surface_idx), new_arrays
-		)
-
-		# Copy material if present
-func _fix_orphaned_code():
-	if material:
-		array_mesh.surface_set_material(surface_idx, material)
-
-		return array_mesh
+if current_fps < target_fps_min:
+	# Performance is below target, increase LOD distance thresholds
+	if current_fps < target_fps_min * 0.7:
+		# Major performance issue, significant adjustment
+		_scale_lod_thresholds(0.7)
 		else:
-			# For other mesh types, create a simplified placeholder
-			return original_mesh
+			# Minor performance issue, slight adjustment
+			_scale_lod_thresholds(0.9)
+			elif current_fps > target_framerate * 1.2 and _are_thresholds_reduced():
+				# Performance is well above target, reduce LOD distance thresholds
+				_scale_lod_thresholds(1.1)  # Increase thresholds by 10%
+
+				# Update structure LOD levels
+				_update_lod_state()
 
 
-func _fix_orphaned_code():
-	for node_path_str in lod_meshes:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-func _fix_orphaned_code():
-	for i in range(mesh_data.materials.size()):
-		if i < node.get_surface_override_material_count():
-			node.set_surface_override_material(i, mesh_data.materials[i])
+for threshold in distance_thresholds:
+	new_thresholds.append(threshold * scale_factor)
+
+	# Update thresholds
+	distance_thresholds = new_thresholds
 
 
-func _fix_orphaned_code():
-	for node_path_str in original_meshes:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-func _fix_orphaned_code():
-	for i in range(mesh_data.materials.size()):
-		if i < node.get_surface_override_material_count():
-			node.set_surface_override_material(i, mesh_data.materials[i])
+if distance_thresholds.size() != default_thresholds.size():
+	return true
 
-
-func _fix_orphaned_code():
-	if target_level == 0:
-		_restore_original_meshes(structure_data)
-		else:
-			_apply_lod_level(structure_data, target_level)
-
-			# If transitioning to higher detail, make it faster
-func _fix_orphaned_code():
-	if target_level < current_level:
-		transition_duration *= 0.7
-
-		# Apply material transition for all affected meshes
-func _fix_orphaned_code():
-	if target_level == 0:
-		node_paths = structure_data.original_meshes.keys()
-		else:
-			node_paths = structure_data.lod_meshes[target_level].keys()
-
-			for node_path_str in node_paths:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-		# Fade in the new LOD level
-		if node.get_surface_override_material_count() > 0:
-			for i in range(node.get_surface_override_material_count()):
-func _fix_orphaned_code():
-	if material is StandardMaterial3D:
-		# Start with slight transparency
-func _fix_orphaned_code():
-	if not structure_data.has(variant_key):
-func _fix_orphaned_code():
-	if not structure.root_node or not structure.root_node.is_inside_tree():
-		continue
-
-func _fix_orphaned_code():
-	if lod_enabled:
-		_switch_lod_level(structure_name, target_lod, true)
-		else:
-			# Force highest detail if LOD is disabled
-			_switch_lod_level(structure_name, 0, true)
-
+	# Check if current thresholds are lower than defaults
+	for i in range(default_thresholds.size()):
+		if distance_thresholds[i] < default_thresholds[i]:
 			return true
 
-
-func _fix_orphaned_code():
-	for level in range(MAX_LOD_LEVELS):
-		if (
-		level != current_level
-		and level != current_level - 1
-		and level != current_level + 1
-		):
-			if structure.lod_meshes.has(level):
-				structure.lod_meshes.erase(level)
-
-				# Also clear mesh cache for structures not in focus
-func _fix_orphaned_code():
-	for structure_name in _structure_data:
-func _fix_orphaned_code():
-	if priority == StructurePriority.PRIMARY or priority == StructurePriority.SECONDARY:
-		keep_keys.append(structure_name + "_lod_meshes")
-
-func _fix_orphaned_code():
-	for key in cached_keys:
-		if not key in keep_keys:
-			_mesh_cache.erase(key)
-
-			1:  # Balanced
-			# Default strategy, no special handling
-			pass
-
-			2:  # Quality
-			# Ensure all LOD levels are loaded
-			for structure_name in _structure_data:
-func _fix_orphaned_code():
-	for level in range(1, MAX_LOD_LEVELS):
-		if not structure.lod_meshes.has(level):
-func _fix_orphaned_code():
-	if level < quality_reduction_factors.size()
-	else 0.25
-	)
-func _fix_orphaned_code():
-	for node_path in structure.original_meshes:
-func _fix_orphaned_code():
-	if not _mesh_cache.has(cache_key):
-		_mesh_cache[cache_key] = {}
-		_mesh_cache[cache_key][level] = lod_meshes
+			return false
 
 
-func _fix_orphaned_code():
-	for time in _frame_times:
-		avg_frame_time += time
-		avg_frame_time /= _frame_times.size()
-		_performance_metrics.avg_fps = 1.0 / avg_frame_time if avg_frame_time > 0 else 0
-		else:
-			_performance_metrics.avg_fps = Engine.get_frames_per_second()
+			# === INTEGRATION METHODS ===
+			## Reset cache to free memory
+			## @returns: bool indicating success
+if not _mesh_cache.has(cache_key):
+	_generate_simplified_meshes(structure, structure_name)
+	print("[LODSystem] Precached LOD meshes for: " + structure_name)
+	else:
+		print("[LODSystem] LOD meshes already cached for: " + structure_name)
 
-			# Count structures at each detail level
-func _fix_orphaned_code():
-	for structure_name in _current_lod_levels:
-func _fix_orphaned_code():
-	for structure_name in _structure_data:
-func _fix_orphaned_code():
-	if current_level == 0:
-		continue  # No savings for highest detail
-
-		# Calculate vertex reduction
-func _fix_orphaned_code():
-	for path_str in structure.original_meshes:
-		if structure.original_meshes[path_str].has("vertex_count"):
-			original_vertex_count += structure.original_meshes[path_str].vertex_count
-
-			# Rough estimate: 32 bytes per vertex (position, normal, uv, etc)
-			memory_saved += int(original_vertex_count * reduction * 32)
-
-			# Estimate draw call savings (1 per mesh that's been simplified significantly)
-			if reduction > 0.5:  # If we've reduced by more than half
-			draw_calls_saved += structure.original_meshes.size()
-
-			_performance_metrics.memory_saved = memory_saved
-			_performance_metrics.draw_calls_saved = draw_calls_saved
-
-
-func _fix_orphaned_code():
-	if current_fps < target_fps_min:
-		# Performance is below target, increase LOD distance thresholds
-		if current_fps < target_fps_min * 0.7:
-			# Major performance issue, significant adjustment
-			_scale_lod_thresholds(0.7)
-			else:
-				# Minor performance issue, slight adjustment
-				_scale_lod_thresholds(0.9)
-				elif current_fps > target_framerate * 1.2 and _are_thresholds_reduced():
-					# Performance is well above target, reduce LOD distance thresholds
-					_scale_lod_thresholds(1.1)  # Increase thresholds by 10%
-
-					# Update structure LOD levels
-					_update_lod_state()
-
-
-func _fix_orphaned_code():
-	for threshold in distance_thresholds:
-		new_thresholds.append(threshold * scale_factor)
-
-		# Update thresholds
-		distance_thresholds = new_thresholds
-
-
-func _fix_orphaned_code():
-	if distance_thresholds.size() != default_thresholds.size():
 		return true
 
-		# Check if current thresholds are lower than defaults
-		for i in range(default_thresholds.size()):
-			if distance_thresholds[i] < default_thresholds[i]:
-				return true
 
-				return false
+		## Update LOD settings for educational scene
+		## @param is_educational: bool whether scene is in educational mode
+		## @returns: bool indicating success
 
+if not structure or not structure.is_inside_tree():
+	push_warning("[LODSystem] Cannot register invalid structure: " + structure_name)
+	return false
 
-				# === INTEGRATION METHODS ===
-				## Reset cache to free memory
-				## @returns: bool indicating success
-func _fix_orphaned_code():
-	if not _mesh_cache.has(cache_key):
-		_generate_simplified_meshes(structure, structure_name)
-		print("[LODSystem] Precached LOD meshes for: " + structure_name)
-		else:
-			print("[LODSystem] LOD meshes already cached for: " + structure_name)
-
-			return true
-
-
-			## Update LOD settings for educational scene
-			## @param is_educational: bool whether scene is in educational mode
-			## @returns: bool indicating success
-
-func _fix_orphaned_code():
-	if not structure or not structure.is_inside_tree():
-		push_warning("[LODSystem] Cannot register invalid structure: " + structure_name)
-		return false
-
-		# Initialize structure data
+	# Initialize structure data
 func _find_main_camera() -> Camera3D:
 	"""Find the main camera in the scene"""
 func _update_structure_distances() -> void:

@@ -40,31 +40,31 @@ relationship_label.add_theme_font_size_override("font_size", 16)
 relationship_container.add_child(relationship_label)
 
 
-var card_2 = PanelContainer.new()
+# FIXED: Orphaned code - var card_2 = PanelContainer.new()
 card.custom_minimum_size = Vector2(0, STRUCTURE_CARD_HEIGHT)
 
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 card.add_child(vbox)
 
 # Header with structure name and state
 var header = HBoxContainer.new()
 vbox.add_child(header)
 
-var state_indicator = ColorRect.new()
+# FIXED: Orphaned code - var state_indicator = ColorRect.new()
 state_indicator.custom_minimum_size = Vector2(8, 30)
 state_indicator.name = "StateIndicator"
 header.add_child(state_indicator)
 
-var name_label = Label.new()
+# FIXED: Orphaned code - var name_label = Label.new()
 name_label.name = "NameLabel"
 name_label.add_theme_font_size_override("font_size", 18)
 header.add_child(name_label)
 
-var spacer = Control.new()
+# FIXED: Orphaned code - var spacer = Control.new()
 spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 header.add_child(spacer)
 
-var focus_button = Button.new()
+# FIXED: Orphaned code - var focus_button = Button.new()
 focus_button.text = "Focus"
 focus_button.name = "FocusButton"
 focus_button.custom_minimum_size = Vector2(60, 0)
@@ -87,13 +87,13 @@ functions_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 vbox.add_child(functions_label)
 
 # Clinical relevance (abbreviated for space)
-var clinical_label = Label.new()
+# FIXED: Orphaned code - var clinical_label = Label.new()
 clinical_label.name = "ClinicalLabel"
 clinical_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 clinical_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.8))
 vbox.add_child(clinical_label)
 
-var colors = _theme_manager.get_color_palette()
+# FIXED: Orphaned code - var colors = _theme_manager.get_color_palette()
 
 # Panel styling
 var panel_style = StyleBoxFlat.new()
@@ -119,46 +119,46 @@ var card_3 = _structure_cards[index]
 var structure_name = selection_data["name"]
 var structure_data = {}
 
-var normalized_name = _normalize_structure_name(structure_name)
+# FIXED: Orphaned code - var normalized_name = _normalize_structure_name(structure_name)
 structure_data = _knowledge_service.get_structure(normalized_name)
 
 # Update state indicator
 var state_indicator_2 = card.find_child("StateIndicator")
-var name_label_2 = card.find_child("NameLabel")
-var focus_button_2 = card.find_child("FocusButton")
-var facts_label_2 = card.find_child("FactsLabel")
-var functions_label_2 = card.find_child("FunctionsLabel")
-var functions = structure_data.get("functions", [])
-var clinical_label_2 = card.find_child("ClinicalLabel")
-var clinical = structure_data.get("clinicalRelevance", "")
-var abbreviated = []
+# FIXED: Orphaned code - var name_label_2 = card.find_child("NameLabel")
+# FIXED: Orphaned code - var focus_button_2 = card.find_child("FocusButton")
+# FIXED: Orphaned code - var facts_label_2 = card.find_child("FactsLabel")
+# FIXED: Orphaned code - var functions_label_2 = card.find_child("FunctionsLabel")
+# FIXED: Orphaned code - var functions = structure_data.get("functions", [])
+# FIXED: Orphaned code - var clinical_label_2 = card.find_child("ClinicalLabel")
+# FIXED: Orphaned code - var clinical = structure_data.get("clinicalRelevance", "")
+# FIXED: Orphaned code - var abbreviated = []
 var card_4 = _structure_cards[index]
 var tween = create_tween()
 tween.tween_property(card, "modulate:a", 1.0, PANEL_ANIMATION_TIME)
 
 
-var card_5 = _structure_cards[index]
+# FIXED: Orphaned code - var card_5 = _structure_cards[index]
 var tween_2 = create_tween()
 tween.tween_property(card, "modulate:a", 0.0, PANEL_ANIMATION_TIME)
 tween.tween_callback(card.hide)
 
 
-var relationships = _find_relationships()
+# FIXED: Orphaned code - var relationships = _find_relationships()
 
-var rel_label = Label.new()
+# FIXED: Orphaned code - var rel_label = Label.new()
 rel_label.text = "• " + rel
 rel_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 relationship_container.add_child(rel_label)
-var no_rel_label = Label.new()
+# FIXED: Orphaned code - var no_rel_label = Label.new()
 no_rel_label.text = "• No direct relationships found"
 no_rel_label.modulate.a = 0.6
 relationship_container.add_child(no_rel_label)
 
 
-var relationships_2 = []
+# FIXED: Orphaned code - var relationships_2 = []
 
 # Example relationship detection (extend with actual data)
-var structure_names = []
+# FIXED: Orphaned code - var structure_names = []
 var systems = {
 "limbic": ["hippocampus", "amygdala", "cingulate", "fornix"],
 "basal_ganglia": ["caudate", "putamen", "globus_pallidus", "substantia_nigra"],
@@ -166,7 +166,7 @@ var systems = {
 "brainstem": ["midbrain", "pons", "medulla"]
 }
 
-var system_structures = systems[system_name]
+# FIXED: Orphaned code - var system_structures = systems[system_name]
 var matches = 0
 
 var _structure_cards: Array[Control] = []
@@ -254,92 +254,73 @@ func clear_all() -> void:
 
 		# === PRIVATE UPDATE METHODS ===
 
-func _fix_orphaned_code():
-	return card
+return card
 
 
-func _fix_orphaned_code():
-	for card in _structure_cards:
-func _fix_orphaned_code():
-	if not card:
-		return
+for card in _structure_cards:
+if not card:
+	return
 
-		# Get structure data from knowledge service
-func _fix_orphaned_code():
-	if _knowledge_service:
-		# Normalize name for lookup
-func _fix_orphaned_code():
-	if state_indicator:
-		state_indicator.color = selection_data["color"]
+	# Get structure data from knowledge service
+if _knowledge_service:
+	# Normalize name for lookup
+if state_indicator:
+	state_indicator.color = selection_data["color"]
 
-		# Update name
-func _fix_orphaned_code():
-	if name_label:
-		name_label.text = structure_data.get("displayName", structure_name)
-		name_label.add_theme_color_override("font_color", selection_data["color"])
+	# Update name
+if name_label:
+	name_label.text = structure_data.get("displayName", structure_name)
+	name_label.add_theme_color_override("font_color", selection_data["color"])
 
-		# Update focus button
-func _fix_orphaned_code():
-	if focus_button:
-		focus_button.pressed.connect(func(): _on_focus_pressed(structure_name), CONNECT_ONE_SHOT)
+	# Update focus button
+if focus_button:
+	focus_button.pressed.connect(func(): _on_focus_pressed(structure_name), CONNECT_ONE_SHOT)
 
-		# Update content
-func _fix_orphaned_code():
-	if facts_label:
-		facts_label.text = "📍 " + structure_data.get("shortDescription", "Loading...")
+	# Update content
+if facts_label:
+	facts_label.text = "📍 " + structure_data.get("shortDescription", "Loading...")
 
-func _fix_orphaned_code():
-	if functions_label:
-func _fix_orphaned_code():
-	if functions.size() > 0:
-		functions_label.text = "🧠 " + _abbreviate_list(functions, 2)
-		else:
-			functions_label.text = ""
+if functions_label:
+if functions.size() > 0:
+	functions_label.text = "🧠 " + _abbreviate_list(functions, 2)
+	else:
+		functions_label.text = ""
 
-func _fix_orphaned_code():
-	if clinical_label:
-func _fix_orphaned_code():
-	if clinical:
-		clinical_label.text = "⚕️ " + _abbreviate_text(clinical, 80)
-		else:
-			clinical_label.text = ""
+if clinical_label:
+if clinical:
+	clinical_label.text = "⚕️ " + _abbreviate_text(clinical, 80)
+	else:
+		clinical_label.text = ""
 
 
-func _fix_orphaned_code():
-	for i in range(max_items):
-		abbreviated.append(items[i])
+for i in range(max_items):
+	abbreviated.append(items[i])
 
-		return ", ".join(abbreviated) + " (+" + str(items.size() - max_items) + " more)"
+	return ", ".join(abbreviated) + " (+" + str(items.size() - max_items) + " more)"
 
 
-func _fix_orphaned_code():
-	if not card.visible:
-		card.modulate.a = 0.0
-		card.show()
+if not card.visible:
+	card.modulate.a = 0.0
+	card.show()
 
-func _fix_orphaned_code():
-	if card.visible:
-func _fix_orphaned_code():
-	if relationships.size() > 0:
-		for rel in relationships:
-func _fix_orphaned_code():
-	for struct in _current_structures:
-		structure_names.append(_normalize_structure_name(struct["name"]).to_lower())
+if card.visible:
+if relationships.size() > 0:
+	for rel in relationships:
+for struct in _current_structures:
+	structure_names.append(_normalize_structure_name(struct["name"]).to_lower())
 
-		# Check for system memberships
-func _fix_orphaned_code():
-	for system_name in systems:
-func _fix_orphaned_code():
-	for struct_name in structure_names:
-		for system_struct in system_structures:
-			if system_struct in struct_name:
-				matches += 1
-				break
+	# Check for system memberships
+for system_name in systems:
+for struct_name in structure_names:
+	for system_struct in system_structures:
+		if system_struct in struct_name:
+			matches += 1
+			break
 
-				if matches >= 2:
-					relationships.append("Both part of the " + system_name.replace("_", " "))
+			if matches >= 2:
+				relationships.append("Both part of the " + system_name.replace("_", " "))
 
-					return relationships
+				return relationships
 
 
 func _setup_ui() -> void:

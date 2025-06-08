@@ -22,7 +22,7 @@ const DOUBLE_CLICK_TIME: float = 0.5
 
 # System references (injected during initialization)
 
-var camera_controller = null
+# FIXED: Orphaned code - var camera_controller = null
 var selection_manager = null
 var main_scene = null
 
@@ -53,7 +53,7 @@ var is_double_click = (current_time - last_click_time) < DOUBLE_CLICK_TIME
 	# Right mouse button - structure selection
 var current_time_2 = Time.get_ticks_msec() / 1000.0
 var status = get_input_status()
-var fake_event = InputEventKey.new()
+# FIXED: Orphaned code - var fake_event = InputEventKey.new()
 	fake_event.keycode = shortcut_key
 	fake_event.pressed = true
 
@@ -184,102 +184,96 @@ func simulate_selection_at_position(position: Vector2) -> void:
 
 		## Cleanup
 
-func _fix_orphaned_code():
-	if event is InputEventKey:
-		input_type = "keyboard"
-		handled = _handle_keyboard_input(event)
-		elif event is InputEventMouseButton:
-			input_type = "mouse_button"
-			handled = _handle_mouse_button_input(event)
-			elif event is InputEventMouseMotion:
-				input_type = "mouse_motion"
-				handled = _handle_mouse_motion_input(event)
+if event is InputEventKey:
+	input_type = "keyboard"
+	handled = _handle_keyboard_input(event)
+	elif event is InputEventMouseButton:
+		input_type = "mouse_button"
+		handled = _handle_mouse_button_input(event)
+		elif event is InputEventMouseMotion:
+			input_type = "mouse_motion"
+			handled = _handle_mouse_motion_input(event)
 
-				# Emit signal for input tracking
-				input_processed.emit(input_type, handled)
+			# Emit signal for input tracking
+			input_processed.emit(input_type, handled)
 
-				# Mark input as handled if we processed it
-				if handled:
-					get_viewport().set_input_as_handled()
+			# Mark input as handled if we processed it
+			if handled:
+				get_viewport().set_input_as_handled()
 
 
-					## Keyboard input handling
-func _fix_orphaned_code():
-	if camera_controller.has_method("focus_on_bounds"):
-		camera_controller.focus_on_bounds(Vector3.ZERO, 2.0)
-		shortcut_triggered = "focus"
+				## Keyboard input handling
+if camera_controller.has_method("focus_on_bounds"):
+	camera_controller.focus_on_bounds(Vector3.ZERO, 2.0)
+	shortcut_triggered = "focus"
 
-		KEY_1, KEY_KP_1:
-			# Front view
-			if camera_controller.has_method("set_view_preset"):
-				camera_controller.set_view_preset("front")
-				shortcut_triggered = "front_view"
+	KEY_1, KEY_KP_1:
+		# Front view
+		if camera_controller.has_method("set_view_preset"):
+			camera_controller.set_view_preset("front")
+			shortcut_triggered = "front_view"
 
-				KEY_3, KEY_KP_3:
-					# Right view
-					if camera_controller.has_method("set_view_preset"):
-						camera_controller.set_view_preset("right")
-						shortcut_triggered = "right_view"
+			KEY_3, KEY_KP_3:
+				# Right view
+				if camera_controller.has_method("set_view_preset"):
+					camera_controller.set_view_preset("right")
+					shortcut_triggered = "right_view"
 
-						KEY_7, KEY_KP_7:
-							# Top view
-							if camera_controller.has_method("set_view_preset"):
-								camera_controller.set_view_preset("top")
-								shortcut_triggered = "top_view"
+					KEY_7, KEY_KP_7:
+						# Top view
+						if camera_controller.has_method("set_view_preset"):
+							camera_controller.set_view_preset("top")
+							shortcut_triggered = "top_view"
 
-								KEY_R:
-									# Reset view
-									if camera_controller.has_method("reset_view"):
-										camera_controller.reset_view()
-										shortcut_triggered = "reset_view"
+							KEY_R:
+								# Reset view
+								if camera_controller.has_method("reset_view"):
+									camera_controller.reset_view()
+									shortcut_triggered = "reset_view"
 
-										_:
+									_:
+										return false
+
+										if not shortcut_triggered.is_empty():
+											print("[INPUT_ROUTER] Camera shortcut triggered: ", shortcut_triggered)
+											camera_shortcut_triggered.emit(shortcut_triggered)
+											return true
+
 											return false
 
-											if not shortcut_triggered.is_empty():
-												print("[INPUT_ROUTER] Camera shortcut triggered: ", shortcut_triggered)
-												camera_shortcut_triggered.emit(shortcut_triggered)
-												return true
 
-												return false
+if event.button_index == MOUSE_BUTTON_RIGHT and enable_selection_input:
+	return _handle_selection_input(event.position, event.button_index, is_double_click)
 
+	# Left mouse button - could be used for other interactions
+	# Currently handled by camera controller for orbiting
 
-func _fix_orphaned_code():
-	if event.button_index == MOUSE_BUTTON_RIGHT and enable_selection_input:
-		return _handle_selection_input(event.position, event.button_index, is_double_click)
-
-		# Left mouse button - could be used for other interactions
-		# Currently handled by camera controller for orbiting
-
-		return false
+	return false
 
 
-func _fix_orphaned_code():
-	if current_time - last_input_time < HOVER_UPDATE_INTERVAL:
-		return false
+if current_time - last_input_time < HOVER_UPDATE_INTERVAL:
+	return false
 
-		hover_position_changed.emit(mouse_hover_position)
+	hover_position_changed.emit(mouse_hover_position)
 
-		# Route hover to selection manager if available
-		if enable_selection_input and selection_manager:
-			if selection_manager.has_method("handle_hover_at_position"):
-				selection_manager.handle_hover_at_position(event.position)
-				return true
+	# Route hover to selection manager if available
+	if enable_selection_input and selection_manager:
+		if selection_manager.has_method("handle_hover_at_position"):
+			selection_manager.handle_hover_at_position(event.position)
+			return true
 
-				return false
-
-
-				## Input control functions
-func _fix_orphaned_code():
-	print("=== INPUT ROUTER STATUS ===")
-	for key in status.keys():
-		print("  ", key, ": ", status[key])
+			return false
 
 
-		## Input simulation for testing
-func _fix_orphaned_code():
-	print("[INPUT_ROUTER] Simulating camera shortcut: ", shortcut_key)
-	_handle_camera_shortcuts(fake_event)
+			## Input control functions
+print("=== INPUT ROUTER STATUS ===")
+for key in status.keys():
+	print("  ", key, ": ", status[key])
+
+
+	## Input simulation for testing
+print("[INPUT_ROUTER] Simulating camera shortcut: ", shortcut_key)
+_handle_camera_shortcuts(fake_event)
 
 
 func _input(event: InputEvent) -> void:

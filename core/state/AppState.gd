@@ -42,7 +42,7 @@ timer.timeout.connect(_on_auto_save_timer)
 add_child(timer)
 
 
-var old_value = _state.get(key)
+# FIXED: Orphaned code - var old_value = _state.get(key)
 
 # Skip if unchanged
 var group_name = _get_group_for_key(key)
@@ -53,11 +53,11 @@ _notify_listeners(key, old_value, value)
 # Notify group listeners if applicable
 var result = {}
 
-var changes_made = false
+# FIXED: Orphaned code - var changes_made = false
 
 # Update each provided value
 var old_value_2 = _state.get(key)
-var config = ConfigFile.new()
+# FIXED: Orphaned code - var config = ConfigFile.new()
 
 # Save each group to its own section
 var value = _state[key]
@@ -65,19 +65,19 @@ var value = _state[key]
 # Special handling for certain types
 var error = config.save(STATE_FILE_PATH)
 
-var config_2 = ConfigFile.new()
-var error_2 = config.load(STATE_FILE_PATH)
+# FIXED: Orphaned code - var config_2 = ConfigFile.new()
+# FIXED: Orphaned code - var error_2 = config.load(STATE_FILE_PATH)
 
-var changed_keys = []
+# FIXED: Orphaned code - var changed_keys = []
 var changed_groups = {}
 
 # Load each saved value
 var old_value_3 = _state.get(key)
-var new_value = config.get_value(section, key)
+# FIXED: Orphaned code - var new_value = config.get_value(section, key)
 
 # Only update if different
 var group = _get_group_for_key(key)
-var default_state = {}
+# FIXED: Orphaned code - var default_state = {}
 _initialize_default_state()
 default_state = _state.duplicate(true)
 
@@ -103,16 +103,16 @@ set_state("current_structure", structure_name)
 ## Get educational session statistics
 ## @returns: Dictionary with session statistics
 var start_time = get_state("session_start_time", 0)
-var current_time = Time.get_unix_time_from_system()
-var duration = current_time - start_time
+# FIXED: Orphaned code - var current_time = Time.get_unix_time_from_system()
+# FIXED: Orphaned code - var duration = current_time - start_time
 
 # Update duration in state
 set_state("session_duration", duration)
 
-var viewed_2 = get_state("viewed_structures", [])
-var interactions = get_state("interactions_count", 0)
+# FIXED: Orphaned code - var viewed_2 = get_state("viewed_structures", [])
+# FIXED: Orphaned code - var interactions = get_state("interactions_count", 0)
 
-var hours = int(seconds) / 3600.0
+# FIXED: Orphaned code - var hours = int(seconds) / 3600.0
 var minutes = (int(seconds) % 3600) / 60.0
 var secs = int(seconds) % 60
 
@@ -337,168 +337,151 @@ func print_state() -> void:
 
 				# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if old_value == value:
-		return
+if old_value == value:
+	return
 
-		# Update state
-		_state[key] = value
-		_state_dirty = true
+	# Update state
+	_state[key] = value
+	_state_dirty = true
 
-		# Find associated group
-func _fix_orphaned_code():
-	if group_name:
-		state_group_changed.emit(group_name)
+	# Find associated group
+if group_name:
+	state_group_changed.emit(group_name)
 
-		# Persist immediately if requested
-		if persist:
-			save_state()
-
-
-			## Get multiple state values by group
-			## @param group_name: Name of the state group
-			## @returns: Dictionary with group state values
-func _fix_orphaned_code():
-	if _groups.has(group_name):
-		for key in _groups[group_name]:
-			if _state.has(key):
-				result[key] = _state[key]
-
-				return result
-
-
-				## Update multiple state values in a group
-				## @param group_name: Name of the state group
-				## @param values: Dictionary of key/value pairs to update
-				## @param persist: Whether to persist these changes immediately
-func _fix_orphaned_code():
-	for key in values:
-		if _groups[group_name].has(key):
-func _fix_orphaned_code():
-	if old_value != values[key]:
-		_state[key] = values[key]
-		_notify_listeners(key, old_value, values[key])
-		changes_made = true
-
-		if changes_made:
-			_state_dirty = true
-			state_group_changed.emit(group_name)
-
-			if persist:
-				save_state()
-
-
-				## Register a listener for state changes
-				## @param key: State key to listen for
-				## @param callback: Callable to invoke when state changes
-func _fix_orphaned_code():
-	for group_name in _groups:
-		for key in _groups[group_name]:
-			if _state.has(key):
-func _fix_orphaned_code():
-	if value is Object and value.has_method("to_dict"):
-		# Convert objects with to_dict method
-		value = value.to_dict()
-		elif value is Vector2 or value is Vector3 or value is Color:
-			# Built-in types are handled automatically
-			pass
-
-			config.set_value(group_name, key, value)
-
-			# Save to file
-func _fix_orphaned_code():
-	if error == OK:
-		print("[AppState] Educational state saved successfully")
-		_state_dirty = false
-		state_saved.emit()
-		return true
-		else:
-			push_error("[AppState] Failed to save state: Error %d" % error)
-			return false
-
-
-			## Load state from disk
-			## @returns: true if load successful, false otherwise
-func _fix_orphaned_code():
-	if error != OK:
-		print("[AppState] No saved state found or error loading: %d" % error)
-		return false
-
-		# Track changes for notifications
-func _fix_orphaned_code():
-	for section in config.get_sections():
-		for key in config.get_section_keys(section):
-func _fix_orphaned_code():
-	if old_value != new_value:
-		_state[key] = new_value
-		changed_keys.append(key)
-
-		# Track changed group
-func _fix_orphaned_code():
-	if group:
-		changed_groups[group] = true
-
-		# Notify listeners of changes
-		for key in changed_keys:
-			_notify_listeners(key, null, _state[key])
-
-			# Notify group listeners
-			for group_name in changed_groups:
-				state_group_changed.emit(group_name)
-
-				print("[AppState] Educational state loaded successfully")
-				state_loaded.emit()
-				return true
-
-
-				## Reset state to default values
-				## @param group_name: Optional group to reset (or all if not specified)
-				## @param persist: Whether to persist these changes immediately
-func _fix_orphaned_code():
-	if group_name.is_empty():
-		print("[AppState] Resetting all educational state to defaults")
-		_state = default_state
-		for g in _groups:
-			state_group_changed.emit(g)
-			else:
-				if not _groups.has(group_name):
-					push_warning("[AppState] Unknown state group: %s" % group_name)
-					return
-
-					print("[AppState] Resetting state group: %s" % group_name)
-					for key in _groups[group_name]:
-						if default_state.has(key):
-func _fix_orphaned_code():
+	# Persist immediately if requested
 	if persist:
 		save_state()
 
 
-		## Check if state has unsaved changes
-		## @returns: true if state has unsaved changes, false otherwise
-func _fix_orphaned_code():
-	if not viewed.has(structure_name):
-		viewed.append(structure_name)
-		set_state("viewed_structures", viewed)
+		## Get multiple state values by group
+		## @param group_name: Name of the state group
+		## @returns: Dictionary with group state values
+if _groups.has(group_name):
+	for key in _groups[group_name]:
+		if _state.has(key):
+			result[key] = _state[key]
 
-		# Increment interactions
-func _fix_orphaned_code():
-	return {
-	"duration_seconds": duration,
-	"duration_formatted": _format_duration(duration),
-	"structures_viewed": viewed.size(),
-	"unique_structures": viewed,
-	"interactions_count": interactions,
-	"interaction_rate": interactions / (duration / 60.0) if duration > 0 else 0  # per minute
-	}
+			return result
 
 
-	# === DEBUGGING ===
-	## Print current state for debugging
-func _fix_orphaned_code():
-	if hours > 0:
-		return "%d:%02d:%02d" % [hours, minutes, secs]
+			## Update multiple state values in a group
+			## @param group_name: Name of the state group
+			## @param values: Dictionary of key/value pairs to update
+			## @param persist: Whether to persist these changes immediately
+for key in values:
+	if _groups[group_name].has(key):
+if old_value != values[key]:
+	_state[key] = values[key]
+	_notify_listeners(key, old_value, values[key])
+	changes_made = true
+
+	if changes_made:
+		_state_dirty = true
+		state_group_changed.emit(group_name)
+
+		if persist:
+			save_state()
+
+
+			## Register a listener for state changes
+			## @param key: State key to listen for
+			## @param callback: Callable to invoke when state changes
+for group_name in _groups:
+	for key in _groups[group_name]:
+		if _state.has(key):
+if value is Object and value.has_method("to_dict"):
+	# Convert objects with to_dict method
+	value = value.to_dict()
+	elif value is Vector2 or value is Vector3 or value is Color:
+		# Built-in types are handled automatically
+		pass
+
+		config.set_value(group_name, key, value)
+
+		# Save to file
+if error == OK:
+	print("[AppState] Educational state saved successfully")
+	_state_dirty = false
+	state_saved.emit()
+	return true
+	else:
+		push_error("[AppState] Failed to save state: Error %d" % error)
+		return false
+
+
+		## Load state from disk
+		## @returns: true if load successful, false otherwise
+if error != OK:
+	print("[AppState] No saved state found or error loading: %d" % error)
+	return false
+
+	# Track changes for notifications
+for section in config.get_sections():
+	for key in config.get_section_keys(section):
+if old_value != new_value:
+	_state[key] = new_value
+	changed_keys.append(key)
+
+	# Track changed group
+if group:
+	changed_groups[group] = true
+
+	# Notify listeners of changes
+	for key in changed_keys:
+		_notify_listeners(key, null, _state[key])
+
+		# Notify group listeners
+		for group_name in changed_groups:
+			state_group_changed.emit(group_name)
+
+			print("[AppState] Educational state loaded successfully")
+			state_loaded.emit()
+			return true
+
+
+			## Reset state to default values
+			## @param group_name: Optional group to reset (or all if not specified)
+			## @param persist: Whether to persist these changes immediately
+if group_name.is_empty():
+	print("[AppState] Resetting all educational state to defaults")
+	_state = default_state
+	for g in _groups:
+		state_group_changed.emit(g)
 		else:
-			return "%d:%02d" % [minutes, secs]
+			if not _groups.has(group_name):
+				push_warning("[AppState] Unknown state group: %s" % group_name)
+				return
+
+				print("[AppState] Resetting state group: %s" % group_name)
+				for key in _groups[group_name]:
+					if default_state.has(key):
+if persist:
+	save_state()
+
+
+	## Check if state has unsaved changes
+	## @returns: true if state has unsaved changes, false otherwise
+if not viewed.has(structure_name):
+	viewed.append(structure_name)
+	set_state("viewed_structures", viewed)
+
+	# Increment interactions
+return {
+"duration_seconds": duration,
+"duration_formatted": _format_duration(duration),
+"structures_viewed": viewed.size(),
+"unique_structures": viewed,
+"interactions_count": interactions,
+"interaction_rate": interactions / (duration / 60.0) if duration > 0 else 0  # per minute
+}
+
+
+# === DEBUGGING ===
+## Print current state for debugging
+if hours > 0:
+	return "%d:%02d:%02d" % [hours, minutes, secs]
+	else:
+		return "%d:%02d" % [minutes, secs]
 
 
 func _register_state_group(group_name: String, keys: Array) -> void:

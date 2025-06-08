@@ -65,7 +65,7 @@ var hit_mesh = hit_data["mesh"] if hit_data else null
 # Handle hover state changes
 var hit_data_2 = _cast_multi_ray_selection(screen_position, true)
 
-var hit_mesh_2 = hit_data["mesh"]
+# FIXED: Orphaned code - var hit_mesh_2 = hit_data["mesh"]
 last_selection_confidence = hit_data["confidence"]
 
 # Apply highlighting
@@ -74,14 +74,14 @@ current_selected_mesh = hit_mesh
 
 # Clear hover since we're now selected
 var camera = get_viewport().get_camera_3d()
-var nearby_structures = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
+# FIXED: Orphaned code - var nearby_structures = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
 
 var smallest_size = 1.0
 var size = struct_data["screen_size"]
 var tolerance_range = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
 var size_factor = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
 var camera_2 = get_viewport().get_camera_3d()
-var candidates: Array[Dictionary] = []
+# FIXED: Orphaned code - var candidates: Array[Dictionary] = []
 var tolerance = get_adaptive_tolerance(screen_position) if use_tolerance else 0.0
 
 # Sample pattern: center + 4 corners + optional edge samples
@@ -97,18 +97,18 @@ Vector2(SAMPLE_RADIUS, SAMPLE_RADIUS),  # Bottom-right
 var sample_pos = screen_position + offset
 var hit_result = _cast_single_ray(sample_pos)
 
-var found = false
+# FIXED: Orphaned code - var found = false
 var best_candidate = candidates[0]
 var total_samples = MULTI_RAY_SAMPLES + (4 if tolerance > 10.0 else 0)
-var confidence = float(best_candidate["hit_count"]) / float(total_samples)
+# FIXED: Orphaned code - var confidence = float(best_candidate["hit_count"]) / float(total_samples)
 
 # Apply structure size boost for small structures
 var avg_dist_a = _calculate_average(a["distances"])
-var avg_dist_b = _calculate_average(b["distances"])
+# FIXED: Orphaned code - var avg_dist_b = _calculate_average(b["distances"])
 
-var camera_3 = get_viewport().get_camera_3d()
-var from = camera.project_ray_origin(screen_position)
-var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
+# FIXED: Orphaned code - var camera_3 = get_viewport().get_camera_3d()
+# FIXED: Orphaned code - var from = camera.project_ray_origin(screen_position)
+# FIXED: Orphaned code - var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
 
 # Setup raycast
 var space_state = get_viewport().world_3d.direct_space_state
@@ -120,23 +120,23 @@ ray_params.hit_from_inside = true  # Important for overlapping geometry
 # Perform raycast
 var result = space_state.intersect_ray(ray_params)
 
-var mesh = _extract_mesh_from_collision(result)
-var nearby: Array = []
+# FIXED: Orphaned code - var mesh = _extract_mesh_from_collision(result)
+# FIXED: Orphaned code - var nearby: Array = []
 var camera_4 = get_viewport().get_camera_3d()
-var brain_model = get_node_or_null("/root/Node3D/BrainModel")
-var all_meshes = _get_all_meshes_recursive(brain_model)
+# FIXED: Orphaned code - var brain_model = get_node_or_null("/root/Node3D/BrainModel")
+# FIXED: Orphaned code - var all_meshes = _get_all_meshes_recursive(brain_model)
 
 # Check each mesh
 var screen_pos = _get_mesh_screen_position(mesh)
-var meshes: Array[MeshInstance3D] = []
+# FIXED: Orphaned code - var meshes: Array[MeshInstance3D] = []
 
 var camera_5 = get_viewport().get_camera_3d()
-var aabb = mesh.get_aabb()
-var center = mesh.global_transform * aabb.get_center()
+# FIXED: Orphaned code - var aabb = mesh.get_aabb()
+# FIXED: Orphaned code - var center = mesh.global_transform * aabb.get_center()
 
-var camera_6 = get_viewport().get_camera_3d()
-var aabb_2 = mesh.get_aabb()
-var corners = [
+# FIXED: Orphaned code - var camera_6 = get_viewport().get_camera_3d()
+# FIXED: Orphaned code - var aabb_2 = mesh.get_aabb()
+# FIXED: Orphaned code - var corners = [
 mesh.global_transform * aabb.position, mesh.global_transform * (aabb.position + aabb.size)
 ]
 
@@ -147,25 +147,25 @@ var screen_pos_2 = camera.unproject_position(corner)
 screen_min = screen_min.min(screen_pos)
 screen_max = screen_max.max(screen_pos)
 
-var screen_size = screen_max - screen_min
+# FIXED: Orphaned code - var screen_size = screen_max - screen_min
 var viewport_size = get_viewport().get_visible_rect().size
 var size_percentage = (screen_size.length() / viewport_size.length()) * 100.0
 
 structure_sizes[mesh] = size_percentage
 var camera_7 = get_viewport().get_camera_3d()
-var sum = 0.0
+# FIXED: Orphaned code - var sum = 0.0
 var collider = collision_result.collider
 
 # Direct mesh instance hit
 var parent = collider.get_parent()
-var aabb_3 = sibling.get_aabb()
-var collision_point = collision_result.get("position", Vector3.ZERO)
-var local_point = sibling.global_transform.inverse() * collision_point
+# FIXED: Orphaned code - var aabb_3 = sibling.get_aabb()
+# FIXED: Orphaned code - var collision_point = collision_result.get("position", Vector3.ZERO)
+# FIXED: Orphaned code - var local_point = sibling.global_transform.inverse() * collision_point
 
 # Check if collision point is within mesh bounds (with tolerance)
-var tolerance_2 = 0.1
+# FIXED: Orphaned code - var tolerance_2 = 0.1
 var parent_2 = collider.get_parent()
-var hover_material = StandardMaterial3D.new()
+# FIXED: Orphaned code - var hover_material = StandardMaterial3D.new()
 hover_material.albedo_color = hover_color.lightened(0.3)
 hover_material.emission_enabled = true
 hover_material.emission = hover_color
@@ -178,7 +178,7 @@ hover_material.rim_tint = 0.8
 hover_material.rim = 0.5
 
 var surface_count = mesh.mesh.get_surface_count()
-var highlight_material = StandardMaterial3D.new()
+# FIXED: Orphaned code - var highlight_material = StandardMaterial3D.new()
 highlight_material.albedo_color = highlight_color.lightened(0.2)
 highlight_material.emission_enabled = true
 highlight_material.emission = highlight_color
@@ -192,13 +192,13 @@ highlight_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 highlight_material.albedo_color.a = 0.8
 
 var surface_count_2 = mesh.mesh.get_surface_count()
-var original_material = original_materials[mesh]
+# FIXED: Orphaned code - var original_material = original_materials[mesh]
 var surface_count_3 = mesh.mesh.get_surface_count() if mesh.mesh else 1
 
 var tween = mesh.create_tween()
 tween.set_loops()
 
-var original_scale = mesh.scale
+# FIXED: Orphaned code - var original_scale = mesh.scale
 var pulse_scale = original_scale * 1.02
 
 tween.tween_property(mesh, "scale", pulse_scale, 0.8)
@@ -207,17 +207,17 @@ tween.tween_property(mesh, "scale", original_scale, 0.8)
 mesh.set_meta("hover_tween", tween)
 
 
-var tween_2 = mesh.create_tween()
+# FIXED: Orphaned code - var tween_2 = mesh.create_tween()
 tween.set_parallel(true)
 
-var original_scale_2 = mesh.scale
+# FIXED: Orphaned code - var original_scale_2 = mesh.scale
 tween.tween_property(mesh, "scale", original_scale * 1.1, 0.1).set_ease(Tween.EASE_OUT)
 tween.tween_property(mesh, "scale", original_scale, 0.3).set_ease(Tween.EASE_OUT).set_trans(
 Tween.TRANS_BACK
 )
 
-var material = mesh.get_surface_override_material(0)
-var original_energy = material.emission_energy_multiplier
+# FIXED: Orphaned code - var material = mesh.get_surface_override_material(0)
+# FIXED: Orphaned code - var original_energy = material.emission_energy_multiplier
 tween.tween_method(
 func(energy): _set_material_emission(material, energy),
 original_energy,
@@ -232,9 +232,9 @@ original_energy,
 )
 
 
-var current_material = mesh.get_surface_override_material(0)
-var mesh_hover_tween = mesh.get_meta("hover_tween")
-var connections = get_signal_connection_list("structure_selected")
+# FIXED: Orphaned code - var current_material = mesh.get_surface_override_material(0)
+# FIXED: Orphaned code - var mesh_hover_tween = mesh.get_meta("hover_tween")
+# FIXED: Orphaned code - var connections = get_signal_connection_list("structure_selected")
 
 func _ready() -> void:
 	set_process_unhandled_input(true)
@@ -353,355 +353,313 @@ func dispose() -> void:
 
 		if has_signal("structure_selected"):
 
-func _fix_orphaned_code():
-	if hit_mesh != current_hovered_mesh:
-		# Clear previous hover
+if hit_mesh != current_hovered_mesh:
+	# Clear previous hover
+	if current_hovered_mesh and current_hovered_mesh != current_selected_mesh:
+		clear_hover_effect(current_hovered_mesh)
+		structure_unhovered.emit()
+
+		# Apply new hover
+		current_hovered_mesh = hit_mesh
 		if current_hovered_mesh and current_hovered_mesh != current_selected_mesh:
-			clear_hover_effect(current_hovered_mesh)
-			structure_unhovered.emit()
-
-			# Apply new hover
-			current_hovered_mesh = hit_mesh
-			if current_hovered_mesh and current_hovered_mesh != current_selected_mesh:
-				apply_hover_effect(current_hovered_mesh)
-				structure_hovered.emit(current_hovered_mesh.name, current_hovered_mesh)
+			apply_hover_effect(current_hovered_mesh)
+			structure_hovered.emit(current_hovered_mesh.name, current_hovered_mesh)
 
 
-				## Enhanced selection with multi-ray sampling and adaptive tolerance
-func _fix_orphaned_code():
-	if hit_data and hit_data["mesh"]:
-func _fix_orphaned_code():
-	if current_hovered_mesh == hit_mesh:
-		current_hovered_mesh = null
+			## Enhanced selection with multi-ray sampling and adaptive tolerance
+if hit_data and hit_data["mesh"]:
+if current_hovered_mesh == hit_mesh:
+	current_hovered_mesh = null
 
-		# Emit signals
-		structure_selected.emit(hit_mesh.name, hit_mesh)
-		selection_confidence_changed.emit(last_selection_confidence)
+	# Emit signals
+	structure_selected.emit(hit_mesh.name, hit_mesh)
+	selection_confidence_changed.emit(last_selection_confidence)
 
-		# Log selection details for debugging
-		if OS.is_debug_build():
-			print(
-			(
-			"[Selection] Selected: %s (Confidence: %.1f%%, Method: %s)"
-			% [
-			hit_mesh.name,
-			last_selection_confidence * 100,
-			hit_data.get("method", "unknown")
-			]
-			)
-			)
-			else:
-				structure_deselected.emit()
-
-
-				## Get adaptive selection tolerance for a given position
-func _fix_orphaned_code():
-	if not camera:
-		return MIN_SELECTION_TOLERANCE
-
-		# Find structures near the click position
-func _fix_orphaned_code():
-	if nearby_structures.is_empty():
-		return MIN_SELECTION_TOLERANCE
-
-		# Calculate tolerance based on smallest nearby structure
-func _fix_orphaned_code():
-	for struct_data in nearby_structures:
-func _fix_orphaned_code():
-	if size < smallest_size:
-		smallest_size = size
-
-		# Adaptive tolerance calculation
-		if smallest_size < SMALL_STRUCTURE_THRESHOLD:
-			# Small structures get maximum tolerance
-			return MAX_SELECTION_TOLERANCE
-			else:
-				# Larger structures get proportionally less tolerance
-func _fix_orphaned_code():
-	return MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
-
-
-	# === ENHANCED SELECTION METHODS ===
-
-
-	## Multi-ray selection with adaptive tolerance
-func _fix_orphaned_code():
-	if not camera:
-		return {}
-
-func _fix_orphaned_code():
-	if tolerance > 10.0:
+	# Log selection details for debugging
+	if OS.is_debug_build():
+		print(
 		(
-		sample_offsets
-		. append_array(
-		[
-		Vector2(0, -SAMPLE_RADIUS),  # Top
-		Vector2(SAMPLE_RADIUS, 0),  # Right
-		Vector2(0, SAMPLE_RADIUS),  # Bottom
-		Vector2(-SAMPLE_RADIUS, 0),  # Left
+		"[Selection] Selected: %s (Confidence: %.1f%%, Method: %s)"
+		% [
+		hit_mesh.name,
+		last_selection_confidence * 100,
+		hit_data.get("method", "unknown")
 		]
 		)
 		)
+		else:
+			structure_deselected.emit()
+
+
+			## Get adaptive selection tolerance for a given position
+if not camera:
+	return MIN_SELECTION_TOLERANCE
+
+	# Find structures near the click position
+if nearby_structures.is_empty():
+	return MIN_SELECTION_TOLERANCE
+
+	# Calculate tolerance based on smallest nearby structure
+for struct_data in nearby_structures:
+if size < smallest_size:
+	smallest_size = size
+
+	# Adaptive tolerance calculation
+	if smallest_size < SMALL_STRUCTURE_THRESHOLD:
+		# Small structures get maximum tolerance
+		return MAX_SELECTION_TOLERANCE
+		else:
+			# Larger structures get proportionally less tolerance
+return MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
+
+
+# === ENHANCED SELECTION METHODS ===
+
+
+## Multi-ray selection with adaptive tolerance
+if not camera:
+	return {}
+
+if tolerance > 10.0:
+	(
+	sample_offsets
+	. append_array(
+	[
+	Vector2(0, -SAMPLE_RADIUS),  # Top
+	Vector2(SAMPLE_RADIUS, 0),  # Right
+	Vector2(0, SAMPLE_RADIUS),  # Bottom
+	Vector2(-SAMPLE_RADIUS, 0),  # Left
+	]
+	)
+	)
+
+	# Cast rays from each sample point
+	for offset in sample_offsets:
+if hit_result:
+	# Check if we already have this mesh as a candidate
+for candidate in candidates:
+	if candidate["mesh"] == hit_result["mesh"]:
+		candidate["hit_count"] += 1
+		candidate["distances"].append(hit_result["distance"])
+		found = true
+		break
+
+		if not found:
+			candidates.append(
+			{
+			"mesh": hit_result["mesh"],
+			"hit_count": 1,
+			"distances": [hit_result["distance"]],
+			"first_hit_position": hit_result["position"],
+			"structure_size": _get_structure_screen_size(hit_result["mesh"])
+			}
+			)
 
-		# Cast rays from each sample point
-		for offset in sample_offsets:
-func _fix_orphaned_code():
-	if hit_result:
-		# Check if we already have this mesh as a candidate
-func _fix_orphaned_code():
-	for candidate in candidates:
-		if candidate["mesh"] == hit_result["mesh"]:
-			candidate["hit_count"] += 1
-			candidate["distances"].append(hit_result["distance"])
-			found = true
-			break
-
-			if not found:
-				candidates.append(
-				{
-				"mesh": hit_result["mesh"],
-				"hit_count": 1,
-				"distances": [hit_result["distance"]],
-				"first_hit_position": hit_result["position"],
-				"structure_size": _get_structure_screen_size(hit_result["mesh"])
-				}
-				)
-
-				# Process candidates to find best selection
-				return _process_selection_candidates(candidates, screen_position, tolerance)
-
-
-				## Process selection candidates with intelligent prioritization
-func _fix_orphaned_code():
-	if best_candidate["structure_size"] < SMALL_STRUCTURE_THRESHOLD:
-		confidence = min(confidence * 1.5, 1.0)
-
-		return {
-		"mesh": best_candidate["mesh"],
-		"confidence": confidence,
-		"method": "multi_ray",
-		"hit_count": best_candidate["hit_count"],
-		"avg_distance": _calculate_average(best_candidate["distances"])
-		}
-
-
-		## Compare function for sorting selection candidates
-func _fix_orphaned_code():
-	if abs(avg_dist_a - avg_dist_b) > 0.1:
-		return avg_dist_a < avg_dist_b
-
-		# Priority 3: Smaller structures get priority (harder to select)
-		return a["structure_size"] < b["structure_size"]
-
-
-		## Cast a single selection ray
-func _fix_orphaned_code():
-	if not camera:
-		return {}
-
-		# Calculate ray
-func _fix_orphaned_code():
-	if not space_state:
-		return {}
-
-func _fix_orphaned_code():
-	if result.is_empty():
-		return {}
-
-func _fix_orphaned_code():
-	if not mesh:
-		return {}
-
-		return {
-		"mesh": mesh,
-		"position": result["position"],
-		"distance": from.distance_to(result["position"]),
-		"normal": result.get("normal", Vector3.UP)
-		}
-
-
-		## Find structures near a screen position
-func _fix_orphaned_code():
-	if not camera:
-		return nearby
-
-		# Get all potential meshes
-func _fix_orphaned_code():
-	if not brain_model:
-		return nearby
-
-func _fix_orphaned_code():
-	for mesh in all_meshes:
-func _fix_orphaned_code():
-	if screen_pos.distance_to(screen_position) <= radius:
-		nearby.append(
-		{
-		"mesh": mesh,
-		"screen_position": screen_pos,
-		"screen_size": _get_structure_screen_size(mesh),
-		"distance": screen_pos.distance_to(screen_position)
-		}
-		)
-
-		return nearby
+			# Process candidates to find best selection
+			return _process_selection_candidates(candidates, screen_position, tolerance)
 
 
-		## Get all meshes recursively
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-		meshes.append(node)
+			## Process selection candidates with intelligent prioritization
+if best_candidate["structure_size"] < SMALL_STRUCTURE_THRESHOLD:
+	confidence = min(confidence * 1.5, 1.0)
 
-		for child in node.get_children():
-			if child is Node3D:
-				meshes.append_array(_get_all_meshes_recursive(child))
+	return {
+	"mesh": best_candidate["mesh"],
+	"confidence": confidence,
+	"method": "multi_ray",
+	"hit_count": best_candidate["hit_count"],
+	"avg_distance": _calculate_average(best_candidate["distances"])
+	}
 
-				return meshes
 
+	## Compare function for sorting selection candidates
+if abs(avg_dist_a - avg_dist_b) > 0.1:
+	return avg_dist_a < avg_dist_b
 
-				## Calculate mesh screen position
-func _fix_orphaned_code():
-	if not camera or not mesh.mesh:
-		return Vector2.ZERO
+	# Priority 3: Smaller structures get priority (harder to select)
+	return a["structure_size"] < b["structure_size"]
 
-func _fix_orphaned_code():
-	if camera.is_position_behind(center):
-		return Vector2(-1000, -1000)  # Off-screen
 
-		return camera.unproject_position(center)
+	## Cast a single selection ray
+if not camera:
+	return {}
 
+	# Calculate ray
+if not space_state:
+	return {}
 
-		## Calculate structure screen size percentage
-func _fix_orphaned_code():
-	if not camera or not mesh.mesh:
-		return 0.0
+if result.is_empty():
+	return {}
 
-func _fix_orphaned_code():
-	for corner in corners:
-		if not camera.is_position_behind(corner):
-func _fix_orphaned_code():
-	return size_percentage
+if not mesh:
+	return {}
 
+	return {
+	"mesh": mesh,
+	"position": result["position"],
+	"distance": from.distance_to(result["position"]),
+	"normal": result.get("normal", Vector3.UP)
+	}
 
-	## Update structure size cache
-func _fix_orphaned_code():
-	if not camera:
-		return
 
-		# Check if camera has moved significantly
-		if (
-		camera.position.distance_to(last_camera_position) > 0.1
-		or camera.rotation.distance_to(last_camera_rotation) > 0.01
-		):
-			structure_sizes.clear()
-			last_camera_position = camera.position
-			last_camera_rotation = camera.rotation
+	## Find structures near a screen position
+if not camera:
+	return nearby
 
+	# Get all potential meshes
+if not brain_model:
+	return nearby
 
-			## Calculate average of an array
-func _fix_orphaned_code():
-	for value in values:
-		sum += value
+for mesh in all_meshes:
+if screen_pos.distance_to(screen_position) <= radius:
+	nearby.append(
+	{
+	"mesh": mesh,
+	"screen_position": screen_pos,
+	"screen_size": _get_structure_screen_size(mesh),
+	"distance": screen_pos.distance_to(screen_position)
+	}
+	)
 
-		return sum / values.size()
+	return nearby
 
 
-		# === EXISTING METHODS (Enhanced) ===
+	## Get all meshes recursively
+if node is MeshInstance3D:
+	meshes.append(node)
 
+	for child in node.get_children():
+		if child is Node3D:
+			meshes.append_array(_get_all_meshes_recursive(child))
 
-func _fix_orphaned_code():
-	if collider is MeshInstance3D:
-		return collider
+			return meshes
 
-		# Enhanced StaticBody3D handling
-		if collider is StaticBody3D:
-			# Check parent first
-func _fix_orphaned_code():
-	if parent is MeshInstance3D:
-		return parent
 
-		# Check children (sometimes mesh is child of StaticBody3D)
-		for child in collider.get_children():
-			if child is MeshInstance3D:
-				return child
+			## Calculate mesh screen position
+if not camera or not mesh.mesh:
+	return Vector2.ZERO
 
-				# Check siblings
-				if parent:
-					for sibling in parent.get_children():
-						if sibling is MeshInstance3D and sibling != collider:
-							# Verify this mesh is related to the collision
-func _fix_orphaned_code():
-	if aabb.grow(tolerance).has_point(local_point):
-		return sibling
+if camera.is_position_behind(center):
+	return Vector2(-1000, -1000)  # Off-screen
 
-		# Area3D handling for trigger-based selection
-		if collider is Area3D:
-func _fix_orphaned_code():
-	if parent is MeshInstance3D:
-		return parent
+	return camera.unproject_position(center)
 
-		return null
 
+	## Calculate structure screen size percentage
+if not camera or not mesh.mesh:
+	return 0.0
 
-		# === VISUAL FEEDBACK (Unchanged from original) ===
+for corner in corners:
+	if not camera.is_position_behind(corner):
+return size_percentage
 
 
-func _fix_orphaned_code():
-	for surface_idx in range(surface_count):
-		mesh.set_surface_override_material(surface_idx, hover_material)
+## Update structure size cache
+if not camera:
+	return
 
-		_animate_hover_pulse(mesh)
+	# Check if camera has moved significantly
+	if (
+	camera.position.distance_to(last_camera_position) > 0.1
+	or camera.rotation.distance_to(last_camera_rotation) > 0.01
+	):
+		structure_sizes.clear()
+		last_camera_position = camera.position
+		last_camera_rotation = camera.rotation
 
 
-func _fix_orphaned_code():
-	for surface_idx in range(surface_count):
-		mesh.set_surface_override_material(surface_idx, highlight_material)
+		## Calculate average of an array
+for value in values:
+	sum += value
 
-		_animate_selection_pulse(mesh)
+	return sum / values.size()
 
 
-func _fix_orphaned_code():
-	for surface_idx in range(surface_count):
-		mesh.set_surface_override_material(surface_idx, original_material)
+	# === EXISTING METHODS (Enhanced) ===
 
-		original_materials.erase(mesh)
 
+if collider is MeshInstance3D:
+	return collider
 
-func _fix_orphaned_code():
-	if material and material.emission_enabled:
-func _fix_orphaned_code():
-	if current_material == null and mesh.mesh != null:
-		current_material = mesh.mesh.surface_get_material(0)
+	# Enhanced StaticBody3D handling
+	if collider is StaticBody3D:
+		# Check parent first
+if parent is MeshInstance3D:
+	return parent
 
-		if current_material == null:
-			current_material = StandardMaterial3D.new()
-			current_material.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
+	# Check children (sometimes mesh is child of StaticBody3D)
+	for child in collider.get_children():
+		if child is MeshInstance3D:
+			return child
 
-			original_materials[mesh] = current_material.duplicate()
+			# Check siblings
+			if parent:
+				for sibling in parent.get_children():
+					if sibling is MeshInstance3D and sibling != collider:
+						# Verify this mesh is related to the collision
+if aabb.grow(tolerance).has_point(local_point):
+	return sibling
 
+	# Area3D handling for trigger-based selection
+	if collider is Area3D:
+if parent is MeshInstance3D:
+	return parent
 
-func _fix_orphaned_code():
-	if mesh_hover_tween and is_instance_valid(mesh_hover_tween):
-		mesh_hover_tween.kill()
-		mesh.remove_meta("hover_tween")
+	return null
 
-		mesh.scale = Vector3.ONE
 
+	# === VISUAL FEEDBACK (Unchanged from original) ===
 
-func _fix_orphaned_code():
-	for connection in connections:
-		if connection.signal.is_connected(connection.callable):
-			connection.signal.disconnect(connection.callable)
 
-			_exit_tree()
+for surface_idx in range(surface_count):
+	mesh.set_surface_override_material(surface_idx, hover_material)
 
-func _fix_orphaned_code():
-	if candidates.is_empty():
-		return {}
+	_animate_hover_pulse(mesh)
 
-		# Sort candidates by priority
-		candidates.sort_custom(_compare_selection_candidates)
 
-		# Calculate selection confidence
+for surface_idx in range(surface_count):
+	mesh.set_surface_override_material(surface_idx, highlight_material)
+
+	_animate_selection_pulse(mesh)
+
+
+for surface_idx in range(surface_count):
+	mesh.set_surface_override_material(surface_idx, original_material)
+
+	original_materials.erase(mesh)
+
+
+if material and material.emission_enabled:
+if current_material == null and mesh.mesh != null:
+	current_material = mesh.mesh.surface_get_material(0)
+
+	if current_material == null:
+		current_material = StandardMaterial3D.new()
+		current_material.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
+
+		original_materials[mesh] = current_material.duplicate()
+
+
+if mesh_hover_tween and is_instance_valid(mesh_hover_tween):
+	mesh_hover_tween.kill()
+	mesh.remove_meta("hover_tween")
+
+	mesh.scale = Vector3.ONE
+
+
+for connection in connections:
+	if connection.signal.is_connected(connection.callable):
+		connection.signal.disconnect(connection.callable)
+
+		_exit_tree()
+
+if candidates.is_empty():
+	return {}
+
+	# Sort candidates by priority
+	candidates.sort_custom(_compare_selection_candidates)
+
+	# Calculate selection confidence
 func _cast_multi_ray_selection(screen_position: Vector2, use_tolerance: bool) -> Dictionary:
 	"""Cast multiple rays for improved selection accuracy"""
 func _compare_selection_candidates(a: Dictionary, b: Dictionary) -> bool:

@@ -12,26 +12,26 @@ signal link_activated(link_data: Dictionary)
 
 # === CONTENT SECTIONS ===
 
-const FeatureFlags = preprepreprepreload("res://core/features/FeatureFlags.gd")
-const ComponentRegistry = preprepreprepreload("res://ui/core/ComponentRegistry.gd")
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const FeatureFlags = preload("res://core/features/FeatureFlags.gd")
+const ComponentRegistry = preload("res://ui/core/ComponentRegistry.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # === SIGNALS ===
 
 var sections: Dictionary = {}
-var section_configs: Dictionary = {}
-var section_states: Dictionary = {}
+# FIXED: Orphaned code - var section_configs: Dictionary = {}
+# FIXED: Orphaned code - var section_states: Dictionary = {}
 
 # === CONFIGURATION ===
 var content_config: Dictionary = {}
-var current_theme: String = "enhanced"
+# FIXED: Orphaned code - var current_theme: String = "enhanced"
 var is_mobile: bool = false
 
 # === CURRENT DATA ===
 var structure_data: Dictionary = {}
 
 
-var section = sections[section_name]
+# FIXED: Orphaned code - var section = sections[section_name]
 var section_2 = sections[section_name]
 var section_3 = ComponentRegistry.create_component(
 "section",
@@ -42,29 +42,29 @@ var section_3 = ComponentRegistry.create_component(
 }
 )
 
-var section_4 = sections[section_name]
+# FIXED: Orphaned code - var section_4 = sections[section_name]
 var section_5 = sections[section_name]
 var section_6 = sections.description
 var description = data.get(
 "shortDescription", data.get("description", "No description available.")
 )
 
-var section_7 = sections.functions
+# FIXED: Orphaned code - var section_7 = sections.functions
 var functions = data.get("functions", [])
 
-var section_8 = sections.connections
+# FIXED: Orphaned code - var section_8 = sections.connections
 var connections = data.get("connections", [])
 
-var section_9 = sections.clinical
+# FIXED: Orphaned code - var section_9 = sections.clinical
 var clinical_notes = data.get("clinicalNotes", data.get("clinicalRelevance", ""))
 
-var formatted = description
+# FIXED: Orphaned code - var formatted = description
 
 # Make first sentence bold if it's a definition
 var first_sentence = formatted.split(".")[0] + "."
 formatted = "[b]" + first_sentence + "[/b]" + formatted.substr(first_sentence.length())
 
-var formatted_2 = ""
+# FIXED: Orphaned code - var formatted_2 = ""
 var function_text = str(functions[i])
 formatted += "• " + function_text
 var formatted_3 = ""
@@ -80,7 +80,7 @@ var regex = RegEx.new()
 regex.compile("(?i)\\b" + keyword + "\\b")
 formatted = regex.sub(formatted, "[i]" + keyword + "[/i]", true)
 
-var link_data = {
+# FIXED: Orphaned code - var link_data = {
 "type": "structure_link",
 "target": link_text,
 "source_structure": structure_data.get("id", "")
@@ -170,110 +170,88 @@ func clear_highlights() -> void:
 	"""Clear all text highlights"""
 	for section_name in sections:
 
-func _fix_orphaned_code():
-	if section.has_method("update_responsive_config"):
-		section.update_responsive_config(config)
+if section.has_method("update_responsive_config"):
+	section.update_responsive_config(config)
 
 
-func _fix_orphaned_code():
-	if section.has_method("apply_theme"):
-		section.apply_theme(theme)
+if section.has_method("apply_theme"):
+	section.apply_theme(theme)
 
 
-		# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if section:
-		add_child(section)
-		sections[section_name] = section
+	# === PRIVATE METHODS ===
+if section:
+	add_child(section)
+	sections[section_name] = section
 
-		# Connect section signals
-		if section.has_signal("section_toggled"):
-			section.section_toggled.connect(_on_section_toggled)
-			if section.has_signal("content_changed"):
-				section.content_changed.connect(_on_section_content_changed)
-
-
-func _fix_orphaned_code():
-	if section.has_method("set_collapsible"):
-		section.set_collapsible(true)
+	# Connect section signals
+	if section.has_signal("section_toggled"):
+		section.section_toggled.connect(_on_section_toggled)
+		if section.has_signal("content_changed"):
+			section.content_changed.connect(_on_section_content_changed)
 
 
-func _fix_orphaned_code():
-	if section.has_method("set_expanded"):
-		section.set_expanded(expanded)
+if section.has_method("set_collapsible"):
+	section.set_collapsible(true)
 
 
-		# === SECTION UPDATE METHODS ===
-func _fix_orphaned_code():
-	if section.has_method("set_content"):
-		section.set_content(_format_description(description))
+if section.has_method("set_expanded"):
+	section.set_expanded(expanded)
 
 
-func _fix_orphaned_code():
-	if section.has_method("set_content"):
-		section.set_content(_format_functions_list(functions))
+	# === SECTION UPDATE METHODS ===
+if section.has_method("set_content"):
+	section.set_content(_format_description(description))
 
 
-func _fix_orphaned_code():
-	if section.has_method("set_content"):
-		section.set_content(_format_connections_list(connections))
+if section.has_method("set_content"):
+	section.set_content(_format_functions_list(functions))
 
 
-func _fix_orphaned_code():
-	if section.has_method("set_content"):
-		section.set_content(_format_clinical_notes(clinical_notes))
+if section.has_method("set_content"):
+	section.set_content(_format_connections_list(connections))
 
 
-		# === CONTENT FORMATTING ===
-func _fix_orphaned_code():
-	if formatted.contains("."):
-func _fix_orphaned_code():
+if section.has_method("set_content"):
+	section.set_content(_format_clinical_notes(clinical_notes))
+
+
+	# === CONTENT FORMATTING ===
+if formatted.contains("."):
+return formatted
+
+
+for i in range(functions.size()):
+if i < functions.size() - 1:
+	formatted += "\n"
+
 	return formatted
 
 
-func _fix_orphaned_code():
-	for i in range(functions.size()):
-func _fix_orphaned_code():
-	if i < functions.size() - 1:
-		formatted += "\n"
+for i in range(connections.size()):
+if i < connections.size() - 1:
+	formatted += "\n"
 
-		return formatted
-
-
-func _fix_orphaned_code():
-	for i in range(connections.size()):
-func _fix_orphaned_code():
-	if i < connections.size() - 1:
-		formatted += "\n"
-
-		return formatted
-
-
-func _fix_orphaned_code():
-	for keyword in clinical_keywords:
-func _fix_orphaned_code():
 	return formatted
 
 
-	# === EVENT HANDLERS ===
-func _fix_orphaned_code():
-	for section_name in sections:
-func _fix_orphaned_code():
-	if section.has_method("highlight_text"):
-func _fix_orphaned_code():
-	return total_matches
+for keyword in clinical_keywords:
+return formatted
 
 
-func _fix_orphaned_code():
-	if section.has_method("clear_highlights"):
-		section.clear_highlights()
+# === EVENT HANDLERS ===
+for section_name in sections:
+if section.has_method("highlight_text"):
+return total_matches
 
 
-		# === FACTORY METHOD ===
-		static func create_with_config(config: Dictionary) -> ContentComponent:
-			"""Factory method to create configured content"""
-func _fix_orphaned_code():
-	return content
+if section.has_method("clear_highlights"):
+	section.clear_highlights()
+
+
+	# === FACTORY METHOD ===
+	static func create_with_config(config: Dictionary) -> ContentComponent:
+		"""Factory method to create configured content"""
+return content
 
 func _setup_content_structure() -> void:
 	"""Setup the content layout"""

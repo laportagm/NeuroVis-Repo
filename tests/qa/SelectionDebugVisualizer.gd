@@ -20,8 +20,8 @@ const COLLISION_COLOR: Color = Color(0.0, 0.0, 1.0, 0.5)  # Blue transparent
 # === PRIVATE VARIABLES ===
 
 var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
-var meshes = _find_structure_meshes(brain_model_parent, structure_name)
-var ray_mesh = _create_line_mesh(from, to, RAY_COLOR if not hit else HIT_COLOR)
+# FIXED: Orphaned code - var meshes = _find_structure_meshes(brain_model_parent, structure_name)
+# FIXED: Orphaned code - var ray_mesh = _create_line_mesh(from, to, RAY_COLOR if not hit else HIT_COLOR)
 _ray_lines.append(ray_mesh)
 add_child(ray_mesh)
 
@@ -33,7 +33,7 @@ add_child(hit_marker)
 
 ## Show collision shapes
 var brain_model_parent_2 = _main_scene.get_node_or_null("BrainModel")
-var color = HIT_COLOR if success else Color(1.0, 0.5, 0.0, 1.0)  # Orange for fail
+# FIXED: Orphaned code - var color = HIT_COLOR if success else Color(1.0, 0.5, 0.0, 1.0)  # Orange for fail
 var marker = _create_sphere_mesh(world_pos, 0.02, color)
 _click_markers.append(marker)
 add_child(marker)
@@ -47,9 +47,9 @@ old_marker.queue_free()
 var meshes_2: Array[MeshInstance3D] = []
 var search_name = structure_name.to_lower().replace("_", " ")
 
-var node_name = node.name.to_lower()
-var aabb = mesh_instance.get_aabb()
-var global_transform = mesh_instance.global_transform
+# FIXED: Orphaned code - var node_name = node.name.to_lower()
+# FIXED: Orphaned code - var aabb = mesh_instance.get_aabb()
+# FIXED: Orphaned code - var global_transform = mesh_instance.global_transform
 
 # Create box mesh for AABB
 var box_mesh = BoxMesh.new()
@@ -72,8 +72,8 @@ mesh_instance_3d.material_override = material
 
 # Store for later cleanup
 var mesh_instance = MeshInstance3D.new()
-var immediate_mesh = ImmediateMesh.new()
-var material_2 = StandardMaterial3D.new()
+# FIXED: Orphaned code - var immediate_mesh = ImmediateMesh.new()
+# FIXED: Orphaned code - var material_2 = StandardMaterial3D.new()
 
 material.vertex_color_use_as_albedo = true
 material.albedo_color = color
@@ -86,8 +86,8 @@ mesh_instance.material_override = material
 var arrays = []
 arrays.resize(Mesh.ARRAY_MAX)
 
-var vertices = PackedVector3Array([from, to])
-var colors = PackedColorArray([color, color])
+# FIXED: Orphaned code - var vertices = PackedVector3Array([from, to])
+# FIXED: Orphaned code - var colors = PackedColorArray([color, color])
 
 arrays[Mesh.ARRAY_VERTEX] = vertices
 arrays[Mesh.ARRAY_COLOR] = colors
@@ -115,8 +115,8 @@ mesh_instance.material_override = material
 
 var meshes_3 = _find_structure_meshes(parent, structure_name)
 
-var current = mesh.get_parent()
-var mesh_instance_3 = MeshInstance3D.new()
+# FIXED: Orphaned code - var current = mesh.get_parent()
+# FIXED: Orphaned code - var mesh_instance_3 = MeshInstance3D.new()
 
 # Create mesh based on shape type
 var box_shape = collision_shape.shape as BoxShape3D
@@ -133,7 +133,7 @@ mesh_instance.mesh = sphere_mesh
 # Trimesh - create a simple box to indicate presence
 var aabb_2 = (
 collision_shape.get_parent().get_aabb()
-var box_mesh_3 = BoxMesh.new()
+# FIXED: Orphaned code - var box_mesh_3 = BoxMesh.new()
 box_mesh.size = aabb.size
 mesh_instance.mesh = box_mesh
 
@@ -156,7 +156,7 @@ _collision_meshes.append(mesh_instance)
 add_child(mesh_instance)
 
 
-var _debug_draw_enabled: bool = false
+# FIXED: Orphaned code - var _debug_draw_enabled: bool = false
 var _show_bounds: bool = false
 var _show_rays: bool = false
 var _show_collisions: bool = false
@@ -266,104 +266,89 @@ func get_status() -> Dictionary:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		push_error("[DebugViz] BrainModel node not found")
-		return
+if not brain_model_parent:
+	push_error("[DebugViz] BrainModel node not found")
+	return
 
-func _fix_orphaned_code():
-	if meshes.is_empty():
-		print("[DebugViz] No meshes found for structure: %s" % structure_name)
-		return
+if meshes.is_empty():
+	print("[DebugViz] No meshes found for structure: %s" % structure_name)
+	return
 
-		# Create bounds visualization for each mesh
-		for mesh in meshes:
-			_create_bounds_visualization(mesh, structure_name)
-
-			print("[DebugViz] Showing bounds for %d meshes of %s" % [meshes.size(), structure_name])
-
-
-			## Show ray visualization for selection
-func _fix_orphaned_code():
-	if hit:
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		return
-
-		if structure_name.is_empty():
-			# Show all collision shapes
-			_visualize_all_collisions(brain_model_parent)
-			else:
-				# Show specific structure's collision shapes
-				_visualize_structure_collisions(brain_model_parent, structure_name)
-
-
-				## Record click position for visualization
-func _fix_orphaned_code():
-	if _click_markers.size() > 50:
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-func _fix_orphaned_code():
-	if node_name.contains(search_name) or search_name.contains(node_name):
-		meshes.append(node)
-
-		for child in node.get_children():
-			if child is Node3D:
-				meshes.append_array(_find_structure_meshes(child, structure_name))
-
-				return meshes
-
-
-func _fix_orphaned_code():
-	if not _bounds_meshes.has(structure_name):
-		_bounds_meshes[structure_name] = []
-		_bounds_meshes[structure_name].append(mesh_instance_3d)
-
-		add_child(mesh_instance_3d)
-
-
-func _fix_orphaned_code():
-	return mesh_instance
-
-
-func _fix_orphaned_code():
-	return mesh_instance
-
-
-func _fix_orphaned_code():
+	# Create bounds visualization for each mesh
 	for mesh in meshes:
-		# Look for StaticBody3D parent
-func _fix_orphaned_code():
-	while current and current != parent:
-		if current is StaticBody3D:
-			# Found static body, look for collision shapes
-			for child in current.get_children():
-				if child is CollisionShape3D:
-					_create_collision_visualization(child)
-					break
-					current = current.get_parent()
+		_create_bounds_visualization(mesh, structure_name)
+
+		print("[DebugViz] Showing bounds for %d meshes of %s" % [meshes.size(), structure_name])
 
 
-func _fix_orphaned_code():
-	if collision_shape.shape is BoxShape3D:
-func _fix_orphaned_code():
-	if collision_shape.get_parent() is MeshInstance3D
-	else AABB()
-	)
-func _fix_orphaned_code():
-	if not _debug_draw_enabled or not _show_rays:
-		return
+		## Show ray visualization for selection
+if hit:
+if not brain_model_parent:
+	return
 
-		_last_ray_origin = from
-		_last_ray_end = to
+	if structure_name.is_empty():
+		# Show all collision shapes
+		_visualize_all_collisions(brain_model_parent)
+		else:
+			# Show specific structure's collision shapes
+			_visualize_structure_collisions(brain_model_parent, structure_name)
 
-		if hit:
-			_last_hit_point = hit_point
 
-			# Clear old ray
-			_clear_ray_visualization()
+			## Record click position for visualization
+if _click_markers.size() > 50:
+if node is MeshInstance3D:
+if node_name.contains(search_name) or search_name.contains(node_name):
+	meshes.append(node)
 
-			# Create ray line
+	for child in node.get_children():
+		if child is Node3D:
+			meshes.append_array(_find_structure_meshes(child, structure_name))
+
+			return meshes
+
+
+if not _bounds_meshes.has(structure_name):
+	_bounds_meshes[structure_name] = []
+	_bounds_meshes[structure_name].append(mesh_instance_3d)
+
+	add_child(mesh_instance_3d)
+
+
+return mesh_instance
+
+
+return mesh_instance
+
+
+for mesh in meshes:
+	# Look for StaticBody3D parent
+while current and current != parent:
+	if current is StaticBody3D:
+		# Found static body, look for collision shapes
+		for child in current.get_children():
+			if child is CollisionShape3D:
+				_create_collision_visualization(child)
+				break
+				current = current.get_parent()
+
+
+if collision_shape.shape is BoxShape3D:
+if collision_shape.get_parent() is MeshInstance3D
+else AABB()
+)
+if not _debug_draw_enabled or not _show_rays:
+	return
+
+	_last_ray_origin = from
+	_last_ray_end = to
+
+	if hit:
+		_last_hit_point = hit_point
+
+		# Clear old ray
+		_clear_ray_visualization()
+
+		# Create ray line
 func _find_structure_meshes(node: Node3D, structure_name: String) -> Array[MeshInstance3D]:
 	"""Find all meshes for a structure"""
 func _create_bounds_visualization(mesh_instance: MeshInstance3D, structure_name: String) -> void:

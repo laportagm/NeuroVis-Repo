@@ -52,7 +52,7 @@ PERFORMANCE  # Maximum performance, aggressive material sharing
 var structure = _priority_structures[structure_name].node
 	_optimize_structure_materials(structure, structure_name)
 
-var base_material = StandardMaterial3D.new()
+# FIXED: Orphaned code - var base_material = StandardMaterial3D.new()
 
 # Apply properties to base material
 var structure_2 = _priority_structures[structure_name].node
@@ -61,23 +61,23 @@ var structure_2 = _priority_structures[structure_name].node
 	_material_stats.batched_groups += 1
 	material_stats_updated.emit(_material_stats)
 
-var structure_3 = _priority_structures[structure_name].node
+# FIXED: Orphaned code - var structure_3 = _priority_structures[structure_name].node
 var original_materials = _original_materials[structure_name]
 
 var node_path = NodePath(node_path_str)
-var node = structure.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node = structure.get_node_or_null(node_path)
 
-var materials = original_materials[node_path_str]
+# FIXED: Orphaned code - var materials = original_materials[node_path_str]
 
 # Apply original materials
 var structure_4 = _priority_structures[structure_name].node
 	_optimize_structure_materials(structure, structure_name)
 
 	_update_material_stats()
-var node_path_2 = node.get_path_to(node)
-var node_path_str = node_path.get_as_property_path()
+# FIXED: Orphaned code - var node_path_2 = node.get_path_to(node)
+# FIXED: Orphaned code - var node_path_str = node_path.get_as_property_path()
 
-var materials_2 = []
+# FIXED: Orphaned code - var materials_2 = []
 var structure_5 = _priority_structures[structure_name].node
 	_optimize_structure_materials(structure, structure_name)
 
@@ -92,12 +92,12 @@ OptimizationLevel.QUALITY:
 	# Quality mode - use original materials with minimal sharing
 var cache_key = _get_material_hash(original_material)
 
-var similarity_threshold = 0.8  # 80% similarity
+# FIXED: Orphaned code - var similarity_threshold = 0.8  # 80% similarity
 
 # Find similar material or create new
 var shared_material = _find_similar_material(original_material, similarity_threshold)
 
-var optimized = _create_optimized_material(original_material, priority)
+# FIXED: Orphaned code - var optimized = _create_optimized_material(original_material, priority)
 
 # Cache the new material
 var cache_key_2 = _get_material_hash(optimized)
@@ -113,7 +113,7 @@ var similarity_threshold_2 = 0.6  # 60% similarity
 # Educational priority influences sharing
 var shared_material_2 = _find_similar_material(original_material, similarity_threshold)
 
-var simplified = _create_simplified_material(original_material, priority)
+# FIXED: Orphaned code - var simplified = _create_simplified_material(original_material, priority)
 
 # Cache the new material
 var cache_key_3 = _get_material_hash(simplified)
@@ -125,7 +125,7 @@ var cache_key_3 = _get_material_hash(simplified)
 
 	## Process all materials in a structure
 var material = node.get_surface_override_material(i)
-var batch = _material_batches[batch_name]
+# FIXED: Orphaned code - var batch = _material_batches[batch_name]
 var batch_material = batch.material
 
 # If educational context aware, check if we need a variation
@@ -163,14 +163,14 @@ var cached_material = _material_cache[cache_key]
 
 var similarity = _calculate_material_similarity(material, cached_material)
 
-var score = 0.0
+# FIXED: Orphaned code - var score = 0.0
 var total_factors = 6.0  # Number of factors we're considering
 
 var mat_a = material_a as StandardMaterial3D
 var mat_b = material_b as StandardMaterial3D
 
 # Compare albedo color (most important)
-var color_similarity = 1.0 - mat_a.albedo_color.distance_to(mat_b.albedo_color)
+# FIXED: Orphaned code - var color_similarity = 1.0 - mat_a.albedo_color.distance_to(mat_b.albedo_color)
 	score += color_similarity * 2.0  # Double weight for color
 	total_factors += 1.0  # Adjust for double weight
 
@@ -183,7 +183,7 @@ var roughness_similarity = 1.0 - abs(mat_a.roughness - mat_b.roughness)
 	score += roughness_similarity
 
 	# Compare transparency mode (exact match check)
-var transparency_match = int(mat_a.transparency) == int(mat_b.transparency)
+# FIXED: Orphaned code - var transparency_match = int(mat_a.transparency) == int(mat_b.transparency)
 	score += 1.0 if transparency_match else 0.0
 
 	# Compare shading mode
@@ -191,7 +191,7 @@ var shading_match = int(mat_a.shading_mode) == int(mat_b.shading_mode)
 	score += 1.0 if shading_match else 0.0
 
 	# Compare emission (important for highlighted educational structures)
-var emission_similarity = 1.0 - mat_a.emission.distance_to(mat_b.emission)
+# FIXED: Orphaned code - var emission_similarity = 1.0 - mat_a.emission.distance_to(mat_b.emission)
 	score += emission_similarity
 
 var optimized_2 = original.duplicate() as StandardMaterial3D
@@ -206,7 +206,7 @@ var simplified_2 = original.duplicate() as StandardMaterial3D
 	simplified.roughness = 1.0  # Maximize roughness for performance
 
 	# Only keep emission if high priority (for highlighting)
-var mat = material as StandardMaterial3D
+# FIXED: Orphaned code - var mat = material as StandardMaterial3D
 var hash_parts = []
 
 # Include key properties in hash
@@ -216,7 +216,7 @@ var hash_parts = []
 	hash_parts.append(str(mat.transparency))
 	hash_parts.append(str(mat.shading_mode))
 
-var batch_2 = _material_batches[batch_name]
+# FIXED: Orphaned code - var batch_2 = _material_batches[batch_name]
 
 # Clear existing variations if variation is 0
 var structure_6 = _priority_structures[structure_name].node
@@ -276,9 +276,9 @@ var structures_in_batch = batch.structures.size()
 var batch_original_count = 0
 var structure_materials_2 = _original_materials[structure_name]
 var shared_count = _material_cache.size()
-var estimated_original = total_materials
+# FIXED: Orphaned code - var estimated_original = total_materials
 var estimated_optimized = shared_count + (total_materials - batched_materials)
-var draw_call_reduction = estimated_original - estimated_optimized
+# FIXED: Orphaned code - var draw_call_reduction = estimated_original - estimated_optimized
 
 # Update stats
 	_material_stats.total_materials = total_materials
@@ -292,7 +292,7 @@ var draw_call_reduction = estimated_original - estimated_optimized
 
 	## Integrate with LOD system if available
 var lod_system = get_node_or_null("../LODSystem")
-var structure_8 = _priority_structures[structure_name].node
+# FIXED: Orphaned code - var structure_8 = _priority_structures[structure_name].node
 var current_priority = _priority_structures[structure_name].priority
 
 # Adjust priority based on LOD level
@@ -310,9 +310,9 @@ var mapped_priority
 	# Update priority and optimize
 	update_structure_priority(structure_name, mapped_priority)
 
-var _material_cache: Dictionary = {}
-var _material_batches: Dictionary = {}
-var _material_stats: Dictionary = {
+# FIXED: Orphaned code - var _material_cache: Dictionary = {}
+# FIXED: Orphaned code - var _material_batches: Dictionary = {}
+# FIXED: Orphaned code - var _material_stats: Dictionary = {
 	"total_materials": 0,
 	"shared_materials": 0,
 	"batched_groups": 0,
@@ -320,9 +320,9 @@ var _material_stats: Dictionary = {
 	"memory_saved": 0
 	}
 
-var _priority_structures: Dictionary = {}
-var _original_materials: Dictionary = {}
-var _initialized: bool = false
+# FIXED: Orphaned code - var _priority_structures: Dictionary = {}
+# FIXED: Orphaned code - var _original_materials: Dictionary = {}
+# FIXED: Orphaned code - var _initialized: bool = false
 
 # === LIFECYCLE METHODS ===
 
@@ -443,266 +443,229 @@ func refresh_all_materials() -> bool:
 
 		for structure_name in _priority_structures:
 
-func _fix_orphaned_code():
-	if current_level != value:
-		current_level = value
-		_apply_optimization_level()
-		optimization_level_changed.emit(current_level)
+if current_level != value:
+	current_level = value
+	_apply_optimization_level()
+	optimization_level_changed.emit(current_level)
 
-		## Enable educational material context awareness
-func _fix_orphaned_code():
-	return true
+	## Enable educational material context awareness
+return true
 
-	## Create a shared material batch
-	## @param material_properties: Dictionary of properties to match
-	## @param structures: Array of structure names to apply to
-	## @param batch_name: String identifier for the batch
-	## @returns: bool indicating success
-func _fix_orphaned_code():
-	for property in material_properties:
-		if property in base_material:
-			base_material.set(property, material_properties[property])
+## Create a shared material batch
+## @param material_properties: Dictionary of properties to match
+## @param structures: Array of structure names to apply to
+## @param batch_name: String identifier for the batch
+## @returns: bool indicating success
+for property in material_properties:
+	if property in base_material:
+		base_material.set(property, material_properties[property])
 
-			# Create batch entry
-			_material_batches[batch_name] = {
-			"material": base_material,
-			"structures": structures,
-			"variations": {}
-			}
+		# Create batch entry
+		_material_batches[batch_name] = {
+		"material": base_material,
+		"structures": structures,
+		"variations": {}
+		}
 
-			# Apply to structures
-			for structure_name in structures:
-				if _priority_structures.has(structure_name):
-func _fix_orphaned_code():
-	return true
+		# Apply to structures
+		for structure_name in structures:
+			if _priority_structures.has(structure_name):
+return true
 
-	## Restore original materials for a structure
-	## @param structure_name: String name of the structure
-	## @returns: bool indicating success
-func _fix_orphaned_code():
-	for node_path_str in original_materials:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-func _fix_orphaned_code():
-	for i in range(materials.size()):
-		if i < node.get_surface_override_material_count():
-			node.set_surface_override_material(i, materials[i])
+## Restore original materials for a structure
+## @param structure_name: String name of the structure
+## @returns: bool indicating success
+for node_path_str in original_materials:
+if node and node is MeshInstance3D:
+for i in range(materials.size()):
+	if i < node.get_surface_override_material_count():
+		node.set_surface_override_material(i, materials[i])
 
-			return true
+		return true
 
-			## Update memory strategy to handle material quality vs. performance
-			## @param strategy_level: OptimizationLevel to apply
-			## @returns: bool indicating success
-func _fix_orphaned_code():
-	return true
+		## Update memory strategy to handle material quality vs. performance
+		## @param strategy_level: OptimizationLevel to apply
+		## @returns: bool indicating success
+return true
 
-	# === PRIVATE METHODS ===
-	## Store original materials for future restoration
-func _fix_orphaned_code():
-	for i in range(node.get_surface_override_material_count()):
-		materials.append(node.get_surface_override_material(i))
+# === PRIVATE METHODS ===
+## Store original materials for future restoration
+for i in range(node.get_surface_override_material_count()):
+	materials.append(node.get_surface_override_material(i))
 
-		if not materials.is_empty():
-			_original_materials[structure_name][node_path_str] = materials.duplicate()
-
-			# Process children
-			for child in node.get_children():
-				_store_node_materials(child, structure_name)
-
-				## Apply optimization based on current level
-func _fix_orphaned_code():
-	if priority > 2:
-		# High priority educational structures keep original materials
-		restore_original_materials(structure_name)
-		else:
-			# Other structures use minimal optimization
-			_apply_quality_optimization(structure, structure_name)
-
-			OptimizationLevel.BALANCED:
-				# Balanced mode - moderate sharing based on priority
-				if priority > 3:
-					# Very high educational priority keeps original materials
-					restore_original_materials(structure_name)
-					else:
-						_apply_balanced_optimization(structure, structure_name, priority)
-
-						OptimizationLevel.PERFORMANCE:
-							# Performance mode - aggressive sharing and simplification
-							_apply_performance_optimization(structure, structure_name, priority)
-
-							## Apply quality-focused optimization
-func _fix_orphaned_code():
-	if _material_cache.has(cache_key):
-		# Use cached material only for exact duplicates
-		mesh_instance.set_surface_override_material(material_idx, _material_cache[cache_key])
-		_material_stats.shared_materials += 1
-		else:
-			# Store in cache for future sharing
-			_material_cache[cache_key] = original_material
-			)
-
-			## Apply balanced optimization
-func _fix_orphaned_code():
-	if shared_material:
-		# Use shared material
-		mesh_instance.set_surface_override_material(material_idx, shared_material)
-		_material_stats.shared_materials += 1
-		else:
-			# Create new material with minor optimization
-func _fix_orphaned_code():
-	if educational_context_awareness and priority > 1:
-		similarity_threshold = 0.7  # Higher threshold for important structures
-
-		# Find similar material with low threshold
-func _fix_orphaned_code():
-	if shared_material:
-		# Use shared material
-		mesh_instance.set_surface_override_material(material_idx, shared_material)
-		_material_stats.shared_materials += 1
-		else:
-			# Create simplified material
-func _fix_orphaned_code():
-	if material:
-		process_func.call(node, i, material)
+	if not materials.is_empty():
+		_original_materials[structure_name][node_path_str] = materials.duplicate()
 
 		# Process children
 		for child in node.get_children():
-			_process_node_materials(child, structure_name, process_func)
+			_store_node_materials(child, structure_name)
 
-			## Apply a batch material to a structure
-func _fix_orphaned_code():
-	if educational_context_awareness and material_variation > 0.0 and not force:
-func _fix_orphaned_code():
-	if not batch.variations.has(structure_name):
-func _fix_orphaned_code():
-	if variation is StandardMaterial3D:
-func _fix_orphaned_code():
-	for cache_key in _material_cache:
-func _fix_orphaned_code():
-	if cached_material is StandardMaterial3D:
-func _fix_orphaned_code():
-	if similarity >= threshold and similarity > best_score:
-		best_match = cached_material
-		best_score = similarity
-
-		return best_match
-
-		## Calculate similarity between materials
-func _fix_orphaned_code():
-	return score / total_factors
-
-	## Create an optimized version of a material
-func _fix_orphaned_code():
-	if priority < 2:  # Low priority
-	# Reduce texture size if any
-	optimized.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
-
-	# Disable features not needed for distance viewing
-	optimized.disable_ambient_light = true
-	optimized.proximity_fade_enabled = false
-	optimized.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_DISABLED
+			## Apply optimization based on current level
+if priority > 2:
+	# High priority educational structures keep original materials
+	restore_original_materials(structure_name)
 	else:
-		# Higher priority gets better quality
-		optimized.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		# Other structures use minimal optimization
+		_apply_quality_optimization(structure, structure_name)
 
-		return optimized
+		OptimizationLevel.BALANCED:
+			# Balanced mode - moderate sharing based on priority
+			if priority > 3:
+				# Very high educational priority keeps original materials
+				restore_original_materials(structure_name)
+				else:
+					_apply_balanced_optimization(structure, structure_name, priority)
 
-		## Create a simplified version of a material
-func _fix_orphaned_code():
-	if priority < 3:
-		simplified.emission_enabled = false
+					OptimizationLevel.PERFORMANCE:
+						# Performance mode - aggressive sharing and simplification
+						_apply_performance_optimization(structure, structure_name, priority)
 
-		# Clear normal mapping for performance
-		simplified.normal_enabled = false
+						## Apply quality-focused optimization
+if _material_cache.has(cache_key):
+	# Use cached material only for exact duplicates
+	mesh_instance.set_surface_override_material(material_idx, _material_cache[cache_key])
+	_material_stats.shared_materials += 1
+	else:
+		# Store in cache for future sharing
+		_material_cache[cache_key] = original_material
+		)
 
-		# Disable advanced effects
-		simplified.rim_enabled = false
-		simplified.clearcoat_enabled = false
-		simplified.anisotropy_enabled = false
-		simplified.ao_enabled = false
-		simplified.heightmap_enabled = false
-		simplified.subsurf_scatter_enabled = false
-		simplified.refraction_enabled = false
+		## Apply balanced optimization
+if shared_material:
+	# Use shared material
+	mesh_instance.set_surface_override_material(material_idx, shared_material)
+	_material_stats.shared_materials += 1
+	else:
+		# Create new material with minor optimization
+if educational_context_awareness and priority > 1:
+	similarity_threshold = 0.7  # Higher threshold for important structures
 
-		return simplified
+	# Find similar material with low threshold
+if shared_material:
+	# Use shared material
+	mesh_instance.set_surface_override_material(material_idx, shared_material)
+	_material_stats.shared_materials += 1
+	else:
+		# Create simplified material
+if material:
+	process_func.call(node, i, material)
 
-		## Get a hash for material caching
-func _fix_orphaned_code():
-	if mat.emission_enabled:
-		hash_parts.append(str(mat.emission))
+	# Process children
+	for child in node.get_children():
+		_process_node_materials(child, structure_name, process_func)
 
-		return ", ".join(hash_parts)
+		## Apply a batch material to a structure
+if educational_context_awareness and material_variation > 0.0 and not force:
+if not batch.variations.has(structure_name):
+if variation is StandardMaterial3D:
+for cache_key in _material_cache:
+if cached_material is StandardMaterial3D:
+if similarity >= threshold and similarity > best_score:
+	best_match = cached_material
+	best_score = similarity
 
-		## Update material variations based on settings
-func _fix_orphaned_code():
-	if material_variation <= 0.0:
-		batch.variations.clear()
+	return best_match
 
-		# Apply base material to all structures
-		for structure_name in batch.structures:
-			if _priority_structures.has(structure_name):
-func _fix_orphaned_code():
+	## Calculate similarity between materials
+return score / total_factors
+
+## Create an optimized version of a material
+if priority < 2:  # Low priority
+# Reduce texture size if any
+optimized.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST_WITH_MIPMAPS
+
+# Disable features not needed for distance viewing
+optimized.disable_ambient_light = true
+optimized.proximity_fade_enabled = false
+optimized.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_DISABLED
+else:
+	# Higher priority gets better quality
+	optimized.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+
+	return optimized
+
+	## Create a simplified version of a material
+if priority < 3:
+	simplified.emission_enabled = false
+
+	# Clear normal mapping for performance
+	simplified.normal_enabled = false
+
+	# Disable advanced effects
+	simplified.rim_enabled = false
+	simplified.clearcoat_enabled = false
+	simplified.anisotropy_enabled = false
+	simplified.ao_enabled = false
+	simplified.heightmap_enabled = false
+	simplified.subsurf_scatter_enabled = false
+	simplified.refraction_enabled = false
+
+	return simplified
+
+	## Get a hash for material caching
+if mat.emission_enabled:
+	hash_parts.append(str(mat.emission))
+
+	return ", ".join(hash_parts)
+
+	## Update material variations based on settings
+if material_variation <= 0.0:
+	batch.variations.clear()
+
+	# Apply base material to all structures
 	for structure_name in batch.structures:
 		if _priority_structures.has(structure_name):
-func _fix_orphaned_code():
-	if not batch.variations.has(structure_name):
-func _fix_orphaned_code():
-	if variation is StandardMaterial3D:
-func _fix_orphaned_code():
-	for structure_name in batch.variations:
-		_adjust_material_brightness(batch.variations[structure_name], brightness_factor)
+for structure_name in batch.structures:
+	if _priority_structures.has(structure_name):
+if not batch.variations.has(structure_name):
+if variation is StandardMaterial3D:
+for structure_name in batch.variations:
+	_adjust_material_brightness(batch.variations[structure_name], brightness_factor)
 
-		# Adjust cached materials
-		for cache_key in _material_cache:
-			_adjust_material_brightness(_material_cache[cache_key], brightness_factor)
+	# Adjust cached materials
+	for cache_key in _material_cache:
+		_adjust_material_brightness(_material_cache[cache_key], brightness_factor)
 
-			# Update stats
-			_update_material_stats()
+		# Update stats
+		_update_material_stats()
 
-			## Adjust brightness of a single material
-func _fix_orphaned_code():
-	if std_material.emission_enabled:
-func _fix_orphaned_code():
-	for structure_name in _original_materials:
-func _fix_orphaned_code():
-	for node_path in structure_materials:
-		total_materials += structure_materials[node_path].size()
+		## Adjust brightness of a single material
+if std_material.emission_enabled:
+for structure_name in _original_materials:
+for node_path in structure_materials:
+	total_materials += structure_materials[node_path].size()
 
-		# Count batched materials
-		for batch_name in _material_batches:
-func _fix_orphaned_code():
-	for structure_name in batch.structures:
-		if _original_materials.has(structure_name):
-func _fix_orphaned_code():
-	for node_path in structure_materials:
-		batch_original_count += structure_materials[node_path].size()
+	# Count batched materials
+	for batch_name in _material_batches:
+for structure_name in batch.structures:
+	if _original_materials.has(structure_name):
+for node_path in structure_materials:
+	batch_original_count += structure_materials[node_path].size()
 
-		batched_materials += batch_original_count
+	batched_materials += batch_original_count
 
-		# Estimate draw call reduction
-func _fix_orphaned_code():
-	if not lod_system or not lod_system is LODSystemEnhanced:
-		return
+	# Estimate draw call reduction
+if not lod_system or not lod_system is LODSystemEnhanced:
+	return
 
-		# Connect to LOD signals
-		if not lod_system.lod_level_changed.is_connected(_on_lod_level_changed):
-			lod_system.lod_level_changed.connect(_on_lod_level_changed)
+	# Connect to LOD signals
+	if not lod_system.lod_level_changed.is_connected(_on_lod_level_changed):
+		lod_system.lod_level_changed.connect(_on_lod_level_changed)
 
-			if not lod_system.structure_priority_changed.is_connected(_on_structure_priority_changed):
-				lod_system.structure_priority_changed.connect(_on_structure_priority_changed)
+		if not lod_system.structure_priority_changed.is_connected(_on_structure_priority_changed):
+			lod_system.structure_priority_changed.connect(_on_structure_priority_changed)
 
-				# === SIGNAL HANDLERS ===
-				## Handle LOD level changes
-func _fix_orphaned_code():
-	if new_level > 0:
-		adjusted_priority = max(1, current_priority - new_level)
+			# === SIGNAL HANDLERS ===
+			## Handle LOD level changes
+if new_level > 0:
+	adjusted_priority = max(1, current_priority - new_level)
 
-		# Only reoptimize if priority actually changed
-		if adjusted_priority != current_priority:
-			_priority_structures[structure_name].priority = adjusted_priority
-			_optimize_structure_materials(structure, structure_name)
+	# Only reoptimize if priority actually changed
+	if adjusted_priority != current_priority:
+		_priority_structures[structure_name].priority = adjusted_priority
+		_optimize_structure_materials(structure, structure_name)
 
-			## Handle structure priority changes
+		## Handle structure priority changes
 func _store_original_materials(structure: Node3D, structure_name: String) -> void:
 	"""Store original materials for educational integrity"""
 	if not structure or not structure.is_inside_tree():

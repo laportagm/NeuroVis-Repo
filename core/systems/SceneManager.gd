@@ -48,7 +48,7 @@ const TRANSITION_TIME: float = 0.3
 # === PRIVATE VARIABLES ===
 
 var resource = ResourceLoader.load(scene_path)
-var loading_scene = load(loading_screen_path)
+# FIXED: Orphaned code - var loading_scene = load(loading_screen_path)
 _loading_screen = loading_scene.instantiate()
 add_child(_loading_screen)
 
@@ -58,7 +58,7 @@ panel.color = loading_background_color
 panel.set_anchors_preset(Control.PRESET_FULL_RECT)
 _loading_screen.add_child(panel)
 
-var label = Label.new()
+# FIXED: Orphaned code - var label = Label.new()
 label.text = "Loading..."
 label.set_anchors_preset(Control.PRESET_CENTER)
 panel.add_child(label)
@@ -82,34 +82,34 @@ var load_status = ResourceLoader.load_threaded_get_status(scene_path)
 
 ResourceLoader.THREAD_LOAD_LOADED:
 var scene = ResourceLoader.load_threaded_get(scene_path)
-var elapsed = (Time.get_ticks_msec() / 1000.0) - _loading_start_time
+# FIXED: Orphaned code - var elapsed = (Time.get_ticks_msec() / 1000.0) - _loading_start_time
 var progress_array = []
 var progress = ResourceLoader.load_threaded_get_status(scene_path, progress_array)
-var result = get_tree().change_scene_to_packed(scene)
-var panel_2 = ColorRect.new()
+# FIXED: Orphaned code - var result = get_tree().change_scene_to_packed(scene)
+# FIXED: Orphaned code - var panel_2 = ColorRect.new()
 	panel.color = Color(0.7, 0.1, 0.1, 0.8)  # Red background for errors
 	panel.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_loading_screen.add_child(panel)
 
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 	vbox.set_anchors_preset(Control.PRESET_CENTER)
 	vbox.size = Vector2(600, 200)
 	panel.add_child(vbox)
 
-var title = Label.new()
+# FIXED: Orphaned code - var title = Label.new()
 	title.text = "Loading Error"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 24)
 	vbox.add_child(title)
 
-var message = Label.new()
+# FIXED: Orphaned code - var message = Label.new()
 	message.text = error
 	message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.add_theme_color_override("font_color", Color(1, 0.9, 0.9))
 	vbox.add_child(message)
 
-var button = Button.new()
+# FIXED: Orphaned code - var button = Button.new()
 	button.text = "Return to Main Menu"
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button.pressed.connect(
@@ -122,11 +122,11 @@ var button = Button.new()
 
 		add_child(_loading_screen)
 
-var _current_scene: String = ""
+# FIXED: Orphaned code - var _current_scene: String = ""
 var _loading_state: LoadingState = LoadingState.IDLE
 var _loading_screen: Control
 var _cached_scenes: Dictionary = {}
-var _loading_start_time: float = 0.0
+# FIXED: Orphaned code - var _loading_start_time: float = 0.0
 
 
 # === LIFECYCLE METHODS ===
@@ -212,102 +212,94 @@ func get_current_scene() -> String:
 	# === PRIVATE METHODS ===
 	## Show the loading screen overlay
 
-func _fix_orphaned_code():
-	if not resource or not resource is PackedScene:
-		push_error("[SceneManager] Failed to preload scene: " + scene_path)
-		return false
+if not resource or not resource is PackedScene:
+	push_error("[SceneManager] Failed to preload scene: " + scene_path)
+	return false
 
-		_cached_scenes[scene_path] = resource
-		print("[SceneManager] Scene preloaded successfully: " + scene_path)
-		return true
-
-
-		## Check if a scene is currently cached
-func _fix_orphaned_code():
-	if _loading_screen.has_method("set_background_color"):
-		_loading_screen.set_background_color(loading_background_color)
-
-		if _loading_screen.has_method("show_loading_screen"):
-			_loading_screen.show_loading_screen()
-
-			print("[SceneManager] Loading screen displayed")
-			else:
-				push_warning("[SceneManager] Loading screen not found at path: " + loading_screen_path)
-				# Create simple loading label as fallback
-				_create_fallback_loading_screen()
+	_cached_scenes[scene_path] = resource
+	print("[SceneManager] Scene preloaded successfully: " + scene_path)
+	return true
 
 
-				## Create a simple fallback loading screen
-func _fix_orphaned_code():
-	if current_time < min_time:
-func _fix_orphaned_code():
-	if not ResourceLoader.exists(scene_path):
-		_handle_loading_error("Scene file not found: " + scene_path)
+	## Check if a scene is currently cached
+if _loading_screen.has_method("set_background_color"):
+	_loading_screen.set_background_color(loading_background_color)
+
+	if _loading_screen.has_method("show_loading_screen"):
+		_loading_screen.show_loading_screen()
+
+		print("[SceneManager] Loading screen displayed")
+		else:
+			push_warning("[SceneManager] Loading screen not found at path: " + loading_screen_path)
+			# Create simple loading label as fallback
+			_create_fallback_loading_screen()
+
+
+			## Create a simple fallback loading screen
+if current_time < min_time:
+if not ResourceLoader.exists(scene_path):
+	_handle_loading_error("Scene file not found: " + scene_path)
+	return
+
+	ResourceLoader.load_threaded_request(scene_path)
+
+	# Wait for loading to complete
+	while true:
+if scene:
+	# Cache the loaded scene
+	_cached_scenes[scene_path] = scene
+
+	# Ensure minimum loading screen time
+if elapsed < MIN_LOADING_SCREEN_TIME:
+	await get_tree().create_timer(MIN_LOADING_SCREEN_TIME - elapsed).timeout
+
+	_finish_scene_change(scene, scene_path)
+	else:
+		_handle_loading_error("Scene loaded but returned null: " + scene_path)
 		return
 
-		ResourceLoader.load_threaded_request(scene_path)
+		ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			# Update progress
+if not progress_array.is_empty():
+	scene_load_progress.emit(progress_array[0] * 100)
 
-		# Wait for loading to complete
-		while true:
-func _fix_orphaned_code():
-	if scene:
-		# Cache the loaded scene
-		_cached_scenes[scene_path] = scene
+	# Update loading screen if it has the method
+	if _loading_screen and _loading_screen.has_method("update_progress"):
+		_loading_screen.update_progress(progress_array[0])
 
-		# Ensure minimum loading screen time
-func _fix_orphaned_code():
-	if elapsed < MIN_LOADING_SCREEN_TIME:
-		await get_tree().create_timer(MIN_LOADING_SCREEN_TIME - elapsed).timeout
+		await get_tree().create_timer(0.1).timeout
 
-		_finish_scene_change(scene, scene_path)
-		else:
-			_handle_loading_error("Scene loaded but returned null: " + scene_path)
+		ResourceLoader.THREAD_LOAD_FAILED:
+			_handle_loading_error("Scene failed to load: " + scene_path)
 			return
 
-			ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-				# Update progress
-func _fix_orphaned_code():
-	if not progress_array.is_empty():
-		scene_load_progress.emit(progress_array[0] * 100)
-
-		# Update loading screen if it has the method
-		if _loading_screen and _loading_screen.has_method("update_progress"):
-			_loading_screen.update_progress(progress_array[0])
-
-			await get_tree().create_timer(0.1).timeout
-
-			ResourceLoader.THREAD_LOAD_FAILED:
-				_handle_loading_error("Scene failed to load: " + scene_path)
+			_:
+				_handle_loading_error("Unknown error loading scene: " + scene_path)
 				return
 
-				_:
-					_handle_loading_error("Unknown error loading scene: " + scene_path)
-					return
+
+				## Complete the scene change process
+if result != OK:
+	_handle_loading_error("Failed to change scene with error code: " + str(result))
+	return
+
+	# Update current scene reference
+	_current_scene = scene_path
+
+	# Clean up loading screen
+	if _loading_screen:
+		_loading_screen.queue_free()
+		_loading_screen = null
+
+		# Reset state
+		_loading_state = LoadingState.IDLE
+
+		# Emit completion signal
+		scene_changed.emit(scene_path)
+		print("[SceneManager] Scene changed to: " + scene_path)
 
 
-					## Complete the scene change process
-func _fix_orphaned_code():
-	if result != OK:
-		_handle_loading_error("Failed to change scene with error code: " + str(result))
-		return
-
-		# Update current scene reference
-		_current_scene = scene_path
-
-		# Clean up loading screen
-		if _loading_screen:
-			_loading_screen.queue_free()
-			_loading_screen = null
-
-			# Reset state
-			_loading_state = LoadingState.IDLE
-
-			# Emit completion signal
-			scene_changed.emit(scene_path)
-			print("[SceneManager] Scene changed to: " + scene_path)
-
-
-			## Handle loading errors
+		## Handle loading errors
 func _show_loading_screen() -> void:
 	"""Display the educational loading screen with feedback"""
 	if _loading_screen != null:

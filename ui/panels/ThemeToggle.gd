@@ -6,10 +6,10 @@ extends CheckButton
 
 # Preload the InfoPanelFactory
 
-const InfoPanelFactory = preprepreprepreload("res://ui/panels/InfoPanelFactory.gd")
+const InfoPanelFactory = preload("res://ui/panels/InfoPanelFactory.gd")
 
 
-var new_theme = (
+# FIXED: Orphaned code - var new_theme = (
 InfoPanelFactory.ThemeMode.MINIMAL if pressed else InfoPanelFactory.ThemeMode.ENHANCED
 )
 InfoPanelFactory.set_theme(new_theme)
@@ -39,20 +39,18 @@ func _ready() -> void:
 	tooltip_text = "Toggle between Enhanced and Minimal UI themes"
 
 
-func _fix_orphaned_code():
-	if pressed:
-		text = "Minimal UI ✓"
-		modulate = Color(0.8, 1.0, 0.8)  # Slight green tint
-		else:
-			text = "Enhanced UI ✓"
-			modulate = Color(0.8, 0.8, 1.0)  # Slight blue tint
+if pressed:
+	text = "Minimal UI ✓"
+	modulate = Color(0.8, 1.0, 0.8)  # Slight green tint
+	else:
+		text = "Enhanced UI ✓"
+		modulate = Color(0.8, 0.8, 1.0)  # Slight blue tint
 
-			# Animate the change
-func _fix_orphaned_code():
-	if main_scene and main_scene.has_method("refresh_info_panel"):
-		main_scene.refresh_info_panel()
+		# Animate the change
+if main_scene and main_scene.has_method("refresh_info_panel"):
+	main_scene.refresh_info_panel()
 
-		print("Theme switched to: ", "Minimal" if pressed else "Enhanced")
+	print("Theme switched to: ", "Minimal" if pressed else "Enhanced")
 
 func _on_theme_toggled(pressed: bool) -> void:
 	# Update factory mode

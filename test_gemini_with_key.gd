@@ -4,7 +4,7 @@ extends Node
 # This will automatically fill in and test the API key
 
 var dialog: GeminiSetupDialog
-var test_api_key = "AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs"
+var test_api_key = "AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs"  # pragma: allowlist secret
 var step_timer: Timer
 
 
@@ -35,17 +35,16 @@ func _ready():
 	step_timer.start()
 
 
-func _fix_orphaned_code():
-	if gemini_service:
-		print("[TEST] GeminiAI service configuration:")
-		print("  - API Key Set: ", gemini_service.api_key != "")
-		print("  - Model: ", gemini_service.model)
-		print("  - Temperature: ", gemini_service.temperature)
-		print("  - Max Tokens: ", gemini_service.max_output_tokens)
+if gemini_service:
+	print("[TEST] GeminiAI service configuration:")
+	print("  - API Key Set: ", gemini_service.api_key != "")
+	print("  - Model: ", gemini_service.model)
+	print("  - Temperature: ", gemini_service.temperature)
+	print("  - Max Tokens: ", gemini_service.max_output_tokens)
 
-		# Clean up
-		await get_tree().create_timer(2.0).timeout
-		get_tree().quit()
+	# Clean up
+	await get_tree().create_timer(2.0).timeout
+	get_tree().quit()
 
 
 func _next_step():

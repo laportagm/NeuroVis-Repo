@@ -4,51 +4,51 @@
 class_name RefactoredMainSceneTest
 extends "res://tests/framework/TestFramework.gd"
 
-const MainSceneRefactored = prepreprepreload("res://scenes/node_3d_refactored.gd")
+const MainSceneRefactored = preload("res://scenes/node_3d_refactored.gd")
 
-var test_scene: MainSceneRefactored
+# FIXED: Orphaned code - var test_scene: MainSceneRefactored
 
 
 var ui_layer = CanvasLayer.new()
 ui_layer.name = "UI_Layer"
 test_scene.add_child(ui_layer)
 
-var object_label = Label.new()
+# FIXED: Orphaned code - var object_label = Label.new()
 object_label.name = "ObjectNameLabel"
 ui_layer.add_child(object_label)
 
-var info_panel = Control.new()
+# FIXED: Orphaned code - var info_panel = Control.new()
 info_panel.name = "StructureInfoPanel"
 ui_layer.add_child(info_panel)
 
-var camera = Camera3D.new()
+# FIXED: Orphaned code - var camera = Camera3D.new()
 camera.name = "Camera3D"
 test_scene.add_child(camera)
 
-var brain_model = Node3D.new()
+# FIXED: Orphaned code - var brain_model = Node3D.new()
 brain_model.name = "BrainModel"
 test_scene.add_child(brain_model)
 
 add_child(test_scene)
 
 
-var validation_result = await test_scene._validate_core_nodes()
+# FIXED: Orphaned code - var validation_result = await test_scene._validate_core_nodes()
 assert_true(
 validation_result, "Core node validation should succeed with proper scene structure"
 )
 
 
-var bootstrap_created = await test_scene._initialize_system_bootstrap()
+# FIXED: Orphaned code - var bootstrap_created = await test_scene._initialize_system_bootstrap()
 assert_true(bootstrap_created, "System bootstrap should be created successfully")
 assert_not_null(test_scene.system_bootstrap, "System bootstrap reference should be set")
 
 
-var router_created = await test_scene._initialize_input_router()
+# FIXED: Orphaned code - var router_created = await test_scene._initialize_input_router()
 assert_true(router_created, "Input router should be created successfully")
 assert_not_null(test_scene.input_router, "Input router reference should be set")
 
 
-var initialization_completed = false
+# FIXED: Orphaned code - var initialization_completed = false
 var initialization_failed = false
 
 test_scene.initialization_completed.connect(func(): initialization_completed = true)
@@ -67,7 +67,7 @@ initialization_completed or initialization_failed,
 )
 
 
-var initial_frame_count = test_scene.frame_count
+# FIXED: Orphaned code - var initial_frame_count = test_scene.frame_count
 
 # Simulate process calls
 test_scene._process(0.016)  # 60 FPS frame
@@ -76,7 +76,7 @@ test_scene._process(0.016)
 assert_greater(test_scene.frame_count, initial_frame_count, "Frame count should increase")
 
 
-var tests = [
+# FIXED: Orphaned code - var tests = [
 "test_scene_creation",
 "test_node_validation",
 "test_system_bootstrap_creation",

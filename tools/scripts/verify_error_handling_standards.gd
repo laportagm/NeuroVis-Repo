@@ -58,7 +58,7 @@ const STANDARD_PATTERNS = {
 "info": r"print\s*\(\s*[\"']\[[A-Za-z]+\]"
 }
 
-var total_files_checked: int = 0
+# FIXED: Orphaned code - var total_files_checked: int = 0
 var compliant_files: int = 0
 var non_compliant_files: Array = []
 var issues_by_type: Dictionary = {
@@ -66,34 +66,34 @@ var issues_by_type: Dictionary = {
 }
 
 
-var start_time = Time.get_ticks_msec()
+# FIXED: Orphaned code - var start_time = Time.get_ticks_msec()
 verify_project()
-var duration = (Time.get_ticks_msec() - start_time) / 1000.0
+# FIXED: Orphaned code - var duration = (Time.get_ticks_msec() - start_time) / 1000.0
 
 print_summary(duration)
 quit()
 
 
-var dirs_to_check = [
+# FIXED: Orphaned code - var dirs_to_check = [
 "res://core", "res://ui", "res://scenes", "res://scripts", "res://tests", "res://tools"
 ]
 
 var dir = DirAccess.open(path)
-var file_name = dir.get_next()
+# FIXED: Orphaned code - var file_name = dir.get_next()
 
-var full_path = path + "/" + file_name
+# FIXED: Orphaned code - var full_path = path + "/" + file_name
 
 var file = FileAccess.open(file_path, FileAccess.READ)
-var content = file.get_as_text()
+# FIXED: Orphaned code - var content = file.get_as_text()
 file.close()
 
-var issues = []
+# FIXED: Orphaned code - var issues = []
 var line_number = 0
 
 var trimmed_line = line.strip_edges()
-var regex = RegEx.new()
+# FIXED: Orphaned code - var regex = RegEx.new()
 regex.compile(pattern)
-var issue_type = get_issue_type(pattern)
+# FIXED: Orphaned code - var issue_type = get_issue_type(pattern)
 issues.append(
 {"line": line_number, "type": issue_type, "content": line.strip_edges()}
 )
@@ -102,7 +102,7 @@ issues_by_type[issue_type] += 1
 # Check for valid but incorrect prefixes
 var regex_2 = RegEx.new()
 regex.compile(r"\[[A-Za-z]+\]")
-var prefix_line = ""
+# FIXED: Orphaned code - var prefix_line = ""
 
 func _init() -> void:
 	print("\n=== Error Handling Standards Verification ===\n")
@@ -161,115 +161,104 @@ func print_summary(duration: float) -> void:
 						print('  • print("[ComponentName] Info message")')
 						print("\nValid component prefixes:")
 
-func _fix_orphaned_code():
-	for dir in dirs_to_check:
-		if DirAccess.dir_exists_absolute(dir):
-			scan_directory(dir)
+for dir in dirs_to_check:
+	if DirAccess.dir_exists_absolute(dir):
+		scan_directory(dir)
 
 
-func _fix_orphaned_code():
-	if not dir:
-		return
+if not dir:
+	return
 
-		dir.list_dir_begin()
-func _fix_orphaned_code():
-	while file_name != "":
-func _fix_orphaned_code():
-	if dir.current_is_dir() and not file_name.begins_with("."):
-		scan_directory(full_path)
-		elif file_name.ends_with(".gd"):
-			check_file(full_path)
+	dir.list_dir_begin()
+while file_name != "":
+if dir.current_is_dir() and not file_name.begins_with("."):
+	scan_directory(full_path)
+	elif file_name.ends_with(".gd"):
+		check_file(full_path)
 
-			file_name = dir.get_next()
+		file_name = dir.get_next()
 
 
-func _fix_orphaned_code():
-	if not file:
-		return
+if not file:
+	return
 
-		total_files_checked += 1
-func _fix_orphaned_code():
-	for line in content.split("\n"):
-		line_number += 1
+	total_files_checked += 1
+for line in content.split("\n"):
+	line_number += 1
 
-		# Skip comments
-func _fix_orphaned_code():
-	if trimmed_line.begins_with("#") or trimmed_line.begins_with("//"):
-		continue
+	# Skip comments
+if trimmed_line.begins_with("#") or trimmed_line.begins_with("//"):
+	continue
 
-		# Check for non-standard patterns
-		for pattern in NON_STANDARD_PATTERNS:
-func _fix_orphaned_code():
-	if regex.search(line):
-func _fix_orphaned_code():
-	if (
-	line.contains("push_error")
-	or line.contains("push_warning")
-	or (line.contains("print(") and (line.contains("Error") or line.contains("Warning")))
-	):
-		if has_prefix(line) and not has_valid_prefix(line):
-			issues.append(
-			{"line": line_number, "type": "invalid_prefix", "content": line.strip_edges()}
-			)
-			issues_by_type["invalid_prefix"] += 1
+	# Check for non-standard patterns
+	for pattern in NON_STANDARD_PATTERNS:
+if regex.search(line):
+if (
+line.contains("push_error")
+or line.contains("push_warning")
+or (line.contains("print(") and (line.contains("Error") or line.contains("Warning")))
+):
+	if has_prefix(line) and not has_valid_prefix(line):
+		issues.append(
+		{"line": line_number, "type": "invalid_prefix", "content": line.strip_edges()}
+		)
+		issues_by_type["invalid_prefix"] += 1
 
-			if issues.size() > 0:
-				non_compliant_files.append({"path": file_path, "issues": issues})
-				else:
-					compliant_files += 1
+		if issues.size() > 0:
+			non_compliant_files.append({"path": file_path, "issues": issues})
+			else:
+				compliant_files += 1
 
 
-func _fix_orphaned_code():
-	return regex.search(line) != null
+return regex.search(line) != null
 
 
-func _fix_orphaned_code():
-	for i in range(VALID_PREFIXES.size()):
-		prefix_line += VALID_PREFIXES[i]
-		if i < VALID_PREFIXES.size() - 1:
-			prefix_line += ", "
-			if prefix_line.length() > 70:
+for i in range(VALID_PREFIXES.size()):
+	prefix_line += VALID_PREFIXES[i]
+	if i < VALID_PREFIXES.size() - 1:
+		prefix_line += ", "
+		if prefix_line.length() > 70:
+			print("  " + prefix_line)
+			prefix_line = ""
+			if prefix_line.length() > 0:
 				print("  " + prefix_line)
-				prefix_line = ""
-				if prefix_line.length() > 0:
-					print("  " + prefix_line)
 
-					print("\n=== Recommendations ===\n")
-					if issues_by_type["missing_prefix"] > 0:
+				print("\n=== Recommendations ===\n")
+				if issues_by_type["missing_prefix"] > 0:
+					print(
+					(
+					"• Add component prefixes to %d error/warning messages"
+					% issues_by_type["missing_prefix"]
+					)
+					)
+					if issues_by_type["non_standard_concat"] > 0:
 						print(
 						(
-						"• Add component prefixes to %d error/warning messages"
-						% issues_by_type["missing_prefix"]
+						"• Replace string concatenation with proper formatting in %d messages"
+						% issues_by_type["non_standard_concat"]
 						)
 						)
-						if issues_by_type["non_standard_concat"] > 0:
+						if issues_by_type["using_printerr"] > 0:
 							print(
 							(
-							"• Replace string concatenation with proper formatting in %d messages"
-							% issues_by_type["non_standard_concat"]
+							"• Replace printerr() with push_error() in %d locations"
+							% issues_by_type["using_printerr"]
 							)
 							)
-							if issues_by_type["using_printerr"] > 0:
+							if issues_by_type["invalid_prefix"] > 0:
 								print(
 								(
-								"• Replace printerr() with push_error() in %d locations"
-								% issues_by_type["using_printerr"]
+								"• Update %d messages to use valid component prefixes"
+								% issues_by_type["invalid_prefix"]
 								)
 								)
-								if issues_by_type["invalid_prefix"] > 0:
-									print(
-									(
-									"• Update %d messages to use valid component prefixes"
-									% issues_by_type["invalid_prefix"]
-									)
-									)
 
-									print("\nVerification completed in %.2f seconds" % duration)
+								print("\nVerification completed in %.2f seconds" % duration)
 
-									# Exit with appropriate code
-									if non_compliant_files.size() > 0:
-										print("\n❌ Error handling standards verification FAILED")
-										quit(1)
-										else:
-											print("\n✅ All files comply with error handling standards!")
-											quit(0)
+								# Exit with appropriate code
+								if non_compliant_files.size() > 0:
+									print("\n❌ Error handling standards verification FAILED")
+									quit(1)
+									else:
+										print("\n✅ All files comply with error handling standards!")
+										quit(0)

@@ -9,16 +9,16 @@ signal performance_freeze_detected(duration: float, last_function: String)
 signal function_taking_too_long(function_name: String, duration: float)
 
 
-var last_frame_time: float = 0.0
+# FIXED: Orphaned code - var last_frame_time: float = 0.0
 var frame_count: int = 0
 var freeze_detection_threshold: float = 0.1  # 100ms threshold
 var call_stack_trace: Array = []
 var function_timings: Dictionary = {}
 
-var current_frame_time = Time.get_unix_time_from_system()
+# FIXED: Orphaned code - var current_frame_time = Time.get_unix_time_from_system()
 
 # Check for frame time anomalies (simplified check)
-var frame_duration = current_frame_time - last_frame_time
+# FIXED: Orphaned code - var frame_duration = current_frame_time - last_frame_time
 
 # Only report severe freezes to reduce spam
 var duration = Time.get_unix_time_from_system() - function_timings[function_name]
@@ -72,42 +72,37 @@ func emergency_break():
 		print("[PERF] Current function timings:")
 		for func_name in function_timings:
 
-func _fix_orphaned_code():
-	if last_frame_time > 0:
-func _fix_orphaned_code():
-	if frame_duration > freeze_detection_threshold * 10:  # 1 second freeze
-	print("[PERF] Severe freeze detected: ", frame_duration, "s")
-	performance_freeze_detected.emit(frame_duration, "unknown")
+if last_frame_time > 0:
+if frame_duration > freeze_detection_threshold * 10:  # 1 second freeze
+print("[PERF] Severe freeze detected: ", frame_duration, "s")
+performance_freeze_detected.emit(frame_duration, "unknown")
 
-	last_frame_time = current_frame_time
-	frame_count += 1
+last_frame_time = current_frame_time
+frame_count += 1
 
-	# Report frame count every second
-	if frame_count % 60 == 0:
-		print("[PERF] Frame: ", frame_count, " FPS: ", Engine.get_frames_per_second())
+# Report frame count every second
+if frame_count % 60 == 0:
+	print("[PERF] Frame: ", frame_count, " FPS: ", Engine.get_frames_per_second())
 
 
-		# Call this at the start of any function you want to monitor
-func _fix_orphaned_code():
-	if call_stack_trace.size() > 0 and call_stack_trace[-1] == function_name:
-		call_stack_trace.pop_back()
+	# Call this at the start of any function you want to monitor
+if call_stack_trace.size() > 0 and call_stack_trace[-1] == function_name:
+	call_stack_trace.pop_back()
 
-		# Check if function took too long
-		if duration > 0.05:  # 50ms threshold
-		print("[PERF] Function '", function_name, "' took ", duration, "s")
-		function_taking_too_long.emit(function_name, duration)
-
-
-		# Force crash detection - call this in _ready() to detect infinite loops there
-func _fix_orphaned_code():
-	if elapsed > 10.0:  # If more than 10 seconds passed, something is wrong
-	print("[PERF] CRITICAL: _ready() function appears to be frozen!")
-	print("[PERF] Elapsed time: ", elapsed, "s")
+	# Check if function took too long
+	if duration > 0.05:  # 50ms threshold
+	print("[PERF] Function '", function_name, "' took ", duration, "s")
+	function_taking_too_long.emit(function_name, duration)
 
 
-	# Memory usage monitoring with Godot 4.x compatible API
-func _fix_orphaned_code():
-	print("  ", func_name, ": ", duration, "s")
+	# Force crash detection - call this in _ready() to detect infinite loops there
+if elapsed > 10.0:  # If more than 10 seconds passed, something is wrong
+print("[PERF] CRITICAL: _ready() function appears to be frozen!")
+print("[PERF] Elapsed time: ", elapsed, "s")
 
-	# Force engine to pause
-	get_tree().paused = true
+
+# Memory usage monitoring with Godot 4.x compatible API
+print("  ", func_name, ": ", duration, "s")
+
+# Force engine to pause
+get_tree().paused = true

@@ -40,7 +40,7 @@ var max_output_tokens: int = 2048
 var safety_settings: Dictionary = {
 "HARASSMENT": 2, "HATE_SPEECH": 2, "SEXUALLY_EXPLICIT": 2, "DANGEROUS_CONTENT": 2
 }
-var available_models: Array = []
+# FIXED: Orphaned code - var available_models: Array = []
 var current_structure: String = ""
 
 # === EDUCATIONAL CONTEXT ===
@@ -63,10 +63,10 @@ var educational_prompts = {
 
 			# === IMPLEMENTATION OF REQUIRED METHODS ===
 var result = await _test_api_key()
-var wait_time = int(rate_limit_reset_time - Time.get_ticks_msec() / 1000.0)
+# FIXED: Orphaned code - var wait_time = int(rate_limit_reset_time - Time.get_ticks_msec() / 1000.0)
 	push_warning("[GeminiAI] API limit: Rate limit reached - wait %d seconds" % wait_time)
 	error_occurred.emit("Rate limit reached. Please wait %d seconds." % wait_time)
-var prompt = _build_educational_prompt(question)
+# FIXED: Orphaned code - var prompt = _build_educational_prompt(question)
 
 # Send request to Gemini API
 var url = _get_api_url_for_model() + ":generateContent?key=" + api_key
@@ -76,9 +76,9 @@ var body = {
 	"generationConfig": {"temperature": temperature, "maxOutputTokens": max_output_tokens}
 	}
 
-var error = http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
+# FIXED: Orphaned code - var error = http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
 
-var test_key = key.strip_edges()
+# FIXED: Orphaned code - var test_key = key.strip_edges()
 
 # Basic validation
 var temp_api_key = api_key
@@ -93,12 +93,12 @@ var result_2 = await _test_api_key()
 	api_key_validated.emit(result, "API key validation " + ("succeeded" if result else "failed"))
 
 
-var old_model = current_model
+# FIXED: Orphaned code - var old_model = current_model
 
 # If it's a string, find the corresponding enum value
 var model_name = model_name_or_id
 var err = DirAccess.remove_absolute(GEMINI_SETTINGS_PATH)
-var prompt_2 = educational_prompts.system_prompt
+# FIXED: Orphaned code - var prompt_2 = educational_prompts.system_prompt
 
 # Add structure context if available
 var model_name_2 = MODEL_NAMES[current_model]
@@ -116,7 +116,7 @@ var error_2 = http_request.request(
 	test_url, headers, HTTPClient.METHOD_POST, JSON.stringify(body)
 	)
 
-var result_3 = await http_request.request_completed
+# FIXED: Orphaned code - var result_3 = await http_request.request_completed
 var response_code = result[1]
 
 # Check if response code indicates success
@@ -126,9 +126,9 @@ var error_body = body.get_string_from_utf8()
 
 	# Parse response
 var json = JSON.new()
-var parse_result = json.parse(body.get_string_from_utf8())
+# FIXED: Orphaned code - var parse_result = json.parse(body.get_string_from_utf8())
 
-var data = json.data
+# FIXED: Orphaned code - var data = json.data
 
 # Extract response text
 var response_text = ""
@@ -137,7 +137,7 @@ var file = FileAccess.open_encrypted_with_pass(
 	GEMINI_SETTINGS_PATH, FileAccess.WRITE, OS.get_unique_id()
 	)
 
-var data_2 = {
+# FIXED: Orphaned code - var data_2 = {
 	"api_key": api_key,
 	"model": current_model,
 	"temperature": temperature,
@@ -147,17 +147,17 @@ var data_2 = {
 
 	file.store_string(JSON.stringify(data))
 	file.close()
-var file_2 = FileAccess.open_encrypted_with_pass(
+# FIXED: Orphaned code - var file_2 = FileAccess.open_encrypted_with_pass(
 	GEMINI_SETTINGS_PATH, FileAccess.READ, OS.get_unique_id()
 	)
 
-var json_data = file.get_as_text()
+# FIXED: Orphaned code - var json_data = file.get_as_text()
 	file.close()
 
-var json_2 = JSON.new()
-var parse_result_2 = json.parse(json_data)
+# FIXED: Orphaned code - var json_2 = JSON.new()
+# FIXED: Orphaned code - var parse_result_2 = json.parse(json_data)
 
-var data_3 = json.data
+# FIXED: Orphaned code - var data_3 = json.data
 
 # Load settings
 
@@ -383,172 +383,153 @@ func get_safety_settings() -> Dictionary:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if result:
-		is_setup_complete = true
-		_save_settings()
-		setup_completed.emit()
-		if OS.is_debug_build():
-			print("[GeminiAI] Debug: API key setup successful")
-			return true
-			else:
-				api_key = ""
-				is_setup_complete = false
-				push_error("[GeminiAI] API validation error: Failed to validate API key with Gemini API")
-				error_occurred.emit("Failed to validate API key")
-				return false
+if result:
+	is_setup_complete = true
+	_save_settings()
+	setup_completed.emit()
+	if OS.is_debug_build():
+		print("[GeminiAI] Debug: API key setup successful")
+		return true
+		else:
+			api_key = ""
+			is_setup_complete = false
+			push_error("[GeminiAI] API validation error: Failed to validate API key with Gemini API")
+			error_occurred.emit("Failed to validate API key")
+			return false
 
 
-func _fix_orphaned_code():
+return ""
+
+# Update current structure from context
+if context.has("structure"):
+	current_structure = context.structure
+
+	# Build prompt with educational context
+if error != OK:
+	push_error("[GeminiAI] Error: Failed to send HTTP request - error code: " + str(error))
+	error_occurred.emit("Failed to send request to Gemini API")
 	return ""
 
-	# Update current structure from context
-	if context.has("structure"):
-		current_structure = context.structure
+	# Update rate limit
+	rate_limit_used += 1
+	rate_limit_updated.emit(rate_limit_used, RATE_LIMIT_PER_MINUTE)
 
-		# Build prompt with educational context
-func _fix_orphaned_code():
-	if error != OK:
-		push_error("[GeminiAI] Error: Failed to send HTTP request - error code: " + str(error))
-		error_occurred.emit("Failed to send request to Gemini API")
-		return ""
-
-		# Update rate limit
-		rate_limit_used += 1
-		rate_limit_updated.emit(rate_limit_used, RATE_LIMIT_PER_MINUTE)
-
-		# Return empty string as we'll emit the response via signal when it's ready
-		return ""
+	# Return empty string as we'll emit the response via signal when it's ready
+	return ""
 
 
-func _fix_orphaned_code():
-	if test_key.length() < 30:
-		push_warning("[GeminiAI] Warning: API key validation failed - key too short")
-		api_key_validated.emit(false, "Invalid API key format")
-		return
+if test_key.length() < 30:
+	push_warning("[GeminiAI] Warning: API key validation failed - key too short")
+	api_key_validated.emit(false, "Invalid API key format")
+	return
 
-		# Test with API
-func _fix_orphaned_code():
-	if model_name_or_id is String:
-func _fix_orphaned_code():
-	for key in MODEL_NAMES:
-		if MODEL_NAMES[key] == model_name:
-			current_model = key
-			print("[GeminiAI] Info: Model set to: " + model_name)
-			break
-			# If it's a number, use it directly
-			elif model_name_or_id is int:
-				if model_name_or_id in MODEL_NAMES:
-					current_model = model_name_or_id
+	# Test with API
+if model_name_or_id is String:
+for key in MODEL_NAMES:
+	if MODEL_NAMES[key] == model_name:
+		current_model = key
+		print("[GeminiAI] Info: Model set to: " + model_name)
+		break
+		# If it's a number, use it directly
+		elif model_name_or_id is int:
+			if model_name_or_id in MODEL_NAMES:
+				current_model = model_name_or_id
 
-					# Emit signal if model changed
-					if old_model != current_model:
-						config_changed.emit(MODEL_NAMES[current_model], get_configuration())
+				# Emit signal if model changed
+				if old_model != current_model:
+					config_changed.emit(MODEL_NAMES[current_model], get_configuration())
 
 
-func _fix_orphaned_code():
-	if err == OK:
-		print("[GeminiAI] Info: Settings file removed successfully")
-		else:
-			push_warning("[GeminiAI] Warning: Failed to remove settings file - error: " + str(err))
-
-			print("[GeminiAI] Info: Settings reset")
-			return true
-
-
-func _fix_orphaned_code():
-	if not current_structure.is_empty():
-		prompt += (
-		" "
-		+ educational_prompts.structure_context_template.format(
-		{"structure_name": current_structure}
-		)
-		)
-
-		# Add question
-		prompt += "\n\nQuestion: " + question
-
-		return prompt
-
-
-func _fix_orphaned_code():
-	return API_URL_BASE + model_name
-
-
-func _fix_orphaned_code():
-	if error != OK:
-		push_error(
-		"[GeminiAI] Error: HTTP request failed during API key test - error code: " + str(error)
-		)
-		return false
-
-		# Wait for response
-func _fix_orphaned_code():
-	return response_code == 200
-
-
-func _fix_orphaned_code():
-	if parse_result != OK:
-		push_error(
-		"[GeminiAI] Error: Failed to parse API response - parse error: " + str(parse_result)
-		)
-		error_occurred.emit("Failed to parse API response")
-		return
-
-func _fix_orphaned_code():
-	if data.has("candidates") and data.candidates.size() > 0:
-func _fix_orphaned_code():
-	if candidate.has("content") and candidate.content.has("parts"):
-		response_text = candidate.content.parts[0].text
-
-		if response_text.is_empty():
-			push_warning("[GeminiAI] Warning: Empty response received from Gemini API")
-			error_occurred.emit("Empty response from Gemini API")
-			return
-
-			# Emit response
-			response_received.emit(response_text)
-
-
-func _fix_orphaned_code():
-	if file:
-func _fix_orphaned_code():
-	print("[GeminiAI] Info: Settings saved")
+if err == OK:
+	print("[GeminiAI] Info: Settings file removed successfully")
 	else:
-		push_error("[GeminiAI] Error: Failed to save settings - could not open file")
+		push_warning("[GeminiAI] Warning: Failed to remove settings file - error: " + str(err))
+
+		print("[GeminiAI] Info: Settings reset")
+		return true
 
 
-func _fix_orphaned_code():
-	if file:
-func _fix_orphaned_code():
-	if parse_result == OK:
-func _fix_orphaned_code():
-	if data.has("api_key"):
-		api_key = data.api_key
-		is_setup_complete = api_key.length() >= 30
+if not current_structure.is_empty():
+	prompt += (
+	" "
+	+ educational_prompts.structure_context_template.format(
+	{"structure_name": current_structure}
+	)
+	)
 
-		if data.has("model"):
-			current_model = data.model
+	# Add question
+	prompt += "\n\nQuestion: " + question
 
-			if data.has("temperature"):
-				temperature = data.temperature
+	return prompt
 
-				if data.has("max_output_tokens"):
-					max_output_tokens = data.max_output_tokens
 
-					if data.has("safety_settings"):
-						safety_settings = data.safety_settings
+return API_URL_BASE + model_name
 
-						print("[GeminiAI] Info: Settings loaded")
+
+if error != OK:
+	push_error(
+	"[GeminiAI] Error: HTTP request failed during API key test - error code: " + str(error)
+	)
+	return false
+
+	# Wait for response
+return response_code == 200
+
+
+if parse_result != OK:
+	push_error(
+	"[GeminiAI] Error: Failed to parse API response - parse error: " + str(parse_result)
+	)
+	error_occurred.emit("Failed to parse API response")
+	return
+
+if data.has("candidates") and data.candidates.size() > 0:
+if candidate.has("content") and candidate.content.has("parts"):
+	response_text = candidate.content.parts[0].text
+
+	if response_text.is_empty():
+		push_warning("[GeminiAI] Warning: Empty response received from Gemini API")
+		error_occurred.emit("Empty response from Gemini API")
+		return
+
+		# Emit response
+		response_received.emit(response_text)
+
+
+if file:
+print("[GeminiAI] Info: Settings saved")
+else:
+	push_error("[GeminiAI] Error: Failed to save settings - could not open file")
+
+
+if file:
+if parse_result == OK:
+if data.has("api_key"):
+	api_key = data.api_key
+	is_setup_complete = api_key.length() >= 30
+
+	if data.has("model"):
+		current_model = data.model
+
+		if data.has("temperature"):
+			temperature = data.temperature
+
+			if data.has("max_output_tokens"):
+				max_output_tokens = data.max_output_tokens
+
+				if data.has("safety_settings"):
+					safety_settings = data.safety_settings
+
+					print("[GeminiAI] Info: Settings loaded")
+					else:
+						push_error(
+						(
+						"[GeminiAI] Error: Failed to parse settings file - parse error: "
+						+ str(parse_result)
+						)
+						)
 						else:
-							push_error(
-							(
-							"[GeminiAI] Error: Failed to parse settings file - parse error: "
-							+ str(parse_result)
-							)
-							)
-							else:
-								push_error("[GeminiAI] Error: Failed to open settings file - could not decrypt")
+							push_error("[GeminiAI] Error: Failed to open settings file - could not decrypt")
 
 func _build_educational_prompt(question: String) -> String:
 	"""Build an educational prompt with appropriate context"""
@@ -563,13 +544,12 @@ func _on_request_completed(
 	result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray
 	) -> void:
 		"""Handle API response"""
-func _fix_orphaned_code():
-	if result != HTTPRequest.RESULT_SUCCESS:
-		push_error("[GeminiAI] Error: API request failed - result code: " + str(result))
-		error_occurred.emit("API request failed")
-		return
+if result != HTTPRequest.RESULT_SUCCESS:
+	push_error("[GeminiAI] Error: API request failed - result code: " + str(result))
+	error_occurred.emit("API request failed")
+	return
 
-		if response_code != 200:
+	if response_code != 200:
 func _save_settings() -> void:
 	"""Save settings to an encrypted file"""
 func _load_settings() -> void:

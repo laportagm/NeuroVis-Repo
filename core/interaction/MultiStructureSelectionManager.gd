@@ -48,7 +48,7 @@ handle_selection_with_modifiers(screen_position, modifiers)
 ## Handle structure selection with multi-selection support
 var hit_data = {}  # _cast_multi_ray_selection(screen_position, true)
 
-var mesh = hit_data["mesh"]
+# FIXED: Orphaned code - var mesh = hit_data["mesh"]
 
 # Handle different selection modes
 var index = -1
@@ -58,10 +58,10 @@ selection_limit_reached.emit()
 _show_selection_limit_feedback()
 
 
-var state_2 = _get_next_selection_state()
+# FIXED: Orphaned code - var state_2 = _get_next_selection_state()
 _add_selection(mesh, state)
 
-var selection_data = {
+# FIXED: Orphaned code - var selection_data = {
 "mesh": mesh, "state": state, "name": mesh.name, "timestamp": Time.get_ticks_msec() / 1000.0
 }
 
@@ -70,11 +70,11 @@ _selection_order.append(mesh)
 
 # Store original material if not already stored
 var orig_mats = get("original_materials")
-var colors = SELECTION_COLORS[state]
+# FIXED: Orphaned code - var colors = SELECTION_COLORS[state]
 
 # Get visual_feedback from parent class using property access
 var vf = get("visual_feedback")
-var state_material = StandardMaterial3D.new()
+# FIXED: Orphaned code - var state_material = StandardMaterial3D.new()
 state_material.albedo_color = colors["default"]
 state_material.emission_enabled = true
 state_material.emission = colors["default"]
@@ -89,9 +89,9 @@ state_material.albedo_color.a = 0.85
 
 # Apply to all surfaces
 var surface_count = mesh.mesh.get_surface_count()
-var vf_2 = get("visual_feedback")
-var orig_mats_2 = get("original_materials")
-var original_mat = orig_mats.get(mesh) if orig_mats != null else null
+# FIXED: Orphaned code - var vf_2 = get("visual_feedback")
+# FIXED: Orphaned code - var orig_mats_2 = get("original_materials")
+# FIXED: Orphaned code - var original_mat = orig_mats.get(mesh) if orig_mats != null else null
 vf.clear_feedback(mesh, original_mat)
 # TODO: Temporarily disabled while fixing inheritance
 # restore_original_material(mesh)
@@ -100,16 +100,16 @@ pass
 _remove_hierarchical_outline(mesh)
 
 
-var relationships = {
+# FIXED: Orphaned code - var relationships = {
 ["hippocampus", "amygdala"]: "limbic_system",
 ["caudate_nucleus", "putamen"]: "basal_ganglia",
 ["thalamus", "hypothalamus"]: "diencephalon"
 }
 
-var name1 = _normalize_structure_name(_selected_structures[i]["name"])
-var name2 = _normalize_structure_name(_selected_structures[j]["name"])
+# FIXED: Orphaned code - var name1 = _normalize_structure_name(_selected_structures[i]["name"])
+# FIXED: Orphaned code - var name2 = _normalize_structure_name(_selected_structures[j]["name"])
 
-var info = []
+# FIXED: Orphaned code - var info = []
 var current_time = Time.get_ticks_msec() / 1000.0
 var colors_2 = SELECTION_COLORS[state]
 var material = StandardMaterial3D.new()
@@ -122,10 +122,10 @@ material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 material.albedo_color.a = 0.85
 
 var surface_count_2 = mesh.mesh.get_surface_count()
-var first_state = _selected_structures[0]["state"]
+# FIXED: Orphaned code - var first_state = _selected_structures[0]["state"]
 
 var _selected_structures: Array = []  # Array of Dictionary: {mesh, state, name, timestamp}
-var _is_comparison_mode: bool = false
+# FIXED: Orphaned code - var _is_comparison_mode: bool = false
 var _selection_order: Array = []  # Array of MeshInstance3D
 var _relationship_lines: Array = []  # Array of MeshInstance3D
 var _selection_timeout_timer: Timer
@@ -231,137 +231,123 @@ func clear_all_selections() -> void:
 func clear_selection(mesh: MeshInstance3D) -> void:
 	"""Clear a specific structure from selection"""
 
-func _fix_orphaned_code():
-	if not hit_data or not hit_data.has("mesh") or not hit_data["mesh"]:
-		if not modifiers.get("ctrl", false) and not modifiers.get("shift", false):
-			clear_all_selections()
-			return
-
-func _fix_orphaned_code():
-	if modifiers.get("ctrl", false):
-		_handle_ctrl_selection(mesh)
-		elif modifiers.get("shift", false):
-			_handle_shift_selection(mesh)
-			else:
-				_handle_normal_selection(mesh)
-
-				# Update visual feedback
-				_update_all_visual_states()
-
-				# Emit change signal
-				multi_selection_changed.emit(_get_selection_info())
-
-				# Check for relationships
-				_check_anatomical_relationships()
-
-				# Reset timeout
-				_selection_timeout_timer.start()
-
-
-				## Get current selection information
-func _fix_orphaned_code():
-	for i in range(_selected_structures.size()):
-		if _selected_structures[i]["mesh"] == mesh:
-			index = i
-			break
-
-			if index >= 0:
-				_clear_selection_visual(mesh)
-				_selected_structures.remove_at(index)
-				_selection_order.erase(mesh)
-
-				# Reorder remaining selections
-				_reorder_selections()
-				_update_all_visual_states()
-
-				multi_selection_changed.emit(_get_selection_info())
-
-				if _selected_structures.is_empty():
-					_is_comparison_mode = false
-					comparison_mode_exited.emit()
-
-
-					# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if _selected_structures.size() > 1 and not _is_comparison_mode:
-		_is_comparison_mode = true
-		comparison_mode_entered.emit()
-		else:
-			selection_limit_reached.emit()
-			_show_selection_limit_feedback()
-
-
-func _fix_orphaned_code():
-	if orig_mats != null and not orig_mats.has(mesh):
-		# TODO: Temporarily disabled while fixing inheritance
-		# _store_original_materials(mesh)
-		pass
-
-		print("[MultiSelection] Added %s as %s selection" % [mesh.name, _get_state_name(state)])
-
-
-func _fix_orphaned_code():
-	if vf != null and is_instance_valid(vf):
-		# Use visual feedback system with state-specific colors
-		vf.set_color_scheme("default")  # Reset to default first
-
-		# Create state-specific material
-func _fix_orphaned_code():
-	for i in range(surface_count):
-		mesh.set_surface_override_material(i, state_material)
-
-		# Add outline effect based on hierarchy
-		_add_hierarchical_outline(mesh, colors["outline"])
-		else:
-			# Fallback visual application
-			_apply_fallback_selection_visual(mesh, state)
-
-
-func _fix_orphaned_code():
-	if vf != null and is_instance_valid(vf):
-func _fix_orphaned_code():
-	for i in range(_selected_structures.size()):
-		for j in range(i + 1, _selected_structures.size()):
-func _fix_orphaned_code():
-	for key in relationships:
-		if (name1 in key) and (name2 in key):
-			relationship_detected.emit(name1, name2, relationships[key])
-			print("[MultiSelection] Relationship detected: %s" % relationships[key])
-
-
-func _fix_orphaned_code():
-	for selection in _selected_structures:
-		info.append(
-		{
-		"name": selection["name"],
-		"state": _get_state_name(selection["state"]),
-		"color": SELECTION_COLORS[selection["state"]]["default"]
-		}
-		)
-		return info
-
-
-func _fix_orphaned_code():
-	if current_time - _last_interaction_time >= SELECTION_TIMEOUT:
-		print("[MultiSelection] Selection timeout - clearing all selections")
+if not hit_data or not hit_data.has("mesh") or not hit_data["mesh"]:
+	if not modifiers.get("ctrl", false) and not modifiers.get("shift", false):
 		clear_all_selections()
+		return
+
+if modifiers.get("ctrl", false):
+	_handle_ctrl_selection(mesh)
+	elif modifiers.get("shift", false):
+		_handle_shift_selection(mesh)
+		else:
+			_handle_normal_selection(mesh)
+
+			# Update visual feedback
+			_update_all_visual_states()
+
+			# Emit change signal
+			multi_selection_changed.emit(_get_selection_info())
+
+			# Check for relationships
+			_check_anatomical_relationships()
+
+			# Reset timeout
+			_selection_timeout_timer.start()
 
 
-func _fix_orphaned_code():
-	for i in range(surface_count):
-		mesh.set_surface_override_material(i, material)
+			## Get current selection information
+for i in range(_selected_structures.size()):
+	if _selected_structures[i]["mesh"] == mesh:
+		index = i
+		break
+
+		if index >= 0:
+			_clear_selection_visual(mesh)
+			_selected_structures.remove_at(index)
+			_selection_order.erase(mesh)
+
+			# Reorder remaining selections
+			_reorder_selections()
+			_update_all_visual_states()
+
+			multi_selection_changed.emit(_get_selection_info())
+
+			if _selected_structures.is_empty():
+				_is_comparison_mode = false
+				comparison_mode_exited.emit()
 
 
-		# === INPUT HANDLING ===
-func _fix_orphaned_code():
-	for i in range(_selected_structures.size() - 1):
-		_selected_structures[i]["state"] = _selected_structures[i + 1]["state"]
-		_selected_structures[_selected_structures.size() - 1]["state"] = first_state
+				# === PRIVATE METHODS ===
+if _selected_structures.size() > 1 and not _is_comparison_mode:
+	_is_comparison_mode = true
+	comparison_mode_entered.emit()
+	else:
+		selection_limit_reached.emit()
+		_show_selection_limit_feedback()
 
-		_update_all_visual_states()
-		multi_selection_changed.emit(_get_selection_info())
 
-		print("[MultiSelection] Cycled primary selection")
+if orig_mats != null and not orig_mats.has(mesh):
+	# TODO: Temporarily disabled while fixing inheritance
+	# _store_original_materials(mesh)
+	pass
+
+	print("[MultiSelection] Added %s as %s selection" % [mesh.name, _get_state_name(state)])
+
+
+if vf != null and is_instance_valid(vf):
+	# Use visual feedback system with state-specific colors
+	vf.set_color_scheme("default")  # Reset to default first
+
+	# Create state-specific material
+for i in range(surface_count):
+	mesh.set_surface_override_material(i, state_material)
+
+	# Add outline effect based on hierarchy
+	_add_hierarchical_outline(mesh, colors["outline"])
+	else:
+		# Fallback visual application
+		_apply_fallback_selection_visual(mesh, state)
+
+
+if vf != null and is_instance_valid(vf):
+for i in range(_selected_structures.size()):
+	for j in range(i + 1, _selected_structures.size()):
+for key in relationships:
+	if (name1 in key) and (name2 in key):
+		relationship_detected.emit(name1, name2, relationships[key])
+		print("[MultiSelection] Relationship detected: %s" % relationships[key])
+
+
+for selection in _selected_structures:
+	info.append(
+	{
+	"name": selection["name"],
+	"state": _get_state_name(selection["state"]),
+	"color": SELECTION_COLORS[selection["state"]]["default"]
+	}
+	)
+	return info
+
+
+if current_time - _last_interaction_time >= SELECTION_TIMEOUT:
+	print("[MultiSelection] Selection timeout - clearing all selections")
+	clear_all_selections()
+
+
+for i in range(surface_count):
+	mesh.set_surface_override_material(i, material)
+
+
+	# === INPUT HANDLING ===
+for i in range(_selected_structures.size() - 1):
+	_selected_structures[i]["state"] = _selected_structures[i + 1]["state"]
+	_selected_structures[_selected_structures.size() - 1]["state"] = first_state
+
+	_update_all_visual_states()
+	multi_selection_changed.emit(_get_selection_info())
+
+	print("[MultiSelection] Cycled primary selection")
 
 func _handle_normal_selection(mesh: MeshInstance3D) -> void:
 	"""Handle normal click selection (replaces all)"""

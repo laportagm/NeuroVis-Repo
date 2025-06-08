@@ -48,9 +48,9 @@ var current_viewport_size: Vector2
 var is_portrait_orientation: bool = false
 var layout_configs: Dictionary = {}
 
-var viewport = get_viewport()
-var new_breakpoint = _calculate_breakpoint(current_viewport_size.x)
-var new_orientation = current_viewport_size.y > current_viewport_size.x
+# FIXED: Orphaned code - var viewport = get_viewport()
+# FIXED: Orphaned code - var new_breakpoint = _calculate_breakpoint(current_viewport_size.x)
+# FIXED: Orphaned code - var new_orientation = current_viewport_size.y > current_viewport_size.x
 
 # Check for breakpoint change
 var old_breakpoint_name = BREAKPOINT_NAMES[current_breakpoint]
@@ -63,7 +63,7 @@ breakpoint_changed.emit(old_breakpoint_name, new_breakpoint_name)
 var breakpoint_name = BREAKPOINT_NAMES[current_breakpoint]
 var layout_config = layout_configs.get(breakpoint_name, {})
 
-var padding = layout_config.padding
+# FIXED: Orphaned code - var padding = layout_config.padding
 var style = StyleBoxFlat.new()
 style.bg_color = Color(0.1, 0.1, 0.15, 0.9)
 style.content_margin_top = padding.get("top", 16)
@@ -76,10 +76,10 @@ add_theme_stylebox_override("panel", style)
 var spacing = layout_config.spacing
 _apply_container_spacing(spacing)
 
-var current_size = node.get_theme_font_size("font_size")
-var current_size_2 = node.get_theme_font_size("font_size")
-var current_size_3 = node.get_theme_font_size("normal_font_size")
-var position = layout_config.position
+# FIXED: Orphaned code - var current_size = node.get_theme_font_size("font_size")
+# FIXED: Orphaned code - var current_size_2 = node.get_theme_font_size("font_size")
+# FIXED: Orphaned code - var current_size_3 = node.get_theme_font_size("normal_font_size")
+# FIXED: Orphaned code - var position = layout_config.position
 var width_percent = layout_config.panel_width_percent
 
 "right":
@@ -106,9 +106,9 @@ var height = current_viewport_size.y * 0.5
 var should_stack_vertical = layout_config.stack_vertical
 	_apply_stacking_to_children(self, should_stack_vertical)
 
-var parent = container.get_parent()
-var children = container.get_children()
-var container_index = container.get_index()
+# FIXED: Orphaned code - var parent = container.get_parent()
+# FIXED: Orphaned code - var children = container.get_children()
+# FIXED: Orphaned code - var container_index = container.get_index()
 
 # Create new container
 var new_container = VBoxContainer.new() if to_vertical else HBoxContainer.new()
@@ -189,94 +189,82 @@ func force_breakpoint(breakpoint: String) -> void:
 
 				# === UTILITY METHODS ===
 
-func _fix_orphaned_code():
-	if not viewport:
-		return
+if not viewport:
+	return
 
-		current_viewport_size = viewport.get_visible_rect().size
-func _fix_orphaned_code():
-	if new_breakpoint != current_breakpoint:
-func _fix_orphaned_code():
-	if new_orientation != is_portrait_orientation:
-		is_portrait_orientation = new_orientation
-		_log("Orientation changed: " + ("portrait" if is_portrait_orientation else "landscape"))
-		orientation_changed.emit(is_portrait_orientation)
+	current_viewport_size = viewport.get_visible_rect().size
+if new_breakpoint != current_breakpoint:
+if new_orientation != is_portrait_orientation:
+	is_portrait_orientation = new_orientation
+	_log("Orientation changed: " + ("portrait" if is_portrait_orientation else "landscape"))
+	orientation_changed.emit(is_portrait_orientation)
 
-		# Apply responsive layout
-		_apply_responsive_layout()
+	# Apply responsive layout
+	_apply_responsive_layout()
 
-func _fix_orphaned_code():
-	if layout_config.is_empty():
-		return
+if layout_config.is_empty():
+	return
 
-		_log("Applying responsive layout: " + breakpoint_name)
+	_log("Applying responsive layout: " + breakpoint_name)
 
-		# Apply padding and margin
-		_apply_spacing(layout_config)
+	# Apply padding and margin
+	_apply_spacing(layout_config)
 
-		# Apply typography scaling
-		if adaptive_typography and layout_config.has("font_scale"):
-			_apply_typography_scaling(layout_config.font_scale)
+	# Apply typography scaling
+	if adaptive_typography and layout_config.has("font_scale"):
+		_apply_typography_scaling(layout_config.font_scale)
 
-			# Apply touch-friendly mode
-			if layout_config.has("button_height"):
-				_apply_touch_friendly_sizing(layout_config.button_height)
+		# Apply touch-friendly mode
+		if layout_config.has("button_height"):
+			_apply_touch_friendly_sizing(layout_config.button_height)
 
-				# Apply positioning
-				_apply_responsive_positioning(layout_config)
+			# Apply positioning
+			_apply_responsive_positioning(layout_config)
 
-				# Apply layout structure
-				_apply_layout_structure(layout_config)
+			# Apply layout structure
+			_apply_layout_structure(layout_config)
 
-				layout_adapted.emit(breakpoint_name)
+			layout_adapted.emit(breakpoint_name)
 
-func _fix_orphaned_code():
-	if self is MarginContainer:
-		add_theme_constant_override("margin_top", padding.get("top", 16))
-		add_theme_constant_override("margin_bottom", padding.get("bottom", 16))
-		add_theme_constant_override("margin_left", padding.get("left", 16))
-		add_theme_constant_override("margin_right", padding.get("right", 16))
-		elif self is PanelContainer:
-			# Apply padding via custom style
-func _fix_orphaned_code():
-	if layout_config.has("spacing"):
-func _fix_orphaned_code():
-	if current_size <= 0:
-		current_size = 14  # Default size
-		node.add_theme_font_size_override("font_size", int(current_size * scale))
-		elif node is Button:
-func _fix_orphaned_code():
-	if current_size <= 0:
-		current_size = 14
-		node.add_theme_font_size_override("font_size", int(current_size * scale))
-		elif node is RichTextLabel:
-func _fix_orphaned_code():
-	if current_size <= 0:
-		current_size = 14
-		node.add_theme_font_size_override("normal_font_size", int(current_size * scale))
+if self is MarginContainer:
+	add_theme_constant_override("margin_top", padding.get("top", 16))
+	add_theme_constant_override("margin_bottom", padding.get("bottom", 16))
+	add_theme_constant_override("margin_left", padding.get("left", 16))
+	add_theme_constant_override("margin_right", padding.get("right", 16))
+	elif self is PanelContainer:
+		# Apply padding via custom style
+if layout_config.has("spacing"):
+if current_size <= 0:
+	current_size = 14  # Default size
+	node.add_theme_font_size_override("font_size", int(current_size * scale))
+	elif node is Button:
+if current_size <= 0:
+	current_size = 14
+	node.add_theme_font_size_override("font_size", int(current_size * scale))
+	elif node is RichTextLabel:
+if current_size <= 0:
+	current_size = 14
+	node.add_theme_font_size_override("normal_font_size", int(current_size * scale))
 
-		# Recursively apply to children
-		for child in node.get_children():
-			_apply_typography_to_children(child, scale)
+	# Recursively apply to children
+	for child in node.get_children():
+		_apply_typography_to_children(child, scale)
 
-func _fix_orphaned_code():
-	if not parent:
-		return
+if not parent:
+	return
 
-func _fix_orphaned_code():
-	for child in children:
-		container.remove_child(child)
-		new_container.add_child(child)
+for child in children:
+	container.remove_child(child)
+	new_container.add_child(child)
 
-		# Replace container
-		parent.remove_child(container)
-		parent.add_child(new_container)
-		parent.move_child(new_container, container_index)
-		container.queue_free()
+	# Replace container
+	parent.remove_child(container)
+	parent.add_child(new_container)
+	parent.move_child(new_container, container_index)
+	container.queue_free()
 
-		# === EVENT HANDLERS ===
-func _fix_orphaned_code():
-	print(prefix + message)
+	# === EVENT HANDLERS ===
+print(prefix + message)
 
 func _setup_responsive_layouts() -> void:
 	"""Setup layout configurations for different breakpoints"""

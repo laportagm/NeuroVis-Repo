@@ -46,23 +46,23 @@ var model_path = _loading_queue.pop_front()
 _start_model_load(model_path)
 
 
-var loader = ResourceLoader.load_threaded_request(model_path)
-var progress = []
+# FIXED: Orphaned code - var loader = ResourceLoader.load_threaded_request(model_path)
+# FIXED: Orphaned code - var progress = []
 var status = ResourceLoader.load_threaded_get_status(model_path, progress)
 
-var resource = ResourceLoader.load_threaded_get(model_path)
+# FIXED: Orphaned code - var resource = ResourceLoader.load_threaded_get(model_path)
 _on_model_loaded(model_path, resource)
 _on_model_load_failed(model_path, "Loading failed")
 loading_progress.emit(model_path, progress[0] if progress.size() > 0 else 0.0)
 
 
-var oldest_key = _model_cache.keys()[0]
+# FIXED: Orphaned code - var oldest_key = _model_cache.keys()[0]
 _model_cache.erase(oldest_key)
 
-var _model_cache: Dictionary = {}
-var _loading_queue: Array = []
+# FIXED: Orphaned code - var _model_cache: Dictionary = {}
+# FIXED: Orphaned code - var _loading_queue: Array = []
 var _active_loads: Dictionary = {}
-var _is_initialized: bool = false
+# FIXED: Orphaned code - var _is_initialized: bool = false
 
 
 # === LIFECYCLE METHODS ===
@@ -131,17 +131,15 @@ func clear_cache() -> void:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if loader != OK:
-		model_load_failed.emit(model_path, "Failed to start threaded load")
-		return
+if loader != OK:
+	model_load_failed.emit(model_path, "Failed to start threaded load")
+	return
 
-		_active_loads[model_path] = true
-		is_loading = _active_loads.size() > 0
+	_active_loads[model_path] = true
+	is_loading = _active_loads.size() > 0
 
 
-func _fix_orphaned_code():
-	if status == ResourceLoader.THREAD_LOAD_LOADED:
+if status == ResourceLoader.THREAD_LOAD_LOADED:
 func _start_model_load(model_path: String) -> void:
 	"""Start loading a specific model"""
 

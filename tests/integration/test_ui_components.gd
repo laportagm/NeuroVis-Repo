@@ -5,7 +5,7 @@ extends TestFramework
 
 # Test ModularInfoPanel functionality
 
-var panel = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel = preload("res://ui/components/panels/ModularInfoPanel.gd").new()
 
 assert_not_null(panel)
 assert_equals(panel.panel_title, "Structure Information")
@@ -18,7 +18,7 @@ assert_true(panel.animation_enabled)
 it(
 "should add and remove sections dynamically",
 func():
-var panel_2 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel_2 = preload("res://ui/components/panels/ModularInfoPanel.gd").new()
 	panel.initialize_component()
 
 	# Test adding custom section
@@ -27,7 +27,7 @@ var custom_config = {
 	}
 	panel.add_section("custom", custom_config)
 
-var sections = panel.get_all_sections_data()
+# FIXED: Orphaned code - var sections = panel.get_all_sections_data()
 	assert_greater_than(sections.size(), 4)  # Default 4 + custom
 
 	# Test removing section
@@ -40,13 +40,13 @@ var sections = panel.get_all_sections_data()
 	it(
 	"should load brain structure data correctly",
 	func():
-var panel_3 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
-var test_scene = Node.new()
+var panel_3 = preload("res://ui/components/panels/ModularInfoPanel.gd").new()
+# FIXED: Orphaned code - var test_scene = Node.new()
 	test_scene.add_child(panel)
 
 	panel.initialize_component()
 
-var test_data = {
+# FIXED: Orphaned code - var test_data = {
 	"displayName": "Hippocampus",
 	"id": "hippocampus",
 	"shortDescription": "Critical for memory formation",
@@ -69,7 +69,7 @@ var header_data = panel.get_section_data("header")
 
 
 	# Test ResponsiveComponent breakpoints
-var component = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
+var component = preload("res://ui/components/core/ResponsiveComponent.gd").new()
 	component.responsive_enabled = true
 
 	# Simulate mobile viewport
@@ -83,7 +83,7 @@ var component = prepreprepreload("res://ui/components/core/ResponsiveComponent.g
 	it(
 	"should detect tablet breakpoint",
 	func():
-var component_2 = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
+var component_2 = preload("res://ui/components/core/ResponsiveComponent.gd").new()
 	component.responsive_enabled = true
 
 	# Simulate tablet viewport
@@ -97,7 +97,7 @@ var component_2 = prepreprepreload("res://ui/components/core/ResponsiveComponent
 	it(
 	"should detect desktop breakpoint",
 	func():
-var component_3 = prepreprepreload("res://ui/components/core/ResponsiveComponent.gd").new()
+var component_3 = preload("res://ui/components/core/ResponsiveComponent.gd").new()
 	component.responsive_enabled = true
 
 	# Simulate desktop viewport
@@ -144,8 +144,8 @@ var form = UIComponentFactory.create_form(fields, {"title": "Login Form"})
 
 
 	# Test signal connectivity
-var panel_5 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
-var signal_received = false
+var panel_5 = preload("res://ui/components/panels/ModularInfoPanel.gd").new()
+# FIXED: Orphaned code - var signal_received = false
 
 	panel.panel_closed.connect(func(): signal_received = true)
 	panel._on_close_pressed()
@@ -156,10 +156,10 @@ var signal_received = false
 	it(
 	"should emit content_changed signal",
 	func():
-var panel_6 = prepreprepreload("res://ui/components/panels/ModularInfoPanel.gd").new()
+var panel_6 = preload("res://ui/components/panels/ModularInfoPanel.gd").new()
 	panel.initialize_component()
 
-var signal_data = {}
+# FIXED: Orphaned code - var signal_data = {}
 	panel.content_changed.connect(
 	func(section, data): signal_data = {"section": section, "data": data}
 	)

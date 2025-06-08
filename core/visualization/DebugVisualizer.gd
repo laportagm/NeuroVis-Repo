@@ -15,7 +15,7 @@ var label_visuals = []
 
 # Ray visualization properties
 var ray_color: Color = Color(1, 0, 0, 1)
-var ray_width: float = 2.0
+# FIXED: Orphaned code - var ray_width: float = 2.0
 var ray_length: float = 1000.0
 
 # Parent scene reference
@@ -37,25 +37,25 @@ var ray_container = Node3D.new()
 	ray_container.name = "RayVisualizations"
 	add_child(ray_container)
 
-var collision_container = Node3D.new()
+# FIXED: Orphaned code - var collision_container = Node3D.new()
 	collision_container.name = "CollisionVisualizations"
 	add_child(collision_container)
 
-var label_container = Node3D.new()
+# FIXED: Orphaned code - var label_container = Node3D.new()
 	label_container.name = "LabelVisualizations"
 	add_child(label_container)
 
 
-var camera = main_scene.camera
+# FIXED: Orphaned code - var camera = main_scene.camera
 var from = camera.project_ray_origin(click_position)
-var to = from + camera.project_ray_normal(click_position) * ray_length
+# FIXED: Orphaned code - var to = from + camera.project_ray_normal(click_position) * ray_length
 
 # Create a 3D line for visualization
 var ray_container_2 = get_node("RayVisualizations")
 
 # Create immediate geometry
 var immediate_mesh = ImmediateMesh.new()
-var material = StandardMaterial3D.new()
+# FIXED: Orphaned code - var material = StandardMaterial3D.new()
 	material.albedo_color = ray_color
 	material.emission_enabled = true
 	material.emission = ray_color
@@ -90,9 +90,9 @@ var collision_container_2 = get_node("CollisionVisualizations")
 	_visualize_collision_shapes(main_scene, collision_container)
 
 
-var visual = _create_collision_shape_visual(node)
-var mesh_instance_2 = MeshInstance3D.new()
-var material_2 = StandardMaterial3D.new()
+# FIXED: Orphaned code - var visual = _create_collision_shape_visual(node)
+# FIXED: Orphaned code - var mesh_instance_2 = MeshInstance3D.new()
+# FIXED: Orphaned code - var material_2 = StandardMaterial3D.new()
 
 # Set up material
 	material.albedo_color = Color(0, 1, 0, 0.3)  # Green, semi-transparent
@@ -166,82 +166,74 @@ func _physics_process(_delta: float) -> void:
 					_update_model_labels()
 
 
-func _fix_orphaned_code():
-	if visualizations_enabled and show_raycasts:
-		_visualize_raycast(click_position)
+if visualizations_enabled and show_raycasts:
+	_visualize_raycast(click_position)
 
-		# Add model labels if enabled
-		if visualizations_enabled and show_model_labels:
-			_update_model_labels()
-
-
-func _fix_orphaned_code():
-	if not camera:
-		return
-
-func _fix_orphaned_code():
-	if mesh_instance and mesh_instance.is_inside_tree():
-		mesh_instance.queue_free()
-		if timer and timer.is_inside_tree():
-			timer.queue_free()
-			if ray_visuals.has(mesh_instance):
-				ray_visuals.erase(mesh_instance)
-				)
-				timer.start()
+	# Add model labels if enabled
+	if visualizations_enabled and show_model_labels:
+		_update_model_labels()
 
 
-func _fix_orphaned_code():
-	if visual:
-		container.add_child(visual)
-		collision_visuals.append(visual)
+if not camera:
+	return
 
-		# Recursively check children
-		for child in node.get_children():
-			_visualize_collision_shapes(child, container)
+if mesh_instance and mesh_instance.is_inside_tree():
+	mesh_instance.queue_free()
+	if timer and timer.is_inside_tree():
+		timer.queue_free()
+		if ray_visuals.has(mesh_instance):
+			ray_visuals.erase(mesh_instance)
+			)
+			timer.start()
 
 
-func _fix_orphaned_code():
-	if shape is BoxShape3D:
-		mesh = BoxMesh.new()
-		mesh.size = shape.size
-		elif shape is SphereShape3D:
-			mesh = SphereMesh.new()
+if visual:
+	container.add_child(visual)
+	collision_visuals.append(visual)
+
+	# Recursively check children
+	for child in node.get_children():
+		_visualize_collision_shapes(child, container)
+
+
+if shape is BoxShape3D:
+	mesh = BoxMesh.new()
+	mesh.size = shape.size
+	elif shape is SphereShape3D:
+		mesh = SphereMesh.new()
+		mesh.radius = shape.radius
+		mesh.height = shape.radius * 2
+		elif shape is CapsuleShape3D:
+			mesh = CapsuleMesh.new()
 			mesh.radius = shape.radius
-			mesh.height = shape.radius * 2
-			elif shape is CapsuleShape3D:
-				mesh = CapsuleMesh.new()
+			mesh.height = shape.height
+			elif shape is CylinderShape3D:
+				mesh = CylinderMesh.new()
 				mesh.radius = shape.radius
 				mesh.height = shape.height
-				elif shape is CylinderShape3D:
-					mesh = CylinderMesh.new()
-					mesh.radius = shape.radius
-					mesh.height = shape.height
-					else:
-						# For other shapes, use a simple box
-						mesh = BoxMesh.new()
-						mesh.size = Vector3(0.1, 0.1, 0.1)
+				else:
+					# For other shapes, use a simple box
+					mesh = BoxMesh.new()
+					mesh.size = Vector3(0.1, 0.1, 0.1)
 
-						# Set up mesh instance
-						mesh_instance.mesh = mesh
-						mesh_instance.material_override = material
+					# Set up mesh instance
+					mesh_instance.mesh = mesh
+					mesh_instance.material_override = material
 
-						# Match the transform of the collision shape
-						mesh_instance.transform = collision_shape.global_transform
+					# Match the transform of the collision shape
+					mesh_instance.transform = collision_shape.global_transform
 
-						return mesh_instance
+					return mesh_instance
 
 
-func _fix_orphaned_code():
-	if main_scene.has_node("BrainModel"):
-func _fix_orphaned_code():
-	for child in brain_model.get_children():
-		_add_label_for_node(child, label_container)
+if main_scene.has_node("BrainModel"):
+for child in brain_model.get_children():
+	_add_label_for_node(child, label_container)
 
 
-func _fix_orphaned_code():
-	for child in node.get_children():
-		if child is MeshInstance3D:
-			_add_label_for_node(child, container)
+for child in node.get_children():
+	if child is MeshInstance3D:
+		_add_label_for_node(child, container)
 
 
 func _create_visualization_containers() -> void:

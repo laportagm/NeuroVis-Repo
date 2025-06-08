@@ -13,8 +13,8 @@ signal search_performed(query: String)
 signal learning_mode_requested(model_name: String)
 
 
-var model_cards: Dictionary = {}
-var filtered_models: Array = []
+# FIXED: Orphaned code - var model_cards: Dictionary = {}
+# FIXED: Orphaned code - var filtered_models: Array = []
 var current_filter: String = "all"
 var current_view_mode: String = "cards"  # "cards" or "list"
 var search_query: String = ""
@@ -93,7 +93,7 @@ var main_vbox = VBoxContainer.new()
 	_create_enhanced_footer(main_vbox)
 
 
-var title_bar = HBoxContainer.new()
+# FIXED: Orphaned code - var title_bar = HBoxContainer.new()
 	title_bar.name = "TitleBar"
 	title_bar.add_theme_constant_override("separation", UIThemeManager.MARGIN_MEDIUM)
 	header_container.add_child(title_bar)
@@ -130,7 +130,7 @@ var view_controls = HBoxContainer.new()
 	view_controls.add_child(view_mode_button)
 
 
-var category_scroll = ScrollContainer.new()
+# FIXED: Orphaned code - var category_scroll = ScrollContainer.new()
 	category_scroll.name = "CategoryScroll"
 	category_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	category_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
@@ -142,7 +142,7 @@ var category_scroll = ScrollContainer.new()
 	category_scroll.add_child(category_container)
 
 
-var separator = HSeparator.new()
+# FIXED: Orphaned code - var separator = HSeparator.new()
 	parent.add_child(separator)
 
 	footer_container = HBoxContainer.new()
@@ -165,14 +165,14 @@ var separator = HSeparator.new()
 	footer_container.add_child(reset_button)
 
 
-var title_2 = header_container.find_child("MainTitle")
-var subtitle_2 = header_container.find_child("Subtitle")
-var category_data = model_categories[category_id]
+# FIXED: Orphaned code - var title_2 = header_container.find_child("MainTitle")
+# FIXED: Orphaned code - var subtitle_2 = header_container.find_child("Subtitle")
+# FIXED: Orphaned code - var category_data = model_categories[category_id]
 var chip = _create_category_chip(category_id, category_data)
 	category_container.add_child(chip)
 
 
-var chip_2 = Button.new()
+# FIXED: Orphaned code - var chip_2 = Button.new()
 	chip.name = "CategoryChip_" + category_id
 	chip.text = category_data["icon"] + " " + category_data["name"]
 	chip.toggle_mode = true
@@ -187,7 +187,7 @@ var accent_color = (
 	# Connect selection
 	chip.toggled.connect(func(pressed: bool): _on_category_selected(category_id, pressed))
 
-var model_name = model_names[i]
+# FIXED: Orphaned code - var model_name = model_names[i]
 var card = _create_enhanced_model_card(model_name, i)
 	models_container.add_child(card)
 	model_cards[model_name] = card
@@ -204,7 +204,7 @@ var card = _create_enhanced_model_card(model_name, i)
 	_apply_current_filter()
 
 
-var card_2 = PanelContainer.new()
+# FIXED: Orphaned code - var card_2 = PanelContainer.new()
 	card.name = "ModelCard_" + model_name
 
 	# Get model metadata
@@ -223,7 +223,7 @@ var metadata = model_metadata.get(
 var card_style = UIThemeManager.create_educational_card_style("info")
 	card.add_theme_stylebox_override("panel", card_style)
 
-var main_container = VBoxContainer.new()
+# FIXED: Orphaned code - var main_container = VBoxContainer.new()
 	main_container.add_theme_constant_override("separation", UIThemeManager.MARGIN_MEDIUM)
 	card.add_child(main_container)
 
@@ -247,7 +247,7 @@ var name_container = HBoxContainer.new()
 var category_data_2 = model_categories.get(
 	metadata.get("category", "all"), model_categories["all"]
 	)
-var icon_label = Label.new()
+# FIXED: Orphaned code - var icon_label = Label.new()
 	icon_label.text = category_data["icon"]
 	icon_label.custom_minimum_size = Vector2(24, 24)
 	UIThemeManager.apply_modern_label(
@@ -281,7 +281,7 @@ var status_label = Label.new()
 
 	# Difficulty badge
 var difficulty = metadata.get("difficulty", "beginner")
-var difficulty_label = Label.new()
+# FIXED: Orphaned code - var difficulty_label = Label.new()
 	difficulty_label.text = _get_difficulty_icon(difficulty) + " " + difficulty.capitalize()
 	UIThemeManager.apply_modern_label(
 	difficulty_label,
@@ -301,7 +301,7 @@ var toggle = CheckButton.new()
 
 	# Description
 var description = metadata.get("description", "Brain structure model")
-var desc_label = Label.new()
+# FIXED: Orphaned code - var desc_label = Label.new()
 	desc_label.text = description
 	desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc_label.custom_minimum_size = Vector2(0, 40)
@@ -337,7 +337,7 @@ var focus_button = Button.new()
 	focus_button.pressed.connect(_on_focus_pressed.bind(model_name))
 
 
-var container = HBoxContainer.new()
+# FIXED: Orphaned code - var container = HBoxContainer.new()
 	container.add_theme_constant_override("separation", UIThemeManager.MARGIN_MEDIUM)
 	card.add_child(container)
 
@@ -345,7 +345,7 @@ var container = HBoxContainer.new()
 var category_data_3 = model_categories.get(
 	metadata.get("category", "all"), model_categories["all"]
 	)
-var icon_label_2 = Label.new()
+# FIXED: Orphaned code - var icon_label_2 = Label.new()
 	icon_label.text = category_data["icon"]
 	icon_label.custom_minimum_size = Vector2(32, 32)
 	UIThemeManager.apply_modern_label(
@@ -387,16 +387,16 @@ var toggle_2 = CheckButton.new()
 	toggle.toggled.connect(_on_model_toggled.bind(model_name, status_label))
 
 
-var card_3 = model_cards[model_name]
+# FIXED: Orphaned code - var card_3 = model_cards[model_name]
 var metadata_2 = card.get_meta("metadata", {})
 
-var should_show = _should_show_model(model_name, metadata)
+# FIXED: Orphaned code - var should_show = _should_show_model(model_name, metadata)
 
-var model_category = metadata.get("category", "all")
-var search_lower = search_query.to_lower()
-var model_lower = model_name.to_lower()
-var description_lower = metadata.get("description", "").to_lower()
-var keywords = metadata.get("keywords", [])
+# FIXED: Orphaned code - var model_category = metadata.get("category", "all")
+# FIXED: Orphaned code - var search_lower = search_query.to_lower()
+# FIXED: Orphaned code - var model_lower = model_name.to_lower()
+# FIXED: Orphaned code - var description_lower = metadata.get("description", "").to_lower()
+# FIXED: Orphaned code - var keywords = metadata.get("keywords", [])
 
 # Check model name
 var new_color = UIThemeManager.ACCENT_GREEN if pressed else UIThemeManager.TEXT_DISABLED
@@ -404,27 +404,27 @@ var new_color = UIThemeManager.ACCENT_GREEN if pressed else UIThemeManager.TEXT_
 
 	# Update counter
 var model_names = model_cards.keys()
-var model_states = {}
+# FIXED: Orphaned code - var model_states = {}
 
 # Save current states
 var card_4 = model_cards[model_name]
 var toggle_3 = card.find_child("ModelToggle")
-var model_name_2 = model_names[i]
+# FIXED: Orphaned code - var model_name_2 = model_names[i]
 var card_5 = _create_enhanced_model_card(model_name, i)
 	models_container.add_child(card)
 	model_cards[model_name] = card
 
 	# Restore state
 var toggle_4 = card.find_child("ModelToggle")
-var card_6 = model_cards[model_name]
+# FIXED: Orphaned code - var card_6 = model_cards[model_name]
 var toggle_5 = card.find_child("ModelToggle")
-var status_label_3 = card.find_child("StatusLabel")
+# FIXED: Orphaned code - var status_label_3 = card.find_child("StatusLabel")
 
-var card_7 = model_cards[model_name]
+# FIXED: Orphaned code - var card_7 = model_cards[model_name]
 var toggle_6 = card.find_child("ModelToggle")
-var status_label_4 = card.find_child("StatusLabel")
+# FIXED: Orphaned code - var status_label_4 = card.find_child("StatusLabel")
 
-var status_text = "👁️ Visible" if visibility else "👁️‍🗨️ Hidden"
+# FIXED: Orphaned code - var status_text = "👁️ Visible" if visibility else "👁️‍🗨️ Hidden"
 var status_color = (
 	UIThemeManager.ACCENT_GREEN if visibility else UIThemeManager.TEXT_DISABLED
 	)
@@ -434,18 +434,18 @@ var status_color = (
 	)
 
 
-var visible = []
+# FIXED: Orphaned code - var visible = []
 var card_8 = model_cards[model_name]
 var toggle_7 = card.find_child("ModelToggle")
-var recommendations = []
+# FIXED: Orphaned code - var recommendations = []
 var sorted_models = []
 
 # Sort by difficulty
 var card_9 = model_cards[model_name]
 var metadata_3 = card.get_meta("metadata", {})
-var difficulty_2 = metadata.get("difficulty", "beginner")
+# FIXED: Orphaned code - var difficulty_2 = metadata.get("difficulty", "beginner")
 
-var priority = 1 if difficulty == "beginner" else 2 if difficulty == "intermediate" else 3
+# FIXED: Orphaned code - var priority = 1 if difficulty == "beginner" else 2 if difficulty == "intermediate" else 3
 	sorted_models.append({"name": model_name, "priority": priority, "metadata": metadata})
 
 	sorted_models.sort_custom(func(a, b): return a["priority"] < b["priority"])
@@ -531,170 +531,152 @@ func dispose() -> void:
 	_clear_models()
 
 
-func _fix_orphaned_code():
-	if title:
-		UIThemeManager.apply_modern_label(
-		title, UIThemeManager.FONT_SIZE_H2, UIThemeManager.TEXT_PRIMARY, "heading"
+if title:
+	UIThemeManager.apply_modern_label(
+	title, UIThemeManager.FONT_SIZE_H2, UIThemeManager.TEXT_PRIMARY, "heading"
+	)
+
+if subtitle:
+	UIThemeManager.apply_modern_label(
+	subtitle, UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.TEXT_SECONDARY, "caption"
+	)
+
+	# Button styling
+	UIThemeManager.apply_modern_button(view_mode_button, UIThemeManager.ACCENT_BLUE, "icon")
+	UIThemeManager.apply_modern_button(filter_button, UIThemeManager.ACCENT_TEAL, "icon")
+	UIThemeManager.apply_modern_button(reset_button, UIThemeManager.ACCENT_ORANGE, "small")
+
+	# Search field styling
+	UIThemeManager.apply_search_field_styling(search_field, "Search brain models, regions...")
+
+	# Footer styling
+	UIThemeManager.apply_modern_label(
+	visibility_counter, UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.TEXT_SECONDARY
+	)
+
+
+return chip
+
+
+if current_view_mode == "cards":
+	_create_card_view_content(card, model_name, metadata)
+	else:
+		_create_list_view_content(card, model_name, metadata)
+
+		# Store metadata in card
+		card.set_meta("model_name", model_name)
+		card.set_meta("metadata", metadata)
+		card.set_meta("visible", true)
+
+		# Add interactive effects
+		_add_enhanced_card_interactions(card)
+
+		return card
+
+
+if should_show != card.visible:
+	if should_show:
+		UIThemeManager.animate_entrance(
+		card, 0.0, UIThemeManager.ANIM_DURATION_FAST, "fade_scale"
 		)
-
-func _fix_orphaned_code():
-	if subtitle:
-		UIThemeManager.apply_modern_label(
-		subtitle, UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.TEXT_SECONDARY, "caption"
-		)
-
-		# Button styling
-		UIThemeManager.apply_modern_button(view_mode_button, UIThemeManager.ACCENT_BLUE, "icon")
-		UIThemeManager.apply_modern_button(filter_button, UIThemeManager.ACCENT_TEAL, "icon")
-		UIThemeManager.apply_modern_button(reset_button, UIThemeManager.ACCENT_ORANGE, "small")
-
-		# Search field styling
-		UIThemeManager.apply_search_field_styling(search_field, "Search brain models, regions...")
-
-		# Footer styling
-		UIThemeManager.apply_modern_label(
-		visibility_counter, UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.TEXT_SECONDARY
-		)
-
-
-func _fix_orphaned_code():
-	return chip
-
-
-func _fix_orphaned_code():
-	if current_view_mode == "cards":
-		_create_card_view_content(card, model_name, metadata)
 		else:
-			_create_list_view_content(card, model_name, metadata)
-
-			# Store metadata in card
-			card.set_meta("model_name", model_name)
-			card.set_meta("metadata", metadata)
-			card.set_meta("visible", true)
-
-			# Add interactive effects
-			_add_enhanced_card_interactions(card)
-
-			return card
+			UIThemeManager.animate_exit(card, UIThemeManager.ANIM_DURATION_FAST, "fade_scale")
 
 
-func _fix_orphaned_code():
-	if should_show != card.visible:
-		if should_show:
-			UIThemeManager.animate_entrance(
-			card, 0.0, UIThemeManager.ANIM_DURATION_FAST, "fade_scale"
-			)
-			else:
-				UIThemeManager.animate_exit(card, UIThemeManager.ANIM_DURATION_FAST, "fade_scale")
+if model_category != current_filter:
+	return false
 
+	# Search filter
+	if search_query != "":
+if model_lower.contains(search_lower):
+	return true
 
-func _fix_orphaned_code():
-	if model_category != current_filter:
-		return false
-
-		# Search filter
-		if search_query != "":
-func _fix_orphaned_code():
-	if model_lower.contains(search_lower):
+	# Check description
+	if description_lower.contains(search_lower):
 		return true
 
-		# Check description
-		if description_lower.contains(search_lower):
-			return true
+		# Check keywords
+		for keyword in keywords:
+			if str(keyword).to_lower().contains(search_lower):
+				return true
 
-			# Check keywords
-			for keyword in keywords:
-				if str(keyword).to_lower().contains(search_lower):
-					return true
+				return false
 
-					return false
-
-					return true
+				return true
 
 
-func _fix_orphaned_code():
-	if pressed:
-		visible_models += 1
-		else:
-			visible_models -= 1
-			_update_visibility_counter()
-
-			model_visibility_changed.emit(model_name, pressed)
-
-
-func _fix_orphaned_code():
-	for model_name in model_names:
-func _fix_orphaned_code():
-	if toggle:
-		model_states[model_name] = toggle.button_pressed
-
-		# Recreate cards
-		_clear_models()
-
-		for i in range(model_names.size()):
-func _fix_orphaned_code():
-	if model_states.has(model_name):
-func _fix_orphaned_code():
-	if toggle:
-		toggle.button_pressed = model_states[model_name]
-
-		# Animate entrance
-		UIThemeManager.animate_entrance(
-		card, i * 0.05, UIThemeManager.ANIM_DURATION_FAST, "fade_scale"
-		)
-
-
-func _fix_orphaned_code():
-	if toggle and status_label:
-		toggle.set_block_signals(true)
-		toggle.button_pressed = true
-		toggle.set_block_signals(false)
-
-		# Update status
-		UIThemeManager.animate_fade_text_change(status_label, "👁️ Visible")
-		UIThemeManager.apply_modern_label(
-		status_label, UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.ACCENT_GREEN
-		)
-
-		visible_models = total_models
+if pressed:
+	visible_models += 1
+	else:
+		visible_models -= 1
 		_update_visibility_counter()
 
-		# Animate reset feedback
-		UIThemeManager.animate_button_press(reset_button, UIThemeManager.ACCENT_ORANGE)
+		model_visibility_changed.emit(model_name, pressed)
 
 
-		# Public interface enhancements
-func _fix_orphaned_code():
-	if toggle and status_label:
-		toggle.set_block_signals(true)
-		toggle.button_pressed = visibility
-		toggle.set_block_signals(false)
+for model_name in model_names:
+if toggle:
+	model_states[model_name] = toggle.button_pressed
 
-		# Update status
-func _fix_orphaned_code():
-	for model_name in model_cards:
-func _fix_orphaned_code():
-	if toggle and toggle.button_pressed:
-		visible.append(model_name)
-		return visible
+	# Recreate cards
+	_clear_models()
 
+	for i in range(model_names.size()):
+if model_states.has(model_name):
+if toggle:
+	toggle.button_pressed = model_states[model_name]
 
-func _fix_orphaned_code():
-	for model_name in model_cards:
-func _fix_orphaned_code():
-	for item in sorted_models:
-		recommendations.append(
-		{
-		"model_name": item["name"],
-		"difficulty": item["metadata"].get("difficulty", "beginner"),
-		"learning_objectives": item["metadata"].get("learning_objectives", [])
-		}
-		)
-
-		return recommendations
+	# Animate entrance
+	UIThemeManager.animate_entrance(
+	card, i * 0.05, UIThemeManager.ANIM_DURATION_FAST, "fade_scale"
+	)
 
 
-		# Cleanup
+if toggle and status_label:
+	toggle.set_block_signals(true)
+	toggle.button_pressed = true
+	toggle.set_block_signals(false)
+
+	# Update status
+	UIThemeManager.animate_fade_text_change(status_label, "👁️ Visible")
+	UIThemeManager.apply_modern_label(
+	status_label, UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.ACCENT_GREEN
+	)
+
+	visible_models = total_models
+	_update_visibility_counter()
+
+	# Animate reset feedback
+	UIThemeManager.animate_button_press(reset_button, UIThemeManager.ACCENT_ORANGE)
+
+
+	# Public interface enhancements
+if toggle and status_label:
+	toggle.set_block_signals(true)
+	toggle.button_pressed = visibility
+	toggle.set_block_signals(false)
+
+	# Update status
+for model_name in model_cards:
+if toggle and toggle.button_pressed:
+	visible.append(model_name)
+	return visible
+
+
+for model_name in model_cards:
+for item in sorted_models:
+	recommendations.append(
+	{
+	"model_name": item["name"],
+	"difficulty": item["metadata"].get("difficulty", "beginner"),
+	"learning_objectives": item["metadata"].get("learning_objectives", [])
+	}
+	)
+
+	return recommendations
+
+
+	# Cleanup
 
 func _create_enhanced_ui_structure() -> void:
 	"""Create sophisticated UI structure for model management"""

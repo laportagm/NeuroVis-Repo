@@ -95,7 +95,7 @@ const ERROR_MESSAGES = {
 
 var error_queue: Array = []
 var active_errors: Dictionary = {}
-var error_log: Array = []
+# FIXED: Orphaned code - var error_log: Array = []
 var is_showing_error: bool = false
 
 # === ERROR NOTIFICATION UI ===
@@ -106,7 +106,7 @@ var is_headless_mode: bool = false
 
 
 var FeatureFlagsRef = Engine.get_singleton("FeatureFlags")
-var container = VBoxContainer.new()
+# FIXED: Orphaned code - var container = VBoxContainer.new()
 	container.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	container.position = Vector2(-20, 20)
 	container.add_theme_constant_override("separation", 8)
@@ -115,7 +115,7 @@ var container = VBoxContainer.new()
 
 	# === PUBLIC API ===
 var error_id = _generate_error_id()
-var error_data = _create_error_data(error_type, error_key, context)
+# FIXED: Orphaned code - var error_data = _create_error_data(error_type, error_key, context)
 	error_data.id = error_id
 
 	# Log the error
@@ -131,7 +131,7 @@ var error_data = _create_error_data(error_type, error_key, context)
 	# Emit signal
 	error_occurred.emit(error_data)
 
-var filtered = []
+# FIXED: Orphaned code - var filtered = []
 var error_template = ERROR_MESSAGES.get(
 	error_key,
 	{
@@ -145,7 +145,7 @@ var error_template = ERROR_MESSAGES.get(
 	# Format message with context
 var formatted_message = error_template.message
 var notification = _create_notification_ui(error_data)
-var tween = create_tween()
+# FIXED: Orphaned code - var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(notification, "modulate:a", 1.0, 0.3)
 	(
@@ -156,7 +156,7 @@ var tween = create_tween()
 	)
 
 	# Auto-dismiss after delay (except critical errors)
-var notification_2 = ErrorNotificationScript.new()
+# FIXED: Orphaned code - var notification_2 = ErrorNotificationScript.new()
 
 # Use severity-appropriate notification type
 var notification_type = ErrorNotificationScript.NotificationType.ERROR
@@ -181,7 +181,7 @@ ErrorSeverity.INFO:
 			notification.show_notification(error_data.message, notification_type)
 			notification.set_meta("error_id", error_data.id)
 
-var panel = PanelContainer.new()
+# FIXED: Orphaned code - var panel = PanelContainer.new()
 	panel.custom_minimum_size = Vector2(350, 0)
 
 	# Apply styling based on severity
@@ -205,7 +205,7 @@ var content = VBoxContainer.new()
 	# Header with title and close button
 var header = HBoxContainer.new()
 
-var title = Label.new()
+# FIXED: Orphaned code - var title = Label.new()
 	title.text = error_data.title
 	title.add_theme_font_size_override("font_size", 16)
 	# Safely load font or use default
@@ -236,7 +236,7 @@ var fallback_btn = Button.new()
 	fallback_btn.pressed.connect(_on_action_pressed.bind(error_data.id, "fallback", panel))
 	actions.add_child(fallback_btn)
 
-var action_btn = Button.new()
+# FIXED: Orphaned code - var action_btn = Button.new()
 	action_btn.text = error_data.action
 	action_btn.pressed.connect(_on_action_pressed.bind(error_data.id, "primary", panel))
 	actions.add_child(action_btn)
@@ -246,18 +246,18 @@ var action_btn = Button.new()
 	panel.add_child(content)
 	panel.set_meta("error_id", error_data.id)
 
-var error_data_2 = active_errors[error_id]
+# FIXED: Orphaned code - var error_data_2 = active_errors[error_id]
 	_handle_error_action(error_data, action_type)
 
 	_dismiss_notification(error_id, panel)
 
 
-var model_name = error_data.context.get("model_name", "")
+# FIXED: Orphaned code - var model_name = error_data.context.get("model_name", "")
 	get_tree().call_group("model_loader", "retry_load", model_name)
 
 
-var panels = notification_container.get_child(0).get_children()
-var tween_2 = create_tween()
+# FIXED: Orphaned code - var panels = notification_container.get_child(0).get_children()
+# FIXED: Orphaned code - var tween_2 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.2)
 	tween.tween_property(panel, "position:x", panel.position.x + 50, 0.2)
@@ -269,7 +269,7 @@ var tween_2 = create_tween()
 	# === ERROR LOGGING ===
 var severity_str = ["INFO", "WARNING", "ERROR", "CRITICAL"][error_data.severity]
 var log_file = FileAccess.open("user://error_log.txt", FileAccess.WRITE_READ)
-var log_entry = (
+# FIXED: Orphaned code - var log_entry = (
 	"%s [%s] %s: %s\n"
 	% [
 	Time.get_datetime_string_from_system(),
@@ -326,110 +326,95 @@ func clear_all_errors() -> void:
 
 	# === ERROR CREATION ===
 
-func _fix_orphaned_code():
-	if FeatureFlagsRef.call("is_core_development_mode"):
-		print("[ErrorHandler] Core development mode - using simplified error handling")
-		is_headless_mode = true  # Use simple logging only
-		return
+if FeatureFlagsRef.call("is_core_development_mode"):
+	print("[ErrorHandler] Core development mode - using simplified error handling")
+	is_headless_mode = true  # Use simple logging only
+	return
 
-		# Safely load the ErrorNotificationScript
-		if ResourceLoader.exists("res://ui/components/ErrorNotification.gd"):
-			ErrorNotificationScript = preprepreload("res://ui/components/ErrorNotification.gd")
-			print("[ErrorHandler] Successfully loaded ErrorNotification script")
-			else:
-				push_warning("[ErrorHandler] Could not load ErrorNotification script")
+	# Safely load the ErrorNotificationScript
+	if ResourceLoader.exists("res://ui/components/ErrorNotification.gd"):
+		ErrorNotificationScript = preload("res://ui/components/ErrorNotification.gd")
+		print("[ErrorHandler] Successfully loaded ErrorNotification script")
+		else:
+			push_warning("[ErrorHandler] Could not load ErrorNotification script")
 
-				# Create notification container
-				notification_container = CanvasLayer.new()
-				notification_container.name = "ErrorNotificationLayer"
-				notification_container.layer = 100
-				add_child(notification_container)
+			# Create notification container
+			notification_container = CanvasLayer.new()
+			notification_container.name = "ErrorNotificationLayer"
+			notification_container.layer = 100
+			add_child(notification_container)
 
-				# Create container for notifications
-func _fix_orphaned_code():
-	return error_id
+			# Create container for notifications
+return error_id
 
 
-func _fix_orphaned_code():
-	for error in active_errors.values():
-		if error.type == error_type:
-			filtered.append(error)
-			return filtered
+for error in active_errors.values():
+	if error.type == error_type:
+		filtered.append(error)
+		return filtered
 
 
-func _fix_orphaned_code():
-	for key in context:
-		formatted_message = formatted_message.replace("{" + key + "}", str(context[key]))
+for key in context:
+	formatted_message = formatted_message.replace("{" + key + "}", str(context[key]))
 
-		return {
-		"type": error_type,
-		"key": error_key,
-		"severity": _determine_severity(error_type, error_key),
-		"title": error_template.title,
-		"message": formatted_message,
-		"action": error_template.action,
-		"fallback": error_template.fallback,
-		"context": context,
-		"timestamp": Time.get_ticks_msec(),
-		"stack_trace": get_stack() if OS.is_debug_build() else []
-		}
-
-
-func _fix_orphaned_code():
-	if not notification:
-		push_warning("[ErrorHandler] Failed to create notification UI")
-		return
-
-		notification_container.get_child(0).add_child(notification)
-
-		# Animate entrance
-		notification.modulate.a = 0
-		notification.position.x += 100
-
-func _fix_orphaned_code():
-	if error_data.severity != ErrorSeverity.CRITICAL:
-		tween.tween_callback(_auto_dismiss_error.bind(error_data.id)).set_delay(5.0)
+	return {
+	"type": error_type,
+	"key": error_key,
+	"severity": _determine_severity(error_type, error_key),
+	"title": error_template.title,
+	"message": formatted_message,
+	"action": error_template.action,
+	"fallback": error_template.fallback,
+	"context": context,
+	"timestamp": Time.get_ticks_msec(),
+	"stack_trace": get_stack() if OS.is_debug_build() else []
+	}
 
 
-func _fix_orphaned_code():
-	return notification
+if not notification:
+	push_warning("[ErrorHandler] Failed to create notification UI")
+	return
 
-	# Fallback to basic UI if ErrorNotificationScript is not available
-func _fix_orphaned_code():
-	if ResourceLoader.exists(font_path):
-		title.add_theme_font_override("font", load(font_path))
-		header.add_child(title)
+	notification_container.get_child(0).add_child(notification)
 
-		header.add_spacer(false)
+	# Animate entrance
+	notification.modulate.a = 0
+	notification.position.x += 100
 
-func _fix_orphaned_code():
-	if error_data.action or error_data.fallback:
-func _fix_orphaned_code():
-	if error_data.fallback:
-func _fix_orphaned_code():
-	if error_data.action:
-func _fix_orphaned_code():
-	return panel
+if error_data.severity != ErrorSeverity.CRITICAL:
+	tween.tween_callback(_auto_dismiss_error.bind(error_data.id)).set_delay(5.0)
 
 
-func _fix_orphaned_code():
-	for panel in panels:
-		if panel.has_meta("error_id") and panel.get_meta("error_id") == error_id:
-			_dismiss_notification(error_id, panel)
-			break
+return notification
+
+# Fallback to basic UI if ErrorNotificationScript is not available
+if ResourceLoader.exists(font_path):
+	title.add_theme_font_override("font", load(font_path))
+	header.add_child(title)
+
+	header.add_spacer(false)
+
+if error_data.action or error_data.fallback:
+if error_data.fallback:
+if error_data.action:
+return panel
 
 
-func _fix_orphaned_code():
-	print("[%s] %s: %s" % [severity_str, error_data.title, error_data.message])
-
-	# File logging in debug builds
-	if OS.is_debug_build():
-		_write_error_log(error_data)
+for panel in panels:
+	if panel.has_meta("error_id") and panel.get_meta("error_id") == error_id:
+		_dismiss_notification(error_id, panel)
+		break
 
 
-func _fix_orphaned_code():
-	if log_file:
-		log_file.seek_end()
+print("[%s] %s: %s" % [severity_str, error_data.title, error_data.message])
+
+# File logging in debug builds
+if OS.is_debug_build():
+	_write_error_log(error_data)
+
+
+if log_file:
+	log_file.seek_end()
 func _create_error_data(
 	error_type: ErrorType, error_key: String, context: Dictionary
 	) -> Dictionary:

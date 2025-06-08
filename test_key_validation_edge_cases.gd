@@ -32,7 +32,7 @@ false,
 ["  AIza12345678901234567890123456789012345  ", true, "Key format looks good!"],  # Valid with spaces (should be trimmed)
 ["AIza-1234567890123456789012345678901234", true, "Key format looks good!"],  # With hyphen
 ["AIza_1234567890123456789012345678901234", true, "Key format looks good!"],  # With underscore
-["AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz123456789", true, "Key format looks good!"],  # Real-looking key
+["AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz123456789", true, "Key format looks good!"],  # Real-looking key  # pragma: allowlist secret
 ]
 
 var test_case = test_cases[i]
@@ -56,55 +56,51 @@ func _ready() -> void:
 
 	# Create and show the dialog
 
-func _fix_orphaned_code():
-	print("[TEST] Testing ", test_cases.size(), " edge cases...")
-	print("")
+print("[TEST] Testing ", test_cases.size(), " edge cases...")
+print("")
 
-	for i in range(test_cases.size()):
-func _fix_orphaned_code():
-	print("[TEST] Test case ", i + 1, ": '", input, "'")
-	print("[TEST] Input length: ", input.length(), " chars")
+for i in range(test_cases.size()):
+print("[TEST] Test case ", i + 1, ": '", input, "'")
+print("[TEST] Input length: ", input.length(), " chars")
 
-	# Set input and trigger validation
-	dialog.api_key_input.text = input
-	dialog._on_key_input_changed(input)
+# Set input and trigger validation
+dialog.api_key_input.text = input
+dialog._on_key_input_changed(input)
 
-	# Check results
-func _fix_orphaned_code():
-	print("[TEST] Button enabled: ", button_enabled, " (expected: ", expected_valid, ")")
-	print("[TEST] Status text: '", status_text, "'")
-	print("[TEST] Expected: '", expected_message, "'")
+# Check results
+print("[TEST] Button enabled: ", button_enabled, " (expected: ", expected_valid, ")")
+print("[TEST] Status text: '", status_text, "'")
+print("[TEST] Expected: '", expected_message, "'")
 
-	if button_enabled == expected_valid:
-		print("[TEST] ✓ Validation state correct")
-		else:
-			print("[TEST] ✗ Validation state INCORRECT!")
+if button_enabled == expected_valid:
+	print("[TEST] ✓ Validation state correct")
+	else:
+		print("[TEST] ✗ Validation state INCORRECT!")
 
-			if status_text == expected_message:
-				print("[TEST] ✓ Status message correct")
-				else:
-					print("[TEST] ✗ Status message INCORRECT!")
+		if status_text == expected_message:
+			print("[TEST] ✓ Status message correct")
+			else:
+				print("[TEST] ✗ Status message INCORRECT!")
 
-					print("")
-					await get_tree().create_timer(0.5).timeout
+				print("")
+				await get_tree().create_timer(0.5).timeout
 
-					# Test paste simulation
-					print("[TEST] Testing paste simulation...")
-					dialog.api_key_input.text = ""
-					await get_tree().create_timer(0.5).timeout
+				# Test paste simulation
+				print("[TEST] Testing paste simulation...")
+				dialog.api_key_input.text = ""
+				await get_tree().create_timer(0.5).timeout
 
-					# Simulate paste event
-func _fix_orphaned_code():
-	print("[TEST] Simulated Ctrl+V paste event")
+				# Simulate paste event
+print("[TEST] Simulated Ctrl+V paste event")
 
-	# Now simulate actual paste by setting text
-	dialog.api_key_input.text = "AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz123456789"
-	dialog._on_key_input_changed(dialog.api_key_input.text)
-	print("[TEST] Pasted valid key")
+# Now simulate actual paste by setting text
+dialog.api_key_input.text = "AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz123456789"  # pragma: allowlist secret
+dialog._on_key_input_changed(dialog.api_key_input.text)
+print("[TEST] Pasted valid key")
 
-	await get_tree().create_timer(2.0).timeout
+await get_tree().create_timer(2.0).timeout
 
-	# Cleanup
-	dialog.queue_free()
-	print("\n[TEST] === Key Validation Edge Cases Test Complete ===")
-	queue_free()
+# Cleanup
+dialog.queue_free()
+print("\n[TEST] === Key Validation Edge Cases Test Complete ===")
+queue_free()

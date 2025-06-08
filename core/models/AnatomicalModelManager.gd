@@ -56,29 +56,29 @@ const LOD_BIAS: float = 1.0
 # Temporarily disable LOD system while debugging
 
 var loaded_scene = load(model_path)
-var model_instance = loaded_scene.instantiate()
-var scale_factor = ANATOMICAL_SCALE * default_model_scale
+# FIXED: Orphaned code - var model_instance = loaded_scene.instantiate()
+# FIXED: Orphaned code - var scale_factor = ANATOMICAL_SCALE * default_model_scale
 model.scale = Vector3.ONE * scale_factor
 
 # Center the model at origin (important for rotation)
 _center_model_at_origin(model)
 
-var material_count = 0
+# FIXED: Orphaned code - var material_count = 0
 var meshes = _find_all_mesh_instances(model)
 
-var original_mat = mesh.get_surface_override_material(i)
-var enhanced_mat = _create_enhanced_material(original_mat)
+# FIXED: Orphaned code - var original_mat = mesh.get_surface_override_material(i)
+# FIXED: Orphaned code - var enhanced_mat = _create_enhanced_material(original_mat)
 mesh.set_surface_override_material(i, enhanced_mat)
 material_count += 1
 
 materials_enhanced.emit(model.name, material_count)
-var meshes_2 = _find_all_mesh_instances(model)
-var lod_parent = Node3D.new()
+# FIXED: Orphaned code - var meshes_2 = _find_all_mesh_instances(model)
+# FIXED: Orphaned code - var lod_parent = Node3D.new()
 lod_parent.name = model.name + "_LOD"
 
 # Get model's parent before modifying
 var original_parent = model.get_parent()
-var original_transform = model.transform
+# FIXED: Orphaned code - var original_transform = model.transform
 
 # Setup LOD levels
 var lod_node = Node3D.new()
@@ -86,7 +86,7 @@ lod_node.name = "LOD_" + str(i)
 
 # Clone meshes for this LOD level
 var lod_mesh = _create_lod_mesh(mesh, i)
-var material = StandardMaterial3D.new()
+# FIXED: Orphaned code - var material = StandardMaterial3D.new()
 
 # Base material properties
 material.albedo_color = _get_structure_color(structure_name)
@@ -95,14 +95,14 @@ material.metallic = 0.0
 
 # Enable subsurface scattering for organic look
 var aabb = _calculate_model_aabb(model)
-var center_offset = aabb.get_center()
+# FIXED: Orphaned code - var center_offset = aabb.get_center()
 
 # Offset all child meshes
 var meshes_3 = _find_all_mesh_instances(model)
-var combined_aabb = AABB()
-var meshes_4 = _find_all_mesh_instances(model)
+# FIXED: Orphaned code - var combined_aabb = AABB()
+# FIXED: Orphaned code - var meshes_4 = _find_all_mesh_instances(model)
 
-var mesh_instance = meshes[i]
+# FIXED: Orphaned code - var mesh_instance = meshes[i]
 var mesh_aabb = mesh_instance.mesh.get_aabb()
 mesh_aabb = mesh_instance.transform * mesh_aabb
 
@@ -133,7 +133,7 @@ var color_map = {
 # Find best match
 var lower_name = structure_name.to_lower()
 
-var _enable_lod_override: bool = false
+# FIXED: Orphaned code - var _enable_lod_override: bool = false
 
 # === PRIVATE VARIABLES ===
 var _loaded_models: Dictionary = {}  # model_path: Node3D
@@ -198,195 +198,175 @@ func setup_lod_system(model: Node3D) -> void:
 func get_structure_material(structure_name: String) -> StandardMaterial3D:
 	"""Create structure-specific materials for better differentiation"""
 
-func _fix_orphaned_code():
-	if not loaded_scene:
-		push_error("[AnatomicalModelManager] Failed to load model: " + model_path)
-		return null
+if not loaded_scene:
+	push_error("[AnatomicalModelManager] Failed to load model: " + model_path)
+	return null
 
-		# Emit progress update
-		loading_progress.emit(model_path.get_file().get_basename(), 0.5)
+	# Emit progress update
+	loading_progress.emit(model_path.get_file().get_basename(), 0.5)
 
-func _fix_orphaned_code():
-	if not model_instance is Node3D:
-		push_error("[AnatomicalModelManager] Loaded model is not a Node3D")
-		model_instance.queue_free()
-		return null
+if not model_instance is Node3D:
+	push_error("[AnatomicalModelManager] Loaded model is not a Node3D")
+	model_instance.queue_free()
+	return null
 
-		# Configure the model
-		_configure_anatomical_model(model_instance, model_path)
+	# Configure the model
+	_configure_anatomical_model(model_instance, model_path)
 
-		# Add to parent if provided
-		if parent_node:
-			parent_node.add_child(model_instance)
+	# Add to parent if provided
+	if parent_node:
+		parent_node.add_child(model_instance)
 
-			# Cache the loaded model
-			_loaded_models[model_path] = model_instance
+		# Cache the loaded model
+		_loaded_models[model_path] = model_instance
 
-			# Emit final progress
-			loading_progress.emit(model_path.get_file().get_basename(), 1.0)
+		# Emit final progress
+		loading_progress.emit(model_path.get_file().get_basename(), 1.0)
 
-			# Emit completion signal
-			model_loaded.emit(model_path.get_file().get_basename(), model_instance)
+		# Emit completion signal
+		model_loaded.emit(model_path.get_file().get_basename(), model_instance)
 
-			return model_instance
+		return model_instance
 
 
-			## Apply anatomical positioning standards to a model
-			## @param model: The model to configure
-			## @param apply_scale: Whether to apply anatomical scaling
-func _fix_orphaned_code():
-	print("[AnatomicalModelManager] Applied anatomical standards to model")
+		## Apply anatomical positioning standards to a model
+		## @param model: The model to configure
+		## @param apply_scale: Whether to apply anatomical scaling
+print("[AnatomicalModelManager] Applied anatomical standards to model")
 
 
-	## Enhance materials for better anatomical visualization
-	## @param model: The model whose materials to enhance
-func _fix_orphaned_code():
-	for mesh in meshes:
-		if mesh.mesh == null:
-			continue
+## Enhance materials for better anatomical visualization
+## @param model: The model whose materials to enhance
+for mesh in meshes:
+	if mesh.mesh == null:
+		continue
 
-			for i in range(mesh.get_surface_override_material_count()):
-func _fix_orphaned_code():
-	if not original_mat:
-		original_mat = mesh.mesh.surface_get_material(i)
+		for i in range(mesh.get_surface_override_material_count()):
+if not original_mat:
+	original_mat = mesh.mesh.surface_get_material(i)
 
-		if original_mat:
-func _fix_orphaned_code():
-	print("[AnatomicalModelManager] Enhanced %d materials" % material_count)
+	if original_mat:
+print("[AnatomicalModelManager] Enhanced %d materials" % material_count)
 
 
-	## Setup LOD system for a model
-	## @param model: The model to setup LOD for
-func _fix_orphaned_code():
-	if meshes.is_empty():
-		return
+## Setup LOD system for a model
+## @param model: The model to setup LOD for
+if meshes.is_empty():
+	return
 
-		# Create LOD parent
-func _fix_orphaned_code():
-	for i in range(LOD_DISTANCES.size()):
-func _fix_orphaned_code():
-	for mesh in meshes:
-func _fix_orphaned_code():
-	if lod_mesh:
-		lod_node.add_child(lod_mesh)
+	# Create LOD parent
+for i in range(LOD_DISTANCES.size()):
+for mesh in meshes:
+if lod_mesh:
+	lod_node.add_child(lod_mesh)
 
-		# Configure visibility range
-		if i < LOD_DISTANCES.size() - 1:
-			lod_node.visibility_range_begin = LOD_DISTANCES[i]
-			lod_node.visibility_range_end = LOD_DISTANCES[i + 1]
-			lod_node.visibility_range_begin_margin = 1.0
-			lod_node.visibility_range_end_margin = 1.0
+	# Configure visibility range
+	if i < LOD_DISTANCES.size() - 1:
+		lod_node.visibility_range_begin = LOD_DISTANCES[i]
+		lod_node.visibility_range_end = LOD_DISTANCES[i + 1]
+		lod_node.visibility_range_begin_margin = 1.0
+		lod_node.visibility_range_end_margin = 1.0
 
-			lod_parent.add_child(lod_node)
+		lod_parent.add_child(lod_node)
 
-			# Replace original model with LOD system
-			if original_parent:
-				original_parent.remove_child(model)
-				original_parent.add_child(lod_parent)
-				lod_parent.transform = original_transform
+		# Replace original model with LOD system
+		if original_parent:
+			original_parent.remove_child(model)
+			original_parent.add_child(lod_parent)
+			lod_parent.transform = original_transform
 
-				print("[AnatomicalModelManager] LOD system configured with %d levels" % LOD_DISTANCES.size())
+			print("[AnatomicalModelManager] LOD system configured with %d levels" % LOD_DISTANCES.size())
 
 
-				## Get structure-specific material for anatomical differentiation
-				## @param structure_name: Name of the anatomical structure
-				## @returns: A configured material for the structure
-func _fix_orphaned_code():
-	if enable_subsurface_scattering:
-		material.subsurf_scatter_enabled = true
-		material.subsurf_scatter_strength = SUBSURFACE_SCATTERING_STRENGTH
-		material.subsurf_scatter_skin_mode = true
+			## Get structure-specific material for anatomical differentiation
+			## @param structure_name: Name of the anatomical structure
+			## @returns: A configured material for the structure
+if enable_subsurface_scattering:
+	material.subsurf_scatter_enabled = true
+	material.subsurf_scatter_strength = SUBSURFACE_SCATTERING_STRENGTH
+	material.subsurf_scatter_skin_mode = true
 
-		# Add rim lighting for better edge definition
-		material.rim_enabled = true
-		material.rim = MATERIAL_FRESNEL_STRENGTH
-		material.rim_tint = MATERIAL_RIM_TINT
+	# Add rim lighting for better edge definition
+	material.rim_enabled = true
+	material.rim = MATERIAL_FRESNEL_STRENGTH
+	material.rim_tint = MATERIAL_RIM_TINT
 
-		# Educational highlighting capability
-		material.emission_enabled = false  # Can be toggled for selection
-		material.emission_energy = 0.0
+	# Educational highlighting capability
+	material.emission_enabled = false  # Can be toggled for selection
+	material.emission_energy = 0.0
 
-		return material
-
-
-		# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if aabb.size != Vector3.ZERO:
-func _fix_orphaned_code():
-	for mesh in meshes:
-		mesh.position -= center_offset
+	return material
 
 
-func _fix_orphaned_code():
-	for i in range(meshes.size()):
-func _fix_orphaned_code():
-	if mesh_instance.mesh:
-func _fix_orphaned_code():
-	if i == 0:
-		combined_aabb = mesh_aabb
-		else:
-			combined_aabb = combined_aabb.merge(mesh_aabb)
-
-			return combined_aabb
+	# === PRIVATE METHODS ===
+if aabb.size != Vector3.ZERO:
+for mesh in meshes:
+	mesh.position -= center_offset
 
 
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-		meshes.append(node)
+for i in range(meshes.size()):
+if mesh_instance.mesh:
+if i == 0:
+	combined_aabb = mesh_aabb
+	else:
+		combined_aabb = combined_aabb.merge(mesh_aabb)
 
-		for child in node.get_children():
-			meshes.append_array(_find_all_mesh_instances(child))
-
-			return meshes
-
-
-func _fix_orphaned_code():
-	if original is StandardMaterial3D:
-		enhanced.albedo_color = original.albedo_color * base_albedo_tint
-		enhanced.albedo_texture = original.albedo_texture
-		enhanced.normal_texture = original.normal_texture
-		enhanced.roughness = original.roughness
-		enhanced.metallic = original.metallic
-		else:
-			# Default for non-standard materials
-			enhanced.albedo_color = base_albedo_tint
-			enhanced.roughness = 0.6
-
-			# Add medical visualization enhancements
-			enhanced.rim_enabled = true
-			enhanced.rim = MATERIAL_FRESNEL_STRENGTH
-			enhanced.rim_tint = MATERIAL_RIM_TINT
-
-			if enable_subsurface_scattering:
-				enhanced.subsurf_scatter_enabled = true
-				enhanced.subsurf_scatter_strength = SUBSURFACE_SCATTERING_STRENGTH
-				enhanced.subsurf_scatter_skin_mode = true
-
-				# Better transparency handling for anatomical layers
-				enhanced.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-				enhanced.cull_mode = BaseMaterial3D.CULL_BACK
-
-				return enhanced
+		return combined_aabb
 
 
-func _fix_orphaned_code():
-	for i in range(original_mesh.get_surface_override_material_count()):
-		lod_mesh.set_surface_override_material(i, original_mesh.get_surface_override_material(i))
+if node is MeshInstance3D:
+	meshes.append(node)
 
-		# Reduce quality for distant LODs
-		if lod_level > 1:
-			lod_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	for child in node.get_children():
+		meshes.append_array(_find_all_mesh_instances(child))
 
-			return lod_mesh
+		return meshes
 
 
-func _fix_orphaned_code():
-	for key in color_map:
-		if lower_name.contains(key):
-			return color_map[key]
+if original is StandardMaterial3D:
+	enhanced.albedo_color = original.albedo_color * base_albedo_tint
+	enhanced.albedo_texture = original.albedo_texture
+	enhanced.normal_texture = original.normal_texture
+	enhanced.roughness = original.roughness
+	enhanced.metallic = original.metallic
+	else:
+		# Default for non-standard materials
+		enhanced.albedo_color = base_albedo_tint
+		enhanced.roughness = 0.6
 
-			# Default brain tissue color
-			return Color(0.85, 0.8, 0.75)
+		# Add medical visualization enhancements
+		enhanced.rim_enabled = true
+		enhanced.rim = MATERIAL_FRESNEL_STRENGTH
+		enhanced.rim_tint = MATERIAL_RIM_TINT
+
+		if enable_subsurface_scattering:
+			enhanced.subsurf_scatter_enabled = true
+			enhanced.subsurf_scatter_strength = SUBSURFACE_SCATTERING_STRENGTH
+			enhanced.subsurf_scatter_skin_mode = true
+
+			# Better transparency handling for anatomical layers
+			enhanced.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			enhanced.cull_mode = BaseMaterial3D.CULL_BACK
+
+			return enhanced
+
+
+for i in range(original_mesh.get_surface_override_material_count()):
+	lod_mesh.set_surface_override_material(i, original_mesh.get_surface_override_material(i))
+
+	# Reduce quality for distant LODs
+	if lod_level > 1:
+		lod_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+		return lod_mesh
+
+
+for key in color_map:
+	if lower_name.contains(key):
+		return color_map[key]
+
+		# Default brain tissue color
+		return Color(0.85, 0.8, 0.75)
 
 func _configure_anatomical_model(model: Node3D, model_path: String) -> void:
 	"""Apply all anatomical configurations to a loaded model"""

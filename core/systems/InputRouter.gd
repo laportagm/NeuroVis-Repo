@@ -60,7 +60,7 @@ _input_handlers.append(handler_entry)
 # Sort by priority (descending)
 _input_handlers.sort_custom(func(a, b): return a.priority > b.priority)
 
-var removed = false
+# FIXED: Orphaned code - var removed = false
 var old_mode = _current_mode
 _current_mode = mode
 _exclusive_mode_owner = exclusive_owner
@@ -68,9 +68,9 @@ _exclusive_mode_owner = exclusive_owner
 var applicable_handlers = []
 var event_type = event.get_class()
 
-var handles_type = false
+# FIXED: Orphaned code - var handles_type = false
 var priority_conflicts = {}
-var top_priority = applicable_handlers[0].priority
+# FIXED: Orphaned code - var top_priority = applicable_handlers[0].priority
 var control = get_control_at_position(mouse_position)
 _ui_has_focus = control != null
 
@@ -78,12 +78,12 @@ _ui_has_focus = control != null
 var control_2 = _ui_elements[i]
 var ui_root = root.get_node_or_null("SceneManager/UIController/UI")
 
-var _current_mode: InputMode = InputMode.NORMAL
+# FIXED: Orphaned code - var _current_mode: InputMode = InputMode.NORMAL
 var _current_area: InteractionArea = InteractionArea.WORLD_3D
 var _ui_has_focus: bool = false
 
 # Input handlers by priority (highest first)
-var _input_handlers: Array[Dictionary] = []
+# FIXED: Orphaned code - var _input_handlers: Array[Dictionary] = []
 
 # Input mode exclusivity control
 var _exclusive_mode_owner: Node = null
@@ -207,122 +207,112 @@ func get_control_at_position(position: Vector2) -> Control:
 		# === PRIVATE METHODS ===
 		## Route input to appropriate handlers
 
-func _fix_orphaned_code():
-	print("[InputRouter] Registered handler: " + handler.name + " with priority " + str(priority))
+print("[InputRouter] Registered handler: " + handler.name + " with priority " + str(priority))
 
-	# Add to UI elements list if it's a Control
-	if handler is Control:
-		_add_ui_element(handler)
+# Add to UI elements list if it's a Control
+if handler is Control:
+	_add_ui_element(handler)
 
-		return true
+	return true
 
-		## Unregister an input handler
-		## @param handler: Node to unregister
-func _fix_orphaned_code():
-	for i in range(_input_handlers.size() - 1, -1, -1):
-		if _input_handlers[i].node == handler:
-			_input_handlers.remove_at(i)
-			removed = true
+	## Unregister an input handler
+	## @param handler: Node to unregister
+for i in range(_input_handlers.size() - 1, -1, -1):
+	if _input_handlers[i].node == handler:
+		_input_handlers.remove_at(i)
+		removed = true
 
-			if removed:
-				print("[InputRouter] Unregistered handler: " + handler.name)
+		if removed:
+			print("[InputRouter] Unregistered handler: " + handler.name)
 
-				# Remove from UI elements if it's a Control
-				if handler is Control:
-					_ui_elements.erase(handler)
+			# Remove from UI elements if it's a Control
+			if handler is Control:
+				_ui_elements.erase(handler)
 
-					## Set the current input mode
-					## @param mode: New input mode to set
-					## @param exclusive_owner: Node that requested exclusivity
-func _fix_orphaned_code():
-	print("[InputRouter] Input mode changed from " + InputMode.keys()[old_mode] +
-	" to " + InputMode.keys()[mode])
+				## Set the current input mode
+				## @param mode: New input mode to set
+				## @param exclusive_owner: Node that requested exclusivity
+print("[InputRouter] Input mode changed from " + InputMode.keys()[old_mode] +
+" to " + InputMode.keys()[mode])
 
-	# Notify of mode change
-	educational_interaction.emit("mode_changed", {
-	"old_mode": old_mode,
-	"new_mode": mode,
-	"exclusive": (exclusive_owner != null)
-	})
+# Notify of mode change
+educational_interaction.emit("mode_changed", {
+"old_mode": old_mode,
+"new_mode": mode,
+"exclusive": (exclusive_owner != null)
+})
 
-	## Release exclusive input mode
-	## @param owner: Node that currently owns exclusive mode
-func _fix_orphaned_code():
-	for handler in _input_handlers:
-		# Check if handler works in current area or all areas (-1)
-		if handler.area != -1 and handler.area != _current_area:
-			continue
-
-			# Check if handler accepts this event type
-func _fix_orphaned_code():
-	for type in handler.event_types:
-		if event_type == type or event.is_class(type):
-			handles_type = true
-			break
-
-			if handles_type and is_instance_valid(handler.node):
-				applicable_handlers.append(handler)
-
-				# Check for conflicts (multiple handlers with same priority)
-				if applicable_handlers.size() > 1:
-func _fix_orphaned_code():
-	for handler in applicable_handlers:
-		if not priority_conflicts.has(handler.priority):
-			priority_conflicts[handler.priority] = []
-			priority_conflicts[handler.priority].append(handler.node.name)
-
-			# Emit conflict warning if multiple handlers have same top priority
-func _fix_orphaned_code():
-	if priority_conflicts[top_priority].size() > 1:
-		input_conflict_detected.emit(priority_conflicts[top_priority])
-
-		# Process handlers in priority order until one handles the event
-		for handler in applicable_handlers:
-			if not is_instance_valid(handler.node):
-				continue
-
-				if handler.node.has_method("handle_input"):
-					# Handler has dedicated input handler method
-					if handler.node.handle_input(event, _current_mode):
-						get_viewport().set_input_as_handled()
-						return
-						else:
-							# Forward to _unhandled_input if present
-							if handler.node.has_method("_unhandled_input"):
-								# Can't detect if _unhandled_input handled the event
-								# Just deliver and continue
-								handler.node._unhandled_input(event)
-
-								# If viewport reports input handled, stop processing
-								if get_viewport().is_input_handled():
-									return
-
-									## Handle global keyboard shortcuts
-func _fix_orphaned_code():
-	if mouse_position != _last_mouse_position:
-		_cache_valid = false
-
-		## Find UI element at a position
-func _fix_orphaned_code():
-	if not is_instance_valid(control) or not control.visible:
+## Release exclusive input mode
+## @param owner: Node that currently owns exclusive mode
+for handler in _input_handlers:
+	# Check if handler works in current area or all areas (-1)
+	if handler.area != -1 and handler.area != _current_area:
 		continue
 
-		if control.get_global_rect().has_point(position) and control.mouse_filter != Control.MOUSE_FILTER_IGNORE:
-			return control
+		# Check if handler accepts this event type
+for type in handler.event_types:
+	if event_type == type or event.is_class(type):
+		handles_type = true
+		break
 
-			return null
+		if handles_type and is_instance_valid(handler.node):
+			applicable_handlers.append(handler)
 
-			## Scan the tree for UI elements
-func _fix_orphaned_code():
-	if ui_root:
-		_find_ui_controls_recursive(ui_root)
-		else:
-			# Fallback to scanning the whole tree
-			_find_ui_controls_recursive(root)
+			# Check for conflicts (multiple handlers with same priority)
+			if applicable_handlers.size() > 1:
+for handler in applicable_handlers:
+	if not priority_conflicts.has(handler.priority):
+		priority_conflicts[handler.priority] = []
+		priority_conflicts[handler.priority].append(handler.node.name)
 
-			print("[InputRouter] Found " + str(_ui_elements.size()) + " UI elements for input handling")
+		# Emit conflict warning if multiple handlers have same top priority
+if priority_conflicts[top_priority].size() > 1:
+	input_conflict_detected.emit(priority_conflicts[top_priority])
 
-			## Recursively find all UI controls
+	# Process handlers in priority order until one handles the event
+	for handler in applicable_handlers:
+		if not is_instance_valid(handler.node):
+			continue
+
+			if handler.node.has_method("handle_input"):
+				# Handler has dedicated input handler method
+				if handler.node.handle_input(event, _current_mode):
+					get_viewport().set_input_as_handled()
+					return
+					else:
+						# Forward to _unhandled_input if present
+						if handler.node.has_method("_unhandled_input"):
+							# Can't detect if _unhandled_input handled the event
+							# Just deliver and continue
+							handler.node._unhandled_input(event)
+
+							# If viewport reports input handled, stop processing
+							if get_viewport().is_input_handled():
+								return
+
+								## Handle global keyboard shortcuts
+if mouse_position != _last_mouse_position:
+	_cache_valid = false
+
+	## Find UI element at a position
+if not is_instance_valid(control) or not control.visible:
+	continue
+
+	if control.get_global_rect().has_point(position) and control.mouse_filter != Control.MOUSE_FILTER_IGNORE:
+		return control
+
+		return null
+
+		## Scan the tree for UI elements
+if ui_root:
+	_find_ui_controls_recursive(ui_root)
+	else:
+		# Fallback to scanning the whole tree
+		_find_ui_controls_recursive(root)
+
+		print("[InputRouter] Found " + str(_ui_elements.size()) + " UI elements for input handling")
+
+		## Recursively find all UI controls
 
 func _route_input(event: InputEvent) -> void:
 	"""Route input event to appropriate handlers based on context"""

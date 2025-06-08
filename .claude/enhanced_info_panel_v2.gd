@@ -71,10 +71,9 @@ func _get_current_breakpoint() -> String:
 	var width = viewport_size.x
 	if width < BREAKPOINTS.mobile:
 		return "mobile"
-	elif width < BREAKPOINTS.tablet:
+	if width < BREAKPOINTS.tablet:
 		return "tablet"
-	else:
-		return "desktop"
+	return "desktop"
 
 func _update_panel_layout() -> void:
 	"""Update panel layout for current breakpoint"""
@@ -178,7 +177,9 @@ func _create_description_section() -> void:
 	description_text.bbcode_enabled = true
 	description_text.fit_content = true
 	description_text.custom_minimum_size.y = 80
-	description_text.text = "[color=#E8E8E8]The hippocampus is a critical brain structure for memory formation and spatial navigation. It plays a key role in converting short-term memories into long-term memories.[/color]"
+	description_text.text = "[color=#E8E8E8]The hippocampus is a critical brain structure " + \
+		"for memory formation and spatial navigation. It plays a key role in converting " + \
+		"short-term memories into long-term memories.[/color]"
 	description_section.add_child(description_text)
 
 func _create_functions_section() -> void:

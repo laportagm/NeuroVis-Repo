@@ -45,7 +45,7 @@ var UIThemeManagerScript = null
 
 
 var FeatureFlagsRef = Engine.get_singleton("FeatureFlags")
-var tween = create_tween()
+# FIXED: Orphaned code - var tween = create_tween()
 tween.set_parallel(true)
 tween.tween_property(self, "modulate", Color.WHITE, 0.4)
 tween.tween_property(self, "scale", Vector2.ONE, 0.4)
@@ -92,7 +92,7 @@ _dismiss_timer.one_shot = true
 add_child(_dismiss_timer)
 
 
-var theme_manager = UIThemeManagerScript
+# FIXED: Orphaned code - var theme_manager = UIThemeManagerScript
 
 # Apply panel styling
 theme_manager.apply_enhanced_panel_style(_background_panel, "elevated")
@@ -107,7 +107,7 @@ theme_manager.apply_enhanced_button_style(_close_button, "secondary")
 
 
 # Apply basic styling when UIThemeManager is not available (testing mode)
-var style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var style = StyleBoxFlat.new()
 style.bg_color = Color(0.15, 0.15, 0.15, 0.9)
 style.border_width_bottom = 1
 style.border_width_left = 1
@@ -120,7 +120,7 @@ style.corner_radius_top_left = 8
 style.corner_radius_top_right = 8
 _background_panel.add_theme_stylebox_override("panel", style)
 
-var color: Color
+# FIXED: Orphaned code - var color: Color
 
 # Handle case when UIThemeManager is not available
 var theme_manager_2 = UIThemeManagerScript
@@ -137,20 +137,20 @@ NotificationType.ERROR:
 
 					# Apply color to icon
 var style_2 = _background_panel.get_theme_stylebox("panel").duplicate()
-var notification = ErrorNotification.new()
+# FIXED: Orphaned code - var notification = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.ERROR)
-var notification_2 = ErrorNotification.new()
+# FIXED: Orphaned code - var notification_2 = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.WARNING)
-var notification_3 = ErrorNotification.new()
+# FIXED: Orphaned code - var notification_3 = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.INFO)
-var notification_4 = ErrorNotification.new()
+# FIXED: Orphaned code - var notification_4 = ErrorNotification.new()
 	parent.add_child(notification)
 	notification.show_notification(message, NotificationType.SUCCESS)
 
-var _label: Label
+# FIXED: Orphaned code - var _label: Label
 var _close_button: Button
 var _icon_label: Label
 var _background_panel: Panel
@@ -162,7 +162,7 @@ var _dismiss_timer: Timer
 func _init():
 	# Safely load UIThemeManager
 	if ResourceLoader.exists("res://ui/panels/UIThemeManager.gd"):
-		UIThemeManagerScript = prepreprepreload("res://ui/panels/UIThemeManager.gd")
+		UIThemeManagerScript = preload("res://ui/panels/UIThemeManager.gd")
 
 
 func _ready() -> void:
@@ -213,97 +213,88 @@ func set_message(message: String) -> void:
 
 		# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if FeatureFlagsRef.call("is_core_development_mode"):
-		print("[ErrorNotification] Core development mode - using minimal UI")
+if FeatureFlagsRef.call("is_core_development_mode"):
+	print("[ErrorNotification] Core development mode - using minimal UI")
 
-		_setup_ui_structure()
-		_apply_educational_theme()
-		_setup_interactions()
+	_setup_ui_structure()
+	_apply_educational_theme()
+	_setup_interactions()
 
-		# Start auto-dismiss timer if enabled
-		if auto_dismiss:
-			_start_dismiss_timer()
-
-
-			# === PUBLIC METHODS ===
-			## Display an educational error message
-			## @param message: The error message to display
-			## @param type: The type of notification (error, warning, info, success)
-func _fix_orphaned_code():
-	if _label:
-		_label.add_theme_font_size_override("font_size", 14)
-		_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
-
-		if _icon_label:
-			_icon_label.add_theme_font_size_override("font_size", 18)
-			_icon_label.add_theme_color_override("font_color", Color(1, 0, 0, 0.9))
-
-			if _close_button:
-				_close_button.add_theme_font_size_override("font_size", 12)
-				_close_button.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
+	# Start auto-dismiss timer if enabled
+	if auto_dismiss:
+		_start_dismiss_timer()
 
 
-func _fix_orphaned_code():
-	if UIThemeManagerScript == null:
-		# Use fallback colors
-		match type:
-			NotificationType.ERROR:
-				color = Color(1.0, 0.0, 0.0, 1.0)  # Red
-				NotificationType.WARNING:
-					color = Color(1.0, 0.7, 0.0, 1.0)  # Orange
-					NotificationType.INFO:
-						color = Color(0.0, 0.7, 1.0, 1.0)  # Blue
-						NotificationType.SUCCESS:
-							color = Color(0.0, 1.0, 0.4, 1.0)  # Green
-							_:
-								color = Color(1.0, 0.0, 0.0, 1.0)  # Red
-								else:
-									# Use theme manager colors
-func _fix_orphaned_code():
+		# === PUBLIC METHODS ===
+		## Display an educational error message
+		## @param message: The error message to display
+		## @param type: The type of notification (error, warning, info, success)
+if _label:
+	_label.add_theme_font_size_override("font_size", 14)
+	_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
+
 	if _icon_label:
-		_icon_label.add_theme_color_override("font_color", color)
+		_icon_label.add_theme_font_size_override("font_size", 18)
+		_icon_label.add_theme_color_override("font_color", Color(1, 0, 0, 0.9))
 
-		# Apply border color if available
-		if _background_panel and _background_panel.has_theme_stylebox("panel"):
-func _fix_orphaned_code():
-	if style is StyleBoxFlat:
-		style.border_color = color
-		_background_panel.add_theme_stylebox_override("panel", style)
+		if _close_button:
+			_close_button.add_theme_font_size_override("font_size", 12)
+			_close_button.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
 
 
-func _fix_orphaned_code():
-	return notification
+if UIThemeManagerScript == null:
+	# Use fallback colors
+	match type:
+		NotificationType.ERROR:
+			color = Color(1.0, 0.0, 0.0, 1.0)  # Red
+			NotificationType.WARNING:
+				color = Color(1.0, 0.7, 0.0, 1.0)  # Orange
+				NotificationType.INFO:
+					color = Color(0.0, 0.7, 1.0, 1.0)  # Blue
+					NotificationType.SUCCESS:
+						color = Color(0.0, 1.0, 0.4, 1.0)  # Green
+						_:
+							color = Color(1.0, 0.0, 0.0, 1.0)  # Red
+							else:
+								# Use theme manager colors
+if _icon_label:
+	_icon_label.add_theme_color_override("font_color", color)
+
+	# Apply border color if available
+	if _background_panel and _background_panel.has_theme_stylebox("panel"):
+if style is StyleBoxFlat:
+	style.border_color = color
+	_background_panel.add_theme_stylebox_override("panel", style)
 
 
-	## Create and show a warning notification
-	## @param message: Warning message to display
-	## @param parent: Parent node to add notification to
-	## @returns: ErrorNotification instance
-	static func show_warning(message: String, parent: Node) -> ErrorNotification:
-		"""Factory method to create and show a warning notification"""
-func _fix_orphaned_code():
-	return notification
+return notification
 
 
-	## Create and show an info notification
-	## @param message: Info message to display
-	## @param parent: Parent node to add notification to
-	## @returns: ErrorNotification instance
-	static func show_info(message: String, parent: Node) -> ErrorNotification:
-		"""Factory method to create and show an info notification"""
-func _fix_orphaned_code():
-	return notification
+## Create and show a warning notification
+## @param message: Warning message to display
+## @param parent: Parent node to add notification to
+## @returns: ErrorNotification instance
+static func show_warning(message: String, parent: Node) -> ErrorNotification:
+	"""Factory method to create and show a warning notification"""
+return notification
 
 
-	## Create and show a success notification
-	## @param message: Success message to display
-	## @param parent: Parent node to add notification to
-	## @returns: ErrorNotification instance
-	static func show_success(message: String, parent: Node) -> ErrorNotification:
-		"""Factory method to create and show a success notification"""
-func _fix_orphaned_code():
-	return notification
+## Create and show an info notification
+## @param message: Info message to display
+## @param parent: Parent node to add notification to
+## @returns: ErrorNotification instance
+static func show_info(message: String, parent: Node) -> ErrorNotification:
+	"""Factory method to create and show an info notification"""
+return notification
+
+
+## Create and show a success notification
+## @param message: Success message to display
+## @param parent: Parent node to add notification to
+## @returns: ErrorNotification instance
+static func show_success(message: String, parent: Node) -> ErrorNotification:
+	"""Factory method to create and show a success notification"""
+return notification
 
 func _animate_entrance_fallback() -> void:
 	"""Fallback animation for testing environments"""

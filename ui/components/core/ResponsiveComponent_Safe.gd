@@ -44,8 +44,8 @@ var last_viewport_size: Vector2 = Vector2.ZERO
 
 
 var viewport = get_viewport()
-var viewport_2 = get_viewport()
-var viewport_size = viewport.get_visible_rect().size
+# FIXED: Orphaned code - var viewport_2 = get_viewport()
+# FIXED: Orphaned code - var viewport_size = viewport.get_visible_rect().size
 var old_breakpoint = current_breakpoint
 _update_breakpoint(viewport_size)
 
@@ -107,61 +107,55 @@ func set_responsive_enabled(enabled: bool) -> void:
 
 		# === UTILITY METHODS ===
 
-func _fix_orphaned_code():
-	if viewport:
-		viewport.size_changed.connect(_on_viewport_size_changed)
+if viewport:
+	viewport.size_changed.connect(_on_viewport_size_changed)
 
 
-func _fix_orphaned_code():
-	if not viewport:
-		return
+if not viewport:
+	return
 
-func _fix_orphaned_code():
-	if viewport_size == last_viewport_size:
-		return
+if viewport_size == last_viewport_size:
+	return
 
-		last_viewport_size = viewport_size
+	last_viewport_size = viewport_size
 
-		# Determine breakpoint
-func _fix_orphaned_code():
-	if old_breakpoint != current_breakpoint:
-		breakpoint_changed.emit(
-		BREAKPOINT_NAMES[old_breakpoint], BREAKPOINT_NAMES[current_breakpoint]
-		)
-		_log(
-		(
-		"Breakpoint changed: "
-		+ BREAKPOINT_NAMES[old_breakpoint]
-		+ " -> "
-		+ BREAKPOINT_NAMES[current_breakpoint]
-		)
-		)
+	# Determine breakpoint
+if old_breakpoint != current_breakpoint:
+	breakpoint_changed.emit(
+	BREAKPOINT_NAMES[old_breakpoint], BREAKPOINT_NAMES[current_breakpoint]
+	)
+	_log(
+	(
+	"Breakpoint changed: "
+	+ BREAKPOINT_NAMES[old_breakpoint]
+	+ " -> "
+	+ BREAKPOINT_NAMES[current_breakpoint]
+	)
+	)
 
-		if was_portrait != is_portrait_orientation:
-			orientation_changed.emit(is_portrait_orientation)
-			_log("Orientation changed to: " + ("portrait" if is_portrait_orientation else "landscape"))
+	if was_portrait != is_portrait_orientation:
+		orientation_changed.emit(is_portrait_orientation)
+		_log("Orientation changed to: " + ("portrait" if is_portrait_orientation else "landscape"))
 
-			# Apply responsive layout
-			_apply_responsive_layout()
+		# Apply responsive layout
+		_apply_responsive_layout()
 
 
-func _fix_orphaned_code():
-	if width < BREAKPOINT_WIDTHS[Breakpoint.MOBILE]:
+if width < BREAKPOINT_WIDTHS[Breakpoint.MOBILE]:
+	current_breakpoint = Breakpoint.MOBILE
+	elif width < BREAKPOINT_WIDTHS[Breakpoint.TABLET_PORTRAIT]:
 		current_breakpoint = Breakpoint.MOBILE
-		elif width < BREAKPOINT_WIDTHS[Breakpoint.TABLET_PORTRAIT]:
-			current_breakpoint = Breakpoint.MOBILE
-			elif width < BREAKPOINT_WIDTHS[Breakpoint.TABLET_LANDSCAPE]:
-				current_breakpoint = Breakpoint.TABLET_PORTRAIT
-				elif width < BREAKPOINT_WIDTHS[Breakpoint.DESKTOP]:
-					current_breakpoint = Breakpoint.TABLET_LANDSCAPE
-					elif width < BREAKPOINT_WIDTHS[Breakpoint.WIDE_DESKTOP]:
-						current_breakpoint = Breakpoint.DESKTOP
-						else:
-							current_breakpoint = Breakpoint.WIDE_DESKTOP
+		elif width < BREAKPOINT_WIDTHS[Breakpoint.TABLET_LANDSCAPE]:
+			current_breakpoint = Breakpoint.TABLET_PORTRAIT
+			elif width < BREAKPOINT_WIDTHS[Breakpoint.DESKTOP]:
+				current_breakpoint = Breakpoint.TABLET_LANDSCAPE
+				elif width < BREAKPOINT_WIDTHS[Breakpoint.WIDE_DESKTOP]:
+					current_breakpoint = Breakpoint.DESKTOP
+					else:
+						current_breakpoint = Breakpoint.WIDE_DESKTOP
 
 
-func _fix_orphaned_code():
-	print(prefix + message)
+print(prefix + message)
 
 func _connect_viewport_signals() -> void:
 	"""Connect to viewport size changes"""

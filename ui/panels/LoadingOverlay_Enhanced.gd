@@ -11,7 +11,7 @@ signal loading_phase_changed(phase_name: String, progress: float)
 signal educational_tip_changed(tip_index: int, tip_data: Dictionary)
 
 
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # UI Components
 
@@ -125,7 +125,7 @@ var center_container = CenterContainer.new()
 	_create_educational_section()
 
 
-var progress_bar_container = VBoxContainer.new()
+# FIXED: Orphaned code - var progress_bar_container = VBoxContainer.new()
 	progress_bar_container.add_theme_constant_override("separation", UIThemeManager.MARGIN_SMALL)
 	progress_container.add_child(progress_bar_container)
 
@@ -166,7 +166,7 @@ var progress_wrapper = HBoxContainer.new()
 	progress_bar_container.add_child(progress_label)
 
 
-var separator = HSeparator.new()
+# FIXED: Orphaned code - var separator = HSeparator.new()
 	educational_content.add_child(separator)
 
 	# Tip header
@@ -181,7 +181,7 @@ var tip_content_container = PanelContainer.new()
 	tip_content_container.custom_minimum_size = Vector2(0, 120)
 	educational_content.add_child(tip_content_container)
 
-var tip_margin = MarginContainer.new()
+# FIXED: Orphaned code - var tip_margin = MarginContainer.new()
 	tip_margin.add_theme_constant_override("margin_top", UIThemeManager.MARGIN_MEDIUM)
 	tip_margin.add_theme_constant_override("margin_bottom", UIThemeManager.MARGIN_MEDIUM)
 	tip_margin.add_theme_constant_override("margin_left", UIThemeManager.MARGIN_MEDIUM)
@@ -224,7 +224,7 @@ var tip_margin = MarginContainer.new()
 	tip_navigation.add_child(next_tip_btn)
 
 
-var bg_style = UIThemeManager.create_glass_panel(0.98, "hero")
+# FIXED: Orphaned code - var bg_style = UIThemeManager.create_glass_panel(0.98, "hero")
 	bg_style.bg_color = Color(0.02, 0.05, 0.1, 0.95)  # Very dark background
 	background_panel.add_theme_stylebox_override("panel", bg_style)
 
@@ -266,7 +266,7 @@ var bg_style = UIThemeManager.create_glass_panel(0.98, "hero")
 
 	# Tip content panel
 var tip_panel = educational_content.find_child("TipContent").get_parent().get_parent()
-var phase_data = loading_phases.get(phase, {"name": "Loading...", "progress": percentage})
+# FIXED: Orphaned code - var phase_data = loading_phases.get(phase, {"name": "Loading...", "progress": percentage})
 	target_progress = percentage
 
 	# Update task label
@@ -449,72 +449,63 @@ func dispose() -> void:
 			loading_tips.clear()
 
 
-func _fix_orphaned_code():
-	if tip_panel:
-		UIThemeManager.apply_glass_panel(tip_panel, 0.8, "card")
+if tip_panel:
+	UIThemeManager.apply_glass_panel(tip_panel, 0.8, "card")
 
 
-func _fix_orphaned_code():
-	if current_task_label:
-func _fix_orphaned_code():
-	if task_description != "":
-		task_text = task_description
+if current_task_label:
+if task_description != "":
+	task_text = task_description
 
-		UIThemeManager.animate_fade_text_change(current_task_label, task_text)
+	UIThemeManager.animate_fade_text_change(current_task_label, task_text)
 
-		# Animate progress bar
-		_animate_progress_update()
+	# Animate progress bar
+	_animate_progress_update()
 
-		# Update detailed progress
-		if progress_label:
-func _fix_orphaned_code():
-	if phase_data.has("tasks"):
-func _fix_orphaned_code():
-	if tasks.size() > 0:
-		detail_text = tasks[randi() % tasks.size()]
+	# Update detailed progress
+	if progress_label:
+if phase_data.has("tasks"):
+if tasks.size() > 0:
+	detail_text = tasks[randi() % tasks.size()]
 
-		UIThemeManager.animate_fade_text_change(progress_label, detail_text)
+	UIThemeManager.animate_fade_text_change(progress_label, detail_text)
 
-		loading_phase_changed.emit(phase, percentage)
-		print("[LOADING_OVERLAY] Progress updated: %s - %.1f%%" % [phase, percentage])
+	loading_phase_changed.emit(phase, percentage)
+	print("[LOADING_OVERLAY] Progress updated: %s - %.1f%%" % [phase, percentage])
 
 
-func _fix_orphaned_code():
-	if logo_container:
+if logo_container:
+	UIThemeManager.animate_entrance(
+	logo_container, 0.2, UIThemeManager.ANIM_DURATION_STANDARD, "fade_scale"
+	)
+
+	if progress_container:
 		UIThemeManager.animate_entrance(
-		logo_container, 0.2, UIThemeManager.ANIM_DURATION_STANDARD, "fade_scale"
+		progress_container, 0.4, UIThemeManager.ANIM_DURATION_STANDARD, "slide_up"
 		)
 
-		if progress_container:
+		if educational_content:
 			UIThemeManager.animate_entrance(
-			progress_container, 0.4, UIThemeManager.ANIM_DURATION_STANDARD, "slide_up"
+			educational_content, 0.6, UIThemeManager.ANIM_DURATION_STANDARD, "slide_up"
 			)
 
-			if educational_content:
-				UIThemeManager.animate_entrance(
-				educational_content, 0.6, UIThemeManager.ANIM_DURATION_STANDARD, "slide_up"
-				)
+
+if content_container:
+	(
+	tween
+	. tween_property(
+	content_container, "scale", Vector2(0.9, 0.9), UIThemeManager.ANIM_DURATION_STANDARD
+	)
+	. set_ease(Tween.EASE_IN)
+	)
 
 
-func _fix_orphaned_code():
-	if content_container:
-		(
-		tween
-		. tween_property(
-		content_container, "scale", Vector2(0.9, 0.9), UIThemeManager.ANIM_DURATION_STANDARD
-		)
-		. set_ease(Tween.EASE_IN)
-		)
+	# Educational content management
+if tip_content:
+if tip_indicator:
+	tip_indicator.text = "%d / %d" % [current_tip_index + 1, loading_tips.size()]
 
-
-		# Educational content management
-func _fix_orphaned_code():
-	if tip_content:
-func _fix_orphaned_code():
-	if tip_indicator:
-		tip_indicator.text = "%d / %d" % [current_tip_index + 1, loading_tips.size()]
-
-		educational_tip_changed.emit(current_tip_index, tip)
+	educational_tip_changed.emit(current_tip_index, tip)
 
 
 func _create_enhanced_loading_ui() -> void:

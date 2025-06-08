@@ -18,11 +18,11 @@ panel.set_anchors_preset(Control.PRESET_CENTER)
 panel.custom_minimum_size = Vector2(500, 300)
 add_child(panel)
 
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 vbox.add_theme_constant_override("separation", 20)
 panel.add_child(vbox)
 
-var title = Label.new()
+# FIXED: Orphaned code - var title = Label.new()
 title.text = "AI Architecture Simple Test"
 title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 title.add_theme_font_size_override("font_size", 24)
@@ -35,18 +35,18 @@ info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 info_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 vbox.add_child(info_label)
 
-var button = Button.new()
+# FIXED: Orphaned code - var button = Button.new()
 button.text = "Close"
 button.custom_minimum_size = Vector2(100, 40)
 button.pressed.connect(func(): queue_free())
 
-var button_container = HBoxContainer.new()
+# FIXED: Orphaned code - var button_container = HBoxContainer.new()
 button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 button_container.add_child(button)
 vbox.add_child(button_container)
 
 
-var results = []
+# FIXED: Orphaned code - var results = []
 
 # Test AIProviderInterface
 results.append(
@@ -74,11 +74,11 @@ results.append(test_class("GeminiAIProvider", "res://core/ai/providers/GeminiAIP
 update_ui(results)
 
 
-var result = {"class": class_type, "path": path, "success": false, "message": ""}
+# FIXED: Orphaned code - var result = {"class": class_type, "path": path, "success": false, "message": ""}
 
 # Check if file exists
 var script = load(path)
-var instance = null
+# FIXED: Orphaned code - var instance = null
 
 var text = "Test Results:\n\n"
 
@@ -109,47 +109,42 @@ func update_ui(results: Array) -> void:
 	"""Update the UI with test results"""
 	@tool
 
-func _fix_orphaned_code():
-	if not FileAccess.file_exists(path):
-		result.message = "File not found"
-		return result
+if not FileAccess.file_exists(path):
+	result.message = "File not found"
+	return result
 
-		# Try to load class
-func _fix_orphaned_code():
-	if not script:
-		result.message = "Failed to load script"
-		return result
+	# Try to load class
+if not script:
+	result.message = "Failed to load script"
+	return result
 
-		# Try to instantiate class
-func _fix_orphaned_code():
-	if class_type == "AIProviderInterface":
-		# Skip instantiation for interface
-		result.success = true
-		result.message = "Script loaded (interface)"
-		else:
-			# Try to instantiate
-			instance = script.new()
-			if instance:
-				result.success = true
-				result.message = "Successfully instantiated"
-				# Clean up
-				if instance is Node:
-					instance.queue_free()
+	# Try to instantiate class
+if class_type == "AIProviderInterface":
+	# Skip instantiation for interface
+	result.success = true
+	result.message = "Script loaded (interface)"
+	else:
+		# Try to instantiate
+		instance = script.new()
+		if instance:
+			result.success = true
+			result.message = "Successfully instantiated"
+			# Clean up
+			if instance is Node:
+				instance.queue_free()
+				else:
+					instance.free()
 					else:
-						instance.free()
-						else:
-							result.message = "Failed to instantiate"
+						result.message = "Failed to instantiate"
 
-							return result
+						return result
 
 
-func _fix_orphaned_code():
-	for result in results:
-func _fix_orphaned_code():
-	if not result.success:
-		all_success = false
+for result in results:
+if not result.success:
+	all_success = false
 
-		text += "\n\nOverall Test: %s" % ("✅ PASSED" if all_success else "❌ FAILED")
+	text += "\n\nOverall Test: %s" % ("✅ PASSED" if all_success else "❌ FAILED")
 
-		info_label.text = text
-		print(text)
+	info_label.text = text
+	print(text)

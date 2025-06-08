@@ -69,18 +69,18 @@ add_child(transition_timer)
 transition_timer.timeout.connect(_on_transition_completed)
 
 
-var timer = get_node("TransitionTimer") as Timer
+# FIXED: Orphaned code - var timer = get_node("TransitionTimer") as Timer
 timer.wait_time = transition_duration
 timer.start()
 
 
-var timer_2 = get_node("TransitionTimer") as Timer
+# FIXED: Orphaned code - var timer_2 = get_node("TransitionTimer") as Timer
 timer.wait_time = transition_duration
 timer.start()
 
 
-var cortex_info = _knowledge_service.get_structure("cerebral_cortex")
-var lobes_info = [
+# FIXED: Orphaned code - var cortex_info = _knowledge_service.get_structure("cerebral_cortex")
+# FIXED: Orphaned code - var lobes_info = [
 _knowledge_service.get_structure("frontal_lobe"),
 _knowledge_service.get_structure("parietal_lobe"),
 _knowledge_service.get_structure("temporal_lobe"),
@@ -88,19 +88,19 @@ _knowledge_service.get_structure("occipital_lobe")
 ]
 
 var corpus_callosum = _knowledge_service.get_structure("corpus_callosum")
-var ventricle_info = _knowledge_service.get_structure("lateral_ventricle")
-var deep_structures = ["thalamus", "hippocampus", "amygdala", "basal_ganglia"]
+# FIXED: Orphaned code - var ventricle_info = _knowledge_service.get_structure("lateral_ventricle")
+# FIXED: Orphaned code - var deep_structures = ["thalamus", "hippocampus", "amygdala", "basal_ganglia"]
 
 var info = _knowledge_service.get_structure(structure)
 
-var _current_system: BrainSystem = BrainSystem.WHOLE_BRAIN
+# FIXED: Orphaned code - var _current_system: BrainSystem = BrainSystem.WHOLE_BRAIN
 var _is_transitioning: bool = false
 var _is_initialized: bool = false
 var _model_registry: ModelRegistry
 var _knowledge_service: Node
 var _selection_manager: BrainStructureSelectionManager
 var _educational_context: Dictionary = {}
-var _current_educational_content: Array = []
+# FIXED: Orphaned code - var _current_educational_content: Array = []
 
 
 # === LIFECYCLE METHODS ===
@@ -188,56 +188,49 @@ func get_educational_content() -> Array:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if maintain_selection and _selection_manager != null:
-		current_selection = _selection_manager.get_current_selection()
+if maintain_selection and _selection_manager != null:
+	current_selection = _selection_manager.get_current_selection()
 
-		# Emit start signal
-		transition_started.emit(_get_system_name(_current_system), _get_system_name(target_system))
+	# Emit start signal
+	transition_started.emit(_get_system_name(_current_system), _get_system_name(target_system))
 
-		# Perform appropriate transition based on style
-		match transition_style:
-			TransitionStyle.FADE:
-				_perform_fade_transition(target_system)
-				TransitionStyle.EXPLODED_VIEW:
-					_perform_exploded_transition(target_system)
-					TransitionStyle.EDUCATIONAL:
-						_perform_educational_transition(target_system)
-						_:
-							_perform_fade_transition(target_system)
+	# Perform appropriate transition based on style
+	match transition_style:
+		TransitionStyle.FADE:
+			_perform_fade_transition(target_system)
+			TransitionStyle.EXPLODED_VIEW:
+				_perform_exploded_transition(target_system)
+				TransitionStyle.EDUCATIONAL:
+					_perform_educational_transition(target_system)
+					_:
+						_perform_fade_transition(target_system)
 
-							# Update current system tracking
-							_current_system = target_system
+						# Update current system tracking
+						_current_system = target_system
 
-							return true
+						return true
 
 
-							## Get the currently active brain system
-							## @return: BrainSystem - the current active system
-func _fix_orphaned_code():
-	if not cortex_info.is_empty():
-		_current_educational_content.append(cortex_info)
+						## Get the currently active brain system
+						## @return: BrainSystem - the current active system
+if not cortex_info.is_empty():
+	_current_educational_content.append(cortex_info)
 
-func _fix_orphaned_code():
-	for info in lobes_info:
-		if not info.is_empty():
-			_current_educational_content.append(info)
-
-			BrainSystem.HALF_SECTIONAL:
-func _fix_orphaned_code():
-	if not corpus_callosum.is_empty():
-		_current_educational_content.append(corpus_callosum)
-
-func _fix_orphaned_code():
-	if not ventricle_info.is_empty():
-		_current_educational_content.append(ventricle_info)
-
-		BrainSystem.INTERNAL:
-func _fix_orphaned_code():
-	for structure in deep_structures:
-func _fix_orphaned_code():
+for info in lobes_info:
 	if not info.is_empty():
 		_current_educational_content.append(info)
+
+		BrainSystem.HALF_SECTIONAL:
+if not corpus_callosum.is_empty():
+	_current_educational_content.append(corpus_callosum)
+
+if not ventricle_info.is_empty():
+	_current_educational_content.append(ventricle_info)
+
+	BrainSystem.INTERNAL:
+for structure in deep_structures:
+if not info.is_empty():
+	_current_educational_content.append(info)
 
 
 func _validate_setup() -> bool:

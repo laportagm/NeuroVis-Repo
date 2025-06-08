@@ -12,8 +12,8 @@ signal link_activated(link_data: Dictionary)
 
 # === UI ELEMENTS ===
 
-const FeatureFlags = preprepreprepreload("res://core/features/FeatureFlags.gd")
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const FeatureFlags = preload("res://core/features/FeatureFlags.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # === SIGNALS ===
 
@@ -45,15 +45,15 @@ content_style.content_margin_right = UIThemeManager.get_spacing("md")
 content_style.content_margin_top = UIThemeManager.get_spacing("sm")
 content_style.content_margin_bottom = UIThemeManager.get_spacing("sm")
 
-var highlighted_content = section_content
+# FIXED: Orphaned code - var highlighted_content = section_content
 var matches = 0
 
 # Simple highlighting with BBCode
 var regex = RegEx.new()
 regex.compile("(?i)\\b" + search_term + "\\b")
-var results = regex.search_all(highlighted_content)
+# FIXED: Orphaned code - var results = regex.search_all(highlighted_content)
 
-var match_text = result.get_string()
+# FIXED: Orphaned code - var match_text = result.get_string()
 highlighted_content = highlighted_content.replace(
 match_text, "[bgcolor=yellow]" + match_text + "[/bgcolor]"
 )
@@ -63,7 +63,7 @@ content_label.text = highlighted_content
 
 var title_text = section_title.to_upper()
 
-var arrow = "▼" if is_expanded else "▶"
+# FIXED: Orphaned code - var arrow = "▼" if is_expanded else "▶"
 header_button.text = arrow + " " + title_text
 header_button.disabled = false
 header_button.text = title_text
@@ -71,13 +71,13 @@ header_button.disabled = true
 
 
 var lines = content.split("\n")
-var formatted = ""
+# FIXED: Orphaned code - var formatted = ""
 
 var tween = create_tween()
 tween.tween_property(content_container, "modulate", Color.WHITE, 0.2)
 
 
-var tween_2 = create_tween()
+# FIXED: Orphaned code - var tween_2 = create_tween()
 tween.tween_property(content_container, "modulate", Color.TRANSPARENT, 0.15)
 tween.tween_callback(func(): content_container.visible = false)
 
@@ -100,7 +100,7 @@ formatted = "[b]" + first_sentence + "[/b]" + formatted.substr(first_sentence.le
 set_content(formatted)
 
 
-var functions = data.get("functions", [])
+# FIXED: Orphaned code - var functions = data.get("functions", [])
 content_type = "list"
 
 var content = ""
@@ -258,72 +258,58 @@ func apply_content_template(template_name: String, data: Dictionary) -> void:
 						_apply_clinical_template(data)
 
 
-func _fix_orphaned_code():
-	if content_container is PanelContainer:
-		content_container.add_theme_stylebox_override("panel", content_style)
+if content_container is PanelContainer:
+	content_container.add_theme_stylebox_override("panel", content_style)
 
 
-		# === PUBLIC API ===
-func _fix_orphaned_code():
-	if results.size() > 0:
-		# Highlight matches
-		for result in results:
-func _fix_orphaned_code():
-	return matches
+	# === PUBLIC API ===
+if results.size() > 0:
+	# Highlight matches
+	for result in results:
+return matches
 
 
-func _fix_orphaned_code():
-	if is_collapsible:
-func _fix_orphaned_code():
-	for line in lines:
-		line = line.strip_edges()
-		if line.is_empty():
-			continue
+if is_collapsible:
+for line in lines:
+	line = line.strip_edges()
+	if line.is_empty():
+		continue
 
-			if not line.begins_with("•"):
-				formatted += "• " + line + "\n"
-				else:
-					formatted += line + "\n"
+		if not line.begins_with("•"):
+			formatted += "• " + line + "\n"
+			else:
+				formatted += line + "\n"
 
-					return formatted.rstrip("\n")
+				return formatted.rstrip("\n")
 
 
-func _fix_orphaned_code():
-	if description.is_empty():
-		set_content("No description available for this structure.")
-		else:
-			# Format with emphasis on first sentence
-func _fix_orphaned_code():
-	if formatted.contains("."):
-func _fix_orphaned_code():
-	if functions.is_empty():
-		set_content("No specific functions listed for this structure.")
-		else:
-func _fix_orphaned_code():
-	for function in functions:
-		content += str(function) + "\n"
-		set_content(content.rstrip("\n"))
+if description.is_empty():
+	set_content("No description available for this structure.")
+	else:
+		# Format with emphasis on first sentence
+if formatted.contains("."):
+if functions.is_empty():
+	set_content("No specific functions listed for this structure.")
+	else:
+for function in functions:
+	content += str(function) + "\n"
+	set_content(content.rstrip("\n"))
 
 
-func _fix_orphaned_code():
-	if connections.is_empty():
-		set_content("No connections listed for this structure.")
-		else:
-func _fix_orphaned_code():
-	for connection in connections:
-		content += "→ [url=" + str(connection) + "]" + str(connection) + "[/url]\n"
-		set_content(content.rstrip("\n"))
+if connections.is_empty():
+	set_content("No connections listed for this structure.")
+	else:
+for connection in connections:
+	content += "→ [url=" + str(connection) + "]" + str(connection) + "[/url]\n"
+	set_content(content.rstrip("\n"))
 
 
-func _fix_orphaned_code():
-	if clinical.is_empty():
-		set_content("No clinical information available for this structure.")
-		else:
-			# Emphasize clinical keywords
-func _fix_orphaned_code():
-	for keyword in keywords:
-func _fix_orphaned_code():
-	return section
+if clinical.is_empty():
+	set_content("No clinical information available for this structure.")
+	else:
+		# Emphasize clinical keywords
+for keyword in keywords:
+return section
 
 func _setup_section_structure() -> void:
 	"""Setup the section layout"""

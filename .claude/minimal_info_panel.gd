@@ -73,7 +73,7 @@ _create_functions_section()
 _create_related_section()
 
 
-var info_container = VBoxContainer.new()
+# FIXED: Orphaned code - var info_container = VBoxContainer.new()
 info_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 header_container.add_child(info_container)
 
@@ -108,7 +108,7 @@ close_button.pressed.connect(_on_close_pressed)
 actions.add_child(close_button)
 
 
-var button = Button.new()
+# FIXED: Orphaned code - var button = Button.new()
 button.flat = true
 button.custom_minimum_size = Vector2(36, 36)
 
@@ -117,7 +117,7 @@ var normal_style = StyleBoxFlat.new()
 normal_style.bg_color = Color.TRANSPARENT
 normal_style.set_corner_radius_all(8)
 
-var hover_style = normal_style.duplicate()
+# FIXED: Orphaned code - var hover_style = normal_style.duplicate()
 hover_style.bg_color = COLORS.hover
 
 button.add_theme_stylebox_override("normal", normal_style)
@@ -135,12 +135,12 @@ description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 overview_section.add_child(description)
 
 
-var content = VBoxContainer.new()
+# FIXED: Orphaned code - var content = VBoxContainer.new()
 content.name = "FunctionsContent"
 content.add_theme_constant_override("separation", SPACING.xs)
 functions_section.add_child(content)
 
-var functions = [
+# FIXED: Orphaned code - var functions = [
 "Memory consolidation",
 "Spatial navigation",
 "Pattern separation",
@@ -152,7 +152,7 @@ var item = _create_list_item(function_text)
 content.add_child(item)
 
 
-var content_2 = VBoxContainer.new()
+# FIXED: Orphaned code - var content_2 = VBoxContainer.new()
 content.name = "RelatedContent"
 content.visible = false
 related_section.add_child(content)
@@ -163,7 +163,7 @@ tag_container.add_theme_constant_override("h_separation", SPACING.sm)
 tag_container.add_theme_constant_override("v_separation", SPACING.sm)
 content.add_child(tag_container)
 
-var structures = [
+# FIXED: Orphaned code - var structures = [
 "Amygdala", "Entorhinal Cortex", "Fornix", "Mammillary Bodies", "Parahippocampal Gyrus"
 ]
 var tag = _create_tag(structure)
@@ -179,7 +179,7 @@ learn_more.add_theme_color_override("font_hover_color", Color(1, 1, 1, 0.8))
 content.add_child(learn_more)
 
 
-var section = VBoxContainer.new()
+# FIXED: Orphaned code - var section = VBoxContainer.new()
 section.add_theme_constant_override("separation", SPACING.md)
 
 # Add separator except for first section
@@ -198,7 +198,7 @@ var title_container = HBoxContainer.new()
 title_container.add_theme_constant_override("separation", SPACING.sm)
 header.add_child(title_container)
 
-var indicator = Label.new()
+# FIXED: Orphaned code - var indicator = Label.new()
 indicator.name = title.replace(" ", "") + "Indicator"
 indicator.text = "▼" if expanded else "▶"
 indicator.add_theme_font_size_override("font_size", 10)
@@ -226,7 +226,7 @@ var count_label = Label.new()
 	count_label.add_theme_color_override("font_color", COLORS.text_muted)
 	header.add_child(count_label)
 
-var item_2 = Label.new()
+# FIXED: Orphaned code - var item_2 = Label.new()
 	item.text = "    " + text  # Simple indent instead of bullet
 	item.add_theme_font_size_override("font_size", FONT_SIZES.small)
 	item.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
@@ -244,7 +244,7 @@ var tween_2 = create_tween()
 	tween.tween_property(item, "modulate", Color.WHITE, ANIM.fast)
 	)
 
-var tag_2 = Button.new()
+# FIXED: Orphaned code - var tag_2 = Button.new()
 	tag.text = text
 	tag.flat = true
 
@@ -256,7 +256,7 @@ var style = StyleBoxFlat.new()
 	style.set_corner_radius_all(16)
 	style.set_content_margin_all(6)
 
-var hover_style_2 = style.duplicate()
+# FIXED: Orphaned code - var hover_style_2 = style.duplicate()
 	hover_style.bg_color = COLORS.border
 	hover_style.border_color = Color(1, 1, 1, 0.12)
 
@@ -268,28 +268,28 @@ var hover_style_2 = style.duplicate()
 
 	tag.pressed.connect(func(): structure_selected.emit(text))
 
-var tween_3 = create_tween()
+# FIXED: Orphaned code - var tween_3 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 1.0, ANIM.slow).set_trans(ANIM.curve)
 	tween.tween_property(self, "position:y", position.y - 20, ANIM.slow).set_trans(ANIM.curve)
 
 
-var section_node: VBoxContainer
+# FIXED: Orphaned code - var section_node: VBoxContainer
 "keyfunctions", "functions":
 	section_node = functions_section
 	"relatedstructures", "related":
 		section_node = related_section
 
 var indicator_2 = section_node.find_child("*Indicator", true, false)
-var tween_4 = create_tween()
-var content_3 = section_node.get_child(section_node.get_child_count() - 1)
-var tween_5 = create_tween()
+# FIXED: Orphaned code - var tween_4 = create_tween()
+# FIXED: Orphaned code - var content_3 = section_node.get_child(section_node.get_child_count() - 1)
+# FIXED: Orphaned code - var tween_5 = create_tween()
 	tween.tween_property(sections_container, "modulate:a", 0, ANIM.fast)
 	tween.tween_callback(_update_content.bind(data))
 	tween.tween_property(sections_container, "modulate:a", 1, ANIM.fast)
 
 
-var category = data.get("category", "Neural Structure")
+# FIXED: Orphaned code - var category = data.get("category", "Neural Structure")
 	structure_category.text = category
 
 
@@ -334,82 +334,65 @@ func display_structure_data(data: Dictionary) -> void:
 
 	# Fade content out
 
-func _fix_orphaned_code():
-	if icon_name == "bookmark":
-		button.text = "☆"
-		elif icon_name == "close":
-			button.text = "×"
+if icon_name == "bookmark":
+	button.text = "☆"
+	elif icon_name == "close":
+		button.text = "×"
 
-			button.add_theme_font_size_override("font_size", size)
+		button.add_theme_font_size_override("font_size", size)
 
-			return button
-
-
-func _fix_orphaned_code():
-	for function_text in functions:
-func _fix_orphaned_code():
-	for structure in structures:
-func _fix_orphaned_code():
-	if sections_container.get_child_count() > 0:
-func _fix_orphaned_code():
-	if collapsible:
-func _fix_orphaned_code():
-	if event is InputEventMouseButton and event.pressed:
-		_toggle_section(title.replace(" ", "").to_lower())
-		)
-		header.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-
-func _fix_orphaned_code():
-	if count > 0:
-func _fix_orphaned_code():
-	return section
+		return button
 
 
-func _fix_orphaned_code():
-	return item
+for function_text in functions:
+for structure in structures:
+if sections_container.get_child_count() > 0:
+if collapsible:
+if event is InputEventMouseButton and event.pressed:
+	_toggle_section(title.replace(" ", "").to_lower())
+	)
+	header.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+if count > 0:
+return section
 
 
-func _fix_orphaned_code():
-	return tag
+return item
 
 
-func _fix_orphaned_code():
-	if not section_node:
-		return
-
-		# Update indicator
-func _fix_orphaned_code():
-	if indicator:
-func _fix_orphaned_code():
-	if expanded_sections[section_id]:
-		tween.tween_property(indicator, "rotation", 0, ANIM.normal)
-		indicator.text = "▼"
-		else:
-			tween.tween_property(indicator, "rotation", deg_to_rad(-90), ANIM.normal)
-			indicator.text = "▶"
-
-			# Toggle content visibility
-func _fix_orphaned_code():
-	if content:
-		content.visible = expanded_sections[section_id]
+return tag
 
 
-		# Public API
-func _fix_orphaned_code():
-	if viewport_width < 768:  # Mobile
-	custom_minimum_size.x = viewport_width * 0.9
-	# Adjust padding for mobile
-func _fix_orphaned_code():
-	if container:
-		container.add_theme_constant_override("margin_left", SPACING.lg)
-		container.add_theme_constant_override("margin_right", SPACING.lg)
-		else:  # Desktop/Tablet
-		custom_minimum_size.x = 380
-		# Reset to default padding
-func _fix_orphaned_code():
-	if container:
-		container.add_theme_constant_override("margin_left", SPACING.xl)
-		container.add_theme_constant_override("margin_right", SPACING.xl)
+if not section_node:
+	return
+
+	# Update indicator
+if indicator:
+if expanded_sections[section_id]:
+	tween.tween_property(indicator, "rotation", 0, ANIM.normal)
+	indicator.text = "▼"
+	else:
+		tween.tween_property(indicator, "rotation", deg_to_rad(-90), ANIM.normal)
+		indicator.text = "▶"
+
+		# Toggle content visibility
+if content:
+	content.visible = expanded_sections[section_id]
+
+
+	# Public API
+if viewport_width < 768:  # Mobile
+custom_minimum_size.x = viewport_width * 0.9
+# Adjust padding for mobile
+if container:
+	container.add_theme_constant_override("margin_left", SPACING.lg)
+	container.add_theme_constant_override("margin_right", SPACING.lg)
+	else:  # Desktop/Tablet
+	custom_minimum_size.x = 380
+	# Reset to default padding
+if container:
+	container.add_theme_constant_override("margin_left", SPACING.xl)
+	container.add_theme_constant_override("margin_right", SPACING.xl)
 
 func _setup_minimal_design() -> void:
 	"""Apply minimal design system"""

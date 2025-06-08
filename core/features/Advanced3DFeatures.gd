@@ -31,8 +31,8 @@ enum SliceAxis { SAGITTAL, CORONAL, AXIAL }  # Left-right  # Front-back  # Top-b
 
 var current_view_mode: ViewMode = ViewMode.NORMAL
 var active_animations: Dictionary = {}
-var slice_planes: Dictionary = {}
-var highlighted_structures: Array = []
+# FIXED: Orphaned code - var slice_planes: Dictionary = {}
+# FIXED: Orphaned code - var highlighted_structures: Array = []
 var pathway_visualizations: Array = []
 
 # === REFERENCES ===
@@ -82,7 +82,7 @@ var plane_2 = slice_planes[axis]
 				slice_position_changed.emit(_get_axis_name(axis), position)
 
 
-var plane_3 = slice_planes[axis]
+# FIXED: Orphaned code - var plane_3 = slice_planes[axis]
 
 SliceAxis.SAGITTAL:
 	plane.position.x = position
@@ -97,7 +97,7 @@ SliceAxis.SAGITTAL:
 			slice_position_changed.emit(_get_axis_name(axis), position)
 
 
-var mat = ShaderMaterial.new()
+# FIXED: Orphaned code - var mat = ShaderMaterial.new()
 	mat.shader = slice_shader
 	mat.set_shader_parameter("slice_axis", axis)
 	mat.set_shader_parameter("slice_position", position)
@@ -109,8 +109,8 @@ var mat = ShaderMaterial.new()
 
 
 var original_mat = model.get_meta("original_material", null)
-var structure = _find_structure_mesh(structure_id)
-var tween = create_tween()
+# FIXED: Orphaned code - var structure = _find_structure_mesh(structure_id)
+# FIXED: Orphaned code - var tween = create_tween()
 	tween.set_loops(3)
 
 	# Pulse effect
@@ -130,14 +130,14 @@ var tween = create_tween()
 		)
 
 
-var pathway_visual = _create_pathway_visualization(structures)
+# FIXED: Orphaned code - var pathway_visual = _create_pathway_visualization(structures)
 	pathway_visualizations.append(pathway_visual)
 
 	# Animate signal flow
 var tween_2 = create_tween()
 
-var from_pos = _get_structure_position(structures[i])
-var to_pos = _get_structure_position(structures[i + 1])
+# FIXED: Orphaned code - var from_pos = _get_structure_position(structures[i])
+# FIXED: Orphaned code - var to_pos = _get_structure_position(structures[i + 1])
 
 # Animate particle along path
 var particle = _create_signal_particle()
@@ -156,18 +156,18 @@ var particle = _create_signal_particle()
 		)
 
 
-var tween_3 = create_tween()
+# FIXED: Orphaned code - var tween_3 = create_tween()
 	tween.set_parallel(true)
 
 	# Calculate explosion vectors for each structure
 var center = brain_model_parent.global_position
 
 var direction = (model.global_position - center).normalized()
-var distance = 2.0 if expand else 0.0
+# FIXED: Orphaned code - var distance = 2.0 if expand else 0.0
 
 # Store original position
 var target_pos = model.get_meta("original_position", model.position)
-var tween_4 = create_tween()
+# FIXED: Orphaned code - var tween_4 = create_tween()
 	tween.set_loops()
 	tween.tween_property(
 	brain_model_parent,
@@ -180,11 +180,11 @@ var tween_4 = create_tween()
 
 
 var mat_2 = model.get_surface_override_material(0)
-var mat_3 = model.get_surface_override_material(0)
-var color = color_map[structure_id]
+# FIXED: Orphaned code - var mat_3 = model.get_surface_override_material(0)
+# FIXED: Orphaned code - var color = color_map[structure_id]
 var structure_2 = _find_structure_mesh(structure_id)
 
-var mat_4 = StandardMaterial3D.new()
+# FIXED: Orphaned code - var mat_4 = StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.emission_enabled = true
 	mat.emission = color
@@ -195,8 +195,8 @@ var mat_4 = StandardMaterial3D.new()
 
 
 var original_mat_2 = model.get_meta("original_material", null)
-var structures = pathway_data.get("structures", [])
-var connections = pathway_data.get("connections", [])
+# FIXED: Orphaned code - var structures = pathway_data.get("structures", [])
+# FIXED: Orphaned code - var connections = pathway_data.get("connections", [])
 
 # Highlight structures in pathway
 var line = _create_connection_line(
@@ -206,8 +206,8 @@ var line = _create_connection_line(
 	pathway_visualizations.append(line)
 
 
-var structure_3 = _find_structure_mesh(structure_id)
-var mat_5 = ShaderMaterial.new()
+# FIXED: Orphaned code - var structure_3 = _find_structure_mesh(structure_id)
+# FIXED: Orphaned code - var mat_5 = ShaderMaterial.new()
 	mat.shader = highlight_shader
 	mat.set_shader_parameter("highlight_color", Color.CYAN)
 	mat.set_shader_parameter("highlight_strength", highlight_intensity)
@@ -218,8 +218,8 @@ var mat_5 = ShaderMaterial.new()
 	highlighted_structures.append(structure_id)
 	# Remove highlight
 var original_mat_3 = structure.get_meta("original_material", null)
-var structure_4 = _find_structure_mesh(structure_id)
-var pathway_node = Node3D.new()
+# FIXED: Orphaned code - var structure_4 = _find_structure_mesh(structure_id)
+# FIXED: Orphaned code - var pathway_node = Node3D.new()
 	pathway_node.name = "Pathway_Visualization"
 
 	# Create connections between structures
@@ -227,14 +227,14 @@ var line_2 = _create_connection_line(structures[i], structures[i + 1], 1.0)
 	pathway_node.add_child(line)
 
 	add_child(pathway_node)
-var line_node = Node3D.new()
+# FIXED: Orphaned code - var line_node = Node3D.new()
 
-var from_pos_2 = _get_structure_position(from_id)
-var to_pos_2 = _get_structure_position(to_id)
+# FIXED: Orphaned code - var from_pos_2 = _get_structure_position(from_id)
+# FIXED: Orphaned code - var to_pos_2 = _get_structure_position(to_id)
 
 # Create line mesh
 var immediate_mesh = ImmediateMesh.new()
-var mesh_instance = MeshInstance3D.new()
+# FIXED: Orphaned code - var mesh_instance = MeshInstance3D.new()
 	mesh_instance.mesh = immediate_mesh
 
 	# Create material
@@ -419,110 +419,91 @@ func take_screenshot(filename: String = "") -> void:
 
 		# Get viewport image
 
-func _fix_orphaned_code():
-	if original_mat:
-		model.material_override = original_mat
-		model.remove_meta("original_material")
+if original_mat:
+	model.material_override = original_mat
+	model.remove_meta("original_material")
 
 
-		# === ANIMATION SYSTEM ===
-func _fix_orphaned_code():
-	if not structure:
-		return
+	# === ANIMATION SYSTEM ===
+if not structure:
+	return
 
-		animation_started.emit("highlight_" + structure_id)
+	animation_started.emit("highlight_" + structure_id)
 
-		# Create highlight animation
-func _fix_orphaned_code():
-	for i in range(structures.size() - 1):
-func _fix_orphaned_code():
-	for model in brain_model_parent.get_children():
-		if model is MeshInstance3D:
-func _fix_orphaned_code():
-	if expand:
-		model.set_meta("original_position", model.position)
+	# Create highlight animation
+for i in range(structures.size() - 1):
+for model in brain_model_parent.get_children():
+	if model is MeshInstance3D:
+if expand:
+	model.set_meta("original_position", model.position)
 
-func _fix_orphaned_code():
-	if expand:
-		target_pos += direction * distance
+if expand:
+	target_pos += direction * distance
 
-		tween.tween_property(model, "position", target_pos, 2.0 * animation_speed)
+	tween.tween_property(model, "position", target_pos, 2.0 * animation_speed)
 
-		tween.finished.connect(func(): animation_completed.emit("exploded_view"))
+	tween.finished.connect(func(): animation_completed.emit("exploded_view"))
 
 
-func _fix_orphaned_code():
-	if not mat:
-		mat = StandardMaterial3D.new()
-		mat.albedo_color = Color.WHITE
+if not mat:
+	mat = StandardMaterial3D.new()
+	mat.albedo_color = Color.WHITE
 
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		mat.albedo_color.a = opacity
-		model.set_surface_override_material(0, mat)
-		else:
-			# Restore opacity
-func _fix_orphaned_code():
-	if mat:
-		mat.albedo_color.a = 1.0
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.albedo_color.a = opacity
+	model.set_surface_override_material(0, mat)
+	else:
+		# Restore opacity
+if mat:
+	mat.albedo_color.a = 1.0
 
 
-		# === FUNCTIONAL COLORING ===
-func _fix_orphaned_code():
-	if structure:
-func _fix_orphaned_code():
-	if original_mat:
-		model.material_override = original_mat
-		model.remove_meta("original_material")
+	# === FUNCTIONAL COLORING ===
+if structure:
+if original_mat:
+	model.material_override = original_mat
+	model.remove_meta("original_material")
 
-		current_view_mode = ViewMode.NORMAL
+	current_view_mode = ViewMode.NORMAL
 
 
-		# === PATHWAY VISUALIZATION ===
-func _fix_orphaned_code():
-	for structure_id in structures:
-		highlight_structure(structure_id, true)
+	# === PATHWAY VISUALIZATION ===
+for structure_id in structures:
+	highlight_structure(structure_id, true)
 
-		# Create connection lines
-		for connection in connections:
-func _fix_orphaned_code():
-	if not structure:
-		return
+	# Create connection lines
+	for connection in connections:
+if not structure:
+	return
 
-		if highlight:
-			# Apply highlight shader
-func _fix_orphaned_code():
-	if original_mat:
-		structure.material_override = original_mat
-		structure.remove_meta("original_material")
+	if highlight:
+		# Apply highlight shader
+if original_mat:
+	structure.material_override = original_mat
+	structure.remove_meta("original_material")
 
-		highlighted_structures.erase(structure_id)
+	highlighted_structures.erase(structure_id)
 
-		highlight_changed.emit(structure_id, highlight)
+	highlight_changed.emit(structure_id, highlight)
 
 
-		# === UTILITY METHODS ===
-func _fix_orphaned_code():
-	if structure:
-		return structure.global_position
-		return Vector3.ZERO
+	# === UTILITY METHODS ===
+if structure:
+	return structure.global_position
+	return Vector3.ZERO
 
 
-func _fix_orphaned_code():
-	for i in range(structures.size() - 1):
-func _fix_orphaned_code():
-	return pathway_node
+for i in range(structures.size() - 1):
+return pathway_node
 
 
-func _fix_orphaned_code():
-	return line_node
+return line_node
 
 
-func _fix_orphaned_code():
-	return particles
+return particles
 
 
-func _fix_orphaned_code():
-	print("Screenshot saved: " + filename)
+print("Screenshot saved: " + filename)
 
 func _load_shaders() -> void:
 	"""Load custom shaders for advanced effects"""

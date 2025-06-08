@@ -13,9 +13,9 @@ timer.timeout.connect(_run_diagnostics)
 timer.start()
 
 
-var main_scene = get_tree().current_scene
+# FIXED: Orphaned code - var main_scene = get_tree().current_scene
 var brain_model_parent = main_scene.find_child("BrainModel", true, false)
-var mesh_names = []
+# FIXED: Orphaned code - var mesh_names = []
 var mesh_info = {}
 
 # Recursively collect all mesh instances
@@ -32,7 +32,7 @@ var main_scene_2 = get_tree().current_scene
 
 var structure_ids = knowledge_base.get_all_structure_ids()
 
-var matches = 0
+# FIXED: Orphaned code - var matches = 0
 var partial_matches = 0
 var no_matches = 0
 
@@ -41,11 +41,11 @@ var matching_id = ""
 
 # Exact match check
 var lower_mesh_name = mesh_name.to_lower()
-var found_partial = false
+# FIXED: Orphaned code - var found_partial = false
 
 var structure = knowledge_base.get_structure(id)
-var display_name = structure.displayName.to_lower()
-var neural_net = null
+# FIXED: Orphaned code - var display_name = structure.displayName.to_lower()
+# FIXED: Orphaned code - var neural_net = null
 var main_scene_3 = get_tree().current_scene
 
 var mapped = 0
@@ -57,133 +57,117 @@ func _ready() -> void:
 	print("MeshDiagnostic: Script initialized. Waiting for models to load...")
 	# Wait a moment to ensure models are loaded
 
-func _fix_orphaned_code():
-	if not main_scene:
-		print("ERROR: Cannot access current scene. Aborting.")
-		return
+if not main_scene:
+	print("ERROR: Cannot access current scene. Aborting.")
+	return
 
-		# Look for BrainModel node
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		print("ERROR: BrainModel node not found. Make sure this script is run in the main scene.")
-		return
+	# Look for BrainModel node
+if not brain_model_parent:
+	print("ERROR: BrainModel node not found. Make sure this script is run in the main scene.")
+	return
 
-		# Store all found mesh names
-func _fix_orphaned_code():
-	print("\nFound " + str(mesh_names.size()) + " mesh instances:")
-	for mesh_name in mesh_names:
-func _fix_orphaned_code():
-	print(" - " + mesh_name + " (Parent: " + info.parent + ", Path: " + info.path + ")")
+	# Store all found mesh names
+print("\nFound " + str(mesh_names.size()) + " mesh instances:")
+for mesh_name in mesh_names:
+print(" - " + mesh_name + " (Parent: " + info.parent + ", Path: " + info.path + ")")
 
-	# Compare with knowledge base structure IDs
-	_compare_with_knowledge_base(mesh_names)
+# Compare with knowledge base structure IDs
+_compare_with_knowledge_base(mesh_names)
 
-	# Check NeuralNet mapping
-	_check_neural_net_mapping(mesh_names)
+# Check NeuralNet mapping
+_check_neural_net_mapping(mesh_names)
 
-	print("\n===== END OF DIAGNOSTIC REPORT =====")
+print("\n===== END OF DIAGNOSTIC REPORT =====")
 
 
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-		mesh_names.append(node.name)
-func _fix_orphaned_code():
-	if node.get_parent() != null:
-		parent_name = node.get_parent().name
+if node is MeshInstance3D:
+	mesh_names.append(node.name)
+if node.get_parent() != null:
+	parent_name = node.get_parent().name
 
-		mesh_info[node.name] = {"parent": parent_name, "path": current_path}
+	mesh_info[node.name] = {"parent": parent_name, "path": current_path}
 
-		# Recursively check all children
-		for child in node.get_children():
-			_collect_mesh_instances(child, mesh_names, mesh_info, current_path)
+	# Recursively check all children
+	for child in node.get_children():
+		_collect_mesh_instances(child, mesh_names, mesh_info, current_path)
 
 
-func _fix_orphaned_code():
-	if main_scene:
-		# Check if the property exists (using get() with a default to avoid errors)
-		if "knowledge_base" in main_scene:
-			knowledge_base = main_scene.knowledge_base
+if main_scene:
+	# Check if the property exists (using get() with a default to avoid errors)
+	if "knowledge_base" in main_scene:
+		knowledge_base = main_scene.knowledge_base
 
-			if not knowledge_base:
-				print("ERROR: Knowledge base not found")
-				return
+		if not knowledge_base:
+			print("ERROR: Knowledge base not found")
+			return
 
-				# Get all structure IDs from knowledge base
-func _fix_orphaned_code():
-	print("\nKnowledge base contains " + str(structure_ids.size()) + " structure IDs:")
-	for id in structure_ids:
-		print(" - " + id)
+			# Get all structure IDs from knowledge base
+print("\nKnowledge base contains " + str(structure_ids.size()) + " structure IDs:")
+for id in structure_ids:
+	print(" - " + id)
 
-		print("\nMatching analysis:")
+	print("\nMatching analysis:")
 
-		# Print matches and mismatches
-func _fix_orphaned_code():
-	for mesh_name in mesh_names:
-func _fix_orphaned_code():
-	if structure_ids.has(mesh_name):
-		match_type = "EXACT MATCH"
-		matching_id = mesh_name
-		matches += 1
-		else:
-			# Check for partial matches
-func _fix_orphaned_code():
-	for id in structure_ids:
-func _fix_orphaned_code():
-	if structure.has("displayName"):
-func _fix_orphaned_code():
-	if (
-	lower_mesh_name.contains(display_name)
-	or display_name.contains(lower_mesh_name)
-	):
-		match_type = "PARTIAL MATCH"
-		matching_id = id
-		partial_matches += 1
-		found_partial = true
-		break
+	# Print matches and mismatches
+for mesh_name in mesh_names:
+if structure_ids.has(mesh_name):
+	match_type = "EXACT MATCH"
+	matching_id = mesh_name
+	matches += 1
+	else:
+		# Check for partial matches
+for id in structure_ids:
+if structure.has("displayName"):
+if (
+lower_mesh_name.contains(display_name)
+or display_name.contains(lower_mesh_name)
+):
+	match_type = "PARTIAL MATCH"
+	matching_id = id
+	partial_matches += 1
+	found_partial = true
+	break
 
-		if not found_partial:
-			no_matches += 1
+	if not found_partial:
+		no_matches += 1
 
-			print(
-			(
-			" - "
-			+ mesh_name
-			+ ": "
-			+ match_type
-			+ (("") if matching_id.is_empty() else (" with " + matching_id))
-			)
-			)
+		print(
+		(
+		" - "
+		+ mesh_name
+		+ ": "
+		+ match_type
+		+ (("") if matching_id.is_empty() else (" with " + matching_id))
+		)
+		)
 
-			print("\nSummary:")
-			print(" - Exact matches: " + str(matches))
-			print(" - Partial matches: " + str(partial_matches))
-			print(" - No matches: " + str(no_matches))
+		print("\nSummary:")
+		print(" - Exact matches: " + str(matches))
+		print(" - Partial matches: " + str(partial_matches))
+		print(" - No matches: " + str(no_matches))
 
 
-func _fix_orphaned_code():
-	if main_scene:
-		# Check if the property exists
-		if "neural_net" in main_scene:
-			neural_net = main_scene.neural_net
+if main_scene:
+	# Check if the property exists
+	if "neural_net" in main_scene:
+		neural_net = main_scene.neural_net
 
-			if not neural_net:
-				print("ERROR: NeuralNet module not found")
-				return
+		if not neural_net:
+			print("ERROR: NeuralNet module not found")
+			return
 
-				# Check mapping for each mesh name
-func _fix_orphaned_code():
-	for mesh_name in mesh_names:
-func _fix_orphaned_code():
-	if mapped_id.is_empty():
-		print(" - " + mesh_name + ": NOT MAPPED")
-		unmapped += 1
-		else:
-			print(" - " + mesh_name + " -> " + mapped_id)
-			mapped += 1
+			# Check mapping for each mesh name
+for mesh_name in mesh_names:
+if mapped_id.is_empty():
+	print(" - " + mesh_name + ": NOT MAPPED")
+	unmapped += 1
+	else:
+		print(" - " + mesh_name + " -> " + mapped_id)
+		mapped += 1
 
-			print("\nSummary:")
-			print(" - Mapped mesh names: " + str(mapped))
-			print(" - Unmapped mesh names: " + str(unmapped))
+		print("\nSummary:")
+		print(" - Mapped mesh names: " + str(mapped))
+		print(" - Unmapped mesh names: " + str(unmapped))
 
 func _run_diagnostics() -> void:
 	print("\n===== MESH DIAGNOSTIC REPORT =====")

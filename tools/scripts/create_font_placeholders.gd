@@ -6,9 +6,9 @@ extends SceneTree
 
 
 var dir = DirAccess.open("res://")
-var err = dir.make_dir("assets")
-var err_2 = dir.make_dir("fonts")
-var fonts_to_create = [
+# FIXED: Orphaned code - var err = dir.make_dir("assets")
+# FIXED: Orphaned code - var err_2 = dir.make_dir("fonts")
+# FIXED: Orphaned code - var fonts_to_create = [
 {
 "filename": "Inter-Regular.tres",
 "original_name": "Inter-Regular.ttf",
@@ -56,7 +56,7 @@ system_font.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
 
 # Save the font resource
 var err_3 = ResourceSaver.save(system_font, font_path)
-var original_path = "res://assets/fonts/" + font_config.original_name
+# FIXED: Orphaned code - var original_path = "res://assets/fonts/" + font_config.original_name
 # Create a duplicate resource pointing to the same system font
 var err2 = ResourceSaver.save(system_font, original_path)
 
@@ -65,77 +65,70 @@ func _init():
 
 	# Ensure the fonts directory exists
 
-func _fix_orphaned_code():
-	if not dir:
-		print("[FontPlaceholders] ERROR: Cannot access project directory")
-		quit()
-		return
+if not dir:
+	print("[FontPlaceholders] ERROR: Cannot access project directory")
+	quit()
+	return
 
-		# Create assets directory if it doesn't exist
-		if not dir.dir_exists("assets"):
-			print("[FontPlaceholders] Creating assets directory...")
-func _fix_orphaned_code():
-	if err != OK:
-		print("[FontPlaceholders] ERROR: Failed to create assets directory")
-		quit()
-		return
+	# Create assets directory if it doesn't exist
+	if not dir.dir_exists("assets"):
+		print("[FontPlaceholders] Creating assets directory...")
+if err != OK:
+	print("[FontPlaceholders] ERROR: Failed to create assets directory")
+	quit()
+	return
 
-		# Create fonts directory if it doesn't exist
-		dir.change_dir("assets")
-		if not dir.dir_exists("fonts"):
-			print("[FontPlaceholders] Creating assets/fonts directory...")
-func _fix_orphaned_code():
-	if err != OK:
-		print("[FontPlaceholders] ERROR: Failed to create fonts directory")
-		quit()
-		return
+	# Create fonts directory if it doesn't exist
+	dir.change_dir("assets")
+	if not dir.dir_exists("fonts"):
+		print("[FontPlaceholders] Creating assets/fonts directory...")
+if err != OK:
+	print("[FontPlaceholders] ERROR: Failed to create fonts directory")
+	quit()
+	return
 
-		# Define font configurations
-func _fix_orphaned_code():
-	for font_config in fonts_to_create:
-func _fix_orphaned_code():
-	if ResourceLoader.exists(font_path):
-		print("[FontPlaceholders] Font already exists: " + font_config.filename)
-		continue
+	# Define font configurations
+for font_config in fonts_to_create:
+if ResourceLoader.exists(font_path):
+	print("[FontPlaceholders] Font already exists: " + font_config.filename)
+	continue
 
-		# Create SystemFont resource
-func _fix_orphaned_code():
-	if err == OK:
-		print("[FontPlaceholders] Created placeholder: " + font_config.filename)
-		created_count += 1
+	# Create SystemFont resource
+if err == OK:
+	print("[FontPlaceholders] Created placeholder: " + font_config.filename)
+	created_count += 1
 
-		# Also create a symlink or copy for the expected .ttf filename
-		if font_config.has("original_name"):
-func _fix_orphaned_code():
-	if err2 == OK:
+	# Also create a symlink or copy for the expected .ttf filename
+	if font_config.has("original_name"):
+if err2 == OK:
+	print(
+	"[FontPlaceholders] Created TTF placeholder: " + font_config.original_name
+	)
+	else:
 		print(
-		"[FontPlaceholders] Created TTF placeholder: " + font_config.original_name
+		(
+		"[FontPlaceholders] Note: Could not create TTF reference for "
+		+ font_config.original_name
+		)
 		)
 		else:
 			print(
 			(
-			"[FontPlaceholders] Note: Could not create TTF reference for "
-			+ font_config.original_name
+			"[FontPlaceholders] ERROR: Failed to save "
+			+ font_config.filename
+			+ " (Error: "
+			+ str(err)
+			+ ")"
 			)
 			)
-			else:
-				print(
-				(
-				"[FontPlaceholders] ERROR: Failed to save "
-				+ font_config.filename
-				+ " (Error: "
-				+ str(err)
-				+ ")"
-				)
-				)
-				failed_count += 1
+			failed_count += 1
 
-				# Print summary
-				print("\n[FontPlaceholders] Generation complete!")
-				print("[FontPlaceholders] Created: " + str(created_count) + " placeholder(s)")
-				print("[FontPlaceholders] Failed: " + str(failed_count))
-				print("[FontPlaceholders] Note: These are temporary placeholders using system fonts.")
-				print("[FontPlaceholders] Replace them with actual font files when available.")
+			# Print summary
+			print("\n[FontPlaceholders] Generation complete!")
+			print("[FontPlaceholders] Created: " + str(created_count) + " placeholder(s)")
+			print("[FontPlaceholders] Failed: " + str(failed_count))
+			print("[FontPlaceholders] Note: These are temporary placeholders using system fonts.")
+			print("[FontPlaceholders] Replace them with actual font files when available.")
 
-				# Quit the script
-				quit()
+			# Quit the script
+			quit()

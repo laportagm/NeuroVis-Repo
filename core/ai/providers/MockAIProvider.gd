@@ -64,7 +64,7 @@ var mock_responses: Dictionary = {
 																							}
 																							}
 
-var current_structure: String = ""
+# FIXED: Orphaned code - var current_structure: String = ""
 var mock_delay: float = 0.5
 
 
@@ -79,11 +79,11 @@ var response = "This is a mock response generated from: " + _prompt
 
 	# Return empty string since the response will be sent via signal
 var lower_question = question.to_lower()
-var response_2 = ""
+# FIXED: Orphaned code - var response_2 = ""
 
 # Check if asking about current structure
 var structure_lower = current_structure.to_lower()
-var structure_responses = mock_responses.get(structure_lower, {})
+# FIXED: Orphaned code - var structure_responses = mock_responses.get(structure_lower, {})
 
 # Match question type to appropriate response
 
@@ -195,40 +195,37 @@ func set_current_structure(structure: String) -> void:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	return ""
+return ""
 
 
-func _fix_orphaned_code():
-	if not current_structure.is_empty():
-func _fix_orphaned_code():
-	if "function" in lower_question or "do" in lower_question:
-		response = structure_responses.get("function", "")
-		elif "location" in lower_question or "where" in lower_question:
-			response = structure_responses.get("location", "")
-			elif "connect" in lower_question or "connection" in lower_question:
-				response = structure_responses.get("connections", "")
-				elif (
-				"damage" in lower_question or "clinical" in lower_question or "injury" in lower_question
-				):
-					response = structure_responses.get("clinical", "")
-					else:
-						response = structure_responses.get("default", "")
+if not current_structure.is_empty():
+if "function" in lower_question or "do" in lower_question:
+	response = structure_responses.get("function", "")
+	elif "location" in lower_question or "where" in lower_question:
+		response = structure_responses.get("location", "")
+		elif "connect" in lower_question or "connection" in lower_question:
+			response = structure_responses.get("connections", "")
+			elif (
+			"damage" in lower_question or "clinical" in lower_question or "injury" in lower_question
+			):
+				response = structure_responses.get("clinical", "")
+				else:
+					response = structure_responses.get("default", "")
 
-						# Fallback to general responses
-						if response.is_empty():
-							if "hello" in lower_question or "hi" in lower_question:
-								response = mock_responses.general.greeting
-								elif "help" in lower_question:
-									response = mock_responses.general.help
-									else:
-										response = mock_responses.general.default
+					# Fallback to general responses
+					if response.is_empty():
+						if "hello" in lower_question or "hi" in lower_question:
+							response = mock_responses.general.greeting
+							elif "help" in lower_question:
+								response = mock_responses.general.help
+								else:
+									response = mock_responses.general.default
 
-										# Add mock AI disclaimer
-										response += "\n\n[Note: This is a mock response for testing. Connect to a real AI provider for full functionality.]"
+									# Add mock AI disclaimer
+									response += "\n\n[Note: This is a mock response for testing. Connect to a real AI provider for full functionality.]"
 
-										# Emit the response
-										response_received.emit(response)
+									# Emit the response
+									response_received.emit(response)
 
 func _send_mock_response(question: String) -> void:
 	"""Generate and send a mock response based on the question"""

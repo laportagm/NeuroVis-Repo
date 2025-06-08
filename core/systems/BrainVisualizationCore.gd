@@ -10,7 +10,7 @@ signal neural_net_ready
 
 # Structure mapping (mesh name to standardized ID)
 
-var structure_map = {
+# FIXED: Orphaned code - var structure_map = {
 # Common name variations in 3D models
 "Thalamus": "Thalamus",
 "thalamus": "Thalamus",
@@ -68,7 +68,7 @@ var structure_map = {
 }
 
 
-var name_str = String(mesh_name)
+# FIXED: Orphaned code - var name_str = String(mesh_name)
 
 # Try direct lookup first
 var lower_name = name_str.to_lower()
@@ -93,23 +93,21 @@ func add_structure_mapping(mesh_name: String, structure_id: String) -> void:
 	structure_map[mesh_name] = structure_id
 	print("Added structure mapping: " + mesh_name + " -> " + structure_id)
 
-func _fix_orphaned_code():
-	if structure_map.has(name_str):
-		return structure_map[name_str]
+if structure_map.has(name_str):
+	return structure_map[name_str]
 
-		# Try lowercase
-func _fix_orphaned_code():
-	if structure_map.has(lower_name):
-		return structure_map[lower_name]
+	# Try lowercase
+if structure_map.has(lower_name):
+	return structure_map[lower_name]
 
-		# Try partial matching (check if mesh name contains any of our known keys)
-		for key in structure_map:
-			if name_str.contains(key) or key.contains(name_str):
-				return structure_map[key]
+	# Try partial matching (check if mesh name contains any of our known keys)
+	for key in structure_map:
+		if name_str.contains(key) or key.contains(name_str):
+			return structure_map[key]
 
-				# No match found, log a verbose message to aid in debugging
-				print_verbose("NeuralNet: No structure ID mapping found for mesh_name: '" + name_str + "'")
-				return ""
+			# No match found, log a verbose message to aid in debugging
+			print_verbose("NeuralNet: No structure ID mapping found for mesh_name: '" + name_str + "'")
+			return ""
 
 
-				# Add a structure mapping
+			# Add a structure mapping

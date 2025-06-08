@@ -45,7 +45,7 @@ var comparison = _comparison_database[comparison_id]
 
 # Load the required models for this comparison
 var loading_success = _load_comparison_models(comparison)
-var comparison_2 = _comparison_database[comparison_id]
+# FIXED: Orphaned code - var comparison_2 = _comparison_database[comparison_id]
 
 # Generate educational report data
 var report = {
@@ -58,7 +58,7 @@ var report = {
 "visualization_tips": _generate_visualization_tips(comparison)
 }
 
-var required_fields = [
+# FIXED: Orphaned code - var required_fields = [
 "title",
 "type",
 "primary_model",
@@ -94,10 +94,10 @@ ComparisonType.STRUCTURE_FUNCTION:
 					tips.append("Compare what features are visible in different imaging modalities")
 					tips.append("Consider clinical applications of each imaging technique")
 
-var _active_comparison_id: String = ""
+# FIXED: Orphaned code - var _active_comparison_id: String = ""
 var _comparison_data: Dictionary = {}
-var _loaded_comparison_models: Dictionary = {}
-var _comparison_database: Dictionary = {
+# FIXED: Orphaned code - var _loaded_comparison_models: Dictionary = {}
+# FIXED: Orphaned code - var _comparison_database: Dictionary = {
 "human_vs_chimp_frontal_lobe":
 	{
 	"title": "Human vs Chimpanzee Frontal Lobe",
@@ -197,92 +197,83 @@ func generate_educational_report(comparison_id: String = "") -> Dictionary:
 			push_error("[ComparativeAnatomy] Cannot generate report: No valid comparison")
 			return {}
 
-func _fix_orphaned_code():
-	if not _validate_comparison_entry(entry):
-		push_warning("[ComparativeAnatomy] Invalid comparison entry: " + comparison_id)
+if not _validate_comparison_entry(entry):
+	push_warning("[ComparativeAnatomy] Invalid comparison entry: " + comparison_id)
 
-		return true
-
-
-		## Get available comparison types
-		## @returns: Array - List of available comparison types
-func _fix_orphaned_code():
-	for type_value in ComparisonType.values():
-		types.append({"id": type_value, "name": ComparisonType.keys()[type_value]})
-		return types
+	return true
 
 
-		## Get available comparisons
-		## @param type: ComparisonType - Optional filter by comparison type
-		## @returns: Array - List of available comparisons
-func _fix_orphaned_code():
-	for id in _comparison_database:
-func _fix_orphaned_code():
-	if type != -1 and entry.type != type:
-		continue
-
-		comparisons.append(
-		{
-		"id": id,
-		"title": entry.title,
-		"type": entry.type,
-		"primary_model": entry.primary_model,
-		"secondary_model": entry.secondary_model
-		}
-		)
-
-		return comparisons
+	## Get available comparison types
+	## @returns: Array - List of available comparison types
+for type_value in ComparisonType.values():
+	types.append({"id": type_value, "name": ComparisonType.keys()[type_value]})
+	return types
 
 
-		## Start a comparison by ID
-		## @param comparison_id: String - ID of the comparison to start
-		## @returns: bool - true if comparison started successfully
-func _fix_orphaned_code():
-	if not loading_success:
-		push_error("[ComparativeAnatomy] Failed to load models for comparison: " + comparison_id)
+	## Get available comparisons
+	## @param type: ComparisonType - Optional filter by comparison type
+	## @returns: Array - List of available comparisons
+for id in _comparison_database:
+if type != -1 and entry.type != type:
+	continue
+
+	comparisons.append(
+	{
+	"id": id,
+	"title": entry.title,
+	"type": entry.type,
+	"primary_model": entry.primary_model,
+	"secondary_model": entry.secondary_model
+	}
+	)
+
+	return comparisons
+
+
+	## Start a comparison by ID
+	## @param comparison_id: String - ID of the comparison to start
+	## @returns: bool - true if comparison started successfully
+if not loading_success:
+	push_error("[ComparativeAnatomy] Failed to load models for comparison: " + comparison_id)
+	return false
+
+	_active_comparison_id = comparison_id
+	_comparison_data = comparison
+
+	comparison_models_loaded.emit(comparison.primary_model, comparison.secondary_model)
+	comparison_ready.emit(comparison_id)
+
+	return true
+
+
+	## Get the current comparison data
+	## @returns: Dictionary - Data for the current comparison
+return report
+
+
+# === PRIVATE METHODS ===
+for field in required_fields:
+	if not entry.has(field):
 		return false
 
-		_active_comparison_id = comparison_id
-		_comparison_data = comparison
-
-		comparison_models_loaded.emit(comparison.primary_model, comparison.secondary_model)
-		comparison_ready.emit(comparison_id)
-
 		return true
 
 
-		## Get the current comparison data
-		## @returns: Dictionary - Data for the current comparison
-func _fix_orphaned_code():
-	return report
+print("[ComparativeAnatomy] Updating annotations for: " + comparison.title)
+
+# Apply annotation style
+match default_annotation_style:
+	AnnotationStyle.SIMPLE_LABELS:
+		_apply_simple_labels(comparison)
+		AnnotationStyle.DETAILED_CALLOUTS:
+			_apply_detailed_callouts(comparison)
+			AnnotationStyle.COLOR_HIGHLIGHTING:
+				_apply_color_highlighting(comparison)
+				AnnotationStyle.INTERACTIVE_MARKERS:
+					_apply_interactive_markers(comparison)
 
 
-	# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	for field in required_fields:
-		if not entry.has(field):
-			return false
-
-			return true
-
-
-func _fix_orphaned_code():
-	print("[ComparativeAnatomy] Updating annotations for: " + comparison.title)
-
-	# Apply annotation style
-	match default_annotation_style:
-		AnnotationStyle.SIMPLE_LABELS:
-			_apply_simple_labels(comparison)
-			AnnotationStyle.DETAILED_CALLOUTS:
-				_apply_detailed_callouts(comparison)
-				AnnotationStyle.COLOR_HIGHLIGHTING:
-					_apply_color_highlighting(comparison)
-					AnnotationStyle.INTERACTIVE_MARKERS:
-						_apply_interactive_markers(comparison)
-
-
-func _fix_orphaned_code():
-	return tips
+return tips
 
 func _validate_comparison_entry(entry: Dictionary) -> bool:
 	"""Validate that a comparison database entry has all required fields"""

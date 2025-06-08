@@ -17,11 +17,11 @@ panel.set_anchors_preset(Control.PRESET_CENTER)
 panel.custom_minimum_size = Vector2(500, 300)
 add_child(panel)
 
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 vbox.add_theme_constant_override("separation", 20)
 panel.add_child(vbox)
 
-var title = Label.new()
+# FIXED: Orphaned code - var title = Label.new()
 title.text = "AI Architecture Simple Test"
 title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 title.add_theme_font_size_override("font_size", 24)
@@ -34,24 +34,24 @@ info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 info_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 vbox.add_child(info_label)
 
-var button = Button.new()
+# FIXED: Orphaned code - var button = Button.new()
 button.text = "Close"
 button.custom_minimum_size = Vector2(100, 40)
 button.pressed.connect(func(): queue_free())
 
-var button_container = HBoxContainer.new()
+# FIXED: Orphaned code - var button_container = HBoxContainer.new()
 button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 button_container.add_child(button)
 vbox.add_child(button_container)
 
 
-var config_script = preprepreload("res://core/ai/config/AIConfigurationManager.gd")
-var config_instance = config_script.new()
-var registry_script = preprepreload("res://core/ai/AIProviderRegistry.gd")
-var registry_instance = registry_script.new()
-var mock_script = preprepreload("res://core/ai/providers/MockAIProvider.gd")
-var mock_instance = mock_script.new()
-var text = "Test Results:\n\n"
+# FIXED: Orphaned code - var config_script = preload("res://core/ai/config/AIConfigurationManager.gd")
+# FIXED: Orphaned code - var config_instance = config_script.new()
+# FIXED: Orphaned code - var registry_script = preload("res://core/ai/AIProviderRegistry.gd")
+# FIXED: Orphaned code - var registry_instance = registry_script.new()
+# FIXED: Orphaned code - var mock_script = preload("res://core/ai/providers/MockAIProvider.gd")
+# FIXED: Orphaned code - var mock_instance = mock_script.new()
+# FIXED: Orphaned code - var text = "Test Results:\n\n"
 
 var all_success = true
 
@@ -124,155 +124,147 @@ func update_ui() -> void:
 	"""Update the UI with test results"""
 	@tool
 
-func _fix_orphaned_code():
-	if config_script:
-func _fix_orphaned_code():
-	if config_instance:
+if config_script:
+if config_instance:
+	test_results.append(
+	{
+	"component": "AIConfigurationManager",
+	"success": true,
+	"message": "Instance created directly"
+	}
+	)
+
+	# Test a method
+	if config_instance.has_method("get_provider_config"):
 		test_results.append(
 		{
-		"component": "AIConfigurationManager",
+		"component": "AIConfigurationManager.get_provider_config",
 		"success": true,
-		"message": "Instance created directly"
+		"message": "Method exists"
 		}
 		)
-
-		# Test a method
-		if config_instance.has_method("get_provider_config"):
+		else:
 			test_results.append(
 			{
 			"component": "AIConfigurationManager.get_provider_config",
-			"success": true,
-			"message": "Method exists"
+			"success": false,
+			"message": "Method not found"
 			}
 			)
+
+			# Clean up
+			config_instance.queue_free()
 			else:
 				test_results.append(
 				{
-				"component": "AIConfigurationManager.get_provider_config",
+				"component": "AIConfigurationManager",
 				"success": false,
-				"message": "Method not found"
+				"message": "Failed to create instance"
 				}
 				)
-
-				# Clean up
-				config_instance.queue_free()
 				else:
 					test_results.append(
 					{
 					"component": "AIConfigurationManager",
 					"success": false,
-					"message": "Failed to create instance"
+					"message": "Failed to load script"
 					}
 					)
-					else:
-						test_results.append(
-						{
-						"component": "AIConfigurationManager",
-						"success": false,
-						"message": "Failed to load script"
-						}
-						)
 
 
-func _fix_orphaned_code():
-	if registry_script:
-func _fix_orphaned_code():
-	if registry_instance:
+if registry_script:
+if registry_instance:
+	test_results.append(
+	{
+	"component": "AIProviderRegistry",
+	"success": true,
+	"message": "Instance created directly"
+	}
+	)
+
+	# Test a method
+	if registry_instance.has_method("get_active_provider"):
 		test_results.append(
 		{
-		"component": "AIProviderRegistry",
+		"component": "AIProviderRegistry.get_active_provider",
 		"success": true,
-		"message": "Instance created directly"
+		"message": "Method exists"
 		}
 		)
-
-		# Test a method
-		if registry_instance.has_method("get_active_provider"):
+		else:
 			test_results.append(
 			{
 			"component": "AIProviderRegistry.get_active_provider",
-			"success": true,
-			"message": "Method exists"
+			"success": false,
+			"message": "Method not found"
 			}
 			)
+
+			# Clean up
+			registry_instance.queue_free()
 			else:
 				test_results.append(
 				{
-				"component": "AIProviderRegistry.get_active_provider",
+				"component": "AIProviderRegistry",
 				"success": false,
-				"message": "Method not found"
+				"message": "Failed to create instance"
 				}
 				)
-
-				# Clean up
-				registry_instance.queue_free()
 				else:
 					test_results.append(
 					{
 					"component": "AIProviderRegistry",
 					"success": false,
-					"message": "Failed to create instance"
+					"message": "Failed to load script"
 					}
 					)
-					else:
-						test_results.append(
-						{
-						"component": "AIProviderRegistry",
-						"success": false,
-						"message": "Failed to load script"
-						}
-						)
 
 
-func _fix_orphaned_code():
-	if mock_script:
-func _fix_orphaned_code():
-	if mock_instance:
+if mock_script:
+if mock_instance:
+	test_results.append(
+	{"component": "MockAIProvider", "success": true, "message": "Instance created"}
+	)
+
+	# Test a method
+	if mock_instance.has_method("initialize"):
 		test_results.append(
-		{"component": "MockAIProvider", "success": true, "message": "Instance created"}
+		{
+		"component": "MockAIProvider.initialize",
+		"success": true,
+		"message": "Method exists"
+		}
 		)
-
-		# Test a method
-		if mock_instance.has_method("initialize"):
+		else:
 			test_results.append(
 			{
 			"component": "MockAIProvider.initialize",
-			"success": true,
-			"message": "Method exists"
+			"success": false,
+			"message": "Method not found"
 			}
 			)
+
+			# Clean up
+			mock_instance.queue_free()
 			else:
 				test_results.append(
 				{
-				"component": "MockAIProvider.initialize",
+				"component": "MockAIProvider",
 				"success": false,
-				"message": "Method not found"
+				"message": "Failed to create instance"
 				}
 				)
-
-				# Clean up
-				mock_instance.queue_free()
 				else:
 					test_results.append(
-					{
-					"component": "MockAIProvider",
-					"success": false,
-					"message": "Failed to create instance"
-					}
+					{"component": "MockAIProvider", "success": false, "message": "Failed to load script"}
 					)
-					else:
-						test_results.append(
-						{"component": "MockAIProvider", "success": false, "message": "Failed to load script"}
-						)
 
 
-func _fix_orphaned_code():
-	for result in test_results:
-func _fix_orphaned_code():
-	if not result.success:
-		all_success = false
+for result in test_results:
+if not result.success:
+	all_success = false
 
-		text += "\n\nOverall Test: %s" % ("✅ PASSED" if all_success else "❌ FAILED")
+	text += "\n\nOverall Test: %s" % ("✅ PASSED" if all_success else "❌ FAILED")
 
-		info_label.text = text
-		print(text)
+	info_label.text = text
+	print(text)

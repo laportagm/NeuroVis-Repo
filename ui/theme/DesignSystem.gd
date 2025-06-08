@@ -118,32 +118,32 @@ const ICON_SIZES = {"xs": 16, "sm": 20, "md": 24, "lg": 32, "xl": 48}
 # === UTILITY FUNCTIONS ===
 static func get_color(color_name: String) -> Color:
 
-var theme = Theme.new()
+	var theme = Theme.new()
 
 # Create button styles
-var normal = StyleBoxFlat.new()
-var hover = StyleBoxFlat.new()
-var pressed = StyleBoxFlat.new()
-var disabled = StyleBoxFlat.new()
+	var normal = StyleBoxFlat.new()
+	# FIXED: Orphaned code - var hover = StyleBoxFlat.new()
+	# FIXED: Orphaned code - var pressed = StyleBoxFlat.new()
+	# FIXED: Orphaned code - var disabled = StyleBoxFlat.new()
 
 # Configure based on variant
 "primary":
 	normal.bg_color = get_color("primary")
-	hover.bg_color = get_color("primary_light")
-	pressed.bg_color = get_color("primary_dark")
-	"secondary":
-		normal.bg_color = get_color("secondary")
-		hover.bg_color = get_color("secondary_light")
-		pressed.bg_color = get_color("secondary_dark")
-		"ghost":
-			normal.bg_color = Color.TRANSPARENT
-			hover.bg_color = Color(1, 1, 1, 0.1)
-			pressed.bg_color = Color(1, 1, 1, 0.2)
+	# ORPHANED REF: hover.bg_color = get_color("primary_light")
+	# ORPHANED REF: pressed.bg_color = get_color("primary_dark")
+"secondary":
+	normal.bg_color = get_color("secondary")
+	# ORPHANED REF: hover.bg_color = get_color("secondary_light")
+	# ORPHANED REF: pressed.bg_color = get_color("secondary_dark")
+"ghost":
+	normal.bg_color = Color.TRANSPARENT
+	# ORPHANED REF: hover.bg_color = Color(1, 1, 1, 0.1)
+	# ORPHANED REF: pressed.bg_color = Color(1, 1, 1, 0.2)
 
-			disabled.bg_color = get_color("surface_light")
+	# ORPHANED REF: disabled.bg_color = get_color("surface_light")
 
 			# Apply common properties
-var panel_style = StyleBoxFlat.new()
+	var panel_style = StyleBoxFlat.new()
 	panel_style.bg_color = get_color("surface")
 	panel_style.corner_radius_top_left = get_radius("lg")
 	panel_style.corner_radius_top_right = get_radius("lg")
@@ -151,76 +151,76 @@ var panel_style = StyleBoxFlat.new()
 	panel_style.corner_radius_bottom_right = get_radius("lg")
 	control.add_theme_stylebox_override("panel", panel_style)
 
-func _fix_orphaned_code():
 	return COLORS.get(color_name, COLORS.text_primary)
 
 
-	static func get_semantic_color(type: String) -> Color:
-		match type:
-			"success":
-				return COLORS.success
-				"warning":
-					return COLORS.warning
-					"error":
-						return COLORS.error
-						"info":
-							return COLORS.info
-							_:
-								return COLORS.text_primary
+static func get_semantic_color(type: String) -> Color:
+	match type:
+	"success":
+		return COLORS.success
+	"warning":
+		return COLORS.warning
+	"error":
+		return COLORS.error
+	"info":
+		return COLORS.info
+	_:
+		return COLORS.text_primary
 
 
-								static func get_spacing(size: String) -> int:
-									return SPACING.get(size, SPACING.md)
+static func get_spacing(size: String) -> int:
+	return SPACING.get(size, SPACING.md)
 
 
-									static func get_font_size(size: String) -> int:
-										return TYPOGRAPHY.get("size_" + size, TYPOGRAPHY.size_body)
+static func get_font_size(size: String) -> int:
+	return TYPOGRAPHY.get("size_" + size, TYPOGRAPHY.size_body)
 
 
-										static func get_animation_duration(speed: String) -> float:
-											return ANIMATION.get(speed, ANIMATION.normal)
+static func get_animation_duration(speed: String) -> float:
+	return ANIMATION.get(speed, ANIMATION.normal)
 
 
-											static func get_elevation_style(level: int) -> Dictionary:
-												return ELEVATION.get("level_" + str(level), ELEVATION.level_0)
+static func get_elevation_style(level: int) -> Dictionary:
+	return ELEVATION.get("level_" + str(level), ELEVATION.level_0)
 
 
-												static func get_radius(size: String) -> int:
-													return RADIUS.get(size, RADIUS.md)
+static func get_radius(size: String) -> int:
+	return RADIUS.get(size, RADIUS.md)
 
 
-													# === THEME CREATION ===
-													static func create_button_theme(variant: String = "primary") -> Theme:
-func _fix_orphaned_code():
-	for style in [normal, hover, pressed, disabled]:
-		style.corner_radius_top_left = get_radius("md")
-		style.corner_radius_top_right = get_radius("md")
-		style.corner_radius_bottom_left = get_radius("md")
-		style.corner_radius_bottom_right = get_radius("md")
-		style.content_margin_left = get_spacing("md")
-		style.content_margin_right = get_spacing("md")
-		style.content_margin_top = get_spacing("sm")
-		style.content_margin_bottom = get_spacing("sm")
+												# === THEME CREATION ===
+static func create_button_theme(variant: String = "primary") -> Theme:
+	# ORPHANED REF: for style in [normal, hover, pressed, disabled]:
+	style.corner_radius_top_left = get_radius("md")
+	style.corner_radius_top_right = get_radius("md")
+	style.corner_radius_bottom_left = get_radius("md")
+	style.corner_radius_bottom_right = get_radius("md")
+	style.content_margin_left = get_spacing("md")
+	style.content_margin_right = get_spacing("md")
+	style.content_margin_top = get_spacing("sm")
+	style.content_margin_bottom = get_spacing("sm")
 
-		# Apply to theme
-		theme.set_stylebox("normal", "Button", normal)
-		theme.set_stylebox("hover", "Button", hover)
-		theme.set_stylebox("pressed", "Button", pressed)
-		theme.set_stylebox("disabled", "Button", disabled)
+	# Apply to theme
+	theme.set_stylebox("normal", "Button", normal)
+	# ORPHANED REF: theme.set_stylebox("hover", "Button", hover)
+	# ORPHANED REF: theme.set_stylebox("pressed", "Button", pressed)
+	# ORPHANED REF: theme.set_stylebox("disabled", "Button", disabled)
 
-		# Set font properties
-		theme.set_font_size("font_size", "Button", get_font_size("body"))
-		theme.set_color("font_color", "Button", get_color("text_primary"))
-		theme.set_color("font_disabled_color", "Button", get_color("text_disabled"))
+	# Set font properties
+	theme.set_font_size("font_size", "Button", get_font_size("body"))
+	theme.set_color("font_color", "Button", get_color("text_primary"))
+	theme.set_color("font_disabled_color", "Button", get_color("text_disabled"))
 
-		return theme
+	return theme
 
 
-		static func apply_design_system(control: Control) -> void:
-			"""Apply design system to any control"""
-			if control is Button:
-				control.theme = create_button_theme()
-				elif control is Label:
-					control.add_theme_font_size_override("font_size", get_font_size("body"))
-					control.add_theme_color_override("font_color", get_color("text_primary"))
-					elif control is PanelContainer:
+static func apply_design_system(control: Control) -> void:
+	"""Apply design system to any control"""
+	if control is Button:
+	control.theme = create_button_theme()
+	elif control is Label:
+	control.add_theme_font_size_override("font_size", get_font_size("body"))
+	control.add_theme_color_override("font_color", get_color("text_primary"))
+	elif control is PanelContainer:
+
+	pass

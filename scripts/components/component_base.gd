@@ -25,7 +25,7 @@ var component_name: String = ""
 
 var success = _initialize_component()
 
-var error_msg = "[%s] Component initialization failed" % component_name
+# FIXED: Orphaned code - var error_msg = "[%s] Component initialization failed" % component_name
 push_error(error_msg)
 component_error.emit(error_msg)
 
@@ -80,12 +80,11 @@ func get_status() -> Dictionary:
 
 	## Override this method in subclasses to provide component-specific status info
 
-func _fix_orphaned_code():
-	if success:
-		is_initialized = true
-		print("[%s] Component initialized successfully" % component_name)
-		component_ready.emit()
-		else:
+if success:
+	is_initialized = true
+	print("[%s] Component initialized successfully" % component_name)
+	component_ready.emit()
+	else:
 func _validate_requirements() -> bool:
 	return true
 

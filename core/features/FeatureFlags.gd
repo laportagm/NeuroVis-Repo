@@ -7,6 +7,11 @@ extends Node
 # === CONSTANTS ===
 const FEATURES_FILE = "user://feature_flags.cfg"
 
+# Feature flag names
+const UI_ADVANCED_INTERACTIONS = "ui_advanced_interactions"
+const UI_GESTURE_RECOGNITION = "ui_gesture_recognition"
+const UI_CONTEXT_MENUS = "ui_context_menus"
+
 # === VARIABLES ===
 var _features: Dictionary = {}
 var _config: ConfigFile
@@ -48,7 +53,10 @@ func _load_default_features() -> void:
 		"analytics": false,
 		"experimental_3d": false,
 		"accessibility_enhancements": true,
-		"debug_mode": false
+		"debug_mode": false,
+		UI_ADVANCED_INTERACTIONS: true,
+		UI_GESTURE_RECOGNITION: true,
+		UI_CONTEXT_MENUS: true
 	}
 
 

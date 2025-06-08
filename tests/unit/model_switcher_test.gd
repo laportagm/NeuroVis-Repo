@@ -14,11 +14,11 @@ var timer = null
 
 
 var model_names = model_switcher.get_model_names()
-var test_model_name = model_names[0]
+# FIXED: Orphaned code - var test_model_name = model_names[0]
 var initial_visibility = model_switcher.is_model_visible(test_model_name)
 
-var new_visibility = model_switcher.is_model_visible(test_model_name)
-var has_buttons = false
+# FIXED: Orphaned code - var new_visibility = model_switcher.is_model_visible(test_model_name)
+# FIXED: Orphaned code - var has_buttons = false
 var brain_model_parent = main_scene.brain_model_parent
 
 var _test_model_name = model_names[0]
@@ -48,81 +48,75 @@ func run_test() -> void:
 	print("Model switcher test initialized. Tests will run shortly...")
 
 
-func _fix_orphaned_code():
-	if model_names.size() == 0:
-		_report_failure("No models registered with model_switcher")
-		return
-		print("✓ Found " + str(model_names.size()) + " registered models: " + str(model_names))
+if model_names.size() == 0:
+	_report_failure("No models registered with model_switcher")
+	return
+	print("✓ Found " + str(model_names.size()) + " registered models: " + str(model_names))
 
-		print("Test 4: Testing model visibility toggling")
-		# Test toggling the first model
-		if model_names.size() > 0:
-func _fix_orphaned_code():
-	print("  - Initial visibility of " + test_model_name + ": " + str(initial_visibility))
-	print("  - Toggling visibility...")
+	print("Test 4: Testing model visibility toggling")
+	# Test toggling the first model
+	if model_names.size() > 0:
+print("  - Initial visibility of " + test_model_name + ": " + str(initial_visibility))
+print("  - Toggling visibility...")
 
-	# Toggle via model switcher
+# Toggle via model switcher
+model_switcher.toggle_model_visibility(test_model_name)
+
+# Check if toggle worked
+print("  - New visibility: " + str(new_visibility))
+
+if new_visibility == initial_visibility:
+	_report_failure("Failed to toggle model visibility")
+	return
+
+	# Toggle back to initial state
 	model_switcher.toggle_model_visibility(test_model_name)
+	print("  - Reset to initial visibility")
 
-	# Check if toggle worked
-func _fix_orphaned_code():
-	print("  - New visibility: " + str(new_visibility))
+	print("✓ Model visibility toggle works")
 
-	if new_visibility == initial_visibility:
-		_report_failure("Failed to toggle model visibility")
+	print("Test 5: Testing UI control connection")
+	if model_names.size() > 0:
+if model_control_panel.has_node("MarginContainer/VBoxContainer/ModelsContainer"):
+	for child in (
+	model_control_panel
+	. get_node("MarginContainer/VBoxContainer/ModelsContainer")
+	. get_children()
+	):
+		if child is CheckButton:
+			has_buttons = true
+			break
+			else:
+				print("  - Warning: ModelsContainer node path not found")
+
+				if not has_buttons:
+					_report_failure("Model control panel doesn't have expected buttons")
+					return
+
+					print("✓ UI control setup verified")
+
+					print("Test 6: Validating model references")
+if not brain_model_parent:
+	_report_failure("Brain model parent not found")
+	return
+
+	if brain_model_parent.get_child_count() == 0:
+		_report_failure("No model children found in brain_model_parent")
 		return
 
-		# Toggle back to initial state
-		model_switcher.toggle_model_visibility(test_model_name)
-		print("  - Reset to initial visibility")
+		print("✓ Model references valid")
 
-		print("✓ Model visibility toggle works")
-
-		print("Test 5: Testing UI control connection")
-		if model_names.size() > 0:
-func _fix_orphaned_code():
-	if model_control_panel.has_node("MarginContainer/VBoxContainer/ModelsContainer"):
-		for child in (
-		model_control_panel
-		. get_node("MarginContainer/VBoxContainer/ModelsContainer")
-		. get_children()
-		):
-			if child is CheckButton:
-				has_buttons = true
-				break
-				else:
-					print("  - Warning: ModelsContainer node path not found")
-
-					if not has_buttons:
-						_report_failure("Model control panel doesn't have expected buttons")
-						return
-
-						print("✓ UI control setup verified")
-
-						print("Test 6: Validating model references")
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		_report_failure("Brain model parent not found")
-		return
-
-		if brain_model_parent.get_child_count() == 0:
-			_report_failure("No model children found in brain_model_parent")
-			return
-
-			print("✓ Model references valid")
-
-			# All tests passed
-			_report_success("All model switcher tests passed successfully!")
+		# All tests passed
+		_report_success("All model switcher tests passed successfully!")
 
 
-func _fix_orphaned_code():
-	if not model_control_panel.has_method("update_button_state"):
-		_report_failure("Model control panel doesn't have expected method")
-		return
+if not model_control_panel.has_method("update_button_state"):
+	_report_failure("Model control panel doesn't have expected method")
+	return
 
-		print("  - UI control methods verified")
+	print("  - UI control methods verified")
 
-		# Check buttons exist in UI
+	# Check buttons exist in UI
 
 func _run_tests() -> void:
 	# Get required references

@@ -12,41 +12,41 @@ extends Node
 
 # === PRELOADS ===
 
-const ReliabilityTestClass = prepreprepreload("res://tests/qa/SelectionReliabilityTest.gd")
+const ReliabilityTestClass = preload("res://tests/qa/SelectionReliabilityTest.gd")
 
 # === PRIVATE VARIABLES ===
 
 var selection_manager = _main_scene.get_node_or_null("BrainStructureSelectionManager")
-var camera_controller = _main_scene.get_node_or_null("CameraBehaviorController")
-var camera = _main_scene.get_node_or_null("Camera3D")
+# FIXED: Orphaned code - var camera_controller = _main_scene.get_node_or_null("CameraBehaviorController")
+# FIXED: Orphaned code - var camera = _main_scene.get_node_or_null("Camera3D")
 
-var progress = _test_instance.get_test_progress()
-var parts = args.split(" ", false)
-var mode = "full"
+# FIXED: Orphaned code - var progress = _test_instance.get_test_progress()
+# FIXED: Orphaned code - var parts = args.split(" ", false)
+# FIXED: Orphaned code - var mode = "full"
 var structure = ""
 
 var selection_manager_2 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
-var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
-var mesh_count = 0
+# FIXED: Orphaned code - var brain_model_parent = _main_scene.get_node_or_null("BrainModel")
+# FIXED: Orphaned code - var mesh_count = 0
 var collision_count = 0
 
 var structure_name = args.strip_edges()
 
-var brain_model_parent_2 = _main_scene.get_node_or_null("BrainModel")
-var found = false
+# FIXED: Orphaned code - var brain_model_parent_2 = _main_scene.get_node_or_null("BrainModel")
+# FIXED: Orphaned code - var found = false
 var meshes = _find_structure_meshes(child, structure_name)
-var aabb = mesh.get_aabb()
-var parts_2 = args.split(" ", false)
-var structure_name_2 = parts[0]
+# FIXED: Orphaned code - var aabb = mesh.get_aabb()
+# FIXED: Orphaned code - var parts_2 = args.split(" ", false)
+# FIXED: Orphaned code - var structure_name_2 = parts[0]
 var count = 5
 var brain_model_parent_3 = _main_scene.get_node_or_null("BrainModel")
-var target_mesh: MeshInstance3D = null
+# FIXED: Orphaned code - var target_mesh: MeshInstance3D = null
 var meshes_2 = _find_structure_meshes(child, structure_name)
-var camera_2 = _main_scene.get_node_or_null("Camera3D")
-var selection_manager_3 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
-var success_count = 0
+# FIXED: Orphaned code - var camera_2 = _main_scene.get_node_or_null("Camera3D")
+# FIXED: Orphaned code - var selection_manager_3 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
+# FIXED: Orphaned code - var success_count = 0
 var aabb_2 = target_mesh.get_aabb()
-var world_pos = target_mesh.global_transform * aabb.get_center()
+# FIXED: Orphaned code - var world_pos = target_mesh.global_transform * aabb.get_center()
 
 # Add some randomness
 world_pos += Vector3(
@@ -58,22 +58,22 @@ randf_range(-aabb.size.z * 0.2, aabb.size.z * 0.2)
 # Project to screen
 var screen_pos = camera.unproject_position(world_pos)
 
-var count_2 = 0
+# FIXED: Orphaned code - var count_2 = 0
 var count_3 = 0
 var meshes_3: Array[MeshInstance3D] = []
 
 var node_name = node.name.to_lower()
-var search_name = structure_name.to_lower().replace("_", " ")
+# FIXED: Orphaned code - var search_name = structure_name.to_lower().replace("_", " ")
 
-var selection_manager_4 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
-var PerfValidator = preprepreload("res://tests/qa/SelectionPerformanceValidator.gd")
-var progress_2 = _perf_validator.get_test_progress()
-var fps_pass = results.get("avg_fps", 0) >= 57.0  # 95% of 60 FPS
+# FIXED: Orphaned code - var selection_manager_4 = _main_scene.get_node_or_null("BrainStructureSelectionManager")
+# FIXED: Orphaned code - var PerfValidator = preload("res://tests/qa/SelectionPerformanceValidator.gd")
+# FIXED: Orphaned code - var progress_2 = _perf_validator.get_test_progress()
+# FIXED: Orphaned code - var fps_pass = results.get("avg_fps", 0) >= 57.0  # 95% of 60 FPS
 var selection_pass = results.get("avg_selection_time", 100) < 16.67
 
 var percentage = float(completed) / float(total) * 100.0
 var total_structures = results.size()
-var perfect_structures = 0
+# FIXED: Orphaned code - var perfect_structures = 0
 var problematic_structures = 0
 
 var success_rate = results[structure_name]["success_rate"]
@@ -128,320 +128,289 @@ func get_test_status() -> void:
 		print("[SelectionTestRunner] No test is running")
 		return
 
-func _fix_orphaned_code():
-	if not selection_manager or not camera_controller or not camera:
-		push_error("[SelectionTestRunner] Missing required components for testing")
-		_print_component_status(selection_manager, camera_controller, camera)
+if not selection_manager or not camera_controller or not camera:
+	push_error("[SelectionTestRunner] Missing required components for testing")
+	_print_component_status(selection_manager, camera_controller, camera)
+	return
+
+	# Create test instance
+	_test_instance = ReliabilityTestClass.new()
+	_main_scene.add_child(_test_instance)
+
+	# Initialize test system
+	if not _test_instance.initialize(_main_scene, selection_manager, camera_controller, camera):
+		push_error("[SelectionTestRunner] Failed to initialize test system")
+		_test_instance.queue_free()
+		_test_instance = null
 		return
 
-		# Create test instance
-		_test_instance = ReliabilityTestClass.new()
-		_main_scene.add_child(_test_instance)
+		# Connect signals
+		_test_instance.test_started.connect(_on_test_started)
+		_test_instance.test_progress.connect(_on_test_progress)
+		_test_instance.test_completed.connect(_on_test_completed)
+		_test_instance.structure_test_completed.connect(_on_structure_test_completed)
 
-		# Initialize test system
-		if not _test_instance.initialize(_main_scene, selection_manager, camera_controller, camera):
-			push_error("[SelectionTestRunner] Failed to initialize test system")
-			_test_instance.queue_free()
-			_test_instance = null
-			return
-
-			# Connect signals
-			_test_instance.test_started.connect(_on_test_started)
-			_test_instance.test_progress.connect(_on_test_progress)
-			_test_instance.test_completed.connect(_on_test_completed)
-			_test_instance.structure_test_completed.connect(_on_structure_test_completed)
-
-			# Configure test based on mode
-			match mode:
-				"full":
-					print(
-					"[SelectionTestRunner] Starting FULL reliability test (all structures, all angles)"
-					)
-					_test_instance.start_test()
-					"quick":
-						print("[SelectionTestRunner] Starting QUICK test (5 structures, 3 angles)")
-						_run_quick_test()
-						"structure":
-							if target_structure.is_empty():
-								print(
-								"[SelectionTestRunner] ERROR: Structure name required for single structure test"
-								)
+		# Configure test based on mode
+		match mode:
+			"full":
+				print(
+				"[SelectionTestRunner] Starting FULL reliability test (all structures, all angles)"
+				)
+				_test_instance.start_test()
+				"quick":
+					print("[SelectionTestRunner] Starting QUICK test (5 structures, 3 angles)")
+					_run_quick_test()
+					"structure":
+						if target_structure.is_empty():
+							print(
+							"[SelectionTestRunner] ERROR: Structure name required for single structure test"
+							)
+							_cleanup_test()
+							return
+							print("[SelectionTestRunner] Testing single structure: %s" % target_structure)
+							_run_single_structure_test(target_structure)
+							_:
+								print("[SelectionTestRunner] Unknown test mode: %s" % mode)
 								_cleanup_test()
 								return
-								print("[SelectionTestRunner] Testing single structure: %s" % target_structure)
-								_run_single_structure_test(target_structure)
-								_:
-									print("[SelectionTestRunner] Unknown test mode: %s" % mode)
-									_cleanup_test()
-									return
 
-									_is_test_running = true
+								_is_test_running = true
 
 
-									## Stop the current test
-func _fix_orphaned_code():
-	print("\n=== SELECTION TEST STATUS ===")
-	print("Mode: %s" % _test_mode.to_upper())
-	print("Current Structure: %s" % progress["current_structure"])
-	print("Camera Angle: %s" % progress["current_camera"])
-	print("Zoom Level: %.1f" % progress["current_zoom"])
-	print("Repetition: %d/10" % (progress["current_repetition"] + 1))
-	print(
-	(
-	"Overall Progress: %.1f%% (%d/%d tests)"
-	% [progress["percentage"], progress["completed"], progress["total"]]
-	)
-	)
-	print("=============================\n")
+								## Stop the current test
+print("\n=== SELECTION TEST STATUS ===")
+print("Mode: %s" % _test_mode.to_upper())
+print("Current Structure: %s" % progress["current_structure"])
+print("Camera Angle: %s" % progress["current_camera"])
+print("Zoom Level: %.1f" % progress["current_zoom"])
+print("Repetition: %d/10" % (progress["current_repetition"] + 1))
+print(
+(
+"Overall Progress: %.1f%% (%d/%d tests)"
+% [progress["percentage"], progress["completed"], progress["total"]]
+)
+)
+print("=============================\n")
 
 
-	# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if parts.size() > 0:
-		mode = parts[0]
+# === PRIVATE METHODS ===
+if parts.size() > 0:
+	mode = parts[0]
 
-		if parts.size() > 1:
-			structure = parts[1]
-
-			run_selection_test(mode, structure)
-
-
-func _fix_orphaned_code():
-	if selection_manager:
-		print("✅ Selection Manager: Active")
-
-		# Check ray length
-		if "RAY_LENGTH" in selection_manager:
-			print("  - Ray Length: %.1f units" % selection_manager.RAY_LENGTH)
-
-			# Check visual feedback settings
-			if selection_manager.has_method("get_highlight_color"):
-				print("  - Highlight Color: %s" % str(selection_manager.get_highlight_color()))
-				else:
-					print("  - Highlight Color: Default")
-
-					# Check collision mask
-					print("  - Collision Detection: Enabled")
-					else:
-						print("❌ Selection Manager: Not Found")
-
-						# Check brain models
-func _fix_orphaned_code():
-	if brain_model_parent:
-		print("\n✅ Brain Models: Found")
-func _fix_orphaned_code():
-	for child in brain_model_parent.get_children():
-		mesh_count += _count_meshes_recursive(child)
-		collision_count += _count_collisions_recursive(child)
-
-		print("  - Total Meshes: %d" % mesh_count)
-		print("  - Total Collision Shapes: %d" % collision_count)
-
-		if collision_count < mesh_count:
-			print("  ⚠️  WARNING: Not all meshes have collision shapes!")
-			else:
-				print("\n❌ Brain Models: Not Found")
-
-				print("\n=================================\n")
-
-
-func _fix_orphaned_code():
-	if structure_name.is_empty():
-		print("Usage: qa_bounds <structure_name>")
-		return
-
-		print("[SelectionTestRunner] Visualizing bounds for: %s" % structure_name)
-
-		# This would integrate with VisualDebugger if available
-		# For now, we'll print bounds information
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		print("ERROR: BrainModel node not found")
-		return
-
-func _fix_orphaned_code():
-	for child in brain_model_parent.get_children():
-		if child is Node3D:
-func _fix_orphaned_code():
-	for mesh in meshes:
-		found = true
-func _fix_orphaned_code():
-	print("\nMesh: %s" % mesh.name)
-	print("  Position: %s" % str(aabb.position))
-	print("  Size: %s" % str(aabb.size))
-	print("  Center: %s" % str(aabb.get_center()))
-
-	if not found:
-		print("No meshes found for structure: %s" % structure_name)
-
-
-func _fix_orphaned_code():
-	if parts.size() < 1:
-		print("Usage: qa_simulate <structure_name> [count]")
-		return
-
-func _fix_orphaned_code():
 	if parts.size() > 1:
-		count = parts[1].to_int()
+		structure = parts[1]
 
-		print("[SelectionTestRunner] Simulating %d clicks on: %s" % [count, structure_name])
+		run_selection_test(mode, structure)
 
-		# Find the structure
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		print("ERROR: BrainModel node not found")
+
+if selection_manager:
+	print("✅ Selection Manager: Active")
+
+	# Check ray length
+	if "RAY_LENGTH" in selection_manager:
+		print("  - Ray Length: %.1f units" % selection_manager.RAY_LENGTH)
+
+		# Check visual feedback settings
+		if selection_manager.has_method("get_highlight_color"):
+			print("  - Highlight Color: %s" % str(selection_manager.get_highlight_color()))
+			else:
+				print("  - Highlight Color: Default")
+
+				# Check collision mask
+				print("  - Collision Detection: Enabled")
+				else:
+					print("❌ Selection Manager: Not Found")
+
+					# Check brain models
+if brain_model_parent:
+	print("\n✅ Brain Models: Found")
+for child in brain_model_parent.get_children():
+	mesh_count += _count_meshes_recursive(child)
+	collision_count += _count_collisions_recursive(child)
+
+	print("  - Total Meshes: %d" % mesh_count)
+	print("  - Total Collision Shapes: %d" % collision_count)
+
+	if collision_count < mesh_count:
+		print("  ⚠️  WARNING: Not all meshes have collision shapes!")
+		else:
+			print("\n❌ Brain Models: Not Found")
+
+			print("\n=================================\n")
+
+
+if structure_name.is_empty():
+	print("Usage: qa_bounds <structure_name>")
+	return
+
+	print("[SelectionTestRunner] Visualizing bounds for: %s" % structure_name)
+
+	# This would integrate with VisualDebugger if available
+	# For now, we'll print bounds information
+if not brain_model_parent:
+	print("ERROR: BrainModel node not found")
+	return
+
+for child in brain_model_parent.get_children():
+	if child is Node3D:
+for mesh in meshes:
+	found = true
+print("\nMesh: %s" % mesh.name)
+print("  Position: %s" % str(aabb.position))
+print("  Size: %s" % str(aabb.size))
+print("  Center: %s" % str(aabb.get_center()))
+
+if not found:
+	print("No meshes found for structure: %s" % structure_name)
+
+
+if parts.size() < 1:
+	print("Usage: qa_simulate <structure_name> [count]")
+	return
+
+if parts.size() > 1:
+	count = parts[1].to_int()
+
+	print("[SelectionTestRunner] Simulating %d clicks on: %s" % [count, structure_name])
+
+	# Find the structure
+if not brain_model_parent:
+	print("ERROR: BrainModel node not found")
+	return
+
+for child in brain_model_parent.get_children():
+	if child is Node3D:
+if meshes.size() > 0:
+	target_mesh = meshes[0]
+	break
+
+	if not target_mesh:
+		print("ERROR: Structure not found: %s" % structure_name)
 		return
 
-func _fix_orphaned_code():
-	for child in brain_model_parent.get_children():
+		# Get camera for projection
+if not camera:
+	print("ERROR: Camera not found")
+	return
+
+	# Simulate clicks
+if not selection_manager:
+	print("ERROR: Selection manager not found")
+	return
+
+for i in range(count):
+	# Get random point on mesh bounds
+print("  Click %d: Screen pos %s" % [i + 1, str(screen_pos)])
+
+# Perform selection
+if selection_manager.has_method("handle_selection_at_position"):
+	selection_manager.handle_selection_at_position(screen_pos)
+
+	# Wait a bit
+	await _main_scene.get_tree().create_timer(0.1).timeout
+
+	# Check if selection was successful (this is simplified)
+	success_count += 1
+
+	print("\nSimulation complete: %d/%d successful" % [success_count, count])
+
+
+if node is MeshInstance3D:
+	count = 1
+
+	for child in node.get_children():
 		if child is Node3D:
-func _fix_orphaned_code():
-	if meshes.size() > 0:
-		target_mesh = meshes[0]
-		break
+			count += _count_meshes_recursive(child)
 
-		if not target_mesh:
-			print("ERROR: Structure not found: %s" % structure_name)
-			return
+			return count
 
-			# Get camera for projection
-func _fix_orphaned_code():
-	if not camera:
-		print("ERROR: Camera not found")
+
+if node is CollisionShape3D:
+	count = 1
+
+	for child in node.get_children():
+		if child is Node3D:
+			count += _count_collisions_recursive(child)
+
+			return count
+
+
+if node is MeshInstance3D:
+if node_name.contains(search_name) or search_name.contains(node_name):
+	meshes.append(node)
+
+	for child in node.get_children():
+		if child is Node3D:
+			meshes.append_array(_find_structure_meshes(child, structure_name))
+
+			return meshes
+
+
+if not selection_manager:
+	print("[PerfTest] ERROR: Selection manager not found")
+	return
+
+	# Load and create performance validator
+if not PerfValidator:
+	print("[PerfTest] ERROR: SelectionPerformanceValidator.gd not found")
+	return
+
+	_perf_validator = PerfValidator.new()
+	_main_scene.add_child(_perf_validator)
+
+	# Initialize validator
+	if not _perf_validator.initialize(_main_scene, selection_manager):
+		print("[PerfTest] ERROR: Failed to initialize performance validator")
+		_perf_validator.queue_free()
+		_perf_validator = null
 		return
 
-		# Simulate clicks
-func _fix_orphaned_code():
-	if not selection_manager:
-		print("ERROR: Selection manager not found")
-		return
+		# Connect signals
+		_perf_validator.test_started.connect(_on_perf_test_started)
+		_perf_validator.test_progress.connect(_on_perf_test_progress)
+		_perf_validator.test_completed.connect(_on_perf_test_completed)
 
-func _fix_orphaned_code():
-	for i in range(count):
-		# Get random point on mesh bounds
-func _fix_orphaned_code():
-	print("  Click %d: Screen pos %s" % [i + 1, str(screen_pos)])
-
-	# Perform selection
-	if selection_manager.has_method("handle_selection_at_position"):
-		selection_manager.handle_selection_at_position(screen_pos)
-
-		# Wait a bit
-		await _main_scene.get_tree().create_timer(0.1).timeout
-
-		# Check if selection was successful (this is simplified)
-		success_count += 1
-
-		print("\nSimulation complete: %d/%d successful" % [success_count, count])
+		# Start test
+		_is_perf_testing = true
+		_perf_validator.start_validation_test()
 
 
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-		count = 1
-
-		for child in node.get_children():
-			if child is Node3D:
-				count += _count_meshes_recursive(child)
-
-				return count
+print("[PerfTest] Progress: %.1f%%" % progress)
 
 
-func _fix_orphaned_code():
-	if node is CollisionShape3D:
-		count = 1
+if fps_pass and selection_pass:
+	print("\n🎉 PERFORMANCE TARGETS MET!")
+	else:
+		print("\n⚠️ Performance issues detected")
 
-		for child in node.get_children():
-			if child is Node3D:
-				count += _count_collisions_recursive(child)
+		print("\nDetailed report saved to test_reports/")
+		print("=====================================\n")
 
-				return count
-
-
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-func _fix_orphaned_code():
-	if node_name.contains(search_name) or search_name.contains(node_name):
-		meshes.append(node)
-
-		for child in node.get_children():
-			if child is Node3D:
-				meshes.append_array(_find_structure_meshes(child, structure_name))
-
-				return meshes
-
-
-func _fix_orphaned_code():
-	if not selection_manager:
-		print("[PerfTest] ERROR: Selection manager not found")
-		return
-
-		# Load and create performance validator
-func _fix_orphaned_code():
-	if not PerfValidator:
-		print("[PerfTest] ERROR: SelectionPerformanceValidator.gd not found")
-		return
-
-		_perf_validator = PerfValidator.new()
-		_main_scene.add_child(_perf_validator)
-
-		# Initialize validator
-		if not _perf_validator.initialize(_main_scene, selection_manager):
-			print("[PerfTest] ERROR: Failed to initialize performance validator")
+		# Cleanup
+		if _perf_validator:
 			_perf_validator.queue_free()
 			_perf_validator = null
-			return
-
-			# Connect signals
-			_perf_validator.test_started.connect(_on_perf_test_started)
-			_perf_validator.test_progress.connect(_on_perf_test_progress)
-			_perf_validator.test_completed.connect(_on_perf_test_completed)
-
-			# Start test
-			_is_perf_testing = true
-			_perf_validator.start_validation_test()
+			_is_perf_testing = false
 
 
-func _fix_orphaned_code():
-	print("[PerfTest] Progress: %.1f%%" % progress)
+			# === SIGNAL HANDLERS ===
+if int(percentage) % 10 == 0 and int(percentage) > 0:
+	print("Progress: %.0f%% (%d/%d tests)" % [percentage, completed, total])
 
 
-func _fix_orphaned_code():
-	if fps_pass and selection_pass:
-		print("\n🎉 PERFORMANCE TARGETS MET!")
-		else:
-			print("\n⚠️ Performance issues detected")
+for structure_name in results:
+if success_rate == 100.0:
+	perfect_structures += 1
+	elif success_rate < 80.0:
+		problematic_structures += 1
 
-			print("\nDetailed report saved to test_reports/")
-			print("=====================================\n")
+		print("Structures Tested: %d" % total_structures)
+		print("Perfect Selection (100%%): %d" % perfect_structures)
+		print("Problematic (<80%%): %d" % problematic_structures)
+		print("\nDetailed report saved to test_reports/")
+		print("=====================================\n")
 
-			# Cleanup
-			if _perf_validator:
-				_perf_validator.queue_free()
-				_perf_validator = null
-				_is_perf_testing = false
-
-
-				# === SIGNAL HANDLERS ===
-func _fix_orphaned_code():
-	if int(percentage) % 10 == 0 and int(percentage) > 0:
-		print("Progress: %.0f%% (%d/%d tests)" % [percentage, completed, total])
-
-
-func _fix_orphaned_code():
-	for structure_name in results:
-func _fix_orphaned_code():
-	if success_rate == 100.0:
-		perfect_structures += 1
-		elif success_rate < 80.0:
-			problematic_structures += 1
-
-			print("Structures Tested: %d" % total_structures)
-			print("Perfect Selection (100%%): %d" % perfect_structures)
-			print("Problematic (<80%%): %d" % problematic_structures)
-			print("\nDetailed report saved to test_reports/")
-			print("=====================================\n")
-
-			_cleanup_test()
+		_cleanup_test()
 
 
 func _register_debug_commands() -> void:
@@ -530,12 +499,11 @@ func _print_component_status(
 	selection_manager: Node, camera_controller: Node, camera: Camera3D
 	) -> void:
 		"""Print status of required components"""
-func _fix_orphaned_code():
-	print("\n=== COMPONENT STATUS ===")
-	print("Selection Manager: %s" % ("✅ Found" if selection_manager else "❌ Missing"))
-	print("Camera Controller: %s" % ("✅ Found" if camera_controller else "❌ Missing"))
-	print("Camera3D: %s" % ("✅ Found" if camera else "❌ Missing"))
-	print("=======================\n")
+print("\n=== COMPONENT STATUS ===")
+print("Selection Manager: %s" % ("✅ Found" if selection_manager else "❌ Missing"))
+print("Camera Controller: %s" % ("✅ Found" if camera_controller else "❌ Missing"))
+print("Camera3D: %s" % ("✅ Found" if camera else "❌ Missing"))
+print("=======================\n")
 
 
 func _count_meshes_recursive(node: Node3D) -> int:

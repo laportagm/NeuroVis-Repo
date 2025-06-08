@@ -15,7 +15,7 @@ signal test_completed(success: bool, message: String)
 
 # Initialize references
 
-const DebugVisualizer = prepreprepreload("res://core/visualization/DebugVisualizer.gd")
+const DebugVisualizer = preload("res://core/visualization/DebugVisualizer.gd")
 
 # Signal when a test is completed
 
@@ -37,23 +37,23 @@ test_results_container.add_child(info_label)
 
 # Check if the test directory exists and create it if not
 var dir = DirAccess.open("res://")
-var test_scripts = _get_test_scripts()
+# FIXED: Orphaned code - var test_scripts = _get_test_scripts()
 
-var direct_tests = [
+# FIXED: Orphaned code - var direct_tests = [
 "ui_info_panel_test",
 "knowledge_base_test",
 "camera_controls_test",
 "structure_selection_test"
 ]
 var test_name = test_script.get_file().get_basename()
-var test_header = Label.new()
+# FIXED: Orphaned code - var test_header = Label.new()
 test_header.text = "Running test: " + test_name
 test_results_container.add_child(test_header)
 
 # Load test scene
 var test_scene = load(test_script)
-var test_instance = test_scene.instantiate()
-var is_direct_script_test = (
+# FIXED: Orphaned code - var test_instance = test_scene.instantiate()
+# FIXED: Orphaned code - var is_direct_script_test = (
 test_name
 in [
 "ui_info_panel_test",
@@ -63,9 +63,9 @@ in [
 ]
 )
 
-var test_path = "res://tests/" + test_name + ".tscn"
+# FIXED: Orphaned code - var test_path = "res://tests/" + test_name + ".tscn"
 var scene = load(scene_path)
-var debug_visualizer = preprepreload("res://core/visualization/DebugVisualizer.gd").new()
+# FIXED: Orphaned code - var debug_visualizer = preload("res://core/visualization/DebugVisualizer.gd").new()
 debug_visualizer.name = "DebugVisualizer"
 debug_visualizer.visualizations_enabled = debug_visualizations_enabled
 debug_visualizer.show_raycasts = show_raycasts
@@ -76,9 +76,9 @@ scene_instance.add_child(debug_visualizer)
 _log_message("Added debug visualizer to scene")
 
 
-var result_label = Label.new()
-var time = Time.get_time_string_from_system()
-var formatted_message = "[" + time + "] " + message
+# FIXED: Orphaned code - var result_label = Label.new()
+# FIXED: Orphaned code - var time = Time.get_time_string_from_system()
+# FIXED: Orphaned code - var formatted_message = "[" + time + "] " + message
 
 # Print to console
 var message_label = Label.new()
@@ -95,7 +95,7 @@ var item = scene_tree.create_item(parent_item)
 
 # Format node info
 var node_class = node.get_class()
-var node_name = node.name
+# FIXED: Orphaned code - var node_name = node.name
 
 item.set_text(0, node_name + " (" + node_class + ")")
 
@@ -107,8 +107,8 @@ test_results_container.add_child(test_header)
 # Check if the script exists
 var script_path = "res://tests/" + test_name + ".gd"
 var test_script = load(script_path)
-var test_instance_2 = test_script.new()
-var cleanup_timer = Timer.new()
+# FIXED: Orphaned code - var test_instance_2 = test_script.new()
+# FIXED: Orphaned code - var cleanup_timer = Timer.new()
 add_child(cleanup_timer)
 cleanup_timer.wait_time = 5.0  # Allow up to 5 seconds for test to complete
 cleanup_timer.one_shot = true
@@ -117,10 +117,10 @@ func():
 var test_scripts_2 = []
 var dir_2 = DirAccess.open(test_container_path)
 
-var file_name = dir.get_next()
+# FIXED: Orphaned code - var file_name = dir.get_next()
 
-var dir_3 = DirAccess.open("res://")
-var script_path_2 = "res://tests/model_switcher_test.gd"
+# FIXED: Orphaned code - var dir_3 = DirAccess.open("res://")
+# FIXED: Orphaned code - var script_path_2 = "res://tests/model_switcher_test.gd"
 var script_content = """
 var main_scene = null
 var model_switcher = null
@@ -129,11 +129,11 @@ var timer = null
 
 var main_scene_2 = get_tree().current_scene
 var model_names = model_switcher.get_model_names()
-var test_model_name = model_names[0]
+# FIXED: Orphaned code - var test_model_name = model_names[0]
 var initial_visibility = model_switcher.is_model_visible(test_model_name)
 
-var new_visibility = model_switcher.is_model_visible(test_model_name)
-var test_model_name_2 = model_names[0]
+# FIXED: Orphaned code - var new_visibility = model_switcher.is_model_visible(test_model_name)
+# FIXED: Orphaned code - var test_model_name_2 = model_names[0]
 
 # Check if model control panel has method to update button state
 var has_buttons = false
@@ -198,295 +198,268 @@ func run_test() -> void:
 
 	print("Model switcher test initialized. Tests will run shortly...")
 
-func _fix_orphaned_code():
-	if not dir.dir_exists("tests"):
-		dir.make_dir("tests")
-		_log_message("Created tests directory")
+if not dir.dir_exists("tests"):
+	dir.make_dir("tests")
+	_log_message("Created tests directory")
 
 
-func _fix_orphaned_code():
-	for test_script in test_scripts:
-		_run_test(test_script)
+for test_script in test_scripts:
+	_run_test(test_script)
 
-		# Run the new direct script tests
-func _fix_orphaned_code():
-	for test_name in direct_tests:
-		_run_direct_script_test(test_name)
+	# Run the new direct script tests
+for test_name in direct_tests:
+	_run_direct_script_test(test_name)
 
-		_update_status("All tests completed")
+	_update_status("All tests completed")
 
 
-func _fix_orphaned_code():
-	if not test_scene:
-		_log_test_result(test_name, false, "Failed to load test script")
-		return
+if not test_scene:
+	_log_test_result(test_name, false, "Failed to load test script")
+	return
 
-		# Instance test scene
-func _fix_orphaned_code():
-	if not test_instance:
-		_log_test_result(test_name, false, "Failed to instantiate test")
-		return
+	# Instance test scene
+if not test_instance:
+	_log_test_result(test_name, false, "Failed to instantiate test")
+	return
 
-		# Connect test completed signal
-		if test_instance.has_signal("test_completed"):
-			test_instance.test_completed.connect(
-			func(success, message): _log_test_result(test_name, success, message)
-			)
-
-			# Add to scene tree
-			add_child(test_instance)
-
-			# If the test has a run method, call it
-			if test_instance.has_method("run_test"):
-				test_instance.run_test()
-
-				# Clean up
-				await get_tree().create_timer(1.0).timeout
-				test_instance.queue_free()
-
-
-func _fix_orphaned_code():
-	if is_direct_script_test:
-		_run_direct_script_test(test_name)
-		return
-
-		# Run the test scene
-func _fix_orphaned_code():
-	if FileAccess.file_exists(test_path):
-		_run_scene(test_path)
-		else:
-			_log_message("Test scene not found: " + test_path, true)
-			_update_status("Test not found")
-
-
-func _fix_orphaned_code():
-	if not scene:
-		_log_message("Failed to load scene: " + scene_path, true)
-		_update_status("Failed to load scene")
-		return
-
-		main_scene_instance = scene.instantiate()
-		if not main_scene_instance:
-			_log_message("Failed to instantiate scene: " + scene_path, true)
-			_update_status("Failed to instantiate scene")
-			return
-
-			# Add debug component to scene if it's the main scene
-			if scene_path == main_scene_path:
-				_add_debug_component_to_scene(main_scene_instance)
-
-				# Add to scene tree
-				add_child(main_scene_instance)
-
-				_log_message("Running scene: " + scene_path)
-				_update_status("Running scene: " + scene_path.get_file())
-
-				# Refresh scene tree
-				_refresh_scene_tree()
-
-
-func _fix_orphaned_code():
-	if success:
-		result_label.text = "✓ " + test_name + ": " + message
-		result_label.add_theme_color_override("font_color", Color(0, 0.8, 0, 1))
-		else:
-			result_label.text = "❌ " + test_name + ": " + message
-			result_label.add_theme_color_override("font_color", Color(0.8, 0, 0, 1))
-
-			test_results_container.add_child(result_label)
-
-			# Also log to debug output
-			_log_message("Test " + test_name + ": " + ("Passed" if success else "Failed") + " - " + message)
-
-
-func _fix_orphaned_code():
-	if is_error:
-		printerr(formatted_message)
-		else:
-			print(formatted_message)
-
-			# Add to debug log
-func _fix_orphaned_code():
-	if is_error:
-		message_label.add_theme_color_override("font_color", Color(0.8, 0, 0, 1))
-
-		debug_messages.add_child(message_label)
-
-		# Auto-scroll to bottom
-		await get_tree().process_frame
-func _fix_orphaned_code():
-	if main_scene_instance:
-		_add_node_to_tree(root, main_scene_instance)
-
-
-func _fix_orphaned_code():
-	for child in node.get_children():
-		_add_node_to_tree(item, child)
-
-
-func _fix_orphaned_code():
-	if not FileAccess.file_exists(script_path):
-		_log_message("Test script not found: " + script_path, true)
-		_log_test_result(test_name, false, "Script not found: " + script_path)
-		return
-
-		# Make sure we have main scene running
-		if main_scene_instance == null or not main_scene_instance.get_class() == "Node3D":
-			# Try to launch main scene first
-			_run_scene(main_scene_path)
-			await get_tree().create_timer(0.5).timeout
-
-			# Load the test script
-func _fix_orphaned_code():
-	if not test_script:
-		_log_message("Failed to load test script: " + script_path, true)
-		_log_test_result(test_name, false, "Failed to load test script")
-		return
-
-		# Instance the test script
-func _fix_orphaned_code():
-	if not test_instance:
-		_log_message("Failed to instantiate test: " + test_name, true)
-		_log_test_result(test_name, false, "Failed to instantiate test")
-		return
-
-		# Connect to the test completed signal
-		if test_instance.has_signal("test_completed"):
-			test_instance.test_completed.connect(
-			func(success, message): _log_test_result(test_name, success, message)
-			)
-
-			# Add to scene tree
-			add_child(test_instance)
-
-			# Run the test
-			if test_instance.has_method("run_test"):
-				test_instance.run_test()
-
-				# Set a timeout to remove the test instance
-func _fix_orphaned_code():
-	if test_instance and is_instance_valid(test_instance):
-		test_instance.queue_free()
-		cleanup_timer.queue_free()
+	# Connect test completed signal
+	if test_instance.has_signal("test_completed"):
+		test_instance.test_completed.connect(
+		func(success, message): _log_test_result(test_name, success, message)
 		)
-		cleanup_timer.start()
+
+		# Add to scene tree
+		add_child(test_instance)
+
+		# If the test has a run method, call it
+		if test_instance.has_method("run_test"):
+			test_instance.run_test()
+
+			# Clean up
+			await get_tree().create_timer(1.0).timeout
+			test_instance.queue_free()
 
 
-func _fix_orphaned_code():
-	if not dir:
-		_log_message("Failed to open test directory", true)
+if is_direct_script_test:
+	_run_direct_script_test(test_name)
+	return
+
+	# Run the test scene
+if FileAccess.file_exists(test_path):
+	_run_scene(test_path)
+	else:
+		_log_message("Test scene not found: " + test_path, true)
+		_update_status("Test not found")
+
+
+if not scene:
+	_log_message("Failed to load scene: " + scene_path, true)
+	_update_status("Failed to load scene")
+	return
+
+	main_scene_instance = scene.instantiate()
+	if not main_scene_instance:
+		_log_message("Failed to instantiate scene: " + scene_path, true)
+		_update_status("Failed to instantiate scene")
+		return
+
+		# Add debug component to scene if it's the main scene
+		if scene_path == main_scene_path:
+			_add_debug_component_to_scene(main_scene_instance)
+
+			# Add to scene tree
+			add_child(main_scene_instance)
+
+			_log_message("Running scene: " + scene_path)
+			_update_status("Running scene: " + scene_path.get_file())
+
+			# Refresh scene tree
+			_refresh_scene_tree()
+
+
+if success:
+	result_label.text = "✓ " + test_name + ": " + message
+	result_label.add_theme_color_override("font_color", Color(0, 0.8, 0, 1))
+	else:
+		result_label.text = "❌ " + test_name + ": " + message
+		result_label.add_theme_color_override("font_color", Color(0.8, 0, 0, 1))
+
+		test_results_container.add_child(result_label)
+
+		# Also log to debug output
+		_log_message("Test " + test_name + ": " + ("Passed" if success else "Failed") + " - " + message)
+
+
+if is_error:
+	printerr(formatted_message)
+	else:
+		print(formatted_message)
+
+		# Add to debug log
+if is_error:
+	message_label.add_theme_color_override("font_color", Color(0.8, 0, 0, 1))
+
+	debug_messages.add_child(message_label)
+
+	# Auto-scroll to bottom
+	await get_tree().process_frame
+if main_scene_instance:
+	_add_node_to_tree(root, main_scene_instance)
+
+
+for child in node.get_children():
+	_add_node_to_tree(item, child)
+
+
+if not FileAccess.file_exists(script_path):
+	_log_message("Test script not found: " + script_path, true)
+	_log_test_result(test_name, false, "Script not found: " + script_path)
+	return
+
+	# Make sure we have main scene running
+	if main_scene_instance == null or not main_scene_instance.get_class() == "Node3D":
+		# Try to launch main scene first
+		_run_scene(main_scene_path)
+		await get_tree().create_timer(0.5).timeout
+
+		# Load the test script
+if not test_script:
+	_log_message("Failed to load test script: " + script_path, true)
+	_log_test_result(test_name, false, "Failed to load test script")
+	return
+
+	# Instance the test script
+if not test_instance:
+	_log_message("Failed to instantiate test: " + test_name, true)
+	_log_test_result(test_name, false, "Failed to instantiate test")
+	return
+
+	# Connect to the test completed signal
+	if test_instance.has_signal("test_completed"):
+		test_instance.test_completed.connect(
+		func(success, message): _log_test_result(test_name, success, message)
+		)
+
+		# Add to scene tree
+		add_child(test_instance)
+
+		# Run the test
+		if test_instance.has_method("run_test"):
+			test_instance.run_test()
+
+			# Set a timeout to remove the test instance
+if test_instance and is_instance_valid(test_instance):
+	test_instance.queue_free()
+	cleanup_timer.queue_free()
+	)
+	cleanup_timer.start()
+
+
+if not dir:
+	_log_message("Failed to open test directory", true)
+	return test_scripts
+
+	dir.list_dir_begin()
+while file_name != "":
+	if file_name.ends_with(".gd") and not file_name.begins_with("."):
+		test_scripts.append(test_container_path + "/" + file_name)
+		file_name = dir.get_next()
+
 		return test_scripts
 
-		dir.list_dir_begin()
-func _fix_orphaned_code():
-	while file_name != "":
-		if file_name.ends_with(".gd") and not file_name.begins_with("."):
-			test_scripts.append(test_container_path + "/" + file_name)
-			file_name = dir.get_next()
 
-			return test_scripts
+if not dir.dir_exists("tests"):
+	dir.make_dir("tests")
 
+	# Create model switcher test script
+if main_scene.get_class() == "Control" and main_scene.name == "DebugScene":
+	for child in main_scene.get_children():
+		if child.get_class() == "Node3D" and child.name == "MainScene":
+			main_scene = child
+			break
 
-func _fix_orphaned_code():
-	if not dir.dir_exists("tests"):
-		dir.make_dir("tests")
+			if not main_scene or main_scene.get_class() != "Node3D":
+				_report_failure("Failed to get main scene")
+				return
 
-		# Create model switcher test script
-func _fix_orphaned_code():
-	if main_scene.get_class() == "Control" and main_scene.name == "DebugScene":
-		for child in main_scene.get_children():
-			if child.get_class() == "Node3D" and child.name == "MainScene":
-				main_scene = child
-				break
+				print("Test 1: Checking for model switcher reference")
+				model_switcher = main_scene.model_switcher
+				if not model_switcher:
+					_report_failure("Failed to find model_switcher in main scene")
+					return
+					print("✓ Model switcher found")
 
-				if not main_scene or main_scene.get_class() != "Node3D":
-					_report_failure("Failed to get main scene")
+					print("Test 2: Checking for model control panel")
+					model_control_panel = main_scene.model_control_panel
+					if not model_control_panel:
+						_report_failure("Failed to find model_control_panel in main scene")
+						return
+						print("✓ Model control panel found")
+
+						print("Test 3: Checking for registered models")
+if model_names.size() == 0:
+	_report_failure("No models registered with model_switcher")
+	return
+	print("✓ Found " + str(model_names.size()) + " registered models: " + str(model_names))
+
+	print("Test 4: Testing model visibility toggling")
+	# Test toggling the first model
+	if model_names.size() > 0:
+print("  - Initial visibility of " + test_model_name + ": " + str(initial_visibility))
+print("  - Toggling visibility...")
+
+# Toggle via model switcher
+model_switcher.toggle_model_visibility(test_model_name)
+
+# Check if toggle worked
+print("  - New visibility: " + str(new_visibility))
+
+if new_visibility == initial_visibility:
+	_report_failure("Failed to toggle model visibility")
+	return
+
+	# Toggle back to initial state
+	model_switcher.toggle_model_visibility(test_model_name)
+	print("  - Reset to initial visibility")
+
+	print("✓ Model visibility toggle works")
+
+	print("Test 5: Testing UI control connection")
+	if model_names.size() > 0:
+if not model_control_panel.has_method("update_button_state"):
+	_report_failure("Model control panel doesn't have expected method")
+	return
+
+	print("  - UI control methods verified")
+
+	# Check buttons exist in UI
+if model_control_panel.has_node("MarginContainer/VBoxContainer/ModelsContainer"):
+	for child in model_control_panel.get_node("MarginContainer/VBoxContainer/ModelsContainer").get_children():
+		if child is CheckButton:
+			has_buttons = true
+			break
+			else:
+				print("  - Warning: ModelsContainer node path not found")
+
+				if not has_buttons:
+					_report_failure("Model control panel doesn't have expected buttons")
 					return
 
-					print("Test 1: Checking for model switcher reference")
-					model_switcher = main_scene.model_switcher
-					if not model_switcher:
-						_report_failure("Failed to find model_switcher in main scene")
-						return
-						print("✓ Model switcher found")
+					print("✓ UI control setup verified")
 
-						print("Test 2: Checking for model control panel")
-						model_control_panel = main_scene.model_control_panel
-						if not model_control_panel:
-							_report_failure("Failed to find model_control_panel in main scene")
-							return
-							print("✓ Model control panel found")
+					print("Test 6: Validating model references")
+if not brain_model_parent:
+	_report_failure("Brain model parent not found")
+	return
 
-							print("Test 3: Checking for registered models")
-func _fix_orphaned_code():
-	if model_names.size() == 0:
-		_report_failure("No models registered with model_switcher")
-		return
-		print("✓ Found " + str(model_names.size()) + " registered models: " + str(model_names))
-
-		print("Test 4: Testing model visibility toggling")
-		# Test toggling the first model
-		if model_names.size() > 0:
-func _fix_orphaned_code():
-	print("  - Initial visibility of " + test_model_name + ": " + str(initial_visibility))
-	print("  - Toggling visibility...")
-
-	# Toggle via model switcher
-	model_switcher.toggle_model_visibility(test_model_name)
-
-	# Check if toggle worked
-func _fix_orphaned_code():
-	print("  - New visibility: " + str(new_visibility))
-
-	if new_visibility == initial_visibility:
-		_report_failure("Failed to toggle model visibility")
+	if brain_model_parent.get_child_count() == 0:
+		_report_failure("No model children found in brain_model_parent")
 		return
 
-		# Toggle back to initial state
-		model_switcher.toggle_model_visibility(test_model_name)
-		print("  - Reset to initial visibility")
+		print("✓ Model references valid")
 
-		print("✓ Model visibility toggle works")
-
-		print("Test 5: Testing UI control connection")
-		if model_names.size() > 0:
-func _fix_orphaned_code():
-	if not model_control_panel.has_method("update_button_state"):
-		_report_failure("Model control panel doesn't have expected method")
-		return
-
-		print("  - UI control methods verified")
-
-		# Check buttons exist in UI
-func _fix_orphaned_code():
-	if model_control_panel.has_node("MarginContainer/VBoxContainer/ModelsContainer"):
-		for child in model_control_panel.get_node("MarginContainer/VBoxContainer/ModelsContainer").get_children():
-			if child is CheckButton:
-				has_buttons = true
-				break
-				else:
-					print("  - Warning: ModelsContainer node path not found")
-
-					if not has_buttons:
-						_report_failure("Model control panel doesn't have expected buttons")
-						return
-
-						print("✓ UI control setup verified")
-
-						print("Test 6: Validating model references")
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		_report_failure("Brain model parent not found")
-		return
-
-		if brain_model_parent.get_child_count() == 0:
-			_report_failure("No model children found in brain_model_parent")
-			return
-
-			print("✓ Model references valid")
-
-			# All tests passed
-			_report_success("All model switcher tests passed successfully!")
+		# All tests passed
+		_report_success("All model switcher tests passed successfully!")
 
 func _on_run_main_scene_btn_pressed() -> void:
 	_run_scene(main_scene_path)

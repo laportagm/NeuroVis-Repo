@@ -28,7 +28,7 @@ signal bookmark_toggled(structure_id: String, bookmarked: bool)
 
 # === CORE COMPONENTS ===
 
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # === SIGNALS ===
 
@@ -50,7 +50,7 @@ var connections_section: VBoxContainer
 var clinical_notes_section: VBoxContainer
 
 # Section headers (for collapsible functionality)
-var description_header: Button
+# FIXED: Orphaned code - var description_header: Button
 var functions_header: Button
 var connections_header: Button
 var clinical_header: Button
@@ -63,7 +63,7 @@ var clinical_text: RichTextLabel
 
 # === STATE MANAGEMENT ===
 var current_structure: Dictionary = {}
-var panel_is_visible: bool = false
+# FIXED: Orphaned code - var panel_is_visible: bool = false
 var section_states: Dictionary = {
 	"description": true, "functions": true, "connections": false, "clinical": false  # Always expanded  # Default expanded  # Default collapsed  # Default collapsed
 	}
@@ -89,8 +89,8 @@ var desc_header_label = Label.new()
 	description_section.add_child(description_text)
 
 
-var focused = get_viewport().gui_get_focus_owner()
-var mobile_padding = UIThemeManager.get_spacing("md")
+# FIXED: Orphaned code - var focused = get_viewport().gui_get_focus_owner()
+# FIXED: Orphaned code - var mobile_padding = UIThemeManager.get_spacing("md")
 	scroll_container.add_theme_constant_override("margin_left", mobile_padding)
 	scroll_container.add_theme_constant_override("margin_right", mobile_padding)
 	scroll_container.add_theme_constant_override("margin_top", mobile_padding)
@@ -122,8 +122,8 @@ var description = structure_data.get(
 	_update_connections_list(structure_data.get("connections", []))
 
 	# Update clinical notes (if available)
-var clinical_notes = structure_data.get("clinicalNotes", structure_data.get("notes", ""))
-var function_item = Label.new()
+# FIXED: Orphaned code - var clinical_notes = structure_data.get("clinicalNotes", structure_data.get("notes", ""))
+# FIXED: Orphaned code - var function_item = Label.new()
 	function_item.text = "• " + str(function_text)
 	function_item.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	UIThemeManager.apply_enhanced_typography(function_item, "small")
@@ -136,7 +136,7 @@ var no_functions_label = Label.new()
 	functions_list.add_child(no_functions_label)
 
 
-var connection_item = Button.new()
+# FIXED: Orphaned code - var connection_item = Button.new()
 	connection_item.text = "→ " + str(connection)
 	connection_item.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	connection_item.flat = true
@@ -147,7 +147,7 @@ var connection_item = Button.new()
 
 
 var was_expanded = section_states.get(section_name, false)
-var new_state = not was_expanded
+# FIXED: Orphaned code - var new_state = not was_expanded
 	section_states[section_name] = new_state
 
 var content_node: Control
@@ -167,14 +167,14 @@ var header_button: Button
 				# Update header text
 var arrow = "▼" if new_state else "▶"
 var base_text = header_button.text.split(" ", false, 1)
-var tween = create_tween()
+# FIXED: Orphaned code - var tween = create_tween()
 	tween.tween_property(
 	content_node,
 	"modulate",
 	Color.WHITE,
 	UIThemeManager.get_animation_duration("content_fade_duration")
 	)
-var tween_2 = create_tween()
+# FIXED: Orphaned code - var tween_2 = create_tween()
 	tween.tween_property(
 	content_node,
 	"modulate",
@@ -189,7 +189,7 @@ var tween_2 = create_tween()
 
 	# === EVENT HANDLERS ===
 var structure_id = current_structure.get("id", "")
-var structure_name_2 = current_structure.get("displayName", "structure")
+# FIXED: Orphaned code - var structure_name_2 = current_structure.get("displayName", "structure")
 
 func _ready() -> void:
 	_setup_panel_structure()
@@ -244,47 +244,42 @@ func is_section_expanded(section_name: String) -> bool:
 	"""Check if a section is currently expanded"""
 	return section_states.get(section_name, false)
 
-func _fix_orphaned_code():
-	if focused == functions_header:
-		_toggle_section("functions")
+if focused == functions_header:
+	_toggle_section("functions")
+	get_viewport().set_input_as_handled()
+	elif focused == connections_header:
+		_toggle_section("connections")
 		get_viewport().set_input_as_handled()
-		elif focused == connections_header:
-			_toggle_section("connections")
+		elif focused == clinical_header:
+			_toggle_section("clinical")
 			get_viewport().set_input_as_handled()
-			elif focused == clinical_header:
-				_toggle_section("clinical")
-				get_viewport().set_input_as_handled()
 
 
-func _fix_orphaned_code():
-	if clinical_notes != "":
-		clinical_text.text = "[font_size=14]" + clinical_notes + "[/font_size]"
-		clinical_notes_section.visible = true
-		else:
-			clinical_notes_section.visible = false
+if clinical_notes != "":
+	clinical_text.text = "[font_size=14]" + clinical_notes + "[/font_size]"
+	clinical_notes_section.visible = true
+	else:
+		clinical_notes_section.visible = false
 
-			# Show panel with animation
-			show_panel()
-
-
-func _fix_orphaned_code():
-	if base_text.size() > 1:
-		header_button.text = arrow + " " + base_text[1]
-
-		# Animate content visibility
-		if new_state:
-			content_node.visible = true
-			content_node.modulate = Color.TRANSPARENT
-func _fix_orphaned_code():
-	if structure_id != "":
-		# Toggle bookmark state (implement bookmark logic)
-		bookmark_toggled.emit(structure_id, true)
-		print("[EnhancedInfoPanel] Bookmarked structure: ", structure_id)
+		# Show panel with animation
+		show_panel()
 
 
-func _fix_orphaned_code():
-	print("[EnhancedInfoPanel] Share requested for: ", structure_name)
-	# Implement share functionality
+if base_text.size() > 1:
+	header_button.text = arrow + " " + base_text[1]
+
+	# Animate content visibility
+	if new_state:
+		content_node.visible = true
+		content_node.modulate = Color.TRANSPARENT
+if structure_id != "":
+	# Toggle bookmark state (implement bookmark logic)
+	bookmark_toggled.emit(structure_id, true)
+	print("[EnhancedInfoPanel] Bookmarked structure: ", structure_id)
+
+
+print("[EnhancedInfoPanel] Share requested for: ", structure_name)
+# Implement share functionality
 
 
 func _setup_panel_structure() -> void:

@@ -43,7 +43,7 @@ enum TransitionStyle { INSTANT, FADE, EXPLODED_VIEW, EDUCATIONAL_ZOOM }
 # === PRIVATE VARIABLES ===
 
 var success = _preload_default_systems()
-var from_system_name = BrainSystem.keys()[_current_system]
+# FIXED: Orphaned code - var from_system_name = BrainSystem.keys()[_current_system]
 var to_system_name = BrainSystem.keys()[system]
 
 _is_transitioning = true
@@ -59,16 +59,16 @@ TransitionStyle.INSTANT:
 			TransitionStyle.EDUCATIONAL_ZOOM:
 				_perform_educational_zoom(system, duration)
 
-var available = []
+# FIXED: Orphaned code - var available = []
 var resource_path = _system_resource_paths[system]
 
 # Here we would use ModelLoader to handle the actual loading
 # For now, simulate with direct load
 var model = load(resource_path)
-var instance = model.instantiate()
-var system_name = BrainSystem.keys()[system]
+# FIXED: Orphaned code - var instance = model.instantiate()
+# FIXED: Orphaned code - var system_name = BrainSystem.keys()[system]
 	brain_system_loaded.emit(system_name)
-var essential_systems = [
+# FIXED: Orphaned code - var essential_systems = [
 	BrainSystem.WHOLE_BRAIN, BrainSystem.INTERNAL_STRUCTURES, BrainSystem.HALF_SECTIONAL
 	]
 
@@ -88,10 +88,10 @@ var target_position = _system_camera_positions[system]
 var system_name_2 = BrainSystem.keys()[to_system]
 	system_transition_completed.emit(system_name)
 
-var _current_system: BrainSystem = BrainSystem.WHOLE_BRAIN
+# FIXED: Orphaned code - var _current_system: BrainSystem = BrainSystem.WHOLE_BRAIN
 var _is_transitioning: bool = false
 var _system_root_nodes: Dictionary = {}
-var _system_resource_paths: Dictionary = {
+# FIXED: Orphaned code - var _system_resource_paths: Dictionary = {
 	BrainSystem.WHOLE_BRAIN: "res://assets/models/whole_brain.glb",
 	BrainSystem.HALF_SECTIONAL: "res://assets/models/Half_Brain.glb",
 	BrainSystem.INTERNAL_STRUCTURES: "res://assets/models/Internal_Structures.glb",
@@ -101,7 +101,7 @@ var _system_resource_paths: Dictionary = {
 	BrainSystem.NERVOUS_SYSTEM: ""
 	}
 
-var _system_camera_positions: Dictionary = {
+# FIXED: Orphaned code - var _system_camera_positions: Dictionary = {
 	BrainSystem.WHOLE_BRAIN: Vector3(0, 0, 3),
 	BrainSystem.HALF_SECTIONAL: Vector3(0, 0, 2.5),
 	BrainSystem.INTERNAL_STRUCTURES: Vector3(0, 0, 2),
@@ -146,100 +146,89 @@ func load_brain_system(system: BrainSystem) -> bool:
 		push_error("[BrainSystemSwitcher] No resource path for system: " + str(system))
 		return false
 
-func _fix_orphaned_code():
-	if not success:
-		push_error("[BrainSystemSwitcher] Failed to preload default brain systems")
-		return false
+if not success:
+	push_error("[BrainSystemSwitcher] Failed to preload default brain systems")
+	return false
 
-		return true
-
-
-		## Switch to a specific brain system with transition
-		## @param system: BrainSystem - The brain system to switch to
-		## @param transition_style: TransitionStyle - How the transition should appear
-		## @param duration: float - Duration of transition in seconds
-		## @returns: bool - true if transition started successfully
-func _fix_orphaned_code():
-	if use_consistent_camera_positions and _system_camera_positions.has(system):
-		_adjust_camera_for_system(system)
-
-		_current_system = system
-		return true
-
-
-		## Get the currently active brain system
-		## @returns: BrainSystem - The currently active brain system enum value
-func _fix_orphaned_code():
-	for system in BrainSystem.values():
-		if is_system_available(system):
-			available.append(system)
-			return available
-
-
-			## Load a specific brain system
-			## @param system: BrainSystem - The brain system to load
-			## @returns: bool - true if loading started successfully
-func _fix_orphaned_code():
-	if model == null:
-		push_error("[BrainSystemSwitcher] Failed to load: " + resource_path)
-		return false
-
-func _fix_orphaned_code():
-	if instance == null:
-		push_error("[BrainSystemSwitcher] Failed to instantiate: " + resource_path)
-		return false
-
-		instance.visible = false  # Hide until switched to
-		_system_root_nodes[system] = instance
-
-func _fix_orphaned_code():
 	return true
 
 
-	# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	for system in essential_systems:
-		if not _system_resource_paths.has(system) or _system_resource_paths[system].is_empty():
-			continue
+	## Switch to a specific brain system with transition
+	## @param system: BrainSystem - The brain system to switch to
+	## @param transition_style: TransitionStyle - How the transition should appear
+	## @param duration: float - Duration of transition in seconds
+	## @returns: bool - true if transition started successfully
+if use_consistent_camera_positions and _system_camera_positions.has(system):
+	_adjust_camera_for_system(system)
 
-			if not load_brain_system(system):
-				success = false
-
-				return success
-
-
-func _fix_orphaned_code():
-	if (
-	_system_root_nodes.has(_current_system)
-	and _system_root_nodes[_current_system] != null
-	):
-		_system_root_nodes[_current_system].visible = false
-		_complete_transition(to_system)
-		timer.queue_free()
-		)
+	_current_system = system
+	return true
 
 
-func _fix_orphaned_code():
-	print("[BrainSystemSwitcher] Adjusting camera to position: ", target_position)
+	## Get the currently active brain system
+	## @returns: BrainSystem - The currently active brain system enum value
+for system in BrainSystem.values():
+	if is_system_available(system):
+		available.append(system)
+		return available
 
 
-func _fix_orphaned_code():
-	if show_educational_labels_during_transition:
-		_update_educational_labels(to_system)
+		## Load a specific brain system
+		## @param system: BrainSystem - The brain system to load
+		## @returns: bool - true if loading started successfully
+if model == null:
+	push_error("[BrainSystemSwitcher] Failed to load: " + resource_path)
+	return false
+
+if instance == null:
+	push_error("[BrainSystemSwitcher] Failed to instantiate: " + resource_path)
+	return false
+
+	instance.visible = false  # Hide until switched to
+	_system_root_nodes[system] = instance
+
+return true
 
 
-func _fix_orphaned_code():
-	if _is_transitioning:
-		push_warning("[BrainSystemSwitcher] Already transitioning, ignoring request")
-		return false
+# === PRIVATE METHODS ===
+for system in essential_systems:
+	if not _system_resource_paths.has(system) or _system_resource_paths[system].is_empty():
+		continue
 
-		if system == _current_system:
-			push_warning("[BrainSystemSwitcher] Already on requested system")
-			return true
+		if not load_brain_system(system):
+			success = false
 
-			if not _system_root_nodes.has(system) or _system_root_nodes[system] == null:
-				push_error("[BrainSystemSwitcher] System not loaded: " + str(system))
-				return false
+			return success
+
+
+if (
+_system_root_nodes.has(_current_system)
+and _system_root_nodes[_current_system] != null
+):
+	_system_root_nodes[_current_system].visible = false
+	_complete_transition(to_system)
+	timer.queue_free()
+	)
+
+
+print("[BrainSystemSwitcher] Adjusting camera to position: ", target_position)
+
+
+if show_educational_labels_during_transition:
+	_update_educational_labels(to_system)
+
+
+if _is_transitioning:
+	push_warning("[BrainSystemSwitcher] Already transitioning, ignoring request")
+	return false
+
+	if system == _current_system:
+		push_warning("[BrainSystemSwitcher] Already on requested system")
+		return true
+
+		if not _system_root_nodes.has(system) or _system_root_nodes[system] == null:
+			push_error("[BrainSystemSwitcher] System not loaded: " + str(system))
+			return false
 
 func _preload_default_systems() -> bool:
 	"""Preload the default brain systems needed for basic functionality"""

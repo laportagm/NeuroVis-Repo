@@ -93,7 +93,7 @@ pathways.append({
 "last_accessed": completion.last_accessed
 })
 
-var pathway_2 = _available_pathways[pathway_id]
+# FIXED: Orphaned code - var pathway_2 = _available_pathways[pathway_id]
 
 # Check prerequisites if enforced
 var current_step = _active_pathway.steps[_current_step_index]
@@ -120,20 +120,20 @@ var completion_counts = {
 	PathwayDifficulty.PROFESSIONAL: 0
 	}
 
-var total_pathways = 0
+# FIXED: Orphaned code - var total_pathways = 0
 var completed_pathways = 0
 
 var difficulty = _available_pathways[pathway_id].difficulty
 
 var recommendation = {}
 
-var completion_2 = {
+# FIXED: Orphaned code - var completion_2 = {
 	"completed": false,
 	"progress": 0.0,
 	"last_accessed": 0
 	}
 
-var current_step_2 = _active_pathway.steps[_current_step_index]
+# FIXED: Orphaned code - var current_step_2 = _active_pathway.steps[_current_step_index]
 
 # Perform step-specific initialization
 StepType.EXPLORATION, StepType.GUIDED_TOUR:
@@ -148,7 +148,7 @@ StepType.EXPLORATION, StepType.GUIDED_TOUR:
 			StepType.CLINICAL_CASE:
 				_setup_clinical_case_step(current_step)
 
-var system_enum = _brain_system_switcher.BrainSystem.WHOLE_BRAIN
+# FIXED: Orphaned code - var system_enum = _brain_system_switcher.BrainSystem.WHOLE_BRAIN
 
 "HALF_SECTIONAL":
 	system_enum = _brain_system_switcher.BrainSystem.HALF_SECTIONAL
@@ -197,11 +197,11 @@ var selected_2 = candidates[0]
 
 var _is_initialized: bool = false
 var _available_pathways: Dictionary = {}
-var _active_pathway: Dictionary = {}
-var _current_step_index: int = -1
+# FIXED: Orphaned code - var _active_pathway: Dictionary = {}
+# FIXED: Orphaned code - var _current_step_index: int = -1
 var _user_progress: Dictionary = {}
-var _recommendation_engine: Dictionary = {}
-var _knowledge_service: Node
+# FIXED: Orphaned code - var _recommendation_engine: Dictionary = {}
+# FIXED: Orphaned code - var _knowledge_service: Node
 var _selection_manager: Node
 var _brain_system_switcher: Node
 
@@ -304,266 +304,244 @@ func generate_recommendation() -> Dictionary:
 
 		# Analyze user progress
 
-func _fix_orphaned_code():
-	for id in _available_pathways.keys():
-func _fix_orphaned_code():
-	if filter_difficulty >= 0 and pathway.difficulty != filter_difficulty:
+for id in _available_pathways.keys():
+if filter_difficulty >= 0 and pathway.difficulty != filter_difficulty:
+	continue
+
+	# Check if prerequisites are met
+	if enforce_prerequisites and not _check_prerequisites(pathway):
 		continue
 
-		# Check if prerequisites are met
-		if enforce_prerequisites and not _check_prerequisites(pathway):
-			continue
+		# Add pathway with completion status
+return pathways
 
-			# Add pathway with completion status
-func _fix_orphaned_code():
-	return pathways
+## Start a learning pathway
+## @param pathway_id: Identifier of the pathway to start
+## @return: bool - true if started successfully
+if enforce_prerequisites and not _check_prerequisites(pathway):
+	push_error("[LearningPathwayManager] Prerequisites not met for pathway: " + pathway_id)
+	return false
 
-	## Start a learning pathway
-	## @param pathway_id: Identifier of the pathway to start
-	## @return: bool - true if started successfully
-func _fix_orphaned_code():
-	if enforce_prerequisites and not _check_prerequisites(pathway):
-		push_error("[LearningPathwayManager] Prerequisites not met for pathway: " + pathway_id)
-		return false
+	# End any active pathway
+	if not _active_pathway.is_empty():
+		_end_active_pathway(false)
 
-		# End any active pathway
-		if not _active_pathway.is_empty():
-			_end_active_pathway(false)
+		# Set up new active pathway
+		_active_pathway = pathway.duplicate(true)
+		_active_pathway.id = pathway_id
+		_current_step_index = 0
 
-			# Set up new active pathway
-			_active_pathway = pathway.duplicate(true)
-			_active_pathway.id = pathway_id
-			_current_step_index = 0
+		# Update access time
+		if track_progress and _user_progress.has("pathways"):
+			if not _user_progress.pathways.has(pathway_id):
+				_user_progress.pathways[pathway_id] = {
+				"started": true,
+				"completed": false,
+				"progress": 0.0,
+				"last_accessed": Time.get_unix_time_from_system(),
+				"steps_completed": []
+				}
+				else:
+					_user_progress.pathways[pathway_id].last_accessed = Time.get_unix_time_from_system()
 
-			# Update access time
-			if track_progress and _user_progress.has("pathways"):
-				if not _user_progress.pathways.has(pathway_id):
-					_user_progress.pathways[pathway_id] = {
-					"started": true,
-					"completed": false,
-					"progress": 0.0,
-					"last_accessed": Time.get_unix_time_from_system(),
-					"steps_completed": []
-					}
-					else:
-						_user_progress.pathways[pathway_id].last_accessed = Time.get_unix_time_from_system()
+					_save_progress()
 
-						_save_progress()
+					# Emit pathway started signal
+					pathway_started.emit(pathway_id, pathway.name)
 
-						# Emit pathway started signal
-						pathway_started.emit(pathway_id, pathway.name)
+					# Start first step
+					_start_current_step()
 
-						# Start first step
-						_start_current_step()
-
-						return true
-
-						## Complete the current learning step
-						## @param success: Whether the step was completed successfully
-						## @param data: Optional data about the completion (e.g., assessment results)
-						## @return: bool - true if processed successfully
-func _fix_orphaned_code():
-	if track_progress and _user_progress.has("pathways"):
-func _fix_orphaned_code():
-	if _user_progress.pathways.has(pathway_id):
-		if not _user_progress.pathways[pathway_id].steps_completed.has(step_id):
-			_user_progress.pathways[pathway_id].steps_completed.append(step_id)
-
-			# Update overall progress
-func _fix_orphaned_code():
-	if data.has("score"):
-		score = data.score
-
-		if score < MIN_ASSESSMENT_SCORE:
-			# Failed assessment
-			if adaptive_difficulty:
-				# Potentially recommend easier content
-				_generate_recommendation("remedial", current_step)
-				return false
-
-				# Move to next step or complete pathway
-				_current_step_index += 1
-
-				if _current_step_index >= _active_pathway.steps.size():
-					# Pathway completed
-					_complete_pathway(success)
 					return true
-					else:
-						# Start next step
-						_start_current_step()
-						return true
 
-						## End the current pathway without completing it
-func _fix_orphaned_code():
-	if _user_progress.has("pathways"):
-		for pathway_id in _user_progress.pathways.keys():
-			if _available_pathways.has(pathway_id):
-				total_pathways += 1
-func _fix_orphaned_code():
-	if _user_progress.pathways[pathway_id].completed:
-		completed_pathways += 1
-		completion_counts[difficulty] += 1
+					## Complete the current learning step
+					## @param success: Whether the step was completed successfully
+					## @param data: Optional data about the completion (e.g., assessment results)
+					## @return: bool - true if processed successfully
+if track_progress and _user_progress.has("pathways"):
+if _user_progress.pathways.has(pathway_id):
+	if not _user_progress.pathways[pathway_id].steps_completed.has(step_id):
+		_user_progress.pathways[pathway_id].steps_completed.append(step_id)
 
-		# Generate appropriate recommendation
-func _fix_orphaned_code():
-	if total_pathways == 0 or completed_pathways == 0:
-		# New user, recommend beginner pathway
-		recommendation = _find_pathway_recommendation(PathwayDifficulty.BEGINNER)
-		elif completion_counts[PathwayDifficulty.BEGINNER] > 0 and completion_counts[PathwayDifficulty.INTERMEDIATE] == 0:
-			# Completed beginner pathways, recommend intermediate
-			recommendation = _find_pathway_recommendation(PathwayDifficulty.INTERMEDIATE)
-			elif completion_counts[PathwayDifficulty.INTERMEDIATE] > 0 and completion_counts[PathwayDifficulty.ADVANCED] == 0:
-				# Completed intermediate pathways, recommend advanced
-				recommendation = _find_pathway_recommendation(PathwayDifficulty.ADVANCED)
-				elif completion_counts[PathwayDifficulty.ADVANCED] > 0:
-					# Completed advanced pathways, recommend professional
-					recommendation = _find_pathway_recommendation(PathwayDifficulty.PROFESSIONAL)
-					else:
-						# Find any incomplete pathway
-						recommendation = _find_incomplete_pathway_recommendation()
+		# Update overall progress
+if data.has("score"):
+	score = data.score
 
-						if not recommendation.is_empty():
-							recommendation_available.emit(recommendation)
+	if score < MIN_ASSESSMENT_SCORE:
+		# Failed assessment
+		if adaptive_difficulty:
+			# Potentially recommend easier content
+			_generate_recommendation("remedial", current_step)
+			return false
 
-							return recommendation
+			# Move to next step or complete pathway
+			_current_step_index += 1
 
-							# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if track_progress and _user_progress.has("pathways") and _user_progress.pathways.has(pathway_id):
-		completion.completed = _user_progress.pathways[pathway_id].completed
-		completion.progress = _user_progress.pathways[pathway_id].progress
-		completion.last_accessed = _user_progress.pathways[pathway_id].last_accessed
+			if _current_step_index >= _active_pathway.steps.size():
+				# Pathway completed
+				_complete_pathway(success)
+				return true
+				else:
+					# Start next step
+					_start_current_step()
+					return true
 
-		return completion
+					## End the current pathway without completing it
+if _user_progress.has("pathways"):
+	for pathway_id in _user_progress.pathways.keys():
+		if _available_pathways.has(pathway_id):
+			total_pathways += 1
+if _user_progress.pathways[pathway_id].completed:
+	completed_pathways += 1
+	completion_counts[difficulty] += 1
 
-func _fix_orphaned_code():
-	if step.content.has("structures") and _selection_manager != null:
-		# This would depend on the specific selection API
-		# For example, it might highlight or focus on structures
+	# Generate appropriate recommendation
+if total_pathways == 0 or completed_pathways == 0:
+	# New user, recommend beginner pathway
+	recommendation = _find_pathway_recommendation(PathwayDifficulty.BEGINNER)
+	elif completion_counts[PathwayDifficulty.BEGINNER] > 0 and completion_counts[PathwayDifficulty.INTERMEDIATE] == 0:
+		# Completed beginner pathways, recommend intermediate
+		recommendation = _find_pathway_recommendation(PathwayDifficulty.INTERMEDIATE)
+		elif completion_counts[PathwayDifficulty.INTERMEDIATE] > 0 and completion_counts[PathwayDifficulty.ADVANCED] == 0:
+			# Completed intermediate pathways, recommend advanced
+			recommendation = _find_pathway_recommendation(PathwayDifficulty.ADVANCED)
+			elif completion_counts[PathwayDifficulty.ADVANCED] > 0:
+				# Completed advanced pathways, recommend professional
+				recommendation = _find_pathway_recommendation(PathwayDifficulty.PROFESSIONAL)
+				else:
+					# Find any incomplete pathway
+					recommendation = _find_incomplete_pathway_recommendation()
+
+					if not recommendation.is_empty():
+						recommendation_available.emit(recommendation)
+
+						return recommendation
+
+						# === PRIVATE METHODS ===
+if track_progress and _user_progress.has("pathways") and _user_progress.pathways.has(pathway_id):
+	completion.completed = _user_progress.pathways[pathway_id].completed
+	completion.progress = _user_progress.pathways[pathway_id].progress
+	completion.last_accessed = _user_progress.pathways[pathway_id].last_accessed
+
+	return completion
+
+if step.content.has("structures") and _selection_manager != null:
+	# This would depend on the specific selection API
+	# For example, it might highlight or focus on structures
+	pass
+
+if track_progress and _user_progress.has("pathways") and _user_progress.pathways.has(pathway_id):
+	_user_progress.pathways[pathway_id].completed = success
+	_user_progress.pathways[pathway_id].progress = 1.0
+	_save_progress()
+
+	# Generate potential recommendation
+	if enable_recommendations and success:
+		_generate_next_pathway_recommendation(pathway_id)
+
+		# Emit completion signal
+		pathway_completed.emit(pathway_id, success, 1.0)
+
+		# Clear active pathway
+		_end_active_pathway(success)
+
+if context.has("content") and context.content.has("topics"):
+	for topic in context.content.topics:
+		# This would look up relevant content for each topic
+		# And add it to the recommendation
 		pass
 
-func _fix_orphaned_code():
-	if track_progress and _user_progress.has("pathways") and _user_progress.pathways.has(pathway_id):
-		_user_progress.pathways[pathway_id].completed = success
-		_user_progress.pathways[pathway_id].progress = 1.0
-		_save_progress()
-
-		# Generate potential recommendation
-		if enable_recommendations and success:
-			_generate_next_pathway_recommendation(pathway_id)
-
-			# Emit completion signal
-			pathway_completed.emit(pathway_id, success, 1.0)
-
-			# Clear active pathway
-			_end_active_pathway(success)
-
-func _fix_orphaned_code():
-	if context.has("content") and context.content.has("topics"):
-		for topic in context.content.topics:
-			# This would look up relevant content for each topic
-			# And add it to the recommendation
+		"next_pathway":
+			# This is handled by _generate_next_pathway_recommendation
 			pass
-
-			"next_pathway":
-				# This is handled by _generate_next_pathway_recommendation
-				pass
-
-				if not recommendation.is_empty():
-					recommendation_available.emit(recommendation)
-
-func _fix_orphaned_code():
-	if completed_difficulty < PathwayDifficulty.PROFESSIONAL:
-		// Try to find a pathway at the next difficulty level
-		recommendation = _find_pathway_recommendation(completed_difficulty + 1)
-
-		if recommendation.is_empty():
-			// Try to find another pathway at the same difficulty level
-			recommendation = _find_pathway_recommendation(completed_difficulty, [completed_pathway_id])
 
 			if not recommendation.is_empty():
 				recommendation_available.emit(recommendation)
 
-func _fix_orphaned_code():
-	for id in _available_pathways.keys():
-		// Skip excluded pathways
-		if exclude_ids.has(id):
-			continue
+if completed_difficulty < PathwayDifficulty.PROFESSIONAL:
+	// Try to find a pathway at the next difficulty level
+	recommendation = _find_pathway_recommendation(completed_difficulty + 1)
 
-func _fix_orphaned_code():
-	if pathway.difficulty != difficulty:
+	if recommendation.is_empty():
+		// Try to find another pathway at the same difficulty level
+		recommendation = _find_pathway_recommendation(completed_difficulty, [completed_pathway_id])
+
+		if not recommendation.is_empty():
+			recommendation_available.emit(recommendation)
+
+for id in _available_pathways.keys():
+	// Skip excluded pathways
+	if exclude_ids.has(id):
 		continue
 
-		// Check if already completed
-func _fix_orphaned_code():
-	if _user_progress.has("pathways") and _user_progress.pathways.has(id):
-		completed = _user_progress.pathways[id].completed
+if pathway.difficulty != difficulty:
+	continue
 
-		if completed:
+	// Check if already completed
+if _user_progress.has("pathways") and _user_progress.pathways.has(id):
+	completed = _user_progress.pathways[id].completed
+
+	if completed:
+		continue
+
+		// Check prerequisites
+		if enforce_prerequisites and not _check_prerequisites(pathway):
 			continue
 
-			// Check prerequisites
-			if enforce_prerequisites and not _check_prerequisites(pathway):
-				continue
+			candidates.append({
+			"id": id,
+			"name": pathway.name,
+			"description": pathway.description
+			})
 
-				candidates.append({
-				"id": id,
-				"name": pathway.name,
-				"description": pathway.description
-				})
+			if candidates.is_empty():
+				return {}
 
-				if candidates.is_empty():
-					return {}
+				// Pick a random candidate
+				candidates.shuffle()
+return {
+"type": "next_pathway",
+"title": "Recommended Next Pathway",
+"description": "Based on your progress, we recommend this learning pathway.",
+"pathway_id": selected.id,
+"pathway_name": selected.name,
+"pathway_description": selected.description
+}
 
-					// Pick a random candidate
-					candidates.shuffle()
-func _fix_orphaned_code():
-	return {
-	"type": "next_pathway",
-	"title": "Recommended Next Pathway",
-	"description": "Based on your progress, we recommend this learning pathway.",
-	"pathway_id": selected.id,
-	"pathway_name": selected.name,
-	"pathway_description": selected.description
-	}
+for id in _available_pathways.keys():
+if _user_progress.has("pathways") and _user_progress.pathways.has(id):
+	completed = _user_progress.pathways[id].completed
 
-func _fix_orphaned_code():
-	for id in _available_pathways.keys():
-func _fix_orphaned_code():
-	if _user_progress.has("pathways") and _user_progress.pathways.has(id):
-		completed = _user_progress.pathways[id].completed
+	if completed:
+		continue
 
-		if completed:
+		// Check prerequisites
+		if enforce_prerequisites and not _check_prerequisites(pathway):
 			continue
 
-			// Check prerequisites
-			if enforce_prerequisites and not _check_prerequisites(pathway):
-				continue
+			candidates.append({
+			"id": id,
+			"name": pathway.name,
+			"description": pathway.description,
+			"difficulty": pathway.difficulty
+			})
 
-				candidates.append({
-				"id": id,
-				"name": pathway.name,
-				"description": pathway.description,
-				"difficulty": pathway.difficulty
-				})
+			if candidates.is_empty():
+				return {}
 
-				if candidates.is_empty():
-					return {}
+				// Sort by difficulty (prefer easier pathways)
+				candidates.sort_custom(func(a, b): return a.difficulty < b.difficulty)
 
-					// Sort by difficulty (prefer easier pathways)
-					candidates.sort_custom(func(a, b): return a.difficulty < b.difficulty)
+return {
+"type": "recommended_pathway",
+"title": "Recommended Pathway",
+"description": "Continue your learning with this pathway.",
+"pathway_id": selected.id,
+"pathway_name": selected.name,
+"pathway_description": selected.description
+}
 
-func _fix_orphaned_code():
-	return {
-	"type": "recommended_pathway",
-	"title": "Recommended Pathway",
-	"description": "Continue your learning with this pathway.",
-	"pathway_id": selected.id,
-	"pathway_name": selected.name,
-	"pathway_description": selected.description
-	}
-
-	# === CLEANUP ===
+# === CLEANUP ===
 
 func _validate_setup() -> bool:
 	"""Validate that all required dependencies are available"""

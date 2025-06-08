@@ -62,12 +62,12 @@ var preset_section = _create_preset_controls()
 add_child(preset_section)
 
 
-var section = VBoxContainer.new()
-var label = Label.new()
+# FIXED: Orphaned code - var section = VBoxContainer.new()
+# FIXED: Orphaned code - var label = Label.new()
 label.text = "Movement"
 section.add_child(label)
 
-var grid = GridContainer.new()
+# FIXED: Orphaned code - var grid = GridContainer.new()
 grid.columns = 3
 
 # Create directional buttons
@@ -83,14 +83,14 @@ _movement_buttons[directions[i]] = button
 grid.add_child(button)
 
 section.add_child(grid)
-var section_2 = VBoxContainer.new()
-var label_2 = Label.new()
+# FIXED: Orphaned code - var section_2 = VBoxContainer.new()
+# FIXED: Orphaned code - var label_2 = Label.new()
 label.text = "Rotation"
 section.add_child(label)
 
 # Pitch slider
 var pitch_container = HBoxContainer.new()
-var pitch_label = Label.new()
+# FIXED: Orphaned code - var pitch_label = Label.new()
 pitch_label.text = "Pitch:"
 var pitch_slider = HSlider.new()
 pitch_slider.min_value = -90.0
@@ -105,7 +105,7 @@ section.add_child(pitch_container)
 
 # Yaw slider
 var yaw_container = HBoxContainer.new()
-var yaw_label = Label.new()
+# FIXED: Orphaned code - var yaw_label = Label.new()
 yaw_label.text = "Yaw:"
 var yaw_slider = HSlider.new()
 yaw_slider.min_value = -180.0
@@ -118,21 +118,21 @@ yaw_container.add_child(yaw_label)
 yaw_container.add_child(yaw_slider)
 section.add_child(yaw_container)
 
-var section_3 = VBoxContainer.new()
-var label_3 = Label.new()
+# FIXED: Orphaned code - var section_3 = VBoxContainer.new()
+# FIXED: Orphaned code - var label_3 = Label.new()
 label.text = "Zoom"
 section.add_child(label)
 
-var container = HBoxContainer.new()
-var zoom_in = Button.new()
+# FIXED: Orphaned code - var container = HBoxContainer.new()
+# FIXED: Orphaned code - var zoom_in = Button.new()
 zoom_in.text = "Zoom In"
 zoom_in.pressed.connect(_on_zoom_in_pressed)
 
-var zoom_out = Button.new()
+# FIXED: Orphaned code - var zoom_out = Button.new()
 zoom_out.text = "Zoom Out"
 zoom_out.pressed.connect(_on_zoom_out_pressed)
 
-var zoom_reset = Button.new()
+# FIXED: Orphaned code - var zoom_reset = Button.new()
 zoom_reset.text = "Reset"
 zoom_reset.pressed.connect(_on_zoom_reset_pressed)
 
@@ -145,12 +145,12 @@ container.add_child(zoom_out)
 container.add_child(zoom_reset)
 section.add_child(container)
 
-var section_4 = VBoxContainer.new()
-var label_4 = Label.new()
+# FIXED: Orphaned code - var section_4 = VBoxContainer.new()
+# FIXED: Orphaned code - var label_4 = Label.new()
 label.text = "Presets"
 section.add_child(label)
 
-var container_2 = GridContainer.new()
+# FIXED: Orphaned code - var container_2 = GridContainer.new()
 container.columns = 2
 
 var presets = ["Front", "Back", "Left", "Right", "Top", "Bottom", "Default"]
@@ -163,11 +163,11 @@ container.add_child(button)
 
 section.add_child(container)
 
-var _movement_buttons: Dictionary = {}
-var _rotation_sliders: Dictionary = {}
-var _zoom_controls: Dictionary = {}
-var _preset_buttons: Dictionary = {}
-var _is_initialized: bool = false
+# FIXED: Orphaned code - var _movement_buttons: Dictionary = {}
+# FIXED: Orphaned code - var _rotation_sliders: Dictionary = {}
+# FIXED: Orphaned code - var _zoom_controls: Dictionary = {}
+# FIXED: Orphaned code - var _preset_buttons: Dictionary = {}
+# FIXED: Orphaned code - var _is_initialized: bool = false
 
 
 # === LIFECYCLE METHODS ===
@@ -235,24 +235,18 @@ func reset_controls() -> void:
 
 				# === UTILITY METHODS ===
 
-func _fix_orphaned_code():
-	for i in directions.size():
-func _fix_orphaned_code():
-	return section
+for i in directions.size():
+return section
 
 
-func _fix_orphaned_code():
-	return section
+return section
 
 
-func _fix_orphaned_code():
-	return section
+return section
 
 
-func _fix_orphaned_code():
-	for preset in presets:
-func _fix_orphaned_code():
-	return section
+for preset in presets:
+return section
 
 
 func _validate_setup() -> bool:

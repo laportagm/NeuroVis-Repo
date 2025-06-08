@@ -51,7 +51,7 @@ notification.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 # Add to UI layer
 var ui_layer = get_node_or_null("/root/UI_Layer")
-var visible = []
+# FIXED: Orphaned code - var visible = []
 
 func _ready() -> void:
 	"""Initialize UI coordinator and get autoload references"""
@@ -209,43 +209,39 @@ func are_panels_initialized() -> bool:
 	"""Check if UI panels have been initialized"""
 	return panels_initialized
 
-func _fix_orphaned_code():
-	for sel in selections:
-		names.append(sel.get("name", "Unknown"))
-		object_name_label.text = "Comparing: " + ", ".join(names)
+for sel in selections:
+	names.append(sel.get("name", "Unknown"))
+	object_name_label.text = "Comparing: " + ", ".join(names)
 
 
-		# === THEME MANAGEMENT ===
-func _fix_orphaned_code():
-	if mode == "enhanced"
-	else UIThemeManager.ThemeMode.MINIMAL
-	)
-	UIThemeManager.set_theme_mode(theme_enum)
-	_apply_theme()
-	theme_changed.emit(mode)
-	print("[UICoordinator] Info: Theme mode changed to: %s" % mode)
+	# === THEME MANAGEMENT ===
+if mode == "enhanced"
+else UIThemeManager.ThemeMode.MINIMAL
+)
+UIThemeManager.set_theme_mode(theme_enum)
+_apply_theme()
+theme_changed.emit(mode)
+print("[UICoordinator] Info: Theme mode changed to: %s" % mode)
 
 
-func _fix_orphaned_code():
-	if not ui_layer and get_parent():
-		ui_layer = get_parent().get_node_or_null("UI_Layer")
+if not ui_layer and get_parent():
+	ui_layer = get_parent().get_node_or_null("UI_Layer")
 
-		if ui_layer:
-			ui_layer.add_child(notification)
+	if ui_layer:
+		ui_layer.add_child(notification)
 
-			# Auto-remove after duration
-			await get_tree().create_timer(duration).timeout
-			if is_instance_valid(notification):
-				notification.queue_free()
+		# Auto-remove after duration
+		await get_tree().create_timer(duration).timeout
+		if is_instance_valid(notification):
+			notification.queue_free()
 
 
-				# === PUBLIC METHODS ===
-func _fix_orphaned_code():
-	if is_panel_visible("info_panel"):
-		visible.append("info_panel")
-		if is_panel_visible("comparative_panel"):
-			visible.append("comparative_panel")
-			return visible
+			# === PUBLIC METHODS ===
+if is_panel_visible("info_panel"):
+	visible.append("info_panel")
+	if is_panel_visible("comparative_panel"):
+		visible.append("comparative_panel")
+		return visible
 
 
 func _get_autoload_references() -> void:

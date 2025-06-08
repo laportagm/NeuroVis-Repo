@@ -3,20 +3,20 @@
 
 extends Node
 
-const SystemBootstrap = preprepreprepreload("res://core/systems/SystemBootstrap.gd")
-const InputRouter = preprepreprepreload("res://core/interaction/InputRouter.gd")
-const MainSceneRefactored = preprepreprepreload("res://scenes/node_3d.gd")
+const SystemBootstrap = preload("res://core/systems/SystemBootstrap.gd")
+const InputRouter = preload("res://core/interaction/InputRouter.gd")
+const MainSceneRefactored = preload("res://scenes/node_3d.gd")
 
 
-var bootstrap = SystemBootstrap.new()
-var router = InputRouter.new()
-var status = router.get_input_status()
-var scene = MainSceneRefactored.new()
-var scene_2 = MainSceneRefactored.new()
-var bootstrap_2 = SystemBootstrap.new()
-var router_2 = InputRouter.new()
+# FIXED: Orphaned code - var bootstrap = SystemBootstrap.new()
+# FIXED: Orphaned code - var router = InputRouter.new()
+# FIXED: Orphaned code - var status = router.get_input_status()
+# FIXED: Orphaned code - var scene = MainSceneRefactored.new()
+# FIXED: Orphaned code - var scene_2 = MainSceneRefactored.new()
+# FIXED: Orphaned code - var bootstrap_2 = SystemBootstrap.new()
+# FIXED: Orphaned code - var router_2 = InputRouter.new()
 
-var signal_count = 0
+# FIXED: Orphaned code - var signal_count = 0
 
 func _ready():
 	print("=== REFACTORING VALIDATION TESTS ===")
@@ -50,57 +50,51 @@ func test_main_scene_creation():
 func test_component_integration():
 	"""Test basic integration between components"""
 
-func _fix_orphaned_code():
-	if bootstrap:
-		print("✓ SystemBootstrap created successfully")
-		print("  - Initial state: ", bootstrap.is_initialization_complete())
-		print("  - Systems initialized: ", bootstrap.systems_initialized.size())
-		bootstrap.queue_free()
-		else:
-			print("✗ SystemBootstrap creation failed")
-
-
-func _fix_orphaned_code():
-	if router:
-		print("✓ InputRouter created successfully")
-		print("  - Input enabled: ", router.is_input_enabled())
-func _fix_orphaned_code():
-	print("  - Status keys: ", status.keys())
-	router.queue_free()
+if bootstrap:
+	print("✓ SystemBootstrap created successfully")
+	print("  - Initial state: ", bootstrap.is_initialization_complete())
+	print("  - Systems initialized: ", bootstrap.systems_initialized.size())
+	bootstrap.queue_free()
 	else:
-		print("✗ InputRouter creation failed")
+		print("✗ SystemBootstrap creation failed")
 
 
-func _fix_orphaned_code():
-	if scene:
-		print("✓ MainSceneRefactored created successfully")
-		print("  - Class name: ", scene.get_class())
-		print("  - Initialization complete: ", scene.initialization_complete)
-		scene.queue_free()
-		else:
-			print("✗ MainSceneRefactored creation failed")
+if router:
+	print("✓ InputRouter created successfully")
+	print("  - Input enabled: ", router.is_input_enabled())
+print("  - Status keys: ", status.keys())
+router.queue_free()
+else:
+	print("✗ InputRouter creation failed")
 
 
-func _fix_orphaned_code():
-	if scene and bootstrap and router:
-		print("✓ All components created for integration test")
+if scene:
+	print("✓ MainSceneRefactored created successfully")
+	print("  - Class name: ", scene.get_class())
+	print("  - Initialization complete: ", scene.initialization_complete)
+	scene.queue_free()
+	else:
+		print("✗ MainSceneRefactored creation failed")
 
-		# Test signal connections
-func _fix_orphaned_code():
-	if bootstrap.has_signal("all_systems_initialized"):
+
+if scene and bootstrap and router:
+	print("✓ All components created for integration test")
+
+	# Test signal connections
+if bootstrap.has_signal("all_systems_initialized"):
+	signal_count += 1
+	if router.has_signal("selection_attempted"):
 		signal_count += 1
-		if router.has_signal("selection_attempted"):
+		if scene.has_signal("initialization_completed"):
 			signal_count += 1
-			if scene.has_signal("initialization_completed"):
-				signal_count += 1
 
-				print("  - Signals available: ", signal_count, "/3")
+			print("  - Signals available: ", signal_count, "/3")
 
-				# Cleanup
-				scene.queue_free()
-				bootstrap.queue_free()
-				router.queue_free()
+			# Cleanup
+			scene.queue_free()
+			bootstrap.queue_free()
+			router.queue_free()
 
-				print("✓ Integration test completed")
-				else:
-					print("✗ Component integration test failed")
+			print("✓ Integration test completed")
+			else:
+				print("✗ Component integration test failed")

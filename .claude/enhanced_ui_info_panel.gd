@@ -37,7 +37,7 @@ margin.add_theme_constant_override("margin_left", UIThemeManager.MARGIN_MEDIUM)
 margin.add_theme_constant_override("margin_right", UIThemeManager.MARGIN_MEDIUM)
 add_child(margin)
 
-var main_vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var main_vbox = VBoxContainer.new()
 main_vbox.name = "MainVBox"
 main_vbox.add_theme_constant_override("separation", UIThemeManager.MARGIN_SMALL)
 margin.add_child(main_vbox)
@@ -86,7 +86,7 @@ learning_progress_bar.max_value = 100
 header_container.add_child(learning_progress_bar)
 
 # Difficulty badge (NEW)
-var difficulty_container = HBoxContainer.new()
+# FIXED: Orphaned code - var difficulty_container = HBoxContainer.new()
 difficulty_container.name = "DifficultyContainer"
 header_container.add_child(difficulty_container)
 
@@ -108,13 +108,13 @@ scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 main_vbox.add_child(scroll)
 
-var content_vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var content_vbox = VBoxContainer.new()
 content_vbox.name = "ContentVBox"
 content_vbox.add_theme_constant_override("separation", UIThemeManager.MARGIN_MEDIUM)
 scroll.add_child(content_vbox)
 
 # Description section (enhanced)
-var desc_header = Label.new()
+# FIXED: Orphaned code - var desc_header = Label.new()
 desc_header.text = "📖 Description"
 desc_header.add_theme_font_size_override("font_size", UIThemeManager.FONT_SIZES.h3)
 desc_header.add_theme_color_override("font_color", UIThemeManager.TEXT_SECONDARY)
@@ -131,7 +131,7 @@ description_text.selection_enabled = true  # Allow text selection
 content_vbox.add_child(description_text)
 
 # Functions section (enhanced)
-var func_header = Label.new()
+# FIXED: Orphaned code - var func_header = Label.new()
 func_header.text = "⚡ Functions"
 func_header.add_theme_font_size_override("font_size", UIThemeManager.FONT_SIZES.h3)
 func_header.add_theme_color_override("font_color", UIThemeManager.TEXT_SECONDARY)
@@ -143,13 +143,13 @@ functions_list.add_theme_constant_override("separation", UIThemeManager.MARGIN_S
 content_vbox.add_child(functions_list)
 
 # Related structures section (NEW)
-var related_header = Label.new()
+# FIXED: Orphaned code - var related_header = Label.new()
 related_header.text = "🔗 Related Structures"
 related_header.add_theme_font_size_override("font_size", UIThemeManager.FONT_SIZES.h3)
 related_header.add_theme_color_override("font_color", UIThemeManager.TEXT_SECONDARY)
 content_vbox.add_child(related_header)
 
-var related_scroll = ScrollContainer.new()
+# FIXED: Orphaned code - var related_scroll = ScrollContainer.new()
 related_scroll.custom_minimum_size = Vector2(0, 40)
 related_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 content_vbox.add_child(related_scroll)
@@ -174,7 +174,7 @@ main_vbox.add_child(action_buttons_container)
 _create_action_buttons()
 
 
-var buttons_data = [
+# FIXED: Orphaned code - var buttons_data = [
 {"text": "📝 Notes", "action": "notes", "color": UIThemeManager.ACCENT_BLUE},
 {"text": "🧪 Quiz", "action": "quiz", "color": UIThemeManager.ACCENT_GREEN},
 {"text": "📚 Study", "action": "study", "color": UIThemeManager.ACCENT_PURPLE},
@@ -196,7 +196,7 @@ button.pressed.connect(_on_action_button_pressed.bind(button_data.action))
 action_buttons_container.add_child(button)
 
 
-var badge_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var badge_style = StyleBoxFlat.new()
 badge_style.corner_radius_top_left = 12
 badge_style.corner_radius_top_right = 12
 badge_style.corner_radius_bottom_left = 12
@@ -234,7 +234,7 @@ badge_style.content_margin_bottom = 4
 			difficulty_badge.add_theme_stylebox_override("normal", badge_style)
 
 
-var display_name = structure_data.get("displayName", "Unknown Structure")
+# FIXED: Orphaned code - var display_name = structure_data.get("displayName", "Unknown Structure")
 	UIThemeManager.animate_fade_text_change(structure_name_label, display_name)
 
 	# ===== ENHANCED DESCRIPTION =====
@@ -243,7 +243,7 @@ var description = structure_data.get("shortDescription", "No description availab
 
 	# ===== DIFFICULTY ASSESSMENT =====
 var difficulty = _assess_content_difficulty(structure_data)
-var functions = structure_data.get("functions", [])
+# FIXED: Orphaned code - var functions = structure_data.get("functions", [])
 	_update_enhanced_functions(functions)
 
 	# ===== RELATED STRUCTURES (NEW) =====
@@ -251,8 +251,8 @@ var related = structure_data.get("related", _generate_related_structures(structu
 	_update_related_structures(related)
 
 
-var functions_count = structure_data.get("functions", []).size()
-var description_length = structure_data.get("shortDescription", "").length()
+# FIXED: Orphaned code - var functions_count = structure_data.get("functions", []).size()
+# FIXED: Orphaned code - var description_length = structure_data.get("shortDescription", "").length()
 
 # Simple heuristic for difficulty assessment
 var formatted = "[color=%s]%s[/color]" % [UIThemeManager.TEXT_PRIMARY.to_html(), text]
@@ -276,12 +276,12 @@ var term_categories = {
 			}
 			}
 
-var data = term_categories[category]
+# FIXED: Orphaned code - var data = term_categories[category]
 var regex = RegEx.new()
 	regex.compile("(?i)\\b" + term + "\\b")
 	formatted = regex.sub(formatted, "[color=%s][b]$0[/b][/color]" % data.color, true)
 
-var placeholder = Label.new()
+# FIXED: Orphaned code - var placeholder = Label.new()
 	placeholder.text = "No functions information available"
 	UIThemeManager.apply_modern_label(
 	placeholder, UIThemeManager.FONT_SIZES.caption, UIThemeManager.TEXT_TERTIARY
@@ -290,7 +290,7 @@ var placeholder = Label.new()
 
 	# Create enhanced function items with staggered animation
 var function_text = str(functions_array[i])
-var item = _create_enhanced_function_item(function_text, i)
+# FIXED: Orphaned code - var item = _create_enhanced_function_item(function_text, i)
 	functions_list.add_child(item)
 
 	# Staggered entrance animation
@@ -299,7 +299,7 @@ var item = _create_enhanced_function_item(function_text, i)
 	)
 
 
-var card = PanelContainer.new()
+# FIXED: Orphaned code - var card = PanelContainer.new()
 
 # Apply card styling
 var card_style = UIThemeManager.create_educational_card_style("default")
@@ -309,13 +309,13 @@ var card_style = UIThemeManager.create_educational_card_style("default")
 	card_style.content_margin_bottom = UIThemeManager.MARGIN_SMALL
 	card.add_theme_stylebox_override("panel", card_style)
 
-var hbox = HBoxContainer.new()
+# FIXED: Orphaned code - var hbox = HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", UIThemeManager.MARGIN_SMALL)
 	card.add_child(hbox)
 
 	# Enhanced bullet with color coding
 var bullet = Label.new()
-var color = Color.from_hsv(float(index) * 0.15, 0.7, 0.9)
+# FIXED: Orphaned code - var color = Color.from_hsv(float(index) * 0.15, 0.7, 0.9)
 	bullet.text = "●"
 	UIThemeManager.apply_modern_label(bullet, UIThemeManager.FONT_SIZES.body, color)
 	bullet.custom_minimum_size.x = 20
@@ -332,12 +332,12 @@ var label = Label.new()
 	# Add hover effect to card
 	UIThemeManager.add_hover_effect(card)
 
-var structure_name = str(related_array[i])
-var chip = _create_structure_chip(structure_name, i)
+# FIXED: Orphaned code - var structure_name = str(related_array[i])
+# FIXED: Orphaned code - var chip = _create_structure_chip(structure_name, i)
 	related_structures_container.add_child(chip)
 
 
-var chip_2 = Button.new()
+# FIXED: Orphaned code - var chip_2 = Button.new()
 	chip.text = structure_name
 	chip.flat = true
 	chip.custom_minimum_size.y = 28
@@ -378,16 +378,16 @@ var chip_style = StyleBoxFlat.new()
 	# Staggered entrance
 	UIThemeManager.animate_entrance(chip, index * 0.1)
 
-var structure_name_2 = structure_data.get("displayName", "").to_lower()
+# FIXED: Orphaned code - var structure_name_2 = structure_data.get("displayName", "").to_lower()
 
-var tween_2 = learning_progress_bar.create_tween()
+# FIXED: Orphaned code - var tween_2 = learning_progress_bar.create_tween()
 	tween.tween_property(learning_progress_bar, "value", learning_progress, 0.5)
 
 	# Emit progress signal
 	learning_progress_updated.emit(current_structure_id, learning_progress)
 
 
-var color_2 = bookmark_active_color if is_bookmarked else bookmark_inactive_color
+# FIXED: Orphaned code - var color_2 = bookmark_active_color if is_bookmarked else bookmark_inactive_color
 	UIThemeManager.apply_modern_button(bookmark_button, color, "icon")
 
 
@@ -541,51 +541,40 @@ func dispose() -> void:
 		clear_data()
 
 
-func _fix_orphaned_code():
-	for button_data in buttons_data:
-func _fix_orphaned_code():
-	if description_text:
-func _fix_orphaned_code():
-	if difficulty_badge:
-		difficulty_badge.text = difficulty.capitalize()
-		_style_difficulty_badge(difficulty)
-		UIThemeManager.animate_entrance(difficulty_badge, 0.2)
+for button_data in buttons_data:
+if description_text:
+if difficulty_badge:
+	difficulty_badge.text = difficulty.capitalize()
+	_style_difficulty_badge(difficulty)
+	UIThemeManager.animate_entrance(difficulty_badge, 0.2)
 
-		# ===== ENHANCED FUNCTIONS LIST =====
-func _fix_orphaned_code():
-	if functions_count <= 2 and description_length < 200:
-		return "beginner"
-		elif functions_count <= 4 and description_length < 400:
-			return "intermediate"
-			else:
-				return "advanced"
+	# ===== ENHANCED FUNCTIONS LIST =====
+if functions_count <= 2 and description_length < 200:
+	return "beginner"
+	elif functions_count <= 4 and description_length < 400:
+		return "intermediate"
+		else:
+			return "advanced"
 
 
-func _fix_orphaned_code():
-	for category in term_categories:
-func _fix_orphaned_code():
-	for term in data.terms:
-func _fix_orphaned_code():
-	return formatted
+for category in term_categories:
+for term in data.terms:
+return formatted
 
 
-func _fix_orphaned_code():
-	for i in range(functions_array.size()):
-func _fix_orphaned_code():
-	return card
+for i in range(functions_array.size()):
+return card
 
 
-func _fix_orphaned_code():
-	return chip
+return chip
 
 
-func _fix_orphaned_code():
-	if "hippocampus" in structure_name:
-		return ["Amygdala", "Fornix", "Temporal Lobe"]
-		elif "cortex" in structure_name:
-			return ["Thalamus", "Corpus Callosum", "White Matter"]
-			else:
-				return ["Related Structure 1", "Related Structure 2"]
+if "hippocampus" in structure_name:
+	return ["Amygdala", "Fornix", "Temporal Lobe"]
+	elif "cortex" in structure_name:
+		return ["Thalamus", "Corpus Callosum", "White Matter"]
+		else:
+			return ["Related Structure 1", "Related Structure 2"]
 
 
 func _find_ui_nodes() -> bool:

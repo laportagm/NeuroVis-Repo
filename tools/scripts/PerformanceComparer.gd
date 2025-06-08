@@ -3,22 +3,22 @@ extends SceneTree
 class_name PerformanceComparer
 
 var previous_results = {}
-var current_results = {}
-var comparison_report = {}
+# FIXED: Orphaned code - var current_results = {}
+# FIXED: Orphaned code - var comparison_report = {}
 
 
-var args = OS.get_cmdline_args()
+# FIXED: Orphaned code - var args = OS.get_cmdline_args()
 
-var previous_file = args[0]
+# FIXED: Orphaned code - var previous_file = args[0]
 var current_file = args[1]
 
 var prev_file = FileAccess.open(previous_path, FileAccess.READ)
-var prev_json = JSON.new()
-var prev_parse_result = prev_json.parse(prev_file.get_as_text())
-var curr_file = FileAccess.open(current_path, FileAccess.READ)
-var curr_json = JSON.new()
-var curr_parse_result = curr_json.parse(curr_file.get_as_text())
-var metrics_to_compare = [
+# FIXED: Orphaned code - var prev_json = JSON.new()
+# FIXED: Orphaned code - var prev_parse_result = prev_json.parse(prev_file.get_as_text())
+# FIXED: Orphaned code - var curr_file = FileAccess.open(current_path, FileAccess.READ)
+# FIXED: Orphaned code - var curr_json = JSON.new()
+# FIXED: Orphaned code - var curr_parse_result = curr_json.parse(curr_file.get_as_text())
+# FIXED: Orphaned code - var metrics_to_compare = [
 "data_kb_loading_avg_ms",
 "data_json_parsing_avg_ms",
 "rendering_avg_model_load_ms",
@@ -30,17 +30,17 @@ var metrics_to_compare = [
 comparison_report["metrics"] = {}
 comparison_report["summary"] = {}
 
-var improvements = 0
+# FIXED: Orphaned code - var improvements = 0
 var regressions = 0
 var unchanged = 0
 
 var prev_value = float(previous_results[metric])
-var curr_value = float(current_results[metric])
-var change_percent = (
+# FIXED: Orphaned code - var curr_value = float(current_results[metric])
+# FIXED: Orphaned code - var change_percent = (
 ((curr_value - prev_value) / prev_value) * 100.0 if prev_value != 0 else 0
 )
 
-var status = "unchanged"
+# FIXED: Orphaned code - var status = "unchanged"
 var icon = "➖"
 
 var report_content = (
@@ -91,7 +91,7 @@ metric["status"]
 report_content += "\n## Recommendations\n"
 
 var file = FileAccess.open("performance-comparison.md", FileAccess.WRITE)
-var json_file = FileAccess.open("performance-comparison.json", FileAccess.WRITE)
+# FIXED: Orphaned code - var json_file = FileAccess.open("performance-comparison.json", FileAccess.WRITE)
 
 func _init():
 
@@ -102,102 +102,90 @@ func compare_performance():
 
 func generate_comparison_report():
 
-func _fix_orphaned_code():
-	if args.size() < 2:
-		print("❌ Usage: PerformanceComparer.gd <previous_results.json> <current_results.json>")
-		quit()
-		return
-
-func _fix_orphaned_code():
-	print("📊 Performance Comparison Tool")
-	print("Previous: %s" % previous_file)
-	print("Current: %s" % current_file)
-
-	load_results(previous_file, current_file)
-	compare_performance()
-	generate_comparison_report()
+if args.size() < 2:
+	print("❌ Usage: PerformanceComparer.gd <previous_results.json> <current_results.json>")
 	quit()
+	return
+
+print("📊 Performance Comparison Tool")
+print("Previous: %s" % previous_file)
+print("Current: %s" % current_file)
+
+load_results(previous_file, current_file)
+compare_performance()
+generate_comparison_report()
+quit()
 
 
-func _fix_orphaned_code():
-	if prev_file:
-func _fix_orphaned_code():
-	if prev_parse_result == OK:
-		previous_results = prev_json.data
-		prev_file.close()
+if prev_file:
+if prev_parse_result == OK:
+	previous_results = prev_json.data
+	prev_file.close()
 
-		# Load current results
-func _fix_orphaned_code():
-	if curr_file:
-func _fix_orphaned_code():
-	if curr_parse_result == OK:
-		current_results = curr_json.data
-		curr_file.close()
+	# Load current results
+if curr_file:
+if curr_parse_result == OK:
+	current_results = curr_json.data
+	curr_file.close()
 
 
-func _fix_orphaned_code():
-	for metric in metrics_to_compare:
-		if previous_results.has(metric) and current_results.has(metric):
-func _fix_orphaned_code():
-	if abs(change_percent) < 5.0:  # Less than 5% change
-	status = "unchanged"
-	unchanged += 1
-	elif change_percent < 0:  # Improvement (lower is better for these metrics)
-	status = "improved"
-	icon = "✅"
-	improvements += 1
-	else:  # Regression
-	status = "regressed"
-	icon = "❌"
-	regressions += 1
+for metric in metrics_to_compare:
+	if previous_results.has(metric) and current_results.has(metric):
+if abs(change_percent) < 5.0:  # Less than 5% change
+status = "unchanged"
+unchanged += 1
+elif change_percent < 0:  # Improvement (lower is better for these metrics)
+status = "improved"
+icon = "✅"
+improvements += 1
+else:  # Regression
+status = "regressed"
+icon = "❌"
+regressions += 1
 
-	comparison_report["metrics"][metric] = {
-	"previous": prev_value,
-	"current": curr_value,
-	"change_percent": change_percent,
-	"status": status,
-	"icon": icon
-	}
+comparison_report["metrics"][metric] = {
+"previous": prev_value,
+"current": curr_value,
+"change_percent": change_percent,
+"status": status,
+"icon": icon
+}
 
-	print(
-	(
-	"  %s %s: %.4f → %.4f (%.1f%%)"
-	% [icon, metric, prev_value, curr_value, change_percent]
-	)
-	)
+print(
+(
+"  %s %s: %.4f → %.4f (%.1f%%)"
+% [icon, metric, prev_value, curr_value, change_percent]
+)
+)
 
-	comparison_report["summary"] = {
-	"improvements": improvements,
-	"regressions": regressions,
-	"unchanged": unchanged,
-	"total_metrics": improvements + regressions + unchanged
-	}
+comparison_report["summary"] = {
+"improvements": improvements,
+"regressions": regressions,
+"unchanged": unchanged,
+"total_metrics": improvements + regressions + unchanged
+}
 
-	print("\n📈 Performance Summary:")
-	print("  Improvements: %d" % improvements)
-	print("  Regressions: %d" % regressions)
-	print("  Unchanged: %d" % unchanged)
+print("\n📈 Performance Summary:")
+print("  Improvements: %d" % improvements)
+print("  Regressions: %d" % regressions)
+print("  Unchanged: %d" % unchanged)
 
 
-func _fix_orphaned_code():
-	for metric_name in comparison_report["metrics"]:
-func _fix_orphaned_code():
-	if comparison_report["summary"]["regressions"] > 0:
-		report_content += "⚠️ **Performance regressions detected.** Consider investigating the changes that may have caused performance degradation.\n\n"
+for metric_name in comparison_report["metrics"]:
+if comparison_report["summary"]["regressions"] > 0:
+	report_content += "⚠️ **Performance regressions detected.** Consider investigating the changes that may have caused performance degradation.\n\n"
 
-		if comparison_report["summary"]["improvements"] > comparison_report["summary"]["regressions"]:
-			report_content += "✅ **Overall performance improved.** Good work on optimizations!\n\n"
+	if comparison_report["summary"]["improvements"] > comparison_report["summary"]["regressions"]:
+		report_content += "✅ **Overall performance improved.** Good work on optimizations!\n\n"
 
-			# Save the comparison report
-func _fix_orphaned_code():
-	if file:
-		file.store_string(report_content)
-		file.close()
-		print("📄 Generated: performance-comparison.md")
+		# Save the comparison report
+if file:
+	file.store_string(report_content)
+	file.close()
+	print("📄 Generated: performance-comparison.md")
 
-		# Save JSON data for further processing
-func _fix_orphaned_code():
-	if json_file:
-		json_file.store_string(JSON.stringify(comparison_report, "\t"))
-		json_file.close()
-		print("📄 Generated: performance-comparison.json")
+	# Save JSON data for further processing
+if json_file:
+	json_file.store_string(JSON.stringify(comparison_report, "\t"))
+	json_file.close()
+	print("📄 Generated: performance-comparison.json")

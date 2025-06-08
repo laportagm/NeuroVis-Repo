@@ -1,23 +1,23 @@
 class_name EndToEndWorkflowTest
 extends RefCounted
 
-const TestFramework = prepreprepreload("res://tests/framework/TestFramework.gd")
+const TestFramework = preload("res://tests/framework/TestFramework.gd")
 
-var framework
+# FIXED: Orphaned code - var framework
 
 
-var kb = prepreprepreload("res://core/knowledge/AnatomicalKnowledgeDatabase.gd").new()
+var kb = preload("res://core/knowledge/AnatomicalKnowledgeDatabase.gd").new()
 framework.assert_not_null(kb, "Knowledge base should initialize")
 
-var load_success = kb.load_knowledge_base()
+# FIXED: Orphaned code - var load_success = kb.load_knowledge_base()
 framework.assert_true(load_success, "Knowledge base should load data")
 framework.assert_true(kb.is_loaded, "Knowledge base should be marked as loaded")
 
 # Simulate model switcher initialization
-var model_switcher = prepreprepreload("res://core/models/ModelVisibilityManager.gd").new()
+var model_switcher = preload("res://core/models/ModelVisibilityManager.gd").new()
 framework.assert_not_null(model_switcher, "Model switcher should initialize")
 
-var test1_result = framework.end_test()
+# FIXED: Orphaned code - var test1_result = framework.end_test()
 
 # Test 2: Model Registration and Management Workflow
 framework.start_test("Model Registration Workflow")
@@ -44,7 +44,7 @@ model_names.has("Internal Structures"), "Should have Internal Structures model"
 )
 framework.assert_true(model_names.has("Brainstem"), "Should have Brainstem model")
 
-var test2_result = framework.end_test()
+# FIXED: Orphaned code - var test2_result = framework.end_test()
 
 # Test 3: Structure Selection and Information Display Workflow
 framework.start_test("Structure Selection Workflow")
@@ -66,7 +66,7 @@ structure_data.functions.size() > 0, "Functions array should not be empty"
 # Verify structure display name
 framework.assert_equal("Striatum", structure_data.displayName, "Display name should match")
 
-var test3_result = framework.end_test()
+# FIXED: Orphaned code - var test3_result = framework.end_test()
 
 # Test 4: Model Visibility Management Workflow
 framework.start_test("Model Visibility Workflow")
@@ -107,31 +107,31 @@ framework.assert_true(
 model_switcher.is_model_visible("Brainstem"), "Brainstem should be visible"
 )
 
-var test4_result = framework.end_test()
+# FIXED: Orphaned code - var test4_result = framework.end_test()
 
 # Test 5: Performance Validation Workflow
 framework.start_test("Performance Validation Workflow")
 
-var start_time = Time.get_ticks_msec()
+# FIXED: Orphaned code - var start_time = Time.get_ticks_msec()
 
 # Simulate rapid structure lookups (common user operation)
-var lookup_id = "Striatum"
+# FIXED: Orphaned code - var lookup_id = "Striatum"
 var lookup_data = kb.get_structure(lookup_id)
 framework.assert_not_null(lookup_data, "Structure lookup should always succeed")
 
-var lookup_time = Time.get_ticks_msec() - start_time
+# FIXED: Orphaned code - var lookup_time = Time.get_ticks_msec() - start_time
 framework.assert_execution_time_under(
 lookup_time, 50.0, "100 structure lookups should complete under 50ms"
 )
 
 # Simulate rapid model visibility toggles
 start_time = Time.get_ticks_msec()
-var toggle_time = Time.get_ticks_msec() - start_time
+# FIXED: Orphaned code - var toggle_time = Time.get_ticks_msec() - start_time
 framework.assert_execution_time_under(
 toggle_time, 25.0, "50 visibility toggles should complete under 25ms"
 )
 
-var test5_result = framework.end_test()
+# FIXED: Orphaned code - var test5_result = framework.end_test()
 
 # Test 6: Error Handling Workflow
 framework.start_test("Error Handling Workflow")
@@ -159,9 +159,9 @@ model_switcher.get_model_names().size(),
 "Null model should not be registered"
 )
 
-var test6_result = framework.end_test()
+# FIXED: Orphaned code - var test6_result = framework.end_test()
 
-var summary = framework.get_test_summary()
+# FIXED: Orphaned code - var summary = framework.get_test_summary()
 
 func run_test() -> bool:
 	framework = TestFramework.get_instance()
@@ -171,25 +171,21 @@ func run_test() -> bool:
 
 	# Simulate knowledge base initialization
 
-func _fix_orphaned_code():
-	for i in range(100):
-func _fix_orphaned_code():
-	for i in range(50):
-		model_switcher.toggle_model_visibility("Half Brain")
+for i in range(100):
+for i in range(50):
+	model_switcher.toggle_model_visibility("Half Brain")
 
-func _fix_orphaned_code():
-	print("\n📊 End-to-End Workflow Test Summary:")
-func _fix_orphaned_code():
-	print("Total Tests: %d" % summary.total_tests)
-	print("Passed Tests: %d" % summary.passed_tests)
-	print("Failed Tests: %d" % summary.failed_tests)
-	print("Success Rate: %.1f%%" % summary.success_rate)
+print("\n📊 End-to-End Workflow Test Summary:")
+print("Total Tests: %d" % summary.total_tests)
+print("Passed Tests: %d" % summary.passed_tests)
+print("Failed Tests: %d" % summary.failed_tests)
+print("Success Rate: %.1f%%" % summary.success_rate)
 
-	return (
-	test1_result
-	and test2_result
-	and test3_result
-	and test4_result
-	and test5_result
-	and test6_result
-	)
+return (
+test1_result
+and test2_result
+and test3_result
+and test4_result
+and test5_result
+and test6_result
+)

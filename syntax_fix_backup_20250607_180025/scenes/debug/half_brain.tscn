@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://brpcqjsmrtyf8"]
-
-[ext_resource type="PackedScene" uid="uid://c2l5q4krykpop" path="res://assets/models/Half_Brain.glb" id="1_lu0mg"]
-
-[node name="Half_Brain" instance=ExtResource("1_lu0mg")]
-
-[node name="Brain model (separated cerebellum 1) 6a" parent="." index="0"]
-transform = Transform3D(0.145831, 0, 0, 0, 0.145831, 0, 0, 0, 0.145831, 17.5203, -0.131454, -0.0267563)

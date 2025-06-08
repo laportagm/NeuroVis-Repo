@@ -50,7 +50,7 @@ var is_benchmarking: bool = false
 var save_path = custom_path if not custom_path.is_empty() else results_save_path
 
 var file = FileAccess.open(save_path, FileAccess.WRITE)
-var summary = {}
+# FIXED: Orphaned code - var summary = {}
 
 # Average FPS across tests
 var fps_values = []
@@ -78,7 +78,7 @@ _draw_call_samples.append(draw_calls)
 var object_count = Performance.get_monitor(Performance.OBJECT_NODE_COUNT)
 _object_count_samples.append(object_count)
 
-var test_results = {}
+# FIXED: Orphaned code - var test_results = {}
 
 "idle_fps":
 	test_results = _calculate_fps_test_results()
@@ -103,7 +103,7 @@ var test_results = {}
 
 var results = {}
 
-var total_fps_2 = 0.0
+# FIXED: Orphaned code - var total_fps_2 = 0.0
 var min_fps = _fps_samples[0]
 var max_fps = _fps_samples[0]
 
@@ -140,7 +140,7 @@ var selection_fps = _fps_samples[-1]
 
 var results_4 = {}
 
-var total_memory = 0.0
+# FIXED: Orphaned code - var total_memory = 0.0
 var min_memory = _memory_samples[0].total_memory
 var max_memory = _memory_samples[0].total_memory
 
@@ -148,28 +148,28 @@ var total_static = 0.0
 var total_dynamic = 0.0
 
 var camera = _find_camera_node()
-var selection_manager = _find_selection_manager()
-var index = int(Time.get_ticks_msec() / 1000.0) % 5
+# FIXED: Orphaned code - var selection_manager = _find_selection_manager()
+# FIXED: Orphaned code - var index = int(Time.get_ticks_msec() / 1000.0) % 5
 	selection_manager.select_structure_at_index(index)
 
 
-var camera_paths = [
+# FIXED: Orphaned code - var camera_paths = [
 	"/root/Main/Camera3D", "/root/Main/CameraRig/Camera3D", "/root/Node3D/Camera3D"
 	]
 
 var node = get_node(path)
-var selection_manager_paths = [
+# FIXED: Orphaned code - var selection_manager_paths = [
 	"/root/BrainStructureSelectionManager", "/root/MultiStructureSelectionManager"
 	]
 
 var nodes = get_tree().get_nodes_in_group("selection_managers")
-var found = _find_node_of_type(child, type)
-var found_2 = _find_node_with_name_containing(child, name_part)
+# FIXED: Orphaned code - var found = _find_node_of_type(child, type)
+# FIXED: Orphaned code - var found_2 = _find_node_with_name_containing(child, name_part)
 
-var _benchmark_timer: Timer
+# FIXED: Orphaned code - var _benchmark_timer: Timer
 var _measurement_timer: Timer
 var _results: Dictionary = {}
-var _current_test: String = ""
+# FIXED: Orphaned code - var _current_test: String = ""
 var _test_queue: Array = []
 var _start_time: float = 0.0
 var _frame_count: int = 0
@@ -290,243 +290,214 @@ func cancel_benchmark() -> void:
 
 		# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if file == null:
-		push_error("[RenderingBenchmark] Failed to open file for writing: " + save_path)
-		return false
+if file == null:
+	push_error("[RenderingBenchmark] Failed to open file for writing: " + save_path)
+	return false
 
-		file.store_string(JSON.stringify(_results, "  "))
-		file.close()
+	file.store_string(JSON.stringify(_results, "  "))
+	file.close()
 
-		print("[RenderingBenchmark] Results saved to: " + save_path)
-		return true
-
-
-		## Get the last benchmark results
-		## @returns: Dictionary with benchmark results
-func _fix_orphaned_code():
-	if _results.tests.has("idle_fps") and _results.tests.idle_fps.has("average_fps"):
-		fps_values.append(_results.tests.idle_fps.average_fps)
-		if _results.tests.has("rotation_fps") and _results.tests.rotation_fps.has("average_fps"):
-			fps_values.append(_results.tests.rotation_fps.average_fps)
-
-			if not fps_values.is_empty():
-func _fix_orphaned_code():
-	for fps in fps_values:
-		total_fps += fps
-		summary["average_fps"] = total_fps / fps_values.size()
-
-		# Model loading time
-		if (
-		_results.tests.has("model_loading")
-		and _results.tests.model_loading.has("average_load_time")
-		):
-			summary["model_loading_time"] = _results.tests.model_loading.average_load_time
-
-			# Memory usage
-			if _results.tests.has("memory_usage") and _results.tests.memory_usage.has("peak_memory_mb"):
-				summary["peak_memory_mb"] = _results.tests.memory_usage.peak_memory_mb
-
-				# Selection performance
-				if (
-				_results.tests.has("selection_performance")
-				and _results.tests.selection_performance.has("average_selection_time")
-				):
-					summary["selection_response_time"] = (
-					_results.tests.selection_performance.average_selection_time
-					)
-
-					# Store in results
-					_results["summary"] = summary
+	print("[RenderingBenchmark] Results saved to: " + save_path)
+	return true
 
 
-func _fix_orphaned_code():
-	if time_elapsed > 0:
-func _fix_orphaned_code():
-	if detailed_logging:
-		print(
-		(
-		"[RenderingBenchmark] Measurement - FPS: %f, Memory: %f MB, Draw Calls: %d"
-		% [
-		_fps_samples[-1] if not _fps_samples.is_empty() else 0,
-		(
-		_memory_samples[-1].total_memory / 1048576.0
-		if not _memory_samples.is_empty()
-		else 0
-		),
-		_draw_call_samples[-1] if not _draw_call_samples.is_empty() else 0
-		]
-		)
-		)
+	## Get the last benchmark results
+	## @returns: Dictionary with benchmark results
+if _results.tests.has("idle_fps") and _results.tests.idle_fps.has("average_fps"):
+	fps_values.append(_results.tests.idle_fps.average_fps)
+	if _results.tests.has("rotation_fps") and _results.tests.rotation_fps.has("average_fps"):
+		fps_values.append(_results.tests.rotation_fps.average_fps)
+
+		if not fps_values.is_empty():
+for fps in fps_values:
+	total_fps += fps
+	summary["average_fps"] = total_fps / fps_values.size()
+
+	# Model loading time
+	if (
+	_results.tests.has("model_loading")
+	and _results.tests.model_loading.has("average_load_time")
+	):
+		summary["model_loading_time"] = _results.tests.model_loading.average_load_time
+
+		# Memory usage
+		if _results.tests.has("memory_usage") and _results.tests.memory_usage.has("peak_memory_mb"):
+			summary["peak_memory_mb"] = _results.tests.memory_usage.peak_memory_mb
+
+			# Selection performance
+			if (
+			_results.tests.has("selection_performance")
+			and _results.tests.selection_performance.has("average_selection_time")
+			):
+				summary["selection_response_time"] = (
+				_results.tests.selection_performance.average_selection_time
+				)
+
+				# Store in results
+				_results["summary"] = summary
 
 
-func _fix_orphaned_code():
-	if _fps_samples.is_empty():
-		results["error"] = "No FPS samples collected"
-		return results
-
-		# Calculate average FPS
-func _fix_orphaned_code():
-	for fps in _fps_samples:
-		total_fps += fps
-
-		results["average_fps"] = total_fps / _fps_samples.size()
-
-		# Calculate min/max FPS
-func _fix_orphaned_code():
-	for fps in _fps_samples:
-		min_fps = min(min_fps, fps)
-		max_fps = max(max_fps, fps)
-
-		results["min_fps"] = min_fps
-		results["max_fps"] = max_fps
-
-		# Calculate standard deviation
-func _fix_orphaned_code():
-	for fps in _fps_samples:
-		variance += pow(fps - results.average_fps, 2)
-
-		results["fps_stability"] = sqrt(variance / _fps_samples.size())
-
-		# Draw calls
-		if not _draw_call_samples.is_empty():
-func _fix_orphaned_code():
-	for draw_calls in _draw_call_samples:
-		total_draw_calls += draw_calls
-
-		results["average_draw_calls"] = total_draw_calls / _draw_call_samples.size()
-
-		# Object count
-		if not _object_count_samples.is_empty():
-func _fix_orphaned_code():
-	for object_count in _object_count_samples:
-		total_objects += object_count
-
-		results["average_object_count"] = total_objects / _object_count_samples.size()
-
-		return results
+if time_elapsed > 0:
+if detailed_logging:
+	print(
+	(
+	"[RenderingBenchmark] Measurement - FPS: %f, Memory: %f MB, Draw Calls: %d"
+	% [
+	_fps_samples[-1] if not _fps_samples.is_empty() else 0,
+	(
+	_memory_samples[-1].total_memory / 1048576.0
+	if not _memory_samples.is_empty()
+	else 0
+	),
+	_draw_call_samples[-1] if not _draw_call_samples.is_empty() else 0
+	]
+	)
+	)
 
 
-func _fix_orphaned_code():
-	if _model_registry != null and _model_registry.has_method("get_loading_statistics"):
-func _fix_orphaned_code():
-	if loading_stats.has("load_times") and loading_stats.load_times.size() > 0:
-func _fix_orphaned_code():
-	for time in loading_stats.load_times:
-		total_time += time
+if _fps_samples.is_empty():
+	results["error"] = "No FPS samples collected"
+	return results
 
-		results["average_load_time"] = total_time / loading_stats.load_times.size()
-		results["total_load_time"] = total_time
-		else:
-			# Estimate from our measurements if not available
-			results["estimated_load_time"] = test_duration
+	# Calculate average FPS
+for fps in _fps_samples:
+	total_fps += fps
 
-			# Memory before/after loading
-			if _memory_samples.size() >= 2:
-func _fix_orphaned_code():
+	results["average_fps"] = total_fps / _fps_samples.size()
+
+	# Calculate min/max FPS
+for fps in _fps_samples:
+	min_fps = min(min_fps, fps)
+	max_fps = max(max_fps, fps)
+
+	results["min_fps"] = min_fps
+	results["max_fps"] = max_fps
+
+	# Calculate standard deviation
+for fps in _fps_samples:
+	variance += pow(fps - results.average_fps, 2)
+
+	results["fps_stability"] = sqrt(variance / _fps_samples.size())
+
+	# Draw calls
+	if not _draw_call_samples.is_empty():
+for draw_calls in _draw_call_samples:
+	total_draw_calls += draw_calls
+
+	results["average_draw_calls"] = total_draw_calls / _draw_call_samples.size()
+
+	# Object count
+	if not _object_count_samples.is_empty():
+for object_count in _object_count_samples:
+	total_objects += object_count
+
+	results["average_object_count"] = total_objects / _object_count_samples.size()
+
 	return results
 
 
-func _fix_orphaned_code():
-	if not selection_times.is_empty():
-func _fix_orphaned_code():
-	for time in selection_times:
-		total_time += time
+if _model_registry != null and _model_registry.has_method("get_loading_statistics"):
+if loading_stats.has("load_times") and loading_stats.load_times.size() > 0:
+for time in loading_stats.load_times:
+	total_time += time
 
-		results["average_selection_time"] = total_time / selection_times.size()
-		results["selection_count"] = selection_times.size()
-		else:
-			results["error"] = "No selection times recorded"
+	results["average_load_time"] = total_time / loading_stats.load_times.size()
+	results["total_load_time"] = total_time
+	else:
+		# Estimate from our measurements if not available
+		results["estimated_load_time"] = test_duration
 
-			# Include FPS impact
-			if _fps_samples.size() >= 2:
-func _fix_orphaned_code():
+		# Memory before/after loading
+		if _memory_samples.size() >= 2:
+return results
+
+
+if not selection_times.is_empty():
+for time in selection_times:
+	total_time += time
+
+	results["average_selection_time"] = total_time / selection_times.size()
+	results["selection_count"] = selection_times.size()
+	else:
+		results["error"] = "No selection times recorded"
+
+		# Include FPS impact
+		if _fps_samples.size() >= 2:
+return results
+
+
+if _memory_samples.is_empty():
+	results["error"] = "No memory samples collected"
+	return results
+
+	# Calculate average, min, max memory usage
+for sample in _memory_samples:
+	total_memory += sample.total_memory
+	min_memory = min(min_memory, sample.total_memory)
+	max_memory = max(max_memory, sample.total_memory)
+
+	results["average_memory_mb"] = (total_memory / _memory_samples.size()) / 1048576.0
+	results["min_memory_mb"] = min_memory / 1048576.0
+	results["peak_memory_mb"] = max_memory / 1048576.0
+
+	# Calculate memory usage by category if detailed info available
+	if _memory_samples[0].has("static_memory") and _memory_samples[0].has("dynamic_memory"):
+for sample in _memory_samples:
+	total_static += sample.static_memory
+	total_dynamic += sample.dynamic_memory
+
+	results["average_static_memory_mb"] = (total_static / _memory_samples.size()) / 1048576.0
+	results["average_dynamic_memory_mb"] = (total_dynamic / _memory_samples.size()) / 1048576.0
+
 	return results
 
 
-func _fix_orphaned_code():
-	if _memory_samples.is_empty():
-		results["error"] = "No memory samples collected"
-		return results
+if not camera:
+	return
 
-		# Calculate average, min, max memory usage
-func _fix_orphaned_code():
-	for sample in _memory_samples:
-		total_memory += sample.total_memory
-		min_memory = min(min_memory, sample.total_memory)
-		max_memory = max(max_memory, sample.total_memory)
-
-		results["average_memory_mb"] = (total_memory / _memory_samples.size()) / 1048576.0
-		results["min_memory_mb"] = min_memory / 1048576.0
-		results["peak_memory_mb"] = max_memory / 1048576.0
-
-		# Calculate memory usage by category if detailed info available
-		if _memory_samples[0].has("static_memory") and _memory_samples[0].has("dynamic_memory"):
-func _fix_orphaned_code():
-	for sample in _memory_samples:
-		total_static += sample.static_memory
-		total_dynamic += sample.dynamic_memory
-
-		results["average_static_memory_mb"] = (total_static / _memory_samples.size()) / 1048576.0
-		results["average_dynamic_memory_mb"] = (total_dynamic / _memory_samples.size()) / 1048576.0
-
-		return results
+	# Rotate the camera slightly to simulate user interaction
+	camera.rotate_y(0.01)
 
 
-func _fix_orphaned_code():
-	if not camera:
-		return
+if not selection_manager:
+	return
 
-		# Rotate the camera slightly to simulate user interaction
-		camera.rotate_y(0.01)
+	# If we have a selection manager, try to call select methods
+	if selection_manager.has_method("select_random_structure"):
+		selection_manager.select_random_structure()
+		elif selection_manager.has_method("select_structure_at_index"):
+			# Select different structures in sequence
+for path in camera_paths:
+	if has_node(path):
+if node is Camera3D:
+	return node
 
-
-func _fix_orphaned_code():
-	if not selection_manager:
-		return
-
-		# If we have a selection manager, try to call select methods
-		if selection_manager.has_method("select_random_structure"):
-			selection_manager.select_random_structure()
-			elif selection_manager.has_method("select_structure_at_index"):
-				# Select different structures in sequence
-func _fix_orphaned_code():
-	for path in camera_paths:
-		if has_node(path):
-func _fix_orphaned_code():
-	if node is Camera3D:
-		return node
-
-		# Search the entire scene if not found
-		return _find_node_of_type(get_tree().root, Camera3D)
+	# Search the entire scene if not found
+	return _find_node_of_type(get_tree().root, Camera3D)
 
 
-func _fix_orphaned_code():
-	for path in selection_manager_paths:
-		if has_node(path):
-			return get_node(path)
+for path in selection_manager_paths:
+	if has_node(path):
+		return get_node(path)
 
-			# Try to find by class name
-func _fix_orphaned_code():
-	if not nodes.is_empty():
-		return nodes[0]
+		# Try to find by class name
+if not nodes.is_empty():
+	return nodes[0]
 
-		# Search for nodes with selection-related names
-		return _find_node_with_name_containing(get_tree().root, "SelectionManager")
+	# Search for nodes with selection-related names
+	return _find_node_with_name_containing(get_tree().root, "SelectionManager")
 
 
-func _fix_orphaned_code():
-	if found:
-		return found
+if found:
+	return found
 
-		return null
+	return null
 
 
-func _fix_orphaned_code():
-	if found:
-		return found
+if found:
+	return found
 
-		return null
+	return null
 
 func _setup_timers() -> void:
 	"""Setup benchmark timers"""

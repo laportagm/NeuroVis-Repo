@@ -33,12 +33,12 @@ const THRESHOLDS = {
 # === SIGNALS ===
 
 var metrics_history: Dictionary = {}
-var current_metrics: Dictionary = {}
-var monitoring_enabled: bool = true
+# FIXED: Orphaned code - var current_metrics: Dictionary = {}
+# FIXED: Orphaned code - var monitoring_enabled: bool = true
 var sample_rate: float = 0.5  # seconds
 var history_size: int = 120  # samples
 var performance_issues: Dictionary = {}
-var optimization_in_progress: bool = false
+# FIXED: Orphaned code - var optimization_in_progress: bool = false
 
 # === UI OVERLAY ===
 var debug_overlay: CanvasLayer
@@ -48,7 +48,7 @@ var graph_container: Control
 var show_overlay: bool = OS.is_debug_build()
 
 
-var static_memory = Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0  # Convert to MB
+# FIXED: Orphaned code - var static_memory = Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0  # Convert to MB
 # Note: MEMORY_DYNAMIC not available in Godot 4.4, using static memory only
 current_metrics[MetricType.MEMORY_USAGE] = static_memory
 
@@ -131,7 +131,7 @@ text += "Vertices: %d\n" % current_metrics[MetricType.VERTEX_COUNT]
 
 # Issues
 var samples = int(duration / sample_rate)
-var history = metrics_history[MetricType.FPS]
+# FIXED: Orphaned code - var history = metrics_history[MetricType.FPS]
 
 var sum = 0.0
 
@@ -210,122 +210,116 @@ func set_monitoring_enabled(enabled: bool) -> void:
 
 		# === SINGLETON SETUP ===
 
-func _fix_orphaned_code():
-	for metric in current_metrics:
-		if metrics_history[metric].size() >= history_size:
-			metrics_history[metric].pop_front()
-			metrics_history[metric].append(current_metrics[metric])
+for metric in current_metrics:
+	if metrics_history[metric].size() >= history_size:
+		metrics_history[metric].pop_front()
+		metrics_history[metric].append(current_metrics[metric])
 
 
-func _fix_orphaned_code():
-	if current_metrics[MetricType.FPS] < THRESHOLDS.fps_critical:
-		new_issues["fps"] = "critical"
-		performance_critical.emit(MetricType.FPS, current_metrics[MetricType.FPS])
-		elif current_metrics[MetricType.FPS] < THRESHOLDS.fps_warning:
-			new_issues["fps"] = "warning"
-			performance_warning.emit(MetricType.FPS, current_metrics[MetricType.FPS])
+if current_metrics[MetricType.FPS] < THRESHOLDS.fps_critical:
+	new_issues["fps"] = "critical"
+	performance_critical.emit(MetricType.FPS, current_metrics[MetricType.FPS])
+	elif current_metrics[MetricType.FPS] < THRESHOLDS.fps_warning:
+		new_issues["fps"] = "warning"
+		performance_warning.emit(MetricType.FPS, current_metrics[MetricType.FPS])
 
-			# Check memory
-			if current_metrics[MetricType.MEMORY_USAGE] > THRESHOLDS.memory_critical:
-				new_issues["memory"] = "critical"
-				performance_critical.emit(MetricType.MEMORY_USAGE, current_metrics[MetricType.MEMORY_USAGE])
-				elif current_metrics[MetricType.MEMORY_USAGE] > THRESHOLDS.memory_warning:
-					new_issues["memory"] = "warning"
-					performance_warning.emit(MetricType.MEMORY_USAGE, current_metrics[MetricType.MEMORY_USAGE])
+		# Check memory
+		if current_metrics[MetricType.MEMORY_USAGE] > THRESHOLDS.memory_critical:
+			new_issues["memory"] = "critical"
+			performance_critical.emit(MetricType.MEMORY_USAGE, current_metrics[MetricType.MEMORY_USAGE])
+			elif current_metrics[MetricType.MEMORY_USAGE] > THRESHOLDS.memory_warning:
+				new_issues["memory"] = "warning"
+				performance_warning.emit(MetricType.MEMORY_USAGE, current_metrics[MetricType.MEMORY_USAGE])
 
-					# Check draw calls
-					if current_metrics[MetricType.DRAW_CALLS] > THRESHOLDS.draw_calls_critical:
-						new_issues["draw_calls"] = "critical"
-						performance_critical.emit(MetricType.DRAW_CALLS, current_metrics[MetricType.DRAW_CALLS])
-						elif current_metrics[MetricType.DRAW_CALLS] > THRESHOLDS.draw_calls_warning:
-							new_issues["draw_calls"] = "warning"
-							performance_warning.emit(MetricType.DRAW_CALLS, current_metrics[MetricType.DRAW_CALLS])
+				# Check draw calls
+				if current_metrics[MetricType.DRAW_CALLS] > THRESHOLDS.draw_calls_critical:
+					new_issues["draw_calls"] = "critical"
+					performance_critical.emit(MetricType.DRAW_CALLS, current_metrics[MetricType.DRAW_CALLS])
+					elif current_metrics[MetricType.DRAW_CALLS] > THRESHOLDS.draw_calls_warning:
+						new_issues["draw_calls"] = "warning"
+						performance_warning.emit(MetricType.DRAW_CALLS, current_metrics[MetricType.DRAW_CALLS])
 
-							# Check for improvements
-							for issue_key in performance_issues:
-								if issue_key not in new_issues:
-									performance_improved.emit(_get_metric_type_from_key(issue_key))
+						# Check for improvements
+						for issue_key in performance_issues:
+							if issue_key not in new_issues:
+								performance_improved.emit(_get_metric_type_from_key(issue_key))
 
-									performance_issues = new_issues
+								performance_issues = new_issues
 
-									# Suggest optimizations if needed
-									if performance_issues.size() > 0 and not optimization_in_progress:
-										_suggest_optimizations()
-
-
-										# === OPTIMIZATION SUGGESTIONS ===
-func _fix_orphaned_code():
-	if "fps" in performance_issues:
-		suggestions.append(
-		{
-		"issue": "Low FPS",
-		"severity": performance_issues["fps"],
-		"suggestions":
-			[
-			"Reduce model complexity",
-			"Enable frustum culling",
-			"Reduce shadow quality",
-			"Lower texture resolution"
-			]
-			}
-			)
-
-			if "memory" in performance_issues:
-				suggestions.append(
-				{
-				"issue": "High Memory Usage",
-				"severity": performance_issues["memory"],
-				"suggestions":
-					[
-					"Unload unused models",
-					"Reduce texture sizes",
-					"Clear cache",
-					"Enable texture streaming"
-					]
-					}
-					)
-
-					if "draw_calls" in performance_issues:
-						suggestions.append(
-						{
-						"issue": "Too Many Draw Calls",
-						"severity": performance_issues["draw_calls"],
-						"suggestions":
-							[
-							"Enable mesh batching",
-							"Use texture atlases",
-							"Implement LOD system",
-							"Reduce material variations"
-							]
-							}
-							)
-
-							if suggestions.size() > 0:
-								optimization_suggested.emit(suggestions)
+								# Suggest optimizations if needed
+								if performance_issues.size() > 0 and not optimization_in_progress:
+									_suggest_optimizations()
 
 
-								# === AUTO-OPTIMIZATION ===
-func _fix_orphaned_code():
-	if performance_issues.size() > 0:
-		text += "\n[color=yellow]⚠ Performance Issues:[/color]\n"
-		for issue in performance_issues:
-			text += "• %s\n" % issue.capitalize()
+									# === OPTIMIZATION SUGGESTIONS ===
+if "fps" in performance_issues:
+	suggestions.append(
+	{
+	"issue": "Low FPS",
+	"severity": performance_issues["fps"],
+	"suggestions":
+		[
+		"Reduce model complexity",
+		"Enable frustum culling",
+		"Reduce shadow quality",
+		"Lower texture resolution"
+		]
+		}
+		)
 
-			metrics_label.text = text
+		if "memory" in performance_issues:
+			suggestions.append(
+			{
+			"issue": "High Memory Usage",
+			"severity": performance_issues["memory"],
+			"suggestions":
+				[
+				"Unload unused models",
+				"Reduce texture sizes",
+				"Clear cache",
+				"Enable texture streaming"
+				]
+				}
+				)
+
+				if "draw_calls" in performance_issues:
+					suggestions.append(
+					{
+					"issue": "Too Many Draw Calls",
+					"severity": performance_issues["draw_calls"],
+					"suggestions":
+						[
+						"Enable mesh batching",
+						"Use texture atlases",
+						"Implement LOD system",
+						"Reduce material variations"
+						]
+						}
+						)
+
+						if suggestions.size() > 0:
+							optimization_suggested.emit(suggestions)
 
 
-func _fix_orphaned_code():
-	if history.size() < samples:
-		samples = history.size()
+							# === AUTO-OPTIMIZATION ===
+if performance_issues.size() > 0:
+	text += "\n[color=yellow]⚠ Performance Issues:[/color]\n"
+	for issue in performance_issues:
+		text += "• %s\n" % issue.capitalize()
 
-		if samples == 0:
-			return 0.0
+		metrics_label.text = text
 
-func _fix_orphaned_code():
-	for i in range(history.size() - samples, history.size()):
-		sum += history[i]
 
-		return sum / samples
+if history.size() < samples:
+	samples = history.size()
+
+	if samples == 0:
+		return 0.0
+
+for i in range(history.size() - samples, history.size()):
+	sum += history[i]
+
+	return sum / samples
 
 
 func _start_monitoring() -> void:

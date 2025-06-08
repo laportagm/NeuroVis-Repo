@@ -6,16 +6,16 @@ var debug_cmd
 
 
 var ai_service = get_node_or_null("/root/AIAssistant")
-var status = ai_service.get_service_status()
-var gemini = status.gemini_status
+# FIXED: Orphaned code - var status = ai_service.get_service_status()
+# FIXED: Orphaned code - var gemini = status.gemini_status
 var gemini_2 = get_node_or_null("/root/GeminiAI")
-var setup_complete = (
+# FIXED: Orphaned code - var setup_complete = (
 gemini.check_setup_status() if gemini.has_method("check_setup_status") else false
 )
-var rate = gemini.get_rate_limit_status()
-var ai_service_2 = get_node_or_null("/root/AIAssistant")
-var ai_service_3 = get_node_or_null("/root/AIAssistant")
-var question = "What is the hippocampus?"
+# FIXED: Orphaned code - var rate = gemini.get_rate_limit_status()
+# FIXED: Orphaned code - var ai_service_2 = get_node_or_null("/root/AIAssistant")
+# FIXED: Orphaned code - var ai_service_3 = get_node_or_null("/root/AIAssistant")
+# FIXED: Orphaned code - var question = "What is the hippocampus?"
 var truncated = response.left(200) + ("..." if response.length() > 200 else "")
 
 func _ready():
@@ -64,22 +64,65 @@ func test_ai_test():
 	print("\n>>> Testing 'ai_test' command:")
 	print("-".repeat(40))
 
-func _fix_orphaned_code():
-	if ai_service:
-func _fix_orphaned_code():
-	print("[color=#00CED1]=== AI Assistant Status ===[/color]")
-	print("[color=#00CED1]Provider: %s[/color]" % status.provider)
-	print("[color=#00CED1]Initialized: %s[/color]" % str(status.initialized))
-	print("[color=#00CED1]API configured: %s[/color]" % str(status.api_configured))
-	if status.get("current_structure", "") != "":
-		print("[color=#00CED1]Current structure: %s[/color]" % status.current_structure)
-		if status.has("gemini_status"):
-func _fix_orphaned_code():
+if ai_service:
+print("[color=#00CED1]=== AI Assistant Status ===[/color]")
+print("[color=#00CED1]Provider: %s[/color]" % status.provider)
+print("[color=#00CED1]Initialized: %s[/color]" % str(status.initialized))
+print("[color=#00CED1]API configured: %s[/color]" % str(status.api_configured))
+if status.get("current_structure", "") != "":
+	print("[color=#00CED1]Current structure: %s[/color]" % status.current_structure)
+	if status.has("gemini_status"):
+print(
+(
+"[color=#00CED1]Gemini rate limit: %d/%d (resets in %ds)[/color]"
+% [gemini.used, gemini.limit, gemini.reset_in]
+)
+)
+else:
+	print("[color=#FF6B6B]ERROR: AI Assistant service not found[/color]")
+
+	await get_tree().create_timer(0.5).timeout
+
+
+if gemini:
+	print("[color=#00CED1]=== Gemini AI Status ===[/color]")
+print("[color=#00CED1]Setup complete: %s[/color]" % ("Yes" if setup_complete else "No"))
+
+if gemini.has_method("get_rate_limit_status"):
+print(
+(
+"[color=#00CED1]Rate limit: %d/%d[/color]"
+% [rate.get("used", 0), rate.get("limit", 0)]
+)
+)
+if rate.get("reset_in", 0) > 0:
+	print("[color=#00CED1]Resets in: %d seconds[/color]" % rate.reset_in)
+
 	print(
 	(
-	"[color=#00CED1]Gemini rate limit: %d/%d (resets in %ds)[/color]"
-	% [gemini.used, gemini.limit, gemini.reset_in]
+	"[color=#00CED1]API key: %s[/color]"
+	% ("Configured" if setup_complete else "Not configured")
 	)
+	)
+	else:
+		print("[color=#FF6B6B]ERROR: GeminiAI service not found[/color]")
+
+		await get_tree().create_timer(0.5).timeout
+
+
+if ai_service:
+	# Show current provider
+	print("Current provider: %s" % ai_service.get("ai_provider"))
+
+	# Test setting to mock
+	print("Setting provider to 'mock'...")
+	ai_service.ai_provider = 4  # MOCK_RESPONSES
+	print("[color=#4ECDC4]AI provider set to: mock[/color]")
+
+	# Test invalid provider
+	print("\nTesting invalid provider...")
+	print(
+	'[color=#FF6B6B]ERROR: Unknown provider. Available: ["openai", "claude", "gemini", "gemini_user", "mock"][/color]'
 	)
 	else:
 		print("[color=#FF6B6B]ERROR: AI Assistant service not found[/color]")
@@ -87,78 +130,25 @@ func _fix_orphaned_code():
 		await get_tree().create_timer(0.5).timeout
 
 
-func _fix_orphaned_code():
-	if gemini:
-		print("[color=#00CED1]=== Gemini AI Status ===[/color]")
-func _fix_orphaned_code():
-	print("[color=#00CED1]Setup complete: %s[/color]" % ("Yes" if setup_complete else "No"))
+if ai_service:
+print("[color=#00CED1]Testing AI with: " + question + "[/color]")
 
-	if gemini.has_method("get_rate_limit_status"):
-func _fix_orphaned_code():
-	print(
-	(
-	"[color=#00CED1]Rate limit: %d/%d[/color]"
-	% [rate.get("used", 0), rate.get("limit", 0)]
-	)
-	)
-	if rate.get("reset_in", 0) > 0:
-		print("[color=#00CED1]Resets in: %d seconds[/color]" % rate.reset_in)
+# Connect to response signals
+if ai_service.has_signal("response_received"):
+	ai_service.response_received.connect(_on_test_response, CONNECT_ONE_SHOT)
+	if ai_service.has_signal("error_occurred"):
+		ai_service.error_occurred.connect(_on_test_error, CONNECT_ONE_SHOT)
 
-		print(
-		(
-		"[color=#00CED1]API key: %s[/color]"
-		% ("Configured" if setup_complete else "Not configured")
-		)
-		)
-		else:
-			print("[color=#FF6B6B]ERROR: GeminiAI service not found[/color]")
+		# Ask question
+		ai_service.ask_question(question)
 
-			await get_tree().create_timer(0.5).timeout
-
-
-func _fix_orphaned_code():
-	if ai_service:
-		# Show current provider
-		print("Current provider: %s" % ai_service.get("ai_provider"))
-
-		# Test setting to mock
-		print("Setting provider to 'mock'...")
-		ai_service.ai_provider = 4  # MOCK_RESPONSES
-		print("[color=#4ECDC4]AI provider set to: mock[/color]")
-
-		# Test invalid provider
-		print("\nTesting invalid provider...")
-		print(
-		'[color=#FF6B6B]ERROR: Unknown provider. Available: ["openai", "claude", "gemini", "gemini_user", "mock"][/color]'
-		)
+		# Wait for response
+		await get_tree().create_timer(2.0).timeout
 		else:
 			print("[color=#FF6B6B]ERROR: AI Assistant service not found[/color]")
 
-			await get_tree().create_timer(0.5).timeout
 
-
-func _fix_orphaned_code():
-	if ai_service:
-func _fix_orphaned_code():
-	print("[color=#00CED1]Testing AI with: " + question + "[/color]")
-
-	# Connect to response signals
-	if ai_service.has_signal("response_received"):
-		ai_service.response_received.connect(_on_test_response, CONNECT_ONE_SHOT)
-		if ai_service.has_signal("error_occurred"):
-			ai_service.error_occurred.connect(_on_test_error, CONNECT_ONE_SHOT)
-
-			# Ask question
-			ai_service.ask_question(question)
-
-			# Wait for response
-			await get_tree().create_timer(2.0).timeout
-			else:
-				print("[color=#FF6B6B]ERROR: AI Assistant service not found[/color]")
-
-
-func _fix_orphaned_code():
-	print("[color=#4ECDC4]AI Response: " + truncated + "[/color]")
+print("[color=#4ECDC4]AI Response: " + truncated + "[/color]")
 
 
 func _on_test_response(_question: String, response: String):

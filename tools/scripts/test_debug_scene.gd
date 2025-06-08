@@ -23,7 +23,7 @@ await get_tree().process_frame
 performance_debugger.end_function_timing("test_core_initialization")
 
 
-var selection_manager = SelectionManager.new()
+# FIXED: Orphaned code - var selection_manager = SelectionManager.new()
 add_child(selection_manager)
 await get_tree().process_frame
 
@@ -48,7 +48,7 @@ await get_tree().process_frame
 performance_debugger.end_function_timing("test_signal_connections")
 
 
-var child = get_child(i)
+# FIXED: Orphaned code - var child = get_child(i)
 
 func _ready():
 	print("[TEST] Starting debug test scene...")
@@ -98,24 +98,18 @@ func emergency_break():
 	if performance_debugger:
 		performance_debugger.emergency_break()
 
-func _fix_orphaned_code():
-	print("[TEST] Creating UI layer...")
-func _fix_orphaned_code():
-	print("[TEST] Creating label...")
-func _fix_orphaned_code():
-	print("[TEST] Creating CameraController...")
-func _fix_orphaned_code():
-	print("[TEST] Initializing CameraController...")
-func _fix_orphaned_code():
-	if camera:
-		camera_controller.initialize(camera)
-		await get_tree().process_frame
+print("[TEST] Creating UI layer...")
+print("[TEST] Creating label...")
+print("[TEST] Creating CameraController...")
+print("[TEST] Initializing CameraController...")
+if camera:
+	camera_controller.initialize(camera)
+	await get_tree().process_frame
 
-		performance_debugger.end_function_timing("test_component_creation")
+	performance_debugger.end_function_timing("test_component_creation")
 
 
-func _fix_orphaned_code():
-	print("[TEST] Child ", i, ": ", child.get_class(), " - ", child.name)
+print("[TEST] Child ", i, ": ", child.get_class(), " - ", child.name)
 
 
 func _on_test_signal():

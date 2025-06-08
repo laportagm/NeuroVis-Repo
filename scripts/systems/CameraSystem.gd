@@ -14,7 +14,7 @@ signal reset_completed
 
 var camera_distance: float = 5.0
 var camera_rotation: Vector2 = Vector2(0.3, 0.0)
-var pivot_point: Vector3 = Vector3.ZERO
+# FIXED: Orphaned code - var pivot_point: Vector3 = Vector3.ZERO
 
 # Camera behavior controller reference
 var camera_controller = null
@@ -24,19 +24,19 @@ var initialization_complete: bool = false
 
 # Signals
 var center = bounds.get_center()
-var size = bounds.size.length()
-var distance = max(size * 1.5, 2.0)
+# FIXED: Orphaned code - var size = bounds.size.length()
+# FIXED: Orphaned code - var distance = max(size * 1.5, 2.0)
 
 # Position camera to look at the center
 var direction = Vector3(0, 0, 1).normalized()
 camera.global_position = center + direction * distance
 camera.look_at(center, Vector3.UP)
 
-var direction_2 = Vector3(0, 0, 1).normalized()
+# FIXED: Orphaned code - var direction_2 = Vector3(0, 0, 1).normalized()
 camera.global_position = center + direction * distance
 camera.look_at(center, Vector3.UP)
 
-var cam_position: Vector3
+# FIXED: Orphaned code - var cam_position: Vector3
 var target = Vector3.ZERO
 
 "front":
@@ -183,27 +183,24 @@ func print_camera_info() -> void:
 		print("Controller: ", "Available" if camera_controller else "Not available")
 		print("Initialized: ", initialization_complete)
 
-func _fix_orphaned_code():
-	print("[CAMERA_SYSTEM] Manual focus on bounds completed")
-	focus_completed.emit()
+print("[CAMERA_SYSTEM] Manual focus on bounds completed")
+focus_completed.emit()
 
 
-func _fix_orphaned_code():
-	print("[CAMERA_SYSTEM] Manual focus on center completed")
-	focus_completed.emit()
+print("[CAMERA_SYSTEM] Manual focus on center completed")
+focus_completed.emit()
 
 
-func _fix_orphaned_code():
-	print("[CAMERA_SYSTEM] Unknown preset: ", preset)
-	return
+print("[CAMERA_SYSTEM] Unknown preset: ", preset)
+return
 
-	camera.global_position = cam_position
-	camera.look_at(target, Vector3.UP)
+camera.global_position = cam_position
+camera.look_at(target, Vector3.UP)
 
-	print("[CAMERA_SYSTEM] Manual view preset '", preset, "' set")
+print("[CAMERA_SYSTEM] Manual view preset '", preset, "' set")
 
 
-	## Camera information methods
+## Camera information methods
 
 func _manual_focus_on_bounds(bounds: AABB) -> void:
 	"""Manual focus implementation"""

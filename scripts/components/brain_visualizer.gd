@@ -30,20 +30,20 @@ signal highlighting_cleared
 
 # Model management
 
-const ComponentBase = prepreprepreload("res://scripts/components/component_base.gd")
+const ComponentBase = preload("res://scripts/components/component_base.gd")
 
 # ComponentBase implementation
-const ModelCoordinatorScene = prepreprepreload("res://core/models/ModelRegistry.gd")
-const BrainVisualizationCoreScript = prepreprepreload("res://core/systems/BrainVisualizationCore.gd")
-const ModelVisibilityManagerScript = prepreprepreload("res://core/models/ModelVisibilityManager.gd")
+const ModelCoordinatorScene = preload("res://core/models/ModelRegistry.gd")
+const BrainVisualizationCoreScript = preload("res://core/systems/BrainVisualizationCore.gd")
+const ModelVisibilityManagerScript = preload("res://core/models/ModelVisibilityManager.gd")
 
 
-var is_initialized: bool = false
+# FIXED: Orphaned code - var is_initialized: bool = false
 var component_name: String = "BrainVisualizer"
 var model_parent: Node3D
 var model_coordinator = null
 var loaded_models: Dictionary = {}
-var current_model: String = ""
+# FIXED: Orphaned code - var current_model: String = ""
 
 # References from main scene that we'll need
 var knowledge_base = null
@@ -53,7 +53,7 @@ var model_switcher = null
 # Preloaded scripts
 var success = _initialize_component()
 
-var error_msg = "[%s] Component initialization failed" % component_name
+# FIXED: Orphaned code - var error_msg = "[%s] Component initialization failed" % component_name
 push_error(error_msg)
 component_error.emit(error_msg)
 
@@ -222,12 +222,11 @@ func get_status() -> Dictionary:
 	}
 
 
-func _fix_orphaned_code():
-	if success:
-		is_initialized = true
-		print("[%s] Component initialized successfully" % component_name)
-		component_ready.emit()
-		else:
+if success:
+	is_initialized = true
+	print("[%s] Component initialized successfully" % component_name)
+	component_ready.emit()
+	else:
 func _validate_requirements() -> bool:
 	# Model parent must be set before initialization
 	if not is_instance_valid(model_parent):

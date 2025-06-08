@@ -113,7 +113,7 @@ var mesh_instance = highlight_data.mesh_instance
 var original_materials = _original_materials[structure_name]
 
 var parent = mesh_instance.get_parent()
-var overlay_name = mesh_instance.name + "_highlight_overlay"
+# FIXED: Orphaned code - var overlay_name = mesh_instance.name + "_highlight_overlay"
 
 var overlay = parent.get_node(overlay_name)
 	parent.remove_child(overlay)
@@ -133,7 +133,7 @@ var parent_2 = outline_mesh.get_parent()
 	# Clean up cached highlight materials
 var structure_names = _highlighted_structures.keys()
 
-var material = ShaderMaterial.new()
+# FIXED: Orphaned code - var material = ShaderMaterial.new()
 	material.shader = _selection_shader
 
 	# Configure shader parameters
@@ -144,10 +144,10 @@ var material = ShaderMaterial.new()
 	material.set_shader_parameter("educational_mode", educational_mode)
 	material.set_shader_parameter("depth_fade_enabled", depth_fade_enabled)
 
-var dir = DirAccess.open("res://assets/materials/brain_materials")
-var parent_dir = DirAccess.open("res://assets/materials")
-var parent_3 = mesh_instance.get_parent()
-var highlight_color = _get_highlight_color(is_primary, selection_index)
+# FIXED: Orphaned code - var dir = DirAccess.open("res://assets/materials/brain_materials")
+# FIXED: Orphaned code - var parent_dir = DirAccess.open("res://assets/materials")
+# FIXED: Orphaned code - var parent_3 = mesh_instance.get_parent()
+# FIXED: Orphaned code - var highlight_color = _get_highlight_color(is_primary, selection_index)
 
 # Create a duplicate mesh for the highlight effect
 var overlay_2 = MeshInstance3D.new()
@@ -187,7 +187,7 @@ var highlight_material = StandardMaterial3D.new()
 var parent_4 = mesh_instance.get_parent()
 
 # Create outline mesh (slightly larger version of original)
-var outline = MeshInstance3D.new()
+# FIXED: Orphaned code - var outline = MeshInstance3D.new()
 	outline.name = mesh_instance.name + "_outline"
 	outline.mesh = mesh_instance.mesh
 	outline.global_transform = mesh_instance.global_transform
@@ -202,13 +202,13 @@ var highlight_data_2 = _highlighted_structures[structure_name]
 	)
 
 
-var material_3 = _highlight_materials[structure_name]
+# FIXED: Orphaned code - var material_3 = _highlight_materials[structure_name]
 var highlight_color_3 = _get_highlight_color(is_primary, selection_index)
 
-var material_4 = _highlight_materials[structure_name]
+# FIXED: Orphaned code - var material_4 = _highlight_materials[structure_name]
 var highlight_data_3 = _highlighted_structures.get(structure_name)
 
-var outline_mesh_2 = _outline_meshes[structure_name]
+# FIXED: Orphaned code - var outline_mesh_2 = _outline_meshes[structure_name]
 var structures_to_recreate = {}
 
 # Store current highlight data
@@ -217,13 +217,13 @@ var data = structures_to_recreate[structure_name]
 	data.mesh_instance, structure_name, data.is_primary, data.selection_index
 	)
 
-var _selection_shader: Shader
+# FIXED: Orphaned code - var _selection_shader: Shader
 var _outline_material: Material
 var _highlighted_structures: Dictionary = {}
-var _original_materials: Dictionary = {}
-var _highlight_materials: Dictionary = {}
-var _outline_meshes: Dictionary = {}
-var _initialized: bool = false
+# FIXED: Orphaned code - var _original_materials: Dictionary = {}
+# FIXED: Orphaned code - var _highlight_materials: Dictionary = {}
+# FIXED: Orphaned code - var _outline_meshes: Dictionary = {}
+# FIXED: Orphaned code - var _initialized: bool = false
 
 
 # === LIFECYCLE METHODS ===
@@ -314,195 +314,173 @@ func update_settings(settings: Dictionary) -> bool:
 
 											# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if use_shader_selection != value:
-		use_shader_selection = value
-		_recreate_highlighted_structures()
-		visualization_setting_changed.emit("use_shader_selection")
+if use_shader_selection != value:
+	use_shader_selection = value
+	_recreate_highlighted_structures()
+	visualization_setting_changed.emit("use_shader_selection")
 
-		# === PUBLIC VARIABLES ===
-		## Whether depth fade effect is enabled for selection visualization
+	# === PUBLIC VARIABLES ===
+	## Whether depth fade effect is enabled for selection visualization
 
-func _fix_orphaned_code():
-	if existing_data.mesh_instance == mesh_instance and existing_data.is_primary != is_primary:
-		existing_data.is_primary = is_primary
-		_update_highlight_material(structure_name, is_primary, selection_index)
-		return true
+if existing_data.mesh_instance == mesh_instance and existing_data.is_primary != is_primary:
+	existing_data.is_primary = is_primary
+	_update_highlight_material(structure_name, is_primary, selection_index)
+	return true
 
-		# If different mesh, clear the old one first
-		clear_highlight(structure_name)
+	# If different mesh, clear the old one first
+	clear_highlight(structure_name)
 
-		# Choose highlighting method based on settings
-		if use_shader_selection:
-			_highlight_with_shader(mesh_instance, structure_name, is_primary, selection_index)
-			else:
-				_highlight_with_material_swap(mesh_instance, structure_name, is_primary, selection_index)
+	# Choose highlighting method based on settings
+	if use_shader_selection:
+		_highlight_with_shader(mesh_instance, structure_name, is_primary, selection_index)
+		else:
+			_highlight_with_material_swap(mesh_instance, structure_name, is_primary, selection_index)
 
-				# Add outline effect if enabled
-				if enable_outline:
-					_add_outline_effect(mesh_instance, structure_name)
+			# Add outline effect if enabled
+			if enable_outline:
+				_add_outline_effect(mesh_instance, structure_name)
 
-					# Store highlight data
-					_highlighted_structures[structure_name] = {
-					"mesh_instance": mesh_instance, "is_primary": is_primary, "selection_index": selection_index
-					}
+				# Store highlight data
+				_highlighted_structures[structure_name] = {
+				"mesh_instance": mesh_instance, "is_primary": is_primary, "selection_index": selection_index
+				}
 
-					# Emit signal
-					structure_highlighted.emit(structure_name, mesh_instance)
+				# Emit signal
+				structure_highlighted.emit(structure_name, mesh_instance)
 
-					return true
+				return true
 
 
-					## Clear highlight from a structure
-					## @param structure_name: String name of the structure to clear
-					## @returns: bool indicating success
-func _fix_orphaned_code():
-	if not use_shader_selection and _original_materials.has(structure_name):
-func _fix_orphaned_code():
-	for i in range(original_materials.size()):
-		if mesh_instance and mesh_instance.is_inside_tree():
-			mesh_instance.set_surface_override_material(i, original_materials[i])
+				## Clear highlight from a structure
+				## @param structure_name: String name of the structure to clear
+				## @returns: bool indicating success
+if not use_shader_selection and _original_materials.has(structure_name):
+for i in range(original_materials.size()):
+	if mesh_instance and mesh_instance.is_inside_tree():
+		mesh_instance.set_surface_override_material(i, original_materials[i])
 
-			_original_materials.erase(structure_name)
+		_original_materials.erase(structure_name)
 
-			# Remove overlay mesh if using shader
-			if use_shader_selection and mesh_instance and mesh_instance.is_inside_tree():
-func _fix_orphaned_code():
-	if parent.has_node(overlay_name):
-func _fix_orphaned_code():
-	if _outline_meshes.has(structure_name):
-func _fix_orphaned_code():
-	if outline_mesh and outline_mesh.is_inside_tree():
-func _fix_orphaned_code():
-	if _highlight_materials.has(structure_name):
-		_highlight_materials.erase(structure_name)
+		# Remove overlay mesh if using shader
+		if use_shader_selection and mesh_instance and mesh_instance.is_inside_tree():
+if parent.has_node(overlay_name):
+if _outline_meshes.has(structure_name):
+if outline_mesh and outline_mesh.is_inside_tree():
+if _highlight_materials.has(structure_name):
+	_highlight_materials.erase(structure_name)
 
-		# Emit signal
-		highlight_cleared.emit(structure_name)
+	# Emit signal
+	highlight_cleared.emit(structure_name)
 
-		return true
+	return true
 
 
-		## Clear all highlights
-		## @returns: bool indicating success
-func _fix_orphaned_code():
-	for structure_name in structure_names:
-		clear_highlight(structure_name)
-
-		return true
-
-
-		## Check if a structure is highlighted
-		## @param structure_name: String name of the structure
-		## @returns: bool indicating if structure is highlighted
-func _fix_orphaned_code():
-	return material
-
-
-	## Update visualization settings
-	## @param settings: Dictionary of settings to update
+	## Clear all highlights
 	## @returns: bool indicating success
-func _fix_orphaned_code():
-	if not dir:
-func _fix_orphaned_code():
-	if not parent_dir:
-		parent_dir = DirAccess.open("res://assets")
-		parent_dir.make_dir("materials")
+for structure_name in structure_names:
+	clear_highlight(structure_name)
 
-		parent_dir = DirAccess.open("res://assets/materials")
-		parent_dir.make_dir("brain_materials")
-
-		ResourceSaver.save(_outline_material, OUTLINE_MATERIAL_PATH)
+	return true
 
 
-func _fix_orphaned_code():
+	## Check if a structure is highlighted
+	## @param structure_name: String name of the structure
+	## @returns: bool indicating if structure is highlighted
+return material
+
+
+## Update visualization settings
+## @param settings: Dictionary of settings to update
+## @returns: bool indicating success
+if not dir:
+if not parent_dir:
+	parent_dir = DirAccess.open("res://assets")
+	parent_dir.make_dir("materials")
+
+	parent_dir = DirAccess.open("res://assets/materials")
+	parent_dir.make_dir("brain_materials")
+
+	ResourceSaver.save(_outline_material, OUTLINE_MATERIAL_PATH)
+
+
+for i in range(mesh_instance.mesh.get_surface_count()):
+	overlay.set_surface_override_material(i, material)
+
+	# Add to scene
+	parent.add_child(overlay)
+
+
+for i in range(mesh_instance.get_surface_override_material_count()):
+	original_materials.append(mesh_instance.get_surface_override_material(i))
+
+	_original_materials[structure_name] = original_materials
+
+	# Create highlight material
+if enable_pulse:
+	# Note: Material swap method doesn't support pulse animation
+	# We'd need to manually animate in _process
+	pass
+
+	# Store for future updates
+	_highlight_materials[structure_name] = highlight_material
+
+	# Apply to all surfaces
 	for i in range(mesh_instance.mesh.get_surface_count()):
-		overlay.set_surface_override_material(i, material)
-
-		# Add to scene
-		parent.add_child(overlay)
+		mesh_instance.set_surface_override_material(i, highlight_material)
 
 
-func _fix_orphaned_code():
-	for i in range(mesh_instance.get_surface_override_material_count()):
-		original_materials.append(mesh_instance.get_surface_override_material(i))
+for i in range(mesh_instance.mesh.get_surface_count()):
+	outline.set_surface_override_material(i, _outline_material)
 
-		_original_materials[structure_name] = original_materials
+	# Add to scene
+	parent.add_child(outline)
 
-		# Create highlight material
-func _fix_orphaned_code():
-	if enable_pulse:
-		# Note: Material swap method doesn't support pulse animation
-		# We'd need to manually animate in _process
-		pass
-
-		# Store for future updates
-		_highlight_materials[structure_name] = highlight_material
-
-		# Apply to all surfaces
-		for i in range(mesh_instance.mesh.get_surface_count()):
-			mesh_instance.set_surface_override_material(i, highlight_material)
+	# Store for cleanup
+	_outline_meshes[structure_name] = outline
 
 
-func _fix_orphaned_code():
-	for i in range(mesh_instance.mesh.get_surface_count()):
-		outline.set_surface_override_material(i, _outline_material)
-
-		# Add to scene
-		parent.add_child(outline)
-
-		# Store for cleanup
-		_outline_meshes[structure_name] = outline
+if material is ShaderMaterial:
+	material.set_shader_parameter("highlight_color", highlight_color)
+	material.set_shader_parameter("multi_selection", selection_index > 0)
+	material.set_shader_parameter("selection_index", selection_index)
+	elif material is StandardMaterial3D:
+		material.albedo_color = highlight_color
+		material.emission = highlight_color
 
 
-func _fix_orphaned_code():
+if not highlight_data:
+	continue
+
 	if material is ShaderMaterial:
-		material.set_shader_parameter("highlight_color", highlight_color)
-		material.set_shader_parameter("multi_selection", selection_index > 0)
-		material.set_shader_parameter("selection_index", selection_index)
+		material.set_shader_parameter("highlight_intensity", highlight_intensity)
+		material.set_shader_parameter("enable_pulse", enable_pulse)
+		material.set_shader_parameter("pulse_speed", pulse_speed)
+		material.set_shader_parameter("educational_mode", educational_mode)
+		material.set_shader_parameter("depth_fade_enabled", depth_fade_enabled)
 		elif material is StandardMaterial3D:
-			material.albedo_color = highlight_color
-			material.emission = highlight_color
+			material.emission_energy_multiplier = highlight_intensity
 
 
-func _fix_orphaned_code():
-	if not highlight_data:
-		continue
-
-		if material is ShaderMaterial:
-			material.set_shader_parameter("highlight_intensity", highlight_intensity)
-			material.set_shader_parameter("enable_pulse", enable_pulse)
-			material.set_shader_parameter("pulse_speed", pulse_speed)
-			material.set_shader_parameter("educational_mode", educational_mode)
-			material.set_shader_parameter("depth_fade_enabled", depth_fade_enabled)
-			elif material is StandardMaterial3D:
-				material.emission_energy_multiplier = highlight_intensity
+if outline_mesh and outline_mesh.is_inside_tree():
+	outline_mesh.visible = enable_outline
 
 
-func _fix_orphaned_code():
-	if outline_mesh and outline_mesh.is_inside_tree():
-		outline_mesh.visible = enable_outline
+for structure_name in _highlighted_structures:
+	structures_to_recreate[structure_name] = _highlighted_structures[structure_name].duplicate()
 
+	# Clear all highlights
+	clear_all_highlights()
 
-func _fix_orphaned_code():
-	for structure_name in _highlighted_structures:
-		structures_to_recreate[structure_name] = _highlighted_structures[structure_name].duplicate()
+	# Recreate highlights with new method
+	for structure_name in structures_to_recreate:
+if not _initialized or not mesh_instance or not mesh_instance.is_inside_tree():
+	return false
 
-		# Clear all highlights
-		clear_all_highlights()
-
-		# Recreate highlights with new method
-		for structure_name in structures_to_recreate:
-func _fix_orphaned_code():
-	if not _initialized or not mesh_instance or not mesh_instance.is_inside_tree():
-		return false
-
-		# Check if already highlighted
-		if _highlighted_structures.has(structure_name):
-func _fix_orphaned_code():
-	if not _selection_shader:
-		push_warning("[SelectionVisualizer] Selection shader not loaded")
-		return null
+	# Check if already highlighted
+	if _highlighted_structures.has(structure_name):
+if not _selection_shader:
+	push_warning("[SelectionVisualizer] Selection shader not loaded")
+	return null
 
 func _load_resources() -> void:
 	"""Load required shader and material resources"""
@@ -528,17 +506,15 @@ func _highlight_with_shader(
 	mesh_instance: MeshInstance3D, structure_name: String, is_primary: bool, selection_index: int
 	) -> void:
 		"""Highlight a structure using a shader overlay approach"""
-func _fix_orphaned_code():
-	if not mesh_instance or not mesh_instance.is_inside_tree() or not mesh_instance.mesh:
-		return
+if not mesh_instance or not mesh_instance.is_inside_tree() or not mesh_instance.mesh:
+	return
 
 func _highlight_with_material_swap(
 	mesh_instance: MeshInstance3D, structure_name: String, is_primary: bool, selection_index: int
 	) -> void:
 		"""Highlight a structure by swapping its materials"""
-func _fix_orphaned_code():
-	if not mesh_instance or not mesh_instance.is_inside_tree() or not mesh_instance.mesh:
-		return
+if not mesh_instance or not mesh_instance.is_inside_tree() or not mesh_instance.mesh:
+	return
 
 func _add_outline_effect(mesh_instance: MeshInstance3D, structure_name: String) -> void:
 	"""Add outline effect to a highlighted structure"""
@@ -562,9 +538,8 @@ func _update_highlight_material(
 	structure_name: String, is_primary: bool, selection_index: int
 	) -> void:
 		"""Update a specific highlight material"""
-func _fix_orphaned_code():
-	if not _highlight_materials.has(structure_name):
-		return
+if not _highlight_materials.has(structure_name):
+	return
 
 func _update_all_materials() -> void:
 	"""Update all highlight materials with current settings"""

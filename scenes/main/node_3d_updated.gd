@@ -25,30 +25,30 @@ const DEBUG_MODE: bool = true
 var MultiStructureSelectionManagerScript = preload(
 "res://core/interaction/MultiStructureSelectionManager.gd"
 )
-var CameraBehaviorControllerScript = prepreprepreload("res://core/interaction/CameraBehaviorController.gd")
-var ModelCoordinatorScene = prepreprepreload("res://core/models/ModelRegistry.gd")
-var ComparativeInfoPanelScript = prepreprepreload("res://ui/panels/ComparativeInfoPanel.gd")
+# FIXED: Orphaned code - var CameraBehaviorControllerScript = preload("res://core/interaction/CameraBehaviorController.gd")
+# FIXED: Orphaned code - var ModelCoordinatorScene = preload("res://core/models/ModelRegistry.gd")
+# FIXED: Orphaned code - var ComparativeInfoPanelScript = preload("res://ui/panels/ComparativeInfoPanel.gd")
 # UIThemeManager is now available as autoload
 
 # === NEW FOUNDATION LAYER ===
-var FeatureFlags = prepreprepreload("res://core/features/FeatureFlags.gd")
-var ComponentRegistry = prepreprepreload("res://ui/core/ComponentRegistry.gd")
-var ComponentStateManager = prepreprepreload("res://ui/state/ComponentStateManager.gd")
+var FeatureFlags = preload("res://core/features/FeatureFlags.gd")
+# FIXED: Orphaned code - var ComponentRegistry = preload("res://ui/core/ComponentRegistry.gd")
+# FIXED: Orphaned code - var ComponentStateManager = preload("res://ui/state/ComponentStateManager.gd")
 
 # UI Component System preloads - PROGRESSIVE ENABLEMENT
-var SafeAutoloadAccess = prepreprepreload("res://ui/components/core/SafeAutoloadAccess.gd")
-var BaseUIComponent = prepreprepreload("res://ui/components/core/BaseUIComponent.gd")
-var UIComponentFactory = prepreprepreload("res://ui/components/core/UIComponentFactory.gd")
-var ResponsiveComponent = prepreprepreload("res://ui/components/core/ResponsiveComponent_Safe.gd")
+var SafeAutoloadAccess = preload("res://ui/components/core/SafeAutoloadAccess.gd")
+# FIXED: Orphaned code - var BaseUIComponent = preload("res://ui/components/core/BaseUIComponent.gd")
+# FIXED: Orphaned code - var UIComponentFactory = preload("res://ui/components/core/UIComponentFactory.gd")
+# FIXED: Orphaned code - var ResponsiveComponent = preload("res://ui/components/core/ResponsiveComponent_Safe.gd")
 
 # Legacy support (will be migrated)
-var InfoPanelFactory = prepreprepreload("res://ui/panels/InfoPanelFactory.gd")
+# FIXED: Orphaned code - var InfoPanelFactory = preload("res://ui/panels/InfoPanelFactory.gd")
 
 # QA Testing integration
-var SelectionTestRunner = prepreprepreload("res://tests/qa/SelectionTestRunner.gd")
+var SelectionTestRunner = preload("res://tests/qa/SelectionTestRunner.gd")
 
 # === NEW AI INTEGRATION LAYER ===
-var AIIntegrationManager = prepreprepreload("res://core/ai/AIIntegrationManager.gd")
+var AIIntegrationManager = preload("res://core/ai/AIIntegrationManager.gd")
 
 # Constants
 var ai_assistant_panel: Control  # Temporary generic type
@@ -70,11 +70,11 @@ var framework_working = true
 
 # Test structure retrieval
 var test_structure = {}
-var test_button = null
+# FIXED: Orphaned code - var test_button = null
 var flags_loaded = true
 var test_component = ComponentRegistry.create_component("button", {"text": "Test"})
-var restored = ComponentStateManager.restore_component_state("test")
-var error_msg = "[CRITICAL] Essential UI nodes missing - cannot initialize"
+# FIXED: Orphaned code - var restored = ComponentStateManager.restore_component_state("test")
+# FIXED: Orphaned code - var error_msg = "[CRITICAL] Essential UI nodes missing - cannot initialize"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
@@ -83,11 +83,11 @@ var error_msg_2 = "[CRITICAL] Selection system initialization failed"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
-var error_msg_3 = "[CRITICAL] Camera system initialization failed"
+# FIXED: Orphaned code - var error_msg_3 = "[CRITICAL] Camera system initialization failed"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
-var error_msg_4 = "[CRITICAL] Model system initialization failed"
+# FIXED: Orphaned code - var error_msg_4 = "[CRITICAL] Model system initialization failed"
 push_error(error_msg)
 initialization_failed.emit(error_msg)
 
@@ -118,10 +118,10 @@ add_child(selection_manager)
 
 # Setup standard selection signals
 var success = selection_manager.initialize(camera, brain_model_parent)
-var success_2 = camera_controller.initialize(camera, brain_model_parent)
-var success_3 = model_coordinator.initialize(brain_model_parent)
-var debug_cmd = get_node_or_null("/root/DebugCmd")
-var selection = selections[0]
+# FIXED: Orphaned code - var success_2 = camera_controller.initialize(camera, brain_model_parent)
+# FIXED: Orphaned code - var success_3 = model_coordinator.initialize(brain_model_parent)
+# FIXED: Orphaned code - var debug_cmd = get_node_or_null("/root/DebugCmd")
+# FIXED: Orphaned code - var selection = selections[0]
 _display_structure_info(selection["name"])
 object_name_label.text = "Selected: " + selection["name"]
 
@@ -139,40 +139,40 @@ notification.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 # Add to UI layer
 var ui_layer = get_node_or_null("UI_Layer")
-var ui_layer_2 = get_node_or_null("UI_Layer")
-var meshes = _get_all_brain_meshes()
-var meshes_2: Array = []
+# FIXED: Orphaned code - var ui_layer_2 = get_node_or_null("UI_Layer")
+# FIXED: Orphaned code - var meshes = _get_all_brain_meshes()
+# FIXED: Orphaned code - var meshes_2: Array = []
 var active_provider = ai_integration.get_active_provider_id()
-var status = ai_integration.get_provider_status()
+# FIXED: Orphaned code - var status = ai_integration.get_provider_status()
 
-var provider_id = ""
+# FIXED: Orphaned code - var provider_id = ""
 var providers = ai_integration.get_available_providers()
-var active = ai_integration.get_active_provider_id()
+# FIXED: Orphaned code - var active = ai_integration.get_active_provider_id()
 
-var status_2 = ai_integration.get_provider_status(provider)
-var provider_id_2 = args[0]
+# FIXED: Orphaned code - var status_2 = ai_integration.get_provider_status(provider)
+# FIXED: Orphaned code - var provider_id_2 = args[0]
 var result = ai_integration.set_active_provider(provider_id)
 
-var test_btn = ComponentRegistry.create_component("button", {"text": "Test"})
-var data = ComponentStateManager.restore_component_state("test_key")
-var button = UIComponentFactory.create_button("Test Button", "primary")
-var label = UIComponentFactory.create_label("Test Label", "body")
-var header_config = {"title": "Test Header", "subtitle": "Test Subtitle", "icon": "info"}
-var header = ComponentRegistry.create_component("header", header_config)
-var content_config = {"sections": ["description", "functions", "clinical_relevance"]}
-var content = ComponentRegistry.create_component("content", content_config)
-var actions_config = {
+# FIXED: Orphaned code - var test_btn = ComponentRegistry.create_component("button", {"text": "Test"})
+# FIXED: Orphaned code - var data = ComponentStateManager.restore_component_state("test_key")
+# FIXED: Orphaned code - var button = UIComponentFactory.create_button("Test Button", "primary")
+# FIXED: Orphaned code - var label = UIComponentFactory.create_label("Test Label", "body")
+# FIXED: Orphaned code - var header_config = {"title": "Test Header", "subtitle": "Test Subtitle", "icon": "info"}
+# FIXED: Orphaned code - var header = ComponentRegistry.create_component("header", header_config)
+# FIXED: Orphaned code - var content_config = {"sections": ["description", "functions", "clinical_relevance"]}
+# FIXED: Orphaned code - var content = ComponentRegistry.create_component("content", content_config)
+# FIXED: Orphaned code - var actions_config = {
 "preset": "default",
 "buttons":
 	[{"text": "Learn More", "action": "learn"}, {"text": "Bookmark", "action": "bookmark"}]
 	}
-var actions = ComponentRegistry.create_component("actions", actions_config)
-var section_config = {
+# FIXED: Orphaned code - var actions = ComponentRegistry.create_component("actions", actions_config)
+# FIXED: Orphaned code - var section_config = {
 	"name": "description", "title": "Description", "collapsible": true, "expanded": true
 	}
-var section = ComponentRegistry.create_component("section", section_config)
-var test_script = prepreprepreload("res://test_phase3_features.gd")
-var test_instance = test_script.new()
+# FIXED: Orphaned code - var section = ComponentRegistry.create_component("section", section_config)
+# FIXED: Orphaned code - var test_script = preload("res://test_phase3_features.gd")
+# FIXED: Orphaned code - var test_instance = test_script.new()
 	get_tree().root.add_child(test_instance)
 
 	# Auto-remove test instance after completion
@@ -352,365 +352,328 @@ func initialize_core_systems() -> void:
 	# Validate essential nodes exist
 	if not _validate_essential_nodes():
 
-func _fix_orphaned_code():
-	if SafeAutoloadAccess.has_method("get_structure_safely"):
-		test_structure = SafeAutoloadAccess.call("get_structure_safely", "Test")
-		if not test_structure.has("id"):
+if SafeAutoloadAccess.has_method("get_structure_safely"):
+	test_structure = SafeAutoloadAccess.call("get_structure_safely", "Test")
+	if not test_structure.has("id"):
+		framework_working = false
+
+		# Test component creation
+if UIComponentFactory.has_method("create_button"):
+	test_button = UIComponentFactory.call("create_button", "Test", "primary")
+	if test_button:
+		test_button.queue_free()
+		else:
 			framework_working = false
 
-			# Test component creation
-func _fix_orphaned_code():
-	if UIComponentFactory.has_method("create_button"):
-		test_button = UIComponentFactory.call("create_button", "Test", "primary")
-		if test_button:
-			test_button.queue_free()
-			else:
-				framework_working = false
+			if framework_working:
+				print("[INIT] ✓ UI safety framework operational")
+				else:
+					print("[INIT] ⚠ UI safety framework has issues - proceeding with caution")
 
-				if framework_working:
-					print("[INIT] ✓ UI safety framework operational")
+
+if FeatureFlags.has_method("is_enabled"):
+	if not FeatureFlags.call("is_enabled", "__test_flag__"):  # This triggers initialization
+	flags_loaded = true
+
+	if flags_loaded:
+		print("[INIT] ✓ FeatureFlags initialized")
+		# Log current configuration
+		if FeatureFlags.has_method("is_enabled") and FeatureFlags.has_method("print_flag_status"):
+			if FeatureFlags.get("DEBUG_COMPONENT_INSPECTOR") != null:
+				if FeatureFlags.call("is_enabled", FeatureFlags.get("DEBUG_COMPONENT_INSPECTOR")):
+					FeatureFlags.call("print_flag_status")
 					else:
-						print("[INIT] ⚠ UI safety framework has issues - proceeding with caution")
+						print("[INIT] ⚠ FeatureFlags initialization failed")
 
+						# Initialize component registry
+if test_component:
+	print("[INIT] ✓ ComponentRegistry initialized")
+	test_component.queue_free()
 
-func _fix_orphaned_code():
-	if FeatureFlags.has_method("is_enabled"):
-		if not FeatureFlags.call("is_enabled", "__test_flag__"):  # This triggers initialization
-		flags_loaded = true
-
-		if flags_loaded:
-			print("[INIT] ✓ FeatureFlags initialized")
-			# Log current configuration
-			if FeatureFlags.has_method("is_enabled") and FeatureFlags.has_method("print_flag_status"):
-				if FeatureFlags.get("DEBUG_COMPONENT_INSPECTOR") != null:
-					if FeatureFlags.call("is_enabled", FeatureFlags.get("DEBUG_COMPONENT_INSPECTOR")):
-						FeatureFlags.call("print_flag_status")
-						else:
-							print("[INIT] ⚠ FeatureFlags initialization failed")
-
-							# Initialize component registry
-func _fix_orphaned_code():
-	if test_component:
-		print("[INIT] ✓ ComponentRegistry initialized")
-		test_component.queue_free()
-
-		# Show registry stats in debug mode
-		if FeatureFlags.is_enabled(FeatureFlags.DEBUG_COMPONENT_INSPECTOR):
-			ComponentRegistry.print_registry_stats()
-			else:
-				print("[INIT] ⚠ ComponentRegistry initialization failed")
-
-				# Initialize state manager
-				if FeatureFlags.is_enabled(FeatureFlags.UI_STATE_PERSISTENCE):
-					ComponentStateManager.save_component_state("test", {"test": true})
-func _fix_orphaned_code():
-	if not restored.is_empty():
-		print("[INIT] ✓ ComponentStateManager initialized")
-		ComponentStateManager.remove_component_state("test")
+	# Show registry stats in debug mode
+	if FeatureFlags.is_enabled(FeatureFlags.DEBUG_COMPONENT_INSPECTOR):
+		ComponentRegistry.print_registry_stats()
 		else:
-			print("[INIT] ⚠ ComponentStateManager not working")
-			else:
-				print("[INIT] - ComponentStateManager disabled (feature flag off)")
+			print("[INIT] ⚠ ComponentRegistry initialization failed")
+
+			# Initialize state manager
+			if FeatureFlags.is_enabled(FeatureFlags.UI_STATE_PERSISTENCE):
+				ComponentStateManager.save_component_state("test", {"test": true})
+if not restored.is_empty():
+	print("[INIT] ✓ ComponentStateManager initialized")
+	ComponentStateManager.remove_component_state("test")
+	else:
+		print("[INIT] ⚠ ComponentStateManager not working")
+		else:
+			print("[INIT] - ComponentStateManager disabled (feature flag off)")
 
 
-func _fix_orphaned_code():
-	if not _initialize_selection_system():
-func _fix_orphaned_code():
-	if not _initialize_camera_system():
-func _fix_orphaned_code():
-	if not _initialize_model_system():
-func _fix_orphaned_code():
-	print("[INIT] Core systems initialized successfully")
+if not _initialize_selection_system():
+if not _initialize_camera_system():
+if not _initialize_model_system():
+print("[INIT] Core systems initialized successfully")
 
 
-func _fix_orphaned_code():
-	for node_info in essential_nodes:
-func _fix_orphaned_code():
-	if not node_ref:
-		push_error("[INIT] Missing essential node: " + node_name)
+for node_info in essential_nodes:
+if not node_ref:
+	push_error("[INIT] Missing essential node: " + node_name)
+	return false
+
+	return true
+
+
+if selection_manager.has_signal("structure_selected"):
+	selection_manager.structure_selected.connect(_on_structure_selected)
+	if selection_manager.has_signal("selection_cleared"):
+		selection_manager.selection_cleared.connect(_on_selection_cleared)
+
+		# Pass required references to selection manager
+		if selection_manager.has_method("initialize"):
+if not success:
+	push_error("[INIT] Failed to initialize selection manager")
+	return false
+	else:
+		push_error("[INIT] Selection manager missing initialize method")
 		return false
 
-		return true
+		# Configure visual properties
+		if selection_manager.has_method("configure_highlight"):
+			selection_manager.configure_highlight(highlight_color, emission_energy)
 
-
-func _fix_orphaned_code():
-	if selection_manager.has_signal("structure_selected"):
-		selection_manager.structure_selected.connect(_on_structure_selected)
-		if selection_manager.has_signal("selection_cleared"):
-			selection_manager.selection_cleared.connect(_on_selection_cleared)
-
-			# Pass required references to selection manager
-			if selection_manager.has_method("initialize"):
-func _fix_orphaned_code():
-	if not success:
-		push_error("[INIT] Failed to initialize selection manager")
-		return false
-		else:
-			push_error("[INIT] Selection manager missing initialize method")
-			return false
-
-			# Configure visual properties
-			if selection_manager.has_method("configure_highlight"):
-				selection_manager.configure_highlight(highlight_color, emission_energy)
-
-				print("[INIT] ✓ Selection system initialized")
-				return true
-
-
-func _fix_orphaned_code():
-	if not success:
-		push_error("[INIT] Failed to initialize camera controller")
-		return false
-		else:
-			push_error("[INIT] Camera controller missing initialize method")
-			return false
-
-			print("[INIT] ✓ Camera system initialized")
+			print("[INIT] ✓ Selection system initialized")
 			return true
 
 
-func _fix_orphaned_code():
-	if not success:
-		push_error("[INIT] Failed to initialize model coordinator")
-		return false
-		else:
-			push_error("[INIT] Model coordinator missing initialize method")
-			return false
-
-			# Pass references to model control panel
-			if model_control_panel and model_control_panel.has_method("initialize_with_coordinator"):
-				model_control_panel.initialize_with_coordinator(model_coordinator)
-
-				print("[INIT] ✓ Model system initialized")
-				return true
-
-
-func _fix_orphaned_code():
-	if not debug_cmd:
-		print("[INIT] DebugCmd not available, skipping debug command registration")
-		return
-
-		# Register foundation test commands
-		debug_cmd.register_command(
-		"test_foundation", self, "_debug_test_foundation", "Test foundation layer"
-		)
-		debug_cmd.register_command(
-		"test_components", self, "_debug_test_components", "Test UI component system"
-		)
-		debug_cmd.register_command("test_phase3", self, "_debug_test_phase3", "Test Phase 3 features")
-
-		# Register AI debug commands
-		debug_cmd.register_command("ai_status", self, "_debug_ai_status", "Check AI integration status")
-		debug_cmd.register_command("ai_setup", self, "_debug_ai_setup", "Show AI setup dialog")
-		debug_cmd.register_command(
-		"ai_provider", self, "_debug_ai_provider", "List or change AI providers"
-		)
-
-
-func _fix_orphaned_code():
-	if ai_integration:
-		ai_integration.set_current_structure(selection["name"])
-
-		else:
-			# Multiple selections - show comparative panel
-			if info_panel:
-				info_panel.hide()
-				_show_comparative_panel(selections)
-
-				# Update label to show multiple selections
-func _fix_orphaned_code():
-	for sel in selections:
-		names.append(sel["name"])
-		object_name_label.text = "Comparing: " + ", ".join(names)
-
-		# Update AI context with first selection
-		if ai_integration and selections.size() > 0:
-			ai_integration.set_current_structure(selections[0]["name"])
-
-			print("[MultiSelect] Selection changed: %d structures" % selections.size())
-
-
-func _fix_orphaned_code():
-	if ui_layer:
-		ui_layer.add_child(notification)
-
-		# Auto-remove after 3 seconds
-		await get_tree().create_timer(3.0).timeout
-		notification.queue_free()
-
-
-func _fix_orphaned_code():
-	if not ui_layer:
-		push_error("[MultiSelect] UI_Layer not found!")
-		return
-
-		# Create comparative panel if it doesn't exist
-		if not comparative_panel:
-			comparative_panel = ComparativeInfoPanelScript.new()
-			comparative_panel.name = "ComparativeInfoPanel"
-
-			# Position on the right side
-			comparative_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
-			comparative_panel.position.x = -420
-			comparative_panel.custom_minimum_size = Vector2(400, 600)
-
-			ui_layer.add_child(comparative_panel)
-
-			# Connect signals
-			comparative_panel.structure_focused.connect(_on_comparative_structure_focused)
-			comparative_panel.comparison_cleared.connect(
-			func(): selection_manager.clear_all_selections()
-			)
-
-			# Update panel with selections
-			comparative_panel.update_selections(selections)
-			comparative_panel.show()
-
-
-func _fix_orphaned_code():
-	for mesh in meshes:
-		if mesh.name == structure_name:
-			# Focus camera on this structure
-			if camera_controller and camera_controller.has_method("focus_on_mesh"):
-				camera_controller.focus_on_mesh(mesh)
-				break
-
-
-func _fix_orphaned_code():
-	if brain_model_parent:
-		_collect_meshes_recursive(brain_model_parent, meshes)
-		return meshes
-
-
-func _fix_orphaned_code():
-	print("\n=== AI INTEGRATION STATUS ===")
-	print("Active Provider: %s" % active_provider)
-	print("Status: %s" % str(status))
-	print("Current Structure: %s" % ai_integration.get_current_structure())
-	print("Available Providers: %s" % str(ai_integration.get_available_providers()))
-	print("============================\n")
-
-
-func _fix_orphaned_code():
-	if args.size() > 0:
-		provider_id = args[0]
-
-		print(
-		(
-		"[AI] Showing setup dialog for provider: %s"
-		% (provider_id if not provider_id.is_empty() else "default")
-		)
-		)
-		ai_integration.show_setup_dialog(provider_id)
-
-
-func _fix_orphaned_code():
-	print("\n=== AVAILABLE AI PROVIDERS ===")
-	for provider in providers:
-func _fix_orphaned_code():
-	print("%s %s - %s" % ["►" if provider == active else " ", provider, str(status)])
-	print("=============================\n")
-
-	print("Use 'ai_provider <provider_id>' to change provider")
+if not success:
+	push_error("[INIT] Failed to initialize camera controller")
+	return false
 	else:
-		# Change provider
-func _fix_orphaned_code():
-	if result:
-		print("[AI] Changed provider to: %s" % provider_id)
+		push_error("[INIT] Camera controller missing initialize method")
+		return false
+
+		print("[INIT] ✓ Camera system initialized")
+		return true
+
+
+if not success:
+	push_error("[INIT] Failed to initialize model coordinator")
+	return false
+	else:
+		push_error("[INIT] Model coordinator missing initialize method")
+		return false
+
+		# Pass references to model control panel
+		if model_control_panel and model_control_panel.has_method("initialize_with_coordinator"):
+			model_control_panel.initialize_with_coordinator(model_coordinator)
+
+			print("[INIT] ✓ Model system initialized")
+			return true
+
+
+if not debug_cmd:
+	print("[INIT] DebugCmd not available, skipping debug command registration")
+	return
+
+	# Register foundation test commands
+	debug_cmd.register_command(
+	"test_foundation", self, "_debug_test_foundation", "Test foundation layer"
+	)
+	debug_cmd.register_command(
+	"test_components", self, "_debug_test_components", "Test UI component system"
+	)
+	debug_cmd.register_command("test_phase3", self, "_debug_test_phase3", "Test Phase 3 features")
+
+	# Register AI debug commands
+	debug_cmd.register_command("ai_status", self, "_debug_ai_status", "Check AI integration status")
+	debug_cmd.register_command("ai_setup", self, "_debug_ai_setup", "Show AI setup dialog")
+	debug_cmd.register_command(
+	"ai_provider", self, "_debug_ai_provider", "List or change AI providers"
+	)
+
+
+if ai_integration:
+	ai_integration.set_current_structure(selection["name"])
+
+	else:
+		# Multiple selections - show comparative panel
+		if info_panel:
+			info_panel.hide()
+			_show_comparative_panel(selections)
+
+			# Update label to show multiple selections
+for sel in selections:
+	names.append(sel["name"])
+	object_name_label.text = "Comparing: " + ", ".join(names)
+
+	# Update AI context with first selection
+	if ai_integration and selections.size() > 0:
+		ai_integration.set_current_structure(selections[0]["name"])
+
+		print("[MultiSelect] Selection changed: %d structures" % selections.size())
+
+
+if ui_layer:
+	ui_layer.add_child(notification)
+
+	# Auto-remove after 3 seconds
+	await get_tree().create_timer(3.0).timeout
+	notification.queue_free()
+
+
+if not ui_layer:
+	push_error("[MultiSelect] UI_Layer not found!")
+	return
+
+	# Create comparative panel if it doesn't exist
+	if not comparative_panel:
+		comparative_panel = ComparativeInfoPanelScript.new()
+		comparative_panel.name = "ComparativeInfoPanel"
+
+		# Position on the right side
+		comparative_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+		comparative_panel.position.x = -420
+		comparative_panel.custom_minimum_size = Vector2(400, 600)
+
+		ui_layer.add_child(comparative_panel)
+
+		# Connect signals
+		comparative_panel.structure_focused.connect(_on_comparative_structure_focused)
+		comparative_panel.comparison_cleared.connect(
+		func(): selection_manager.clear_all_selections()
+		)
+
+		# Update panel with selections
+		comparative_panel.update_selections(selections)
+		comparative_panel.show()
+
+
+for mesh in meshes:
+	if mesh.name == structure_name:
+		# Focus camera on this structure
+		if camera_controller and camera_controller.has_method("focus_on_mesh"):
+			camera_controller.focus_on_mesh(mesh)
+			break
+
+
+if brain_model_parent:
+	_collect_meshes_recursive(brain_model_parent, meshes)
+	return meshes
+
+
+print("\n=== AI INTEGRATION STATUS ===")
+print("Active Provider: %s" % active_provider)
+print("Status: %s" % str(status))
+print("Current Structure: %s" % ai_integration.get_current_structure())
+print("Available Providers: %s" % str(ai_integration.get_available_providers()))
+print("============================\n")
+
+
+if args.size() > 0:
+	provider_id = args[0]
+
+	print(
+	(
+	"[AI] Showing setup dialog for provider: %s"
+	% (provider_id if not provider_id.is_empty() else "default")
+	)
+	)
+	ai_integration.show_setup_dialog(provider_id)
+
+
+print("\n=== AVAILABLE AI PROVIDERS ===")
+for provider in providers:
+print("%s %s - %s" % ["►" if provider == active else " ", provider, str(status)])
+print("=============================\n")
+
+print("Use 'ai_provider <provider_id>' to change provider")
+else:
+	# Change provider
+if result:
+	print("[AI] Changed provider to: %s" % provider_id)
+	else:
+		print("[AI] Failed to change provider to: %s" % provider_id)
+		print("Available providers: %s" % str(ai_integration.get_available_providers()))
+
+
+if test_btn:
+	print("  - Component creation: Working")
+	test_btn.queue_free()
+	else:
+		print("  - Component creation: Failed")
 		else:
-			print("[AI] Failed to change provider to: %s" % provider_id)
-			print("Available providers: %s" % str(ai_integration.get_available_providers()))
+			print("✗ ComponentRegistry: Not available")
 
-
-func _fix_orphaned_code():
-	if test_btn:
-		print("  - Component creation: Working")
-		test_btn.queue_free()
+			# Test state manager
+			if ComponentStateManager and ComponentStateManager.has_method("save_component_state"):
+				print("✓ ComponentStateManager: Available")
+				ComponentStateManager.save_component_state("test_key", {"test": true})
+if data and data.has("test"):
+	print("  - State save/restore: Working")
+	else:
+		print("  - State save/restore: Failed")
+		ComponentStateManager.remove_component_state("test_key")
 		else:
-			print("  - Component creation: Failed")
-			else:
-				print("✗ ComponentRegistry: Not available")
+			print("✗ ComponentStateManager: Not available")
 
-				# Test state manager
-				if ComponentStateManager and ComponentStateManager.has_method("save_component_state"):
-					print("✓ ComponentStateManager: Available")
-					ComponentStateManager.save_component_state("test_key", {"test": true})
-func _fix_orphaned_code():
-	if data and data.has("test"):
-		print("  - State save/restore: Working")
+			print("===============================\n")
+
+
+if button:
+	print("  - Button creation: Working")
+	button.queue_free()
+	else:
+		print("  - Button creation: Failed")
+
+if label:
+	print("  - Label creation: Working")
+	label.queue_free()
+	else:
+		print("  - Label creation: Failed")
 		else:
-			print("  - State save/restore: Failed")
-			ComponentStateManager.remove_component_state("test_key")
-			else:
-				print("✗ ComponentStateManager: Not available")
+			print("✗ UIComponentFactory: Not available")
 
-				print("===============================\n")
+			# Test component registry
+			print("\nTesting fragment components:")
 
+			# Test header fragment
+if header:
+	print("✓ Header fragment created")
+	header.queue_free()
+	else:
+		print("✗ Header fragment failed")
 
-func _fix_orphaned_code():
-	if button:
-		print("  - Button creation: Working")
-		button.queue_free()
-		else:
-			print("  - Button creation: Failed")
+		# Test content fragment
+if content:
+	print("✓ Content fragment created")
+	content.queue_free()
+	else:
+		print("✗ Content fragment failed")
 
-func _fix_orphaned_code():
-	if label:
-		print("  - Label creation: Working")
-		label.queue_free()
-		else:
-			print("  - Label creation: Failed")
-			else:
-				print("✗ UIComponentFactory: Not available")
+		# Test actions fragment
+if actions:
+	print("✓ Actions fragment created")
+	actions.queue_free()
+	else:
+		print("✗ Actions fragment failed")
 
-				# Test component registry
-				print("\nTesting fragment components:")
+		# Test section fragment
+if section:
+	print("✓ Section fragment created")
+	section.queue_free()
+	else:
+		print("✗ Section fragment failed")
 
-				# Test header fragment
-func _fix_orphaned_code():
-	if header:
-		print("✓ Header fragment created")
-		header.queue_free()
-		else:
-			print("✗ Header fragment failed")
-
-			# Test content fragment
-func _fix_orphaned_code():
-	if content:
-		print("✓ Content fragment created")
-		content.queue_free()
-		else:
-			print("✗ Content fragment failed")
-
-			# Test actions fragment
-func _fix_orphaned_code():
-	if actions:
-		print("✓ Actions fragment created")
-		actions.queue_free()
-		else:
-			print("✗ Actions fragment failed")
-
-			# Test section fragment
-func _fix_orphaned_code():
-	if section:
-		print("✓ Section fragment created")
-		section.queue_free()
-		else:
-			print("✗ Section fragment failed")
-
-			print("=================================\n")
+		print("=================================\n")
 
 
-func _fix_orphaned_code():
-	if test_script:
-func _fix_orphaned_code():
-	if is_instance_valid(test_instance):
-		test_instance.queue_free()
-		print("✓ Phase 3 test instance cleaned up")
-		else:
-			print("✗ Failed to load Phase 3 test script")
+if test_script:
+if is_instance_valid(test_instance):
+	test_instance.queue_free()
+	print("✓ Phase 3 test instance cleaned up")
+	else:
+		print("✗ Failed to load Phase 3 test script")
 
-			print("=== PHASE 3 TESTS COMPLETED ===\n")
+		print("=== PHASE 3 TESTS COMPLETED ===\n")
 
 func _validate_essential_nodes() -> bool:
 	"""Ensure all required nodes exist"""

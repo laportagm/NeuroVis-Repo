@@ -22,14 +22,14 @@ var pivot_point: Vector3 = Vector3.ZERO
 var camera_distance: float = 3.0
 var camera_rotation: Vector2 = Vector2(0.3, 0.0)
 
-var is_orbiting: bool = false
+# FIXED: Orphaned code - var is_orbiting: bool = false
 var is_panning: bool = false
 var last_mouse_pos: Vector2 = Vector2.ZERO
 var touches: Dictionary = {}
 
-var target_distance: float = 3.0
+# FIXED: Orphaned code - var target_distance: float = 3.0
 var target_rotation: Vector2 = Vector2(0.3, 0.0)
-var target_pivot: Vector3 = Vector3.ZERO
+# FIXED: Orphaned code - var target_pivot: Vector3 = Vector3.ZERO
 var rotation_velocity: Vector2 = Vector2.ZERO
 var pan_velocity: Vector3 = Vector3.ZERO
 var zoom_velocity: float = 0.0
@@ -40,7 +40,7 @@ var delta = event.position - last_mouse_pos
 var pan_delta = Vector3(
 delta.x * PAN_SPEED * camera_distance, -delta.y * PAN_SPEED * camera_distance, 0.0
 )
-var cam_transform = camera.global_transform
+# FIXED: Orphaned code - var cam_transform = camera.global_transform
 pan_velocity = cam_transform.basis.x * pan_delta.x + cam_transform.basis.y * pan_delta.y
 
 last_mouse_pos = event.position
@@ -50,7 +50,7 @@ event.delta.x * PAN_SPEED * camera_distance * 0.5,
 -event.delta.y * PAN_SPEED * camera_distance * 0.5,
 0.0
 )
-var cam_transform_2 = camera.global_transform
+# FIXED: Orphaned code - var cam_transform_2 = camera.global_transform
 pan_velocity += cam_transform.basis.x * pan_delta.x + cam_transform.basis.y * pan_delta.y
 
 zoom_velocity -= (event.factor - 1.0) * ZOOM_SPEED * 10.0
@@ -69,10 +69,10 @@ var changed = false
 
 # Validate and fix target_rotation
 var clamped_x = clamp(target_rotation.x, -PI / 2 + 0.1, PI / 2 - 0.1)
-var clamped_distance = clamp(target_distance, ZOOM_MIN, ZOOM_MAX)
-var position_diff = camera_rotation.distance_to(target_rotation)
-var distance_diff = abs(camera_distance - target_distance)
-var pivot_diff = pivot_point.distance_to(target_pivot)
+# FIXED: Orphaned code - var clamped_distance = clamp(target_distance, ZOOM_MIN, ZOOM_MAX)
+# FIXED: Orphaned code - var position_diff = camera_rotation.distance_to(target_rotation)
+# FIXED: Orphaned code - var distance_diff = abs(camera_distance - target_distance)
+# FIXED: Orphaned code - var pivot_diff = pivot_point.distance_to(target_pivot)
 
 func _ready() -> void:
 	add_to_group("camera_controller")
@@ -189,96 +189,88 @@ func get_health_status() -> Dictionary:
 	"rotation": camera_rotation
 	}
 
-func _fix_orphaned_code():
-	if is_orbiting:
-		rotation_velocity.y = -delta.x * ROTATION_SPEED
-		rotation_velocity.x = delta.y * ROTATION_SPEED  # Fixed: removed negative to make vertical feel natural
-		elif (
-		is_panning
-		or (Input.is_key_pressed(KEY_SHIFT) and event.button_mask == MOUSE_BUTTON_MASK_LEFT)
-		):
-func _fix_orphaned_code():
-	if rotation_velocity.length() > 0.001:
-		target_rotation += rotation_velocity
-		rotation_velocity *= MOMENTUM_DAMPING
+if is_orbiting:
+	rotation_velocity.y = -delta.x * ROTATION_SPEED
+	rotation_velocity.x = delta.y * ROTATION_SPEED  # Fixed: removed negative to make vertical feel natural
+	elif (
+	is_panning
+	or (Input.is_key_pressed(KEY_SHIFT) and event.button_mask == MOUSE_BUTTON_MASK_LEFT)
+	):
+if rotation_velocity.length() > 0.001:
+	target_rotation += rotation_velocity
+	rotation_velocity *= MOMENTUM_DAMPING
+	needs_update = true
+
+	if pan_velocity.length() > 0.001:
+		target_pivot += pan_velocity
+		pan_velocity *= MOMENTUM_DAMPING
 		needs_update = true
 
-		if pan_velocity.length() > 0.001:
-			target_pivot += pan_velocity
-			pan_velocity *= MOMENTUM_DAMPING
+		if abs(zoom_velocity) > 0.001:
+			target_distance += zoom_velocity
+			zoom_velocity *= MOMENTUM_DAMPING
 			needs_update = true
 
-			if abs(zoom_velocity) > 0.001:
-				target_distance += zoom_velocity
-				zoom_velocity *= MOMENTUM_DAMPING
+			# Validate and clamp values to prevent invalid camera positions
+			if _validate_and_clamp_values():
 				needs_update = true
 
-				# Validate and clamp values to prevent invalid camera positions
-				if _validate_and_clamp_values():
-					needs_update = true
+				# Only update camera if there are actual changes
+				if needs_update or _needs_camera_update():
+					camera_rotation = camera_rotation.lerp(target_rotation, SMOOTHING)
+					camera_distance = lerp(camera_distance, target_distance, SMOOTHING)
+					pivot_point = pivot_point.lerp(target_pivot, SMOOTHING)
 
-					# Only update camera if there are actual changes
-					if needs_update or _needs_camera_update():
-						camera_rotation = camera_rotation.lerp(target_rotation, SMOOTHING)
-						camera_distance = lerp(camera_distance, target_distance, SMOOTHING)
-						pivot_point = pivot_point.lerp(target_pivot, SMOOTHING)
-
-						_update_camera_from_state_safe()
+					_update_camera_from_state_safe()
 
 
-						# Optimized camera update with safety checks
-func _fix_orphaned_code():
-	if _is_valid_vector3(pos) and _is_valid_vector3(pivot_point):
-func _fix_orphaned_code():
-	if _is_valid_vector3(new_position):
-		camera.global_position = new_position
-		camera.look_at(pivot_point, Vector3.UP)
+					# Optimized camera update with safety checks
+if _is_valid_vector3(pos) and _is_valid_vector3(pivot_point):
+if _is_valid_vector3(new_position):
+	camera.global_position = new_position
+	camera.look_at(pivot_point, Vector3.UP)
+	else:
+		push_warning(
+		"[CameraController] State error: Invalid camera position calculated, skipping update"
+		)
 		else:
 			push_warning(
-			"[CameraController] State error: Invalid camera position calculated, skipping update"
+			"[CameraController] Calculation error: Invalid camera calculation values, resetting"
 			)
-			else:
-				push_warning(
-				"[CameraController] Calculation error: Invalid camera calculation values, resetting"
-				)
-				_reset_to_safe_values()
+			_reset_to_safe_values()
 
 
-				# Legacy method for compatibility
-func _fix_orphaned_code():
-	if not _is_valid_vector2(target_rotation):
-		target_rotation = Vector2(0.3, 0.0)
+			# Legacy method for compatibility
+if not _is_valid_vector2(target_rotation):
+	target_rotation = Vector2(0.3, 0.0)
+	changed = true
+	else:
+if abs(clamped_x - target_rotation.x) > 0.001:
+	target_rotation.x = clamped_x
+	changed = true
+
+	# Validate and fix target_distance
+	if not is_finite(target_distance) or target_distance <= 0:
+		target_distance = 3.0
 		changed = true
 		else:
-func _fix_orphaned_code():
-	if abs(clamped_x - target_rotation.x) > 0.001:
-		target_rotation.x = clamped_x
+if abs(clamped_distance - target_distance) > 0.001:
+	target_distance = clamped_distance
+	changed = true
+
+	# Validate pivot point
+	if not _is_valid_vector3(target_pivot):
+		target_pivot = Vector3.ZERO
 		changed = true
 
-		# Validate and fix target_distance
-		if not is_finite(target_distance) or target_distance <= 0:
-			target_distance = 3.0
-			changed = true
-			else:
-func _fix_orphaned_code():
-	if abs(clamped_distance - target_distance) > 0.001:
-		target_distance = clamped_distance
-		changed = true
-
-		# Validate pivot point
-		if not _is_valid_vector3(target_pivot):
-			target_pivot = Vector3.ZERO
-			changed = true
-
-			return changed
+		return changed
 
 
-			# Check if camera needs updating (positions differ significantly)
-func _fix_orphaned_code():
-	return position_diff > 0.001 or distance_diff > 0.001 or pivot_diff > 0.001
+		# Check if camera needs updating (positions differ significantly)
+return position_diff > 0.001 or distance_diff > 0.001 or pivot_diff > 0.001
 
 
-	# Validate Vector3 for NaN and infinity
+# Validate Vector3 for NaN and infinity
 
 func _update_camera_from_state_safe() -> void:
 	if not camera or not is_instance_valid(camera):

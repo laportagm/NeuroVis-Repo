@@ -59,10 +59,10 @@ var entry_2 = _cache.entries[key]
 var age = Time.get_unix_time_from_system() - entry.created_at
 var max_size = _cache.get("max_size", 100)
 
-var oldest_key = ""
+# FIXED: Orphaned code - var oldest_key = ""
 var oldest_time = Time.get_unix_time_from_system()
 
-var entry_time = _cache.entries[key].created_at
+# FIXED: Orphaned code - var entry_time = _cache.entries[key].created_at
 var full_message = "[" + SINGLETON_NAME + "] " + message
 
 push_error(full_message)
@@ -72,14 +72,14 @@ error_occurred.emit(message)
 # === LOGGING ===
 var info = get_debug_info()
 
-var _is_initialized: bool = false
+# FIXED: Orphaned code - var _is_initialized: bool = false
 var _initialization_time: float = 0.0
 var _error_count: int = 0
 
 # === DATA STORAGE ===
 var _data: Dictionary = {}
-var _cache: Dictionary = {}
-var _settings: Dictionary = {}
+# FIXED: Orphaned code - var _cache: Dictionary = {}
+# FIXED: Orphaned code - var _settings: Dictionary = {}
 
 
 # === LIFECYCLE METHODS ===
@@ -250,58 +250,49 @@ func get_debug_info() -> Dictionary:
 func print_debug_info() -> void:
 	"""Print debug information to console"""
 
-func _fix_orphaned_code():
-	if monitor_performance:
-		_setup_performance_monitoring()
+if monitor_performance:
+	_setup_performance_monitoring()
 
-		# Mark as initialized
-		_is_initialized = true
-		_initialization_time = (Time.get_ticks_msec() - start_time) / 1000.0
+	# Mark as initialized
+	_is_initialized = true
+	_initialization_time = (Time.get_ticks_msec() - start_time) / 1000.0
 
-		initialized.emit()
-		_log_debug(SINGLETON_NAME + " initialized in " + str(_initialization_time) + "s")
-
-
-func _fix_orphaned_code():
-	for key in _settings.keys():
-func _fix_orphaned_code():
-	if ProjectSettings.has_setting(setting_path):
-		_settings[key] = ProjectSettings.get_setting(setting_path)
+	initialized.emit()
+	_log_debug(SINGLETON_NAME + " initialized in " + str(_initialization_time) + "s")
 
 
-func _fix_orphaned_code():
-	if entry.ttl > 0:
-func _fix_orphaned_code():
-	if age > entry.ttl:
-		_cache.entries.erase(key)
+for key in _settings.keys():
+if ProjectSettings.has_setting(setting_path):
+	_settings[key] = ProjectSettings.get_setting(setting_path)
+
+
+if entry.ttl > 0:
+if age > entry.ttl:
+	_cache.entries.erase(key)
+	_cache.current_size -= 1
+	return default_value
+
+	return entry.value
+
+
+	## Clear cache
+while _cache.current_size > max_size:
+	# Remove oldest entry
+for key in _cache.entries.keys():
+if entry_time < oldest_time:
+	oldest_time = entry_time
+	oldest_key = key
+
+	if not oldest_key.is_empty():
+		_cache.entries.erase(oldest_key)
 		_cache.current_size -= 1
-		return default_value
-
-		return entry.value
 
 
-		## Clear cache
-func _fix_orphaned_code():
-	while _cache.current_size > max_size:
-		# Remove oldest entry
-func _fix_orphaned_code():
-	for key in _cache.entries.keys():
-func _fix_orphaned_code():
-	if entry_time < oldest_time:
-		oldest_time = entry_time
-		oldest_key = key
-
-		if not oldest_key.is_empty():
-			_cache.entries.erase(oldest_key)
-			_cache.current_size -= 1
-
-
-			# === ERROR HANDLING ===
-func _fix_orphaned_code():
-	print("=== " + SINGLETON_NAME + " DEBUG INFO ===")
-	for key in info.keys():
-		print("  " + key + ": " + str(info[key]))
-		print("==========================")
+		# === ERROR HANDLING ===
+print("=== " + SINGLETON_NAME + " DEBUG INFO ===")
+for key in info.keys():
+	print("  " + key + ": " + str(info[key]))
+	print("==========================")
 
 func _load_configuration() -> void:
 	"""Load singleton configuration from settings"""

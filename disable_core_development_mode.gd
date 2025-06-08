@@ -4,54 +4,52 @@
 
 extends SceneTree
 
+var feature_flags_script = preload("res://core/features/FeatureFlags.gd")
 
-var feature_flags_script = preprepreload("res://core/features/FeatureFlags.gd")
-var config = ConfigFile.new()
-config.load("user://feature_flags.cfg")
-config.set_value("system", "core_development_mode", false)
-
-# Remove all feature overrides to use defaults
-var save_result = config.save("user://feature_flags.cfg")
 
 func _init() -> void:
 	print("\n🔧 NeuroVis Core Development Mode Disable 🔧")
 	print("============================================\n")
 
 	# Load the FeatureFlags script directly
-
-func _fix_orphaned_code():
 	if not feature_flags_script:
 		push_error("Failed to load FeatureFlags script!")
 		quit(1)
 		return
 
-		print("✅ FeatureFlags loaded successfully")
+	print("✅ FeatureFlags loaded successfully")
 
-		# Disable core development mode
-		feature_flags_script.disable_core_development_mode()
+	# Create and load config file
+	var config = ConfigFile.new()
+	config.load("user://feature_flags.cfg")
+	config.set_value("system", "core_development_mode", false)
 
-		# Remove the core development mode flag
-func _fix_orphaned_code():
+	# Remove all feature overrides to use defaults
 	if config.has_section("features"):
 		config.erase_section("features")
 
-		# Save configuration
-func _fix_orphaned_code():
+	# Save configuration
+	var save_result = config.save("user://feature_flags.cfg")
+
+	# Disable core development mode
+	feature_flags_script.disable_core_development_mode()
+
+	# Save configuration
 	if save_result == OK:
 		print("✅ Configuration saved to user://feature_flags.cfg")
-		else:
-			push_error("Failed to save configuration!")
+	else:
+		push_error("Failed to save configuration!")
 
-			print("\n🎯 Core Development Mode DISABLED!")
-			print("\nRestored:")
-			print("  • Full system functionality")
-			print("  • All UI components available")
-			print("  • Production-ready settings")
-			print("  • Standard autoload configuration")
+	print("\n🎯 Core Development Mode DISABLED!")
+	print("\nRestored:")
+	print("  • Full system functionality")
+	print("  • All UI components available")
+	print("  • Production-ready settings")
+	print("  • Standard autoload configuration")
 
-			print("\nTo re-enable core development mode, run:")
-			print("  godot --script enable_core_development_mode.gd")
+	print("\nTo re-enable core development mode, run:")
+	print("  godot --script enable_core_development_mode.gd")
 
-			print("\n✨ Full functionality restored!\n")
+	print("\n✨ Full functionality restored!\n")
 
-			quit(0)
+	quit(0)

@@ -74,7 +74,7 @@ var navigation_sections = {
 										}
 
 
-var main_container = Control.new()
+# FIXED: Orphaned code - var main_container = Control.new()
 	main_container.name = "UIDemo"
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	get_tree().root.add_child(main_container)
@@ -82,7 +82,7 @@ var main_container = Control.new()
 	# Apply dark theme
 var bg_panel = Panel.new()
 	bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-var bg_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var bg_style = StyleBoxFlat.new()
 	bg_style.bg_color = Color("#0a0a0a")
 	bg_panel.add_theme_stylebox_override("panel", bg_style)
 	main_container.add_child(bg_panel)
@@ -97,13 +97,13 @@ var h_split = HSplitContainer.new()
 	_setup_navigation_sidebar(h_split)
 
 	# Right side split (center + right panel)
-var right_split = HSplitContainer.new()
+# FIXED: Orphaned code - var right_split = HSplitContainer.new()
 	right_split.split_offset = -320  # Right panel width from right edge
 	h_split.add_child(right_split)
 
 	# Center Panel - Workspace
 var center_panel = Panel.new()
-var center_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var center_style = StyleBoxFlat.new()
 	center_style.bg_color = Color("#0f0f0f")
 	center_panel.add_theme_stylebox_override("panel", center_style)
 	right_split.add_child(center_panel)
@@ -127,10 +127,10 @@ var header_style = StyleBoxFlat.new()
 	header_container.add_theme_stylebox_override("panel", header_style)
 	workspace_vbox.add_child(header_container)
 
-var header_hbox = HBoxContainer.new()
+# FIXED: Orphaned code - var header_hbox = HBoxContainer.new()
 	header_container.add_child(header_hbox)
 
-var workspace_title = Label.new()
+# FIXED: Orphaned code - var workspace_title = Label.new()
 	workspace_title.text = "Neural Visualization Workspace"
 	workspace_title.add_theme_font_size_override("font_size", 20)
 	header_hbox.add_child(workspace_title)
@@ -144,7 +144,7 @@ var spacer = Control.new()
 var live_button = Button.new()
 	live_button.text = "Live"
 	live_button.custom_minimum_size = Vector2(80, 32)
-var live_style_normal = StyleBoxFlat.new()
+# FIXED: Orphaned code - var live_style_normal = StyleBoxFlat.new()
 	live_style_normal.bg_color = Color("#26d0ce")
 	live_style_normal.corner_radius_top_left = 6
 	live_style_normal.corner_radius_top_right = 6
@@ -156,7 +156,7 @@ var live_style_normal = StyleBoxFlat.new()
 	"font",
 	(
 	preload("res://assets/fonts/Inter-Bold.ttf")
-var viewport_container = Panel.new()
+# FIXED: Orphaned code - var viewport_container = Panel.new()
 	viewport_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 var viewport_style = StyleBoxFlat.new()
 	viewport_style.bg_color = Color("#050505")
@@ -177,11 +177,11 @@ var input_panel_style = StyleBoxFlat.new()
 	input_container.add_theme_stylebox_override("panel", input_panel_style)
 	workspace_vbox.add_child(input_container)
 
-var input_hbox = HBoxContainer.new()
+# FIXED: Orphaned code - var input_hbox = HBoxContainer.new()
 	input_hbox.add_theme_constant_override("separation", 12)
 	input_container.add_child(input_hbox)
 
-var input_field = LineEdit.new()
+# FIXED: Orphaned code - var input_field = LineEdit.new()
 	input_field.placeholder_text = "Describe what you want to analyze or visualize..."
 	input_field.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	input_hbox.add_child(input_field)
@@ -206,7 +206,7 @@ var tools_vbox = VBoxContainer.new()
 	tools_vbox.add_theme_constant_override("separation", 24)
 	tools_panel.add_child(tools_vbox)
 
-var tools_header = Label.new()
+# FIXED: Orphaned code - var tools_header = Label.new()
 	tools_header.text = "Workspace Tools"
 	tools_header.add_theme_font_size_override("font_size", 18)
 	tools_vbox.add_child(tools_header)
@@ -224,9 +224,9 @@ var tools_header = Label.new()
 	# Export section
 	_create_tools_section(tools_vbox, "EXPORT", ["Images", "Video", "Reports"])
 
-var sidebar_scene = load("res://ui/components/navigation/NavigationSidebar.tscn")
-var sidebar_script = preprepreload("res://ui/components/navigation/NavigationSidebar.gd")
-var section_data = navigation_sections[section_id]
+# FIXED: Orphaned code - var sidebar_scene = load("res://ui/components/navigation/NavigationSidebar.tscn")
+# FIXED: Orphaned code - var sidebar_script = preload("res://ui/components/navigation/NavigationSidebar.gd")
+# FIXED: Orphaned code - var section_data = navigation_sections[section_id]
 
 # Add section
 	navigation_sidebar.add_section(section_id, section_data.title, section_data.icon)
@@ -258,7 +258,7 @@ var item_container = HBoxContainer.new()
 	# Icon placeholder
 var icon = Panel.new()
 	icon.custom_minimum_size = Vector2(20, 20)
-var icon_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var icon_style = StyleBoxFlat.new()
 	icon_style.bg_color = Color("#333333")
 	icon_style.corner_radius_top_left = 4
 	icon_style.corner_radius_top_right = 4
@@ -281,60 +281,52 @@ func _ready() -> void:
 
 	# Create main window with dark theme
 
-func _fix_orphaned_code():
-	if NeuroVisDarkTheme and NeuroVisDarkTheme.has_method("apply_to_node"):
-		NeuroVisDarkTheme.apply_to_node(main_container)
+if NeuroVisDarkTheme and NeuroVisDarkTheme.has_method("apply_to_node"):
+	NeuroVisDarkTheme.apply_to_node(main_container)
 
-		# Set dark background
-func _fix_orphaned_code():
-	if ResourceLoader.exists("res://assets/fonts/Inter-Bold.ttf")
-	else null
-	)
-	)
-	header_hbox.add_child(live_button)
+	# Set dark background
+if ResourceLoader.exists("res://assets/fonts/Inter-Bold.ttf")
+else null
+)
+)
+header_hbox.add_child(live_button)
 
-	# 3D Viewport area (placeholder)
-func _fix_orphaned_code():
-	print("UI Transformation Demo loaded! Check the running window.")
+# 3D Viewport area (placeholder)
+print("UI Transformation Demo loaded! Check the running window.")
 
 
-func _fix_orphaned_code():
-	if sidebar_scene:
-		navigation_sidebar = sidebar_scene.instantiate()
-		else:
-			# Fallback to creating instance directly
-func _fix_orphaned_code():
-	if sidebar_script:
-		navigation_sidebar = sidebar_script.new()
-		else:
-			push_error("[UI Transformation] Failed to load NavigationSidebar script")
-			return
+if sidebar_scene:
+	navigation_sidebar = sidebar_scene.instantiate()
+	else:
+		# Fallback to creating instance directly
+if sidebar_script:
+	navigation_sidebar = sidebar_script.new()
+	else:
+		push_error("[UI Transformation] Failed to load NavigationSidebar script")
+		return
 
-			# Configure sidebar
-			navigation_sidebar.name = "NavigationSidebar"
-			navigation_sidebar.custom_minimum_size.x = 260
-			navigation_sidebar.anchor_bottom = 1.0
-			navigation_sidebar.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		# Configure sidebar
+		navigation_sidebar.name = "NavigationSidebar"
+		navigation_sidebar.custom_minimum_size.x = 260
+		navigation_sidebar.anchor_bottom = 1.0
+		navigation_sidebar.size_flags_vertical = Control.SIZE_EXPAND_FILL
 
-			# Add to parent
-			parent_node.add_child(navigation_sidebar)
+		# Add to parent
+		parent_node.add_child(navigation_sidebar)
 
-			# Add sections and items
-			for section_id in navigation_sections:
-func _fix_orphaned_code():
-	for item_id in section_data.items:
-func _fix_orphaned_code():
-	if navigation_sidebar.has_signal("item_selected"):
-		navigation_sidebar.item_selected.connect(_on_navigation_item_selected)
+		# Add sections and items
+		for section_id in navigation_sections:
+for item_id in section_data.items:
+if navigation_sidebar.has_signal("item_selected"):
+	navigation_sidebar.item_selected.connect(_on_navigation_item_selected)
 
-		if navigation_sidebar.has_signal("section_toggled"):
-			navigation_sidebar.section_toggled.connect(_on_navigation_section_toggled)
+	if navigation_sidebar.has_signal("section_toggled"):
+		navigation_sidebar.section_toggled.connect(_on_navigation_section_toggled)
 
-			print("[UI Transformation] Navigation sidebar setup complete")
+		print("[UI Transformation] Navigation sidebar setup complete")
 
 
-func _fix_orphaned_code():
-	for item in items:
+for item in items:
 func _setup_navigation_sidebar(parent_node: Node) -> void:
 	"""Setup the navigation sidebar with sections and items"""
 	print("[UI Transformation] Setting up navigation sidebar...")

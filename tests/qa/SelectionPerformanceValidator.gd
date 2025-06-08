@@ -128,13 +128,13 @@ var selection_pass = _results["avg_selection_time"] < MAX_SELECTION_TIME_MS
 var memory_pass = (_results["memory_end"] - _results["memory_start"]) < 50 * 1048576  # 50MB limit
 
 var timestamp = Time.get_datetime_string_from_system().replace(" ", "_").replace(":", "-")
-var file_path = "user://selection_performance_%s.md" % timestamp
+# FIXED: Orphaned code - var file_path = "user://selection_performance_%s.md" % timestamp
 
 var file = FileAccess.open(file_path, FileAccess.WRITE)
-var project_path = "res://test_reports/selection_performance_%s.md" % timestamp
+# FIXED: Orphaned code - var project_path = "res://test_reports/selection_performance_%s.md" % timestamp
 var project_file = FileAccess.open(project_path, FileAccess.WRITE)
 
-var _is_testing: bool = false
+# FIXED: Orphaned code - var _is_testing: bool = false
 var _test_start_time: int = 0
 var _frame_times: Array[float] = []
 var _selection_times: Array[float] = []
@@ -222,97 +222,85 @@ func get_test_progress() -> float:
 	if not _is_testing:
 		return 0.0
 
-func _fix_orphaned_code():
-	return min(elapsed / TEST_DURATION_SECONDS * 100.0, 100.0)
+return min(elapsed / TEST_DURATION_SECONDS * 100.0, 100.0)
 
 
-	# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if fps < TARGET_FPS * 0.9:  # 10% tolerance
-	_results["fps_drops"] += 1
+# === PRIVATE METHODS ===
+if fps < TARGET_FPS * 0.9:  # 10% tolerance
+_results["fps_drops"] += 1
 
-	# Sample memory periodically
-func _fix_orphaned_code():
-	if int(elapsed * SAMPLES_PER_SECOND) > _memory_samples.size():
-func _fix_orphaned_code():
-	if elapsed >= TEST_DURATION_SECONDS:
-		_complete_test()
+# Sample memory periodically
+if int(elapsed * SAMPLES_PER_SECOND) > _memory_samples.size():
+if elapsed >= TEST_DURATION_SECONDS:
+	_complete_test()
 
 
-func _fix_orphaned_code():
-	for i in range(int(TEST_DURATION_SECONDS * 2)):  # 2 selections per second
-	if not _is_testing:
-		break
+for i in range(int(TEST_DURATION_SECONDS * 2)):  # 2 selections per second
+if not _is_testing:
+	break
 
-func _fix_orphaned_code():
-	if _selection_manager.has_method("handle_selection_at_position"):
-		_selection_manager.handle_selection_at_position(position)
+if _selection_manager.has_method("handle_selection_at_position"):
+	_selection_manager.handle_selection_at_position(position)
 
-		# Measure time
-func _fix_orphaned_code():
-	if _selection_manager.has_method("handle_hover_at_position"):
-func _fix_orphaned_code():
-	for hover_pos in hover_positions:
-		_selection_manager.handle_hover_at_position(hover_pos)
-		await _main_scene.get_tree().create_timer(0.05).timeout
+	# Measure time
+if _selection_manager.has_method("handle_hover_at_position"):
+for hover_pos in hover_positions:
+	_selection_manager.handle_hover_at_position(hover_pos)
+	await _main_scene.get_tree().create_timer(0.05).timeout
 
 
-func _fix_orphaned_code():
-	for value in values:
-		sum += value
+for value in values:
+	sum += value
 
-		return sum / values.size()
+	return sum / values.size()
 
 
-func _fix_orphaned_code():
-	if fps_pass and selection_pass and memory_pass:
-		report += "### ✅ ALL PERFORMANCE TARGETS MET\n"
-		report += "The enhanced selection system maintains target performance.\n"
-		else:
-			report += "### ⚠️ PERFORMANCE ISSUES DETECTED\n"
-			if not fps_pass:
+if fps_pass and selection_pass and memory_pass:
+	report += "### ✅ ALL PERFORMANCE TARGETS MET\n"
+	report += "The enhanced selection system maintains target performance.\n"
+	else:
+		report += "### ⚠️ PERFORMANCE ISSUES DETECTED\n"
+		if not fps_pass:
+			report += (
+			"- Frame rate below target (%.1f < %.1f FPS)\n" % [_results["avg_fps"], TARGET_FPS]
+			)
+			if not selection_pass:
 				report += (
-				"- Frame rate below target (%.1f < %.1f FPS)\n" % [_results["avg_fps"], TARGET_FPS]
+				"- Selection response time too high (%.2fms > %.2fms)\n"
+				% [_results["avg_selection_time"], MAX_SELECTION_TIME_MS]
 				)
-				if not selection_pass:
+				if not memory_pass:
 					report += (
-					"- Selection response time too high (%.2fms > %.2fms)\n"
-					% [_results["avg_selection_time"], MAX_SELECTION_TIME_MS]
+					"- Excessive memory usage (%.1f MB increase)\n"
+					% ((_results["memory_end"] - _results["memory_start"]) / 1048576.0)
 					)
-					if not memory_pass:
-						report += (
-						"- Excessive memory usage (%.1f MB increase)\n"
-						% ((_results["memory_end"] - _results["memory_start"]) / 1048576.0)
-						)
 
-						# Recommendations
-						report += "\n## Recommendations\n"
+					# Recommendations
+					report += "\n## Recommendations\n"
 
-						if _results["fps_drops"] > 5:
-							report += "- Consider reducing multi-ray sample count for better performance\n"
+					if _results["fps_drops"] > 5:
+						report += "- Consider reducing multi-ray sample count for better performance\n"
 
-							if _results["max_selection_time"] > 20.0:
-								report += "- Optimize structure size calculations or implement caching\n"
+						if _results["max_selection_time"] > 20.0:
+							report += "- Optimize structure size calculations or implement caching\n"
 
-								if _results["avg_selection_time"] > 10.0:
-									report += "- Consider spatial partitioning for ray queries\n"
+							if _results["avg_selection_time"] > 10.0:
+								report += "- Consider spatial partitioning for ray queries\n"
 
-									# Save report
-									_save_report(report)
+								# Save report
+								_save_report(report)
 
 
-func _fix_orphaned_code():
-	if file:
-		file.store_string(report_content)
-		file.close()
-		print("[PerfValidator] Report saved to: %s" % file_path)
+if file:
+	file.store_string(report_content)
+	file.close()
+	print("[PerfValidator] Report saved to: %s" % file_path)
 
-		# Also save to project directory
-func _fix_orphaned_code():
-	if project_file:
-		project_file.store_string(report_content)
-		project_file.close()
-		print("[PerfValidator] Report also saved to: %s" % project_path)
+	# Also save to project directory
+if project_file:
+	project_file.store_string(report_content)
+	project_file.close()
+	print("[PerfValidator] Report also saved to: %s" % project_path)
 
 func _run_test_sequence() -> void:
 	"""Run automated selection test sequence"""

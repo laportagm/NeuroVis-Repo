@@ -18,20 +18,18 @@ extends Node
 var bookmark_text = " ⭐" if bookmarked else ""
 var structure_data = KnowledgeService.get_structure(structure_id)
 
-func _fix_orphaned_code():
-	if UIThemeManager:
-		UIThemeManager.animate_fade_text_change(
-		object_name_label, "Selected: " + structure_id + bookmark_text
-		)
+if UIThemeManager:
+	UIThemeManager.animate_fade_text_change(
+	object_name_label, "Selected: " + structure_id + bookmark_text
+	)
 
 
-func _fix_orphaned_code():
-	if structure_data.is_empty():
-		push_warning("[EnhancedSignalHandlers] No data found for structure: " + structure_id)
-		return
+if structure_data.is_empty():
+	push_warning("[EnhancedSignalHandlers] No data found for structure: " + structure_id)
+	return
 
-		# TODO: Trigger proper structure selection and display
-		print("[EnhancedSignalHandlers] Displaying info for: " + structure_id)
+	# TODO: Trigger proper structure selection and display
+	print("[EnhancedSignalHandlers] Displaying info for: " + structure_id)
 
 
 func _setup_enhanced_ui_connections() -> void:

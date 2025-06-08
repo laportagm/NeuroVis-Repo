@@ -44,25 +44,24 @@ func start_benchmark() -> void:
 	benchmark_tool.start_full_benchmark()
 
 
-func _fix_orphaned_code():
-	if summary.has("average_fps"):
-		print("  Average FPS: %.2f" % summary.average_fps)
+if summary.has("average_fps"):
+	print("  Average FPS: %.2f" % summary.average_fps)
 
-		if summary.has("model_loading_time"):
-			print("  Model Loading Time: %.2f seconds" % summary.model_loading_time)
+	if summary.has("model_loading_time"):
+		print("  Model Loading Time: %.2f seconds" % summary.model_loading_time)
 
-			if summary.has("peak_memory_mb"):
-				print("  Peak Memory Usage: %.2f MB" % summary.peak_memory_mb)
+		if summary.has("peak_memory_mb"):
+			print("  Peak Memory Usage: %.2f MB" % summary.peak_memory_mb)
 
-				if summary.has("selection_response_time"):
-					print("  Selection Response Time: %.2f ms" % (summary.selection_response_time * 1000))
+			if summary.has("selection_response_time"):
+				print("  Selection Response Time: %.2f ms" % (summary.selection_response_time * 1000))
 
-					print("\nResults saved to: " + benchmark_tool.results_save_path)
+				print("\nResults saved to: " + benchmark_tool.results_save_path)
 
-					# Optional: Add to scene tree to visualize results
-					# var results_display = ResultsDisplay.new()
-					# results_display.display_results(results)
-					# add_child(results_display)
+				# Optional: Add to scene tree to visualize results
+				# var results_display = ResultsDisplay.new()
+				# results_display.display_results(results)
+				# add_child(results_display)
 
 func _on_benchmark_progress(progress: float, message: String) -> void:
 	print("RenderingBenchmark Runner: Progress %.1f%% - %s" % [progress * 100, message])

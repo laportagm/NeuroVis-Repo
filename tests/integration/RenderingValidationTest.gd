@@ -50,7 +50,7 @@ var is_testing: bool = false
 
 # === PRIVATE VARIABLES ===
 var dir = DirAccess.open("user://")
-var valid_tests = [
+# FIXED: Orphaned code - var valid_tests = [
 "baseline_performance",
 "material_quality",
 "lighting_setup",
@@ -64,10 +64,10 @@ var valid_tests = [
 
 var save_path = custom_path
 var file = FileAccess.open(save_path, FileAccess.WRITE)
-var missing_tools = []
+# FIXED: Orphaned code - var missing_tools = []
 var nodes = get_tree().get_nodes_in_group("rendering_tools")
-var all_nodes = get_tree().get_nodes_in_group("_all")
-var progress_label = Label.new()
+# FIXED: Orphaned code - var all_nodes = get_tree().get_nodes_in_group("_all")
+# FIXED: Orphaned code - var progress_label = Label.new()
 progress_label.name = "ProgressLabel"
 progress_label.text = "Rendering Validation Tests"
 progress_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -91,7 +91,7 @@ _test_ui.add_child(progress_bar)
 _test_ui.visible = false
 
 var progress_label_2 = _test_ui.get_node("ProgressLabel")
-var progress_bar_2 = _test_ui.get_node("ProgressBar")
+# FIXED: Orphaned code - var progress_bar_2 = _test_ui.get_node("ProgressBar")
 
 progress_label.text = "Test " + str(_test_counter) + "/" + str(_total_tests) + ": " + _current_test
 progress_bar.value = ((_test_counter - 1) / float(_total_tests)) * 100
@@ -105,7 +105,7 @@ var test_results_2 = {}
 # Common metrics for all tests
 test_results["frame_count"] = _frame_times.size()
 
-var total_time = 0.0
+# FIXED: Orphaned code - var total_time = 0.0
 var current_memory = Performance.get_monitor(Performance.MEMORY_STATIC) + Performance.get_monitor(Performance.MEMORY_DYNAMIC)
 test_results["memory_usage"] = current_memory
 
@@ -137,7 +137,7 @@ results["summary"] = summary
 
 var test_meshes = _find_test_meshes()
 
-var mesh = test_meshes[i]
+# FIXED: Orphaned code - var mesh = test_meshes[i]
 var view_index = 0
 var view_timer = Timer.new()
 add_child(view_timer)
@@ -155,8 +155,8 @@ var views = [0, 1, 4, 6]  # Different anatomical views
 	# Start timer
 	_test_timer.start(TEST_DURATION)
 
-var test_meshes_2 = _find_test_meshes()
-var transition_timer = Timer.new()
+# FIXED: Orphaned code - var test_meshes_2 = _find_test_meshes()
+# FIXED: Orphaned code - var transition_timer = Timer.new()
 	add_child(transition_timer)
 	transition_timer.wait_time = TEST_DURATION / 4.0
 
@@ -171,7 +171,7 @@ var mesh_instances = []
 # Find mesh instances in scene
 	_find_mesh_instances(get_tree().root, mesh_instances)
 
-var image = get_viewport().get_texture().get_image()
+# FIXED: Orphaned code - var image = get_viewport().get_texture().get_image()
 	_baseline_screenshot = image
 
 var assessment = {}
@@ -179,18 +179,18 @@ var assessment = {}
 # Check if material library is available
 var assessment_2 = {}
 
-var assessment_3 = {}
+# FIXED: Orphaned code - var assessment_3 = {}
 
-var assessment_4 = {}
+# FIXED: Orphaned code - var assessment_4 = {}
 
-var assessment_5 = {}
+# FIXED: Orphaned code - var assessment_5 = {}
 
-var assessment_6 = {}
+# FIXED: Orphaned code - var assessment_6 = {}
 
-var assessment_7 = {}
+# FIXED: Orphaned code - var assessment_7 = {}
 
-var final_memory = Performance.get_monitor(Performance.MEMORY_STATIC) + Performance.get_monitor(Performance.MEMORY_DYNAMIC)
-var memory_difference = final_memory - _memory_baseline
+# FIXED: Orphaned code - var final_memory = Performance.get_monitor(Performance.MEMORY_STATIC) + Performance.get_monitor(Performance.MEMORY_DYNAMIC)
+# FIXED: Orphaned code - var memory_difference = final_memory - _memory_baseline
 
 	assessment["memory_difference"] = memory_difference
 	assessment["memory_difference_percent"] = (memory_difference / _memory_baseline) * 100
@@ -214,7 +214,7 @@ var _medical_camera: Node
 var _test_ui: Control
 var _initialized: bool = false
 var _test_objects: Dictionary = {}
-var _baseline_screenshot: Image
+# FIXED: Orphaned code - var _baseline_screenshot: Image
 
 # === LIFECYCLE METHODS ===
 
@@ -286,397 +286,369 @@ func generate_test_report(custom_path: String = "") -> String:
 		push_warning("[RenderingValidationTest] No test results to report")
 		return ""
 
-func _fix_orphaned_code():
-	if dir:
-		if not dir.dir_exists("test_reports"):
-			dir.make_dir("test_reports")
+if dir:
+	if not dir.dir_exists("test_reports"):
+		dir.make_dir("test_reports")
 
-			_initialized = true
-			print("[RenderingValidationTest] Initialized")
+		_initialized = true
+		print("[RenderingValidationTest] Initialized")
 
-func _fix_orphaned_code():
-	if not test_name in valid_tests:
-		push_warning("[RenderingValidationTest] Invalid test name: " + test_name)
-		return false
+if not test_name in valid_tests:
+	push_warning("[RenderingValidationTest] Invalid test name: " + test_name)
+	return false
 
-		# Reset results
-		results = {
-		"timestamp": Time.get_datetime_string_from_system(),
-		"tests": {},
-		"summary": {}
-		}
+	# Reset results
+	results = {
+	"timestamp": Time.get_datetime_string_from_system(),
+	"tests": {},
+	"summary": {}
+	}
 
-		# Set up test queue with just this test
-		_test_queue = [test_name]
-		_total_tests = 1
-		_test_counter = 0
+	# Set up test queue with just this test
+	_test_queue = [test_name]
+	_total_tests = 1
+	_test_counter = 0
 
-		# Start testing
-		is_testing = true
-		_frame_times.clear()
-		_start_next_test()
-
-		return true
-
-		## Generate a test report
-		## @param custom_path: String optional custom save path
-		## @returns: String path to the generated report
-func _fix_orphaned_code():
-	if save_path.is_empty():
-		save_path = report_path + "rendering_test_" + Time.get_datetime_string_from_system().replace(":", "-") + ".json"
-
-func _fix_orphaned_code():
-	if file == null:
-		push_error("[RenderingValidationTest] Failed to open file for writing: " + save_path)
-		return ""
-
-		file.store_string(JSON.stringify(results, "  "))
-		file.close()
-
-		print("[RenderingValidationTest] Test report saved to: " + save_path)
-		return save_path
-
-		# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if not _benchmark_tool:
-		missing_tools.append("RenderingBenchmark")
-		if not _optimization_tool:
-			missing_tools.append("RenderingOptimizer")
-			if not _material_library:
-				missing_tools.append("MaterialLibrary")
-				if not _lod_manager:
-					missing_tools.append("LODManager")
-					if not _selection_visualizer:
-						missing_tools.append("SelectionVisualizer")
-						if not _medical_lighting:
-							missing_tools.append("MedicalLighting")
-							if not _medical_camera:
-								missing_tools.append("MedicalCameraController")
-
-								if not missing_tools.is_empty():
-									push_warning("[RenderingValidationTest] Some components missing: " + ", ".join(missing_tools))
-
-func _fix_orphaned_code():
-	for node in nodes:
-		if node.get_class() == class_name or node.is_class(class_name):
-			return node
-
-			# Find by type in entire scene (slower, but thorough)
-func _fix_orphaned_code():
-	for node in all_nodes:
-		if node.get_class() == class_name or node.is_class(class_name):
-			return node
-
-			# Not found
-			return null
-
-func _fix_orphaned_code():
-	if _current_test == "baseline_performance":
-		_take_baseline_screenshot()
-
-		# Initialize specific test
-		print("[RenderingValidationTest] Starting test: " + _current_test)
-
-		match _current_test:
-			"baseline_performance":
-				_start_baseline_performance_test()
-				"material_quality":
-					_start_material_quality_test()
-					"lighting_setup":
-						_start_lighting_setup_test()
-						"lod_system":
-							_start_lod_system_test()
-							"selection_visualization":
-								_start_selection_visualization_test()
-								"camera_presets":
-									_start_camera_presets_test()
-									"optimization_techniques":
-										_start_optimization_techniques_test()
-										"combined_systems":
-											_start_combined_systems_test()
-											"cross_scene_stability":
-												_start_cross_scene_stability_test()
-
-												# Emit progress signal
-												test_progress.emit(_current_test, float(_test_counter - 1) / _total_tests)
-
-func _fix_orphaned_code():
-	print("[RenderingValidationTest] Completed test: " + _current_test)
-	test_progress.emit(_current_test, float(_test_counter) / _total_tests)
-
-	# Start next test
+	# Start testing
+	is_testing = true
+	_frame_times.clear()
 	_start_next_test()
 
-func _fix_orphaned_code():
-	if not _frame_times.is_empty():
-func _fix_orphaned_code():
-	for time in _frame_times:
-		total_time += time
+	return true
 
-		test_results["average_fps"] = _frame_times.size() / total_time
-		test_results["min_fps"] = 1.0 / _frame_times.max()
-		test_results["max_fps"] = 1.0 / _frame_times.min()
-		test_results["frame_time_stability"] = _calculate_frame_stability()
+	## Generate a test report
+	## @param custom_path: String optional custom save path
+	## @returns: String path to the generated report
+if save_path.is_empty():
+	save_path = report_path + "rendering_test_" + Time.get_datetime_string_from_system().replace(":", "-") + ".json"
 
-		# Get memory usage
-func _fix_orphaned_code():
-	if _memory_baseline > 0:
-		test_results["memory_change_percent"] = ((current_memory - _memory_baseline) / _memory_baseline) * 100
+if file == null:
+	push_error("[RenderingValidationTest] Failed to open file for writing: " + save_path)
+	return ""
 
-		# Test-specific metrics
-		match _current_test:
-			"baseline_performance":
-				_memory_baseline = current_memory  # Set baseline for future tests
+	file.store_string(JSON.stringify(results, "  "))
+	file.close()
 
-				# Get draw calls
-				test_results["draw_calls"] = Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
-				test_results["render_time"] = Performance.get_monitor(Performance.RENDER_TOTAL_RENDER_TIME)
+	print("[RenderingValidationTest] Test report saved to: " + save_path)
+	return save_path
 
-				# Store as baseline for other tests
-				results["baseline"] = {
-				"fps": test_results.get("average_fps", 0),
-				"memory": current_memory,
-				"draw_calls": test_results.get("draw_calls", 0),
-				"render_time": test_results.get("render_time", 0)
-				}
+	# === PRIVATE METHODS ===
+if not _benchmark_tool:
+	missing_tools.append("RenderingBenchmark")
+	if not _optimization_tool:
+		missing_tools.append("RenderingOptimizer")
+		if not _material_library:
+			missing_tools.append("MaterialLibrary")
+			if not _lod_manager:
+				missing_tools.append("LODManager")
+				if not _selection_visualizer:
+					missing_tools.append("SelectionVisualizer")
+					if not _medical_lighting:
+						missing_tools.append("MedicalLighting")
+						if not _medical_camera:
+							missing_tools.append("MedicalCameraController")
 
-				"material_quality":
-					# Compare with baseline
-					if results.has("baseline"):
-						test_results["fps_change_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
-						test_results["draw_calls_change"] = Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME) - results.baseline.draw_calls
+							if not missing_tools.is_empty():
+								push_warning("[RenderingValidationTest] Some components missing: " + ", ".join(missing_tools))
 
-						# Visual quality assessment
-						test_results["visual_quality_score"] = _assess_visual_quality()
-						test_results["material_quality_assessment"] = _assess_material_quality()
+for node in nodes:
+	if node.get_class() == class_name or node.is_class(class_name):
+		return node
 
-						"lighting_setup":
-							# Lighting quality metrics
-							test_results["lighting_quality_score"] = _assess_lighting_quality()
+		# Find by type in entire scene (slower, but thorough)
+for node in all_nodes:
+	if node.get_class() == class_name or node.is_class(class_name):
+		return node
 
-							# Performance impact
-							if results.has("baseline"):
-								test_results["fps_impact_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+		# Not found
+		return null
 
-								test_results["lighting_scenarios_tested"] = ["standard", "clinical", "educational"]
-								test_results["lighting_flexibility_score"] = 0.9  # Placeholder value
+if _current_test == "baseline_performance":
+	_take_baseline_screenshot()
 
-								"lod_system":
-									# LOD performance metrics
-									test_results["lod_transition_smoothness"] = _assess_lod_transition()
-									test_results["lod_performance_scaling"] = _assess_lod_performance_scaling()
+	# Initialize specific test
+	print("[RenderingValidationTest] Starting test: " + _current_test)
 
-									if results.has("baseline"):
-										test_results["fps_improvement_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+	match _current_test:
+		"baseline_performance":
+			_start_baseline_performance_test()
+			"material_quality":
+				_start_material_quality_test()
+				"lighting_setup":
+					_start_lighting_setup_test()
+					"lod_system":
+						_start_lod_system_test()
+						"selection_visualization":
+							_start_selection_visualization_test()
+							"camera_presets":
+								_start_camera_presets_test()
+								"optimization_techniques":
+									_start_optimization_techniques_test()
+									"combined_systems":
+										_start_combined_systems_test()
+										"cross_scene_stability":
+											_start_cross_scene_stability_test()
 
-										test_results["memory_efficiency_score"] = 0.85  # Placeholder value
+											# Emit progress signal
+											test_progress.emit(_current_test, float(_test_counter - 1) / _total_tests)
 
-										"selection_visualization":
-											# Selection visualization metrics
-											test_results["selection_quality_score"] = _assess_selection_quality()
-											test_results["selection_performance_impact"] = _assess_selection_performance()
+print("[RenderingValidationTest] Completed test: " + _current_test)
+test_progress.emit(_current_test, float(_test_counter) / _total_tests)
 
-											if results.has("baseline"):
-												test_results["fps_impact_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+# Start next test
+_start_next_test()
 
-												"camera_presets":
-													# Camera metrics
-													test_results["camera_transition_smoothness"] = _assess_camera_transitions()
-													test_results["preset_accuracy_score"] = 0.95  # Placeholder value
+if not _frame_times.is_empty():
+for time in _frame_times:
+	total_time += time
 
-													if results.has("baseline"):
-														test_results["fps_impact_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+	test_results["average_fps"] = _frame_times.size() / total_time
+	test_results["min_fps"] = 1.0 / _frame_times.max()
+	test_results["max_fps"] = 1.0 / _frame_times.min()
+	test_results["frame_time_stability"] = _calculate_frame_stability()
 
-														"optimization_techniques":
-															# Optimization metrics
-															test_results["frustum_culling_effectiveness"] = _assess_frustum_culling()
-															test_results["occlusion_culling_effectiveness"] = _assess_occlusion_culling()
-															test_results["material_batching_effectiveness"] = _assess_material_batching()
+	# Get memory usage
+if _memory_baseline > 0:
+	test_results["memory_change_percent"] = ((current_memory - _memory_baseline) / _memory_baseline) * 100
 
-															if results.has("baseline"):
-																test_results["fps_improvement_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
-																test_results["draw_calls_reduction_percent"] = ((Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME) - results.baseline.draw_calls) / results.baseline.draw_calls) * 100
+	# Test-specific metrics
+	match _current_test:
+		"baseline_performance":
+			_memory_baseline = current_memory  # Set baseline for future tests
 
-																"combined_systems":
-																	# Combined systems metrics
-																	test_results["system_synergy_score"] = _assess_system_synergy()
+			# Get draw calls
+			test_results["draw_calls"] = Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+			test_results["render_time"] = Performance.get_monitor(Performance.RENDER_TOTAL_RENDER_TIME)
 
-																	if results.has("baseline"):
-																		test_results["fps_improvement_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
-																		test_results["quality_impact_score"] = _assess_quality_impact()
+			# Store as baseline for other tests
+			results["baseline"] = {
+			"fps": test_results.get("average_fps", 0),
+			"memory": current_memory,
+			"draw_calls": test_results.get("draw_calls", 0),
+			"render_time": test_results.get("render_time", 0)
+			}
 
-																		"cross_scene_stability":
-																			# Stability metrics
-																			test_results["scene_transition_stability"] = _assess_scene_transition_stability()
-																			test_results["memory_leak_assessment"] = _assess_memory_leak()
+			"material_quality":
+				# Compare with baseline
+				if results.has("baseline"):
+					test_results["fps_change_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+					test_results["draw_calls_change"] = Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME) - results.baseline.draw_calls
 
-																			if results.has("baseline"):
-																				test_results["fps_stability_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+					# Visual quality assessment
+					test_results["visual_quality_score"] = _assess_visual_quality()
+					test_results["material_quality_assessment"] = _assess_material_quality()
 
-																				# Clear frame times for next test
-																				_frame_times.clear()
+					"lighting_setup":
+						# Lighting quality metrics
+						test_results["lighting_quality_score"] = _assess_lighting_quality()
 
-																				return test_results
+						# Performance impact
+						if results.has("baseline"):
+							test_results["fps_impact_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
 
-func _fix_orphaned_code():
-	for time in _frame_times:
-		avg_time += time
-		avg_time /= _frame_times.size()
+							test_results["lighting_scenarios_tested"] = ["standard", "clinical", "educational"]
+							test_results["lighting_flexibility_score"] = 0.9  # Placeholder value
 
-func _fix_orphaned_code():
-	for time in _frame_times:
-		variance += pow(time - avg_time, 2)
-		variance /= _frame_times.size()
+							"lod_system":
+								# LOD performance metrics
+								test_results["lod_transition_smoothness"] = _assess_lod_transition()
+								test_results["lod_performance_scaling"] = _assess_lod_performance_scaling()
 
-		return sqrt(variance) / avg_time
+								if results.has("baseline"):
+									test_results["fps_improvement_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
 
-func _fix_orphaned_code():
-	for test_name in results.tests:
-func _fix_orphaned_code():
-	if test_data.has("average_fps"):
-		total_fps += test_data.average_fps
-		test_count += 1
+									test_results["memory_efficiency_score"] = 0.85  # Placeholder value
 
-		if test_data.has("memory_change_percent"):
-			total_memory_impact += test_data.memory_change_percent
+									"selection_visualization":
+										# Selection visualization metrics
+										test_results["selection_quality_score"] = _assess_selection_quality()
+										test_results["selection_performance_impact"] = _assess_selection_performance()
 
-			if test_data.has("visual_quality_score"):
-				total_visual_quality += test_data.visual_quality_score
-				visual_quality_count += 1
+										if results.has("baseline"):
+											test_results["fps_impact_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
 
-				if test_count > 0:
-					summary["average_fps"] = total_fps / test_count
+											"camera_presets":
+												# Camera metrics
+												test_results["camera_transition_smoothness"] = _assess_camera_transitions()
+												test_results["preset_accuracy_score"] = 0.95  # Placeholder value
 
-					if results.tests.size() > 0:
-						summary["average_memory_impact"] = total_memory_impact / results.tests.size()
+												if results.has("baseline"):
+													test_results["fps_impact_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
 
-						if visual_quality_count > 0:
-							summary["average_visual_quality"] = total_visual_quality / visual_quality_count
+													"optimization_techniques":
+														# Optimization metrics
+														test_results["frustum_culling_effectiveness"] = _assess_frustum_culling()
+														test_results["occlusion_culling_effectiveness"] = _assess_occlusion_culling()
+														test_results["material_batching_effectiveness"] = _assess_material_batching()
 
-							# Overall success metrics
-func _fix_orphaned_code():
-	if not test_meshes.is_empty():
-		# Highlight a few test meshes
-		for i in range(min(3, test_meshes.size())):
-func _fix_orphaned_code():
-	if _selection_visualizer.has_method("highlight_structure"):
-		_selection_visualizer.highlight_structure(mesh, "test_structure_" + str(i), true, i)
+														if results.has("baseline"):
+															test_results["fps_improvement_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+															test_results["draw_calls_reduction_percent"] = ((Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME) - results.baseline.draw_calls) / results.baseline.draw_calls) * 100
+
+															"combined_systems":
+																# Combined systems metrics
+																test_results["system_synergy_score"] = _assess_system_synergy()
+
+																if results.has("baseline"):
+																	test_results["fps_improvement_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+																	test_results["quality_impact_score"] = _assess_quality_impact()
+
+																	"cross_scene_stability":
+																		# Stability metrics
+																		test_results["scene_transition_stability"] = _assess_scene_transition_stability()
+																		test_results["memory_leak_assessment"] = _assess_memory_leak()
+
+																		if results.has("baseline"):
+																			test_results["fps_stability_percent"] = ((test_results.get("average_fps", 0) - results.baseline.fps) / results.baseline.fps) * 100
+
+																			# Clear frame times for next test
+																			_frame_times.clear()
+
+																			return test_results
+
+for time in _frame_times:
+	avg_time += time
+	avg_time /= _frame_times.size()
+
+for time in _frame_times:
+	variance += pow(time - avg_time, 2)
+	variance /= _frame_times.size()
+
+	return sqrt(variance) / avg_time
+
+for test_name in results.tests:
+if test_data.has("average_fps"):
+	total_fps += test_data.average_fps
+	test_count += 1
+
+	if test_data.has("memory_change_percent"):
+		total_memory_impact += test_data.memory_change_percent
+
+		if test_data.has("visual_quality_score"):
+			total_visual_quality += test_data.visual_quality_score
+			visual_quality_count += 1
+
+			if test_count > 0:
+				summary["average_fps"] = total_fps / test_count
+
+				if results.tests.size() > 0:
+					summary["average_memory_impact"] = total_memory_impact / results.tests.size()
+
+					if visual_quality_count > 0:
+						summary["average_visual_quality"] = total_visual_quality / visual_quality_count
+
+						# Overall success metrics
+if not test_meshes.is_empty():
+	# Highlight a few test meshes
+	for i in range(min(3, test_meshes.size())):
+if _selection_visualizer.has_method("highlight_structure"):
+	_selection_visualizer.highlight_structure(mesh, "test_structure_" + str(i), true, i)
+
+	# Start timer
+	_test_timer.start(TEST_DURATION)
+
+if not test_meshes.is_empty():
+	_selection_visualizer.highlight_structure(test_meshes[0], "test_structure_combined", true)
+
+	if _optimization_tool and _optimization_tool.has_method("force_optimization_update"):
+		_optimization_tool.force_optimization_update()
 
 		# Start timer
 		_test_timer.start(TEST_DURATION)
 
-func _fix_orphaned_code():
-	if not test_meshes.is_empty():
-		_selection_visualizer.highlight_structure(test_meshes[0], "test_structure_combined", true)
+if _material_library and _material_library.has_method("update_settings"):
+	_material_library.update_settings({
+	"use_pbr": true,
+	"quality_level": 2
+	})
+	2:
+		# Enable lighting
+		if _medical_lighting and _medical_lighting.has_method("update_settings"):
+			_medical_lighting.update_settings({
+			"ambient_occlusion_enabled": true,
+			"bloom_enabled": true
+			})
+			3:
+				# Enable LOD and optimizations
+				if _lod_manager:
+					_lod_manager.lod_enabled = true
 
-		if _optimization_tool and _optimization_tool.has_method("force_optimization_update"):
-			_optimization_tool.force_optimization_update()
+					if _optimization_tool and _optimization_tool.has_method("update_settings"):
+						_optimization_tool.update_settings({
+						"frustum_culling_enabled": true,
+						"occlusion_culling_enabled": true,
+						"material_batching_enabled": true
+						})
+						)
 
-			# Start timer
-			_test_timer.start(TEST_DURATION)
+						transition_timer.start()
 
-func _fix_orphaned_code():
-	if _material_library and _material_library.has_method("update_settings"):
-		_material_library.update_settings({
-		"use_pbr": true,
-		"quality_level": 2
-		})
-		2:
-			# Enable lighting
-			if _medical_lighting and _medical_lighting.has_method("update_settings"):
-				_medical_lighting.update_settings({
-				"ambient_occlusion_enabled": true,
-				"bloom_enabled": true
-				})
-				3:
-					# Enable LOD and optimizations
-					if _lod_manager:
-						_lod_manager.lod_enabled = true
+						# Start timer
+						_test_timer.start(TEST_DURATION)
 
-						if _optimization_tool and _optimization_tool.has_method("update_settings"):
-							_optimization_tool.update_settings({
-							"frustum_culling_enabled": true,
-							"occlusion_culling_enabled": true,
-							"material_batching_enabled": true
-							})
-							)
+return mesh_instances
 
-							transition_timer.start()
-
-							# Start timer
-							_test_timer.start(TEST_DURATION)
-
-func _fix_orphaned_code():
-	return mesh_instances
-
-func _fix_orphaned_code():
-	if _material_library:
-		assessment["pbr_enabled"] = _material_library.use_pbr
-		assessment["quality_level"] = _material_library.quality_level
-		assessment["subsurface_scattering"] = _material_library.subsurface_scattering_strength
-		assessment["overall_score"] = 0.9
-		else:
-			assessment["overall_score"] = 0.7
-
-			return assessment
-
-func _fix_orphaned_code():
-	if _lod_manager:
-		assessment["lod_levels"] = _lod_manager.MAX_LOD_LEVELS
-		assessment["distance_thresholds"] = _lod_manager.distance_thresholds
-		assessment["quality_reduction"] = _lod_manager.quality_reduction_factors
-		assessment["scaling_score"] = 0.85
-		else:
-			assessment["scaling_score"] = 0.7
-
-			return assessment
-
-func _fix_orphaned_code():
-	if _selection_visualizer:
-		assessment["shader_based"] = _selection_visualizer.use_shader_selection
-		assessment["outline_enabled"] = _selection_visualizer.enable_outline
-		assessment["educational_mode"] = _selection_visualizer.educational_mode
-		assessment["performance_impact_score"] = 0.1  # Lower is better
-		else:
-			assessment["performance_impact_score"] = 0.2
-
-			return assessment
-
-func _fix_orphaned_code():
-	if _optimization_tool:
-		assessment["enabled"] = _optimization_tool.frustum_culling_enabled
-		assessment["objects_culled"] = _optimization_tool.performance_stats.culled_objects
-		assessment["effectiveness_score"] = 0.8
-		else:
-			assessment["effectiveness_score"] = 0.5
-
-			return assessment
-
-func _fix_orphaned_code():
-	if _optimization_tool:
-		assessment["enabled"] = _optimization_tool.occlusion_culling_enabled
-		assessment["occlusion_depth"] = _optimization_tool.occlusion_depth
-		assessment["effectiveness_score"] = 0.75
-		else:
-			assessment["effectiveness_score"] = 0.5
-
-			return assessment
-
-func _fix_orphaned_code():
-	if _optimization_tool:
-		assessment["enabled"] = _optimization_tool.material_batching_enabled
-		assessment["batched_materials"] = _optimization_tool.performance_stats.batched_materials
-		assessment["effectiveness_score"] = 0.85
-		else:
-			assessment["effectiveness_score"] = 0.5
-
-			return assessment
-
-func _fix_orphaned_code():
-	if assessment.potential_leak:
-		assessment.leak_severity = min(1.0, assessment.memory_difference_percent / 100.0)
+if _material_library:
+	assessment["pbr_enabled"] = _material_library.use_pbr
+	assessment["quality_level"] = _material_library.quality_level
+	assessment["subsurface_scattering"] = _material_library.subsurface_scattering_strength
+	assessment["overall_score"] = 0.9
+	else:
+		assessment["overall_score"] = 0.7
 
 		return assessment
+
+if _lod_manager:
+	assessment["lod_levels"] = _lod_manager.MAX_LOD_LEVELS
+	assessment["distance_thresholds"] = _lod_manager.distance_thresholds
+	assessment["quality_reduction"] = _lod_manager.quality_reduction_factors
+	assessment["scaling_score"] = 0.85
+	else:
+		assessment["scaling_score"] = 0.7
+
+		return assessment
+
+if _selection_visualizer:
+	assessment["shader_based"] = _selection_visualizer.use_shader_selection
+	assessment["outline_enabled"] = _selection_visualizer.enable_outline
+	assessment["educational_mode"] = _selection_visualizer.educational_mode
+	assessment["performance_impact_score"] = 0.1  # Lower is better
+	else:
+		assessment["performance_impact_score"] = 0.2
+
+		return assessment
+
+if _optimization_tool:
+	assessment["enabled"] = _optimization_tool.frustum_culling_enabled
+	assessment["objects_culled"] = _optimization_tool.performance_stats.culled_objects
+	assessment["effectiveness_score"] = 0.8
+	else:
+		assessment["effectiveness_score"] = 0.5
+
+		return assessment
+
+if _optimization_tool:
+	assessment["enabled"] = _optimization_tool.occlusion_culling_enabled
+	assessment["occlusion_depth"] = _optimization_tool.occlusion_depth
+	assessment["effectiveness_score"] = 0.75
+	else:
+		assessment["effectiveness_score"] = 0.5
+
+		return assessment
+
+if _optimization_tool:
+	assessment["enabled"] = _optimization_tool.material_batching_enabled
+	assessment["batched_materials"] = _optimization_tool.performance_stats.batched_materials
+	assessment["effectiveness_score"] = 0.85
+	else:
+		assessment["effectiveness_score"] = 0.5
+
+		return assessment
+
+if assessment.potential_leak:
+	assessment.leak_severity = min(1.0, assessment.memory_difference_percent / 100.0)
+
+	return assessment
 
 func _setup_timer() -> void:
 	"""Set up test timer"""

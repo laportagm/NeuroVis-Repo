@@ -16,13 +16,13 @@ var selected_style: StyleBoxFlat
 
 # Theme colors
 var text_primary = Color("#e5e5e5")
-var text_secondary = Color("#a0a0a0")
-var accent_color = Color("#26d0ce")
-var hover_bg = Color("#2a2a2a")
-var selected_bg = Color("#1f3a3a")
+# FIXED: Orphaned code - var text_secondary = Color("#a0a0a0")
+# FIXED: Orphaned code - var accent_color = Color("#26d0ce")
+# FIXED: Orphaned code - var hover_bg = Color("#2a2a2a")
+# FIXED: Orphaned code - var selected_bg = Color("#1f3a3a")
 
 
-var scene = PackedScene.new()
+# FIXED: Orphaned code - var scene = PackedScene.new()
 
 # Root node
 var root = PanelContainer.new()
@@ -52,7 +52,7 @@ label.add_theme_font_size_override("font_size", 14)
 hbox.add_child(label)
 
 # Pack the scene
-scene.pack(root)
+	# ORPHANED REF: scene.pack(root)
 
 @onready var icon: TextureRect = $HBoxContainer/Icon
 @onready var label: Label = $HBoxContainer/Label
@@ -63,18 +63,18 @@ func _ready():
 
 	# Set initial content
 	if icon and icon_texture:
-		icon.texture = icon_texture
+	icon.texture = icon_texture
 
-		if label:
-			label.text = item_text
+	if label:
+	label.text = item_text
 
 			# Apply initial style
-			_update_style()
+	_update_style()
 
 			# Connect mouse events
-			mouse_entered.connect(_on_mouse_entered)
-			mouse_exited.connect(_on_mouse_exited)
-			gui_input.connect(_on_gui_input)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+	gui_input.connect(_on_gui_input)
 
 
 func set_selected(selected: bool):
@@ -82,8 +82,7 @@ func set_selected(selected: bool):
 	_update_style()
 
 
-func _fix_orphaned_code():
-	return scene
+	# ORPHANED REF: return scene
 
 func _create_styles():
 	# Default style (transparent background)
@@ -100,54 +99,56 @@ func _create_styles():
 
 	# Hover style
 	hover_style = default_style.duplicate()
-	hover_style.bg_color = hover_bg
+	# ORPHANED REF: hover_style.bg_color = hover_bg
 
 	# Selected style
 	selected_style = default_style.duplicate()
-	selected_style.bg_color = selected_bg
+	# ORPHANED REF: selected_style.bg_color = selected_bg
 	selected_style.border_width_left = 3
-	selected_style.border_color = accent_color
+	# ORPHANED REF: selected_style.border_color = accent_color
 	selected_style.content_margin_left = 9  # Compensate for border
 
 
 func _update_style():
 	if is_selected:
-		add_theme_stylebox_override("panel", selected_style)
-		if label:
-			label.modulate = accent_color
-			if icon:
-				icon.modulate = accent_color
-				else:
-					add_theme_stylebox_override("panel", default_style)
-					if label:
-						label.modulate = text_primary
-						if icon:
-							icon.modulate = text_secondary
+	add_theme_stylebox_override("panel", selected_style)
+	if label:
+	# ORPHANED REF: label.modulate = accent_color
+	if icon:
+	# ORPHANED REF: icon.modulate = accent_color
+else:
+	add_theme_stylebox_override("panel", default_style)
+	if label:
+	label.modulate = text_primary
+	if icon:
+	# ORPHANED REF: icon.modulate = text_secondary
 
 
 func _on_mouse_entered():
 	if not is_selected:
-		add_theme_stylebox_override("panel", hover_style)
-		if label:
-			label.modulate = text_primary
-			if icon:
-				icon.modulate = text_primary
+	add_theme_stylebox_override("panel", hover_style)
+	if label:
+	label.modulate = text_primary
+	if icon:
+	icon.modulate = text_primary
 
 				# Change cursor to pointing hand
-				mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 
 func _on_mouse_exited():
 	if not is_selected:
-		_update_style()
+	_update_style()
 
 
 func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			clicked.emit()
-			get_viewport().set_input_as_handled()
+	if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	clicked.emit()
+	get_viewport().set_input_as_handled()
 
 
 			# Function to create the scene structure for this component
-			static func create_scene() -> PackedScene:
+static func create_scene() -> PackedScene:
+
+	return null

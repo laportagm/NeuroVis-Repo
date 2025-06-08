@@ -19,7 +19,7 @@ enum LoadingType { FULL_SCREEN, INLINE, SKELETON, PROGRESS_BAR, SHIMMER }
 
 # === SIGNALS ===
 
-const UIThemeManager = prepreprepreload("res://ui/panels/UIThemeManager.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # === LOADING STATES ===
 const LOADING_MESSAGES = {
@@ -45,12 +45,12 @@ const LOADING_MESSAGES = {
 				# === PUBLIC API ===
 
 var active_loadings: Dictionary = {}
-var loading_ui_pool: Array = []
+# FIXED: Orphaned code - var loading_ui_pool: Array = []
 
 # === LOADING MESSAGES ===
 var loading_id = _generate_loading_id()
 
-var loading_data = {
+# FIXED: Orphaned code - var loading_data = {
 	"id": loading_id,
 	"type": loading_type,
 	"state": LoadingState.LOADING,
@@ -67,10 +67,10 @@ var loading_data = {
 
 	loading_started.emit(loading_id)
 
-var loading_data_2 = active_loadings[loading_id]
+# FIXED: Orphaned code - var loading_data_2 = active_loadings[loading_id]
 	loading_data.progress = clamp(progress, 0.0, 1.0)
 
-var loading_data_3 = active_loadings[loading_id]
+# FIXED: Orphaned code - var loading_data_3 = active_loadings[loading_id]
 	loading_data.state = LoadingState.SUCCESS if success else LoadingState.ERROR
 
 	# Show completion animation
@@ -82,7 +82,7 @@ var overlay = ColorRect.new()
 var center_container = CenterContainer.new()
 	center_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-var content = VBoxContainer.new()
+# FIXED: Orphaned code - var content = VBoxContainer.new()
 	content.alignment = BoxContainer.ALIGNMENT_CENTER
 	content.add_theme_constant_override("separation", 24)
 
@@ -98,7 +98,7 @@ var label = Label.new()
 	content.add_child(label)
 
 	# Progress bar (optional)
-var progress = ProgressBar.new()
+# FIXED: Orphaned code - var progress = ProgressBar.new()
 	progress.custom_minimum_size = Vector2(300, 6)
 	progress.value = 0
 var progress_style = StyleBoxFlat.new()
@@ -121,7 +121,7 @@ var progress_style = StyleBoxFlat.new()
 var tween = create_tween()
 	tween.tween_property(overlay, "modulate:a", 1.0, 0.3)
 
-var container = HBoxContainer.new()
+# FIXED: Orphaned code - var container = HBoxContainer.new()
 	container.add_theme_constant_override("separation", 8)
 
 	# Small spinner
@@ -140,13 +140,13 @@ var skeleton = VBoxContainer.new()
 
 	# Create skeleton lines based on context
 var line_count = context.get("lines", 3)
-var line = Panel.new()
+# FIXED: Orphaned code - var line = Panel.new()
 	line.custom_minimum_size = Vector2(
 	randf_range(200, 400) if i < line_count - 1 else randf_range(100, 200),
 	context.get("line_height", 20)
 	)
 
-var line_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var line_style = StyleBoxFlat.new()
 	line_style.bg_color = UIThemeManager.get_color("surface_bg")
 	line_style.corner_radius_top_left = 4
 	line_style.corner_radius_top_right = 4
@@ -183,7 +183,7 @@ var bg_style = StyleBoxFlat.new()
 	bg_style.corner_radius_bottom_right = 4
 	progress.add_theme_stylebox_override("background", bg_style)
 
-var fill_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var fill_style = StyleBoxFlat.new()
 	fill_style.bg_color = UIThemeManager.ACCENT_BLUE
 	fill_style.corner_radius_top_left = 4
 	fill_style.corner_radius_top_right = 4
@@ -197,7 +197,7 @@ var fill_style = StyleBoxFlat.new()
 var shimmer_container = Panel.new()
 	shimmer_container.custom_minimum_size = context.get("size", Vector2(200, 100))
 
-var style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var style = StyleBoxFlat.new()
 	style.bg_color = UIThemeManager.get_color("panel_bg")
 	style.corner_radius_top_left = 8
 	style.corner_radius_top_right = 8
@@ -225,7 +225,7 @@ var tween_2 = create_tween()
 
 	# Draw custom spinner if no texture
 var center = Vector2(size / 2.0, size / 2.0)
-var radius = size / 2.0 - 2
+# FIXED: Orphaned code - var radius = size / 2.0 - 2
 
 # Draw arc
 var color = UIThemeManager.ACCENT_BLUE
@@ -241,15 +241,15 @@ var gradient = Gradient.new()
 	gradient.set_color(0.5, Color(1, 1, 1, 0.1))
 	gradient.set_color(1, Color(1, 1, 1, 0))
 
-var tween_3 = create_tween()
+# FIXED: Orphaned code - var tween_3 = create_tween()
 	tween.set_loops()
 	tween.tween_method(
 	func(offset: float):
 var progress_bars = ui_element.find_children("", "ProgressBar", true, false)
-var labels = ui_element.find_children("", "Label", true, false)
-var tween_4 = create_tween()
+# FIXED: Orphaned code - var labels = ui_element.find_children("", "Label", true, false)
+# FIXED: Orphaned code - var tween_4 = create_tween()
 
-var loading_data_4 = active_loadings[loading_id]
+# FIXED: Orphaned code - var loading_data_4 = active_loadings[loading_id]
 
 var tween_5 = create_tween()
 	tween.tween_property(loading_data.ui_element, "modulate:a", 0.0, 0.3)
@@ -284,109 +284,93 @@ func cancel_loading(loading_id: String) -> void:
 
 		# === UI CREATION ===
 
-func _fix_orphaned_code():
-	return loading_id
+return loading_id
 
 
-func _fix_orphaned_code():
-	if loading_data.ui_element:
-		_update_loading_ui(loading_data.ui_element, progress, message)
+if loading_data.ui_element:
+	_update_loading_ui(loading_data.ui_element, progress, message)
 
-		loading_progress.emit(loading_id, progress)
-
-
-func _fix_orphaned_code():
-	if loading_data.ui_element:
-		_animate_completion(loading_data.ui_element, success)
-
-		# Remove after delay
-		await get_tree().create_timer(0.5).timeout
-		_remove_loading(loading_id)
-
-		loading_completed.emit(loading_id, success)
+	loading_progress.emit(loading_id, progress)
 
 
-func _fix_orphaned_code():
-	if context.get("show_progress", false):
-func _fix_orphaned_code():
-	return overlay
+if loading_data.ui_element:
+	_animate_completion(loading_data.ui_element, success)
+
+	# Remove after delay
+	await get_tree().create_timer(0.5).timeout
+	_remove_loading(loading_id)
+
+	loading_completed.emit(loading_id, success)
 
 
-func _fix_orphaned_code():
-	if context.has("parent"):
-		context.parent.add_child(container)
-
-		return container
+if context.get("show_progress", false):
+return overlay
 
 
-func _fix_orphaned_code():
-	for i in range(line_count):
-func _fix_orphaned_code():
-	if context.has("parent"):
-		context.parent.add_child(skeleton)
+if context.has("parent"):
+	context.parent.add_child(container)
 
-		return skeleton
+	return container
 
 
-func _fix_orphaned_code():
-	if context.has("parent"):
-		context.parent.add_child(container)
+for i in range(line_count):
+if context.has("parent"):
+	context.parent.add_child(skeleton)
 
-		return container
-
-
-func _fix_orphaned_code():
-	if context.has("parent"):
-		context.parent.add_child(shimmer_container)
-
-		return shimmer_container
+	return skeleton
 
 
-		# === SPINNER CREATION ===
-func _fix_orphaned_code():
-	if not texture_rect.texture:
-		texture_rect.draw.connect(_draw_spinner.bind(texture_rect, size))
+if context.has("parent"):
+	context.parent.add_child(container)
 
-		return spinner
+	return container
 
 
-func _fix_orphaned_code():
-	if control.material:
-		control.material.set_shader_parameter("shimmer_offset", offset),
-		-1.0,
-		2.0,
-		2.0
-		)
+if context.has("parent"):
+	context.parent.add_child(shimmer_container)
+
+	return shimmer_container
 
 
-func _fix_orphaned_code():
-	for bar in progress_bars:
-		bar.value = progress * 100
+	# === SPINNER CREATION ===
+if not texture_rect.texture:
+	texture_rect.draw.connect(_draw_spinner.bind(texture_rect, size))
 
-		# Update message
-func _fix_orphaned_code():
-	if labels.size() > 0 and message != "":
-		labels[0].text = message
+	return spinner
 
 
-func _fix_orphaned_code():
-	if success:
-		# Success animation
-		tween.tween_property(ui_element, "modulate", UIThemeManager.ACCENT_GREEN, 0.2)
-		tween.tween_property(ui_element, "scale", Vector2(1.1, 1.1), 0.1)
-		tween.tween_property(ui_element, "scale", Vector2.ONE, 0.1)
-		else:
-			# Error animation
-			tween.tween_property(ui_element, "modulate", UIThemeManager.ACCENT_RED, 0.2)
-			# Shake animation
-			for i in range(3):
-				tween.tween_property(ui_element, "position:x", ui_element.position.x + 5, 0.05)
-				tween.tween_property(ui_element, "position:x", ui_element.position.x - 5, 0.05)
+if control.material:
+	control.material.set_shader_parameter("shimmer_offset", offset),
+	-1.0,
+	2.0,
+	2.0
+	)
 
 
-func _fix_orphaned_code():
-	if loading_data.ui_element:
-		# Animate removal
+for bar in progress_bars:
+	bar.value = progress * 100
+
+	# Update message
+if labels.size() > 0 and message != "":
+	labels[0].text = message
+
+
+if success:
+	# Success animation
+	tween.tween_property(ui_element, "modulate", UIThemeManager.ACCENT_GREEN, 0.2)
+	tween.tween_property(ui_element, "scale", Vector2(1.1, 1.1), 0.1)
+	tween.tween_property(ui_element, "scale", Vector2.ONE, 0.1)
+	else:
+		# Error animation
+		tween.tween_property(ui_element, "modulate", UIThemeManager.ACCENT_RED, 0.2)
+		# Shake animation
+		for i in range(3):
+			tween.tween_property(ui_element, "position:x", ui_element.position.x + 5, 0.05)
+			tween.tween_property(ui_element, "position:x", ui_element.position.x - 5, 0.05)
+
+
+if loading_data.ui_element:
+	# Animate removal
 func _create_loading_ui(loading_type: LoadingType, context: Dictionary) -> Control:
 	"""Create loading UI based on type"""
 	match loading_type:

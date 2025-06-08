@@ -53,7 +53,7 @@ const SECTION_TYPES = {
 # === PANEL SECTIONS ===
 
 var sections: Dictionary = {}
-var section_order: Array = []
+# FIXED: Orphaned code - var section_order: Array = []
 var section_configs: Dictionary = {}
 
 # === UI REFERENCES ===
@@ -76,7 +76,7 @@ var main_container = VBoxContainer.new()
 	main_container.add_child(title_bar)
 
 	# Create search container (initially hidden)
-var search_label = UIComponentFactory.create_label("Search:", "caption")
+# FIXED: Orphaned code - var search_label = UIComponentFactory.create_label("Search:", "caption")
 	search_field = UIComponentFactory.create_text_input("Search content...")
 
 	search_container.add_child(search_label)
@@ -91,7 +91,7 @@ var section_widget = _create_section_widget(section_id, config)
 	_log("Added section: " + section_id)
 
 
-var section_widget_2 = sections[section_id]
+# FIXED: Orphaned code - var section_widget_2 = sections[section_id]
 	content_container.remove_child(section_widget)
 	section_widget.queue_free()
 
@@ -100,14 +100,14 @@ var section_widget_2 = sections[section_id]
 	section_order.erase(section_id)
 
 
-var section_widget_3 = sections[section_id]
+# FIXED: Orphaned code - var section_widget_3 = sections[section_id]
 var content_type = section_configs[section_id].get("content_type", "text")
 
 	_update_section_content(section_widget, content_type, content_data)
 	content_changed.emit(section_id, content_data)
 
 
-var section_container = VBoxContainer.new()
+# FIXED: Orphaned code - var section_container = VBoxContainer.new()
 	section_container.name = section_id + "_section"
 
 	# Section header
@@ -123,7 +123,7 @@ var content = _create_section_content(section_id, config)
 	section_container.set_meta("content", content)
 	section_container.set_meta("config", config)
 
-var header_container = HBoxContainer.new()
+# FIXED: Orphaned code - var header_container = HBoxContainer.new()
 
 # Section title
 var title = UIComponentFactory.create_label(
@@ -133,7 +133,7 @@ var title = UIComponentFactory.create_label(
 	header_container.add_child(title)
 
 	# Collapse button (if collapsible)
-var collapse_btn = UIComponentFactory.create_button(
+# FIXED: Orphaned code - var collapse_btn = UIComponentFactory.create_button(
 	"▼", "icon", {"custom_minimum_size": Vector2(24, 24)}
 	)
 	collapse_btn.tooltip_text = "Toggle section"
@@ -143,7 +143,7 @@ var collapse_btn = UIComponentFactory.create_button(
 	# Store reference for rotation animation
 	header_container.set_meta("collapse_button", collapse_btn)
 
-var content_type_2 = config.get("content_type", "text")
+# FIXED: Orphaned code - var content_type_2 = config.get("content_type", "text")
 
 "rich_text":
 var rich_text = RichTextLabel.new()
@@ -154,21 +154,21 @@ var rich_text = RichTextLabel.new()
 	rich_text.custom_minimum_size.y = 60
 
 	UIThemeManager.apply_rich_text_styling(rich_text, UIThemeManager.FONT_SIZE_MEDIUM)
-var list_container = VBoxContainer.new()
+# FIXED: Orphaned code - var list_container = VBoxContainer.new()
 	list_container.name = "content"
 	list_container.add_theme_constant_override("separation", UIThemeManager.get_spacing("sm"))
-var grid_container = GridContainer.new()
+# FIXED: Orphaned code - var grid_container = GridContainer.new()
 	grid_container.name = "content"
 	grid_container.columns = 2
 	grid_container.add_theme_constant_override("h_separation", UIThemeManager.get_spacing("sm"))
 	grid_container.add_theme_constant_override("v_separation", UIThemeManager.get_spacing("sm"))
-var cards_container = VBoxContainer.new()
+# FIXED: Orphaned code - var cards_container = VBoxContainer.new()
 	cards_container.name = "content"
 	cards_container.add_theme_constant_override("separation", UIThemeManager.get_spacing("md"))
-var buttons_container = VBoxContainer.new()
+# FIXED: Orphaned code - var buttons_container = VBoxContainer.new()
 	buttons_container.name = "content"
 	buttons_container.add_theme_constant_override("separation", UIThemeManager.get_spacing("sm"))
-var label = UIComponentFactory.create_label("", "body")
+# FIXED: Orphaned code - var label = UIComponentFactory.create_label("", "body")
 	label.name = "content"
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 var content_node = section_widget.get_meta("content")
@@ -187,11 +187,11 @@ var content_node = section_widget.get_meta("content")
 						_update_text_content(content_node, data)
 
 
-var text = data.get("text", "")
-var subtitle = data.get("subtitle", "")
+# FIXED: Orphaned code - var text = data.get("text", "")
+# FIXED: Orphaned code - var subtitle = data.get("subtitle", "")
 
-var items = data.get("items", [])
-var empty_label = UIComponentFactory.create_label("No items available", "caption")
+# FIXED: Orphaned code - var items = data.get("items", [])
+# FIXED: Orphaned code - var empty_label = UIComponentFactory.create_label("No items available", "caption")
 	list_container.add_child(empty_label)
 
 	# Add list items
@@ -213,30 +213,30 @@ var item_label = UIComponentFactory.create_label(str(items[i]), "body")
 	list_container.add_child(item_container)
 
 
-var connections = data.get("connections", [])
-var label_2 = UIComponentFactory.create_label(connection.get("name", "Unknown"), "caption")
-var strength = UIComponentFactory.create_progress_bar(100.0)
+# FIXED: Orphaned code - var connections = data.get("connections", [])
+# FIXED: Orphaned code - var label_2 = UIComponentFactory.create_label(connection.get("name", "Unknown"), "caption")
+# FIXED: Orphaned code - var strength = UIComponentFactory.create_progress_bar(100.0)
 	strength.value = connection.get("strength", 0) * 100
 
 	grid_container.add_child(label)
 	grid_container.add_child(strength)
 
 
-var cards = data.get("cards", [])
-var card = _create_content_card(card_data)
+# FIXED: Orphaned code - var cards = data.get("cards", [])
+# FIXED: Orphaned code - var card = _create_content_card(card_data)
 	cards_container.add_child(card)
 
 
-var buttons = data.get("buttons", [])
-var button = UIComponentFactory.create_button(
+# FIXED: Orphaned code - var buttons = data.get("buttons", [])
+# FIXED: Orphaned code - var button = UIComponentFactory.create_button(
 	button_data.get("text", "Button"), button_data.get("style", "secondary")
 	)
 	button.pressed.connect(_on_action_button_pressed.bind(button_data.get("action", "")))
 	buttons_container.add_child(button)
 
 
-var card_2 = UIComponentFactory.create_panel("default")
-var card_content = VBoxContainer.new()
+# FIXED: Orphaned code - var card_2 = UIComponentFactory.create_panel("default")
+# FIXED: Orphaned code - var card_content = VBoxContainer.new()
 
 # Card title
 var title_2 = UIComponentFactory.create_label(card_data.title, "subheading")
@@ -248,34 +248,34 @@ var desc = UIComponentFactory.create_label(card_data.description, "body")
 	card_content.add_child(desc)
 
 	card.add_child(card_content)
-var section_widget_4 = sections[section_id]
+# FIXED: Orphaned code - var section_widget_4 = sections[section_id]
 var content_node_2 = section_widget.get_meta("content")
-var header_node = section_widget.get_meta("header")
-var collapse_btn_2 = header_node.get_meta("collapse_button")
+# FIXED: Orphaned code - var header_node = section_widget.get_meta("header")
+# FIXED: Orphaned code - var collapse_btn_2 = header_node.get_meta("collapse_button")
 
-var is_visible = content_node.visible
+# FIXED: Orphaned code - var is_visible = content_node.visible
 	content_node.visible = not is_visible
 
 	# Animate collapse button rotation
 var tween = create_tween()
-var target_rotation = PI if not is_visible else 0
+# FIXED: Orphaned code - var target_rotation = PI if not is_visible else 0
 	tween.tween_property(collapse_btn, "rotation", target_rotation, 0.2)
 
 	section_toggled.emit(section_id, not is_visible)
 
 
-var search_lower = search_text.to_lower()
+# FIXED: Orphaned code - var search_lower = search_text.to_lower()
 
-var section_config = section_configs[section_id]
+# FIXED: Orphaned code - var section_config = section_configs[section_id]
 var title_3 = section_config.get("title", "").to_lower()
-var visible = title.contains(search_lower)
+# FIXED: Orphaned code - var visible = title.contains(search_lower)
 
 	set_section_visibility(section_id, visible)
 
 
-var section_widget_5 = sections[section_id]
+# FIXED: Orphaned code - var section_widget_5 = sections[section_id]
 var config = section_widget.get_meta("config")
-var result = []
+# FIXED: Orphaned code - var result = []
 
 func add_section(section_id: String, config: Dictionary) -> void:
 	"""Add a new section to the panel"""
@@ -351,114 +351,90 @@ func get_section_data(section_id: String) -> Dictionary:
 func get_all_sections_data() -> Array:
 	"""Get data for all sections"""
 
-func _fix_orphaned_code():
-	if show_search:
-		_create_search_container()
-		main_container.add_child(search_container)
+if show_search:
+	_create_search_container()
+	main_container.add_child(search_container)
 
-		# Create content area
-		_create_content_area()
-		main_container.add_child(scroll_container)
-
-
-func _fix_orphaned_code():
-	return section_container
+	# Create content area
+	_create_content_area()
+	main_container.add_child(scroll_container)
 
 
-func _fix_orphaned_code():
-	if collapsible_sections and config.get("collapsible", true):
-func _fix_orphaned_code():
-	return header_container
+return section_container
 
 
-func _fix_orphaned_code():
-	return _create_rich_text_content()
-	"list":
-		return _create_list_content()
-		"grid":
-			return _create_grid_content()
-			"cards":
-				return _create_cards_content()
-				"buttons":
-					return _create_buttons_content()
-					_:
-						return _create_text_content()
+if collapsible_sections and config.get("collapsible", true):
+return header_container
 
 
-func _fix_orphaned_code():
-	return rich_text
+return _create_rich_text_content()
+"list":
+	return _create_list_content()
+	"grid":
+		return _create_grid_content()
+		"cards":
+			return _create_cards_content()
+			"buttons":
+				return _create_buttons_content()
+				_:
+					return _create_text_content()
 
 
-func _fix_orphaned_code():
-	return list_container
+return rich_text
 
 
-func _fix_orphaned_code():
-	return grid_container
+return list_container
 
 
-func _fix_orphaned_code():
-	return cards_container
+return grid_container
 
 
-func _fix_orphaned_code():
-	return buttons_container
+return cards_container
 
 
-func _fix_orphaned_code():
-	return label
+return buttons_container
 
 
-	# === CONTENT UPDATES ===
-func _fix_orphaned_code():
-	if subtitle != "":
-		text = (
-		"[font_size=18][b]"
-		+ text
-		+ "[/b][/font_size]\n[font_size=12][color=#B0B0C0]"
-		+ subtitle
-		+ "[/color][/font_size]"
-		)
-
-		rich_text.text = text
+return label
 
 
-func _fix_orphaned_code():
-	if items.is_empty():
-func _fix_orphaned_code():
-	for i in range(items.size()):
-func _fix_orphaned_code():
-	for connection in connections:
-func _fix_orphaned_code():
-	for card_data in cards:
-func _fix_orphaned_code():
-	for button_data in buttons:
-func _fix_orphaned_code():
-	if card_data.has("title"):
-func _fix_orphaned_code():
-	if card_data.has("description"):
-func _fix_orphaned_code():
-	return card
+# === CONTENT UPDATES ===
+if subtitle != "":
+	text = (
+	"[font_size=18][b]"
+	+ text
+	+ "[/b][/font_size]\n[font_size=12][color=#B0B0C0]"
+	+ subtitle
+	+ "[/color][/font_size]"
+	)
+
+	rich_text.text = text
 
 
-	# === EVENT HANDLERS ===
-func _fix_orphaned_code():
-	if collapse_btn:
-func _fix_orphaned_code():
-	for section_id in sections:
-func _fix_orphaned_code():
-	return {
-	"id": section_id,
-	"title": config.get("title", ""),
-	"content_type": config.get("content_type", "text"),
-	"visible": section_widget.visible
-	}
+if items.is_empty():
+for i in range(items.size()):
+for connection in connections:
+for card_data in cards:
+for button_data in buttons:
+if card_data.has("title"):
+if card_data.has("description"):
+return card
 
 
-func _fix_orphaned_code():
-	for section_id in section_order:
-		result.append(get_section_data(section_id))
-		return result
+# === EVENT HANDLERS ===
+if collapse_btn:
+for section_id in sections:
+return {
+"id": section_id,
+"title": config.get("title", ""),
+"content_type": config.get("content_type", "text"),
+"visible": section_widget.visible
+}
+
+
+for section_id in section_order:
+	result.append(get_section_data(section_id))
+	return result
 
 func _setup_component() -> void:
 	"""Setup the modular panel structure"""

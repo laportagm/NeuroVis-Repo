@@ -65,11 +65,11 @@ main_container.add_child(title_bar)
 _create_provider_selection()
 main_container.add_child(model_selector_container)
 
-var icon_label = UIComponentFactory.create_label("🤖", "heading")
+# FIXED: Orphaned code - var icon_label = UIComponentFactory.create_label("🤖", "heading")
 icon_label.custom_minimum_size.x = 32
 title_bar.add_child(icon_label)
 
-var title_label = UIComponentFactory.create_label("NeuroBot Assistant", "heading")
+# FIXED: Orphaned code - var title_label = UIComponentFactory.create_label("NeuroBot Assistant", "heading")
 title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 title_bar.add_child(title_label)
 
@@ -82,7 +82,7 @@ close_btn.pressed.connect(_on_close_pressed)
 title_bar.add_child(close_btn)
 
 
-var provider_label = UIComponentFactory.create_label("AI Provider:", "caption")
+# FIXED: Orphaned code - var provider_label = UIComponentFactory.create_label("AI Provider:", "caption")
 provider_label.custom_minimum_size.x = 100
 model_selector_container.add_child(provider_label)
 
@@ -92,7 +92,7 @@ provider_selector.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 # Add provider options
 var providers = ai_service.get_available_providers()
-var style = UIThemeManager.create_enhanced_glass_style(0.8)
+# FIXED: Orphaned code - var style = UIThemeManager.create_enhanced_glass_style(0.8)
 style.bg_color = UIThemeManager.get_color("button_secondary")
 style.corner_radius_top_left = 12
 style.corner_radius_top_right = 12
@@ -108,8 +108,8 @@ context_bg.add_theme_stylebox_override("panel", style)
 context_bg.add_child(context_indicator)
 
 
-var gemini = get_node_or_null("/root/GeminiAI")
-var btn = UIComponentFactory.create_button(
+# FIXED: Orphaned code - var gemini = get_node_or_null("/root/GeminiAI")
+# FIXED: Orphaned code - var btn = UIComponentFactory.create_button(
 question_data.text, "secondary", {"custom_minimum_size": Vector2(80, 32)}
 )
 btn.tooltip_text = question_data.tooltip
@@ -117,7 +117,7 @@ btn.pressed.connect(_on_quick_question_pressed.bind(question_data.type))
 quick_questions_container.add_child(btn)
 
 
-var input_row = HBoxContainer.new()
+# FIXED: Orphaned code - var input_row = HBoxContainer.new()
 input_row.add_theme_constant_override("separation", UIThemeManager.get_spacing("sm"))
 
 # Question input field
@@ -137,21 +137,21 @@ input_row.add_child(send_button)
 input_container.add_child(input_row)
 
 
-var welcome_text = "Hello! I'm NeuroBot, your brain anatomy assistant. I can help explain brain structures, their functions, and how they work together. Select a brain structure and ask me questions!"
+# FIXED: Orphaned code - var welcome_text = "Hello! I'm NeuroBot, your brain anatomy assistant. I can help explain brain structures, their functions, and how they work together. Select a brain structure and ask me questions!"
 _add_message("assistant", welcome_text, "Welcome")
 
 
 # === AI SERVICE INTEGRATION ===
 var gemini_2 = get_node_or_null("/root/GeminiAI")
-var provider_name = provider_selector.get_item_text(index)
-var provider = AIAssistantService.AIProvider.get(provider_name)
+# FIXED: Orphaned code - var provider_name = provider_selector.get_item_text(index)
+# FIXED: Orphaned code - var provider = AIAssistantService.AIProvider.get(provider_name)
 
 # Update AI service provider
 ai_service.set_provider(provider)
 
 # Show/hide Gemini selector based on provider
 var user_gemini = get_node_or_null("/root/GeminiAI")
-var setup_message = "Your Gemini AI service requires setup. Please enter your API key to continue."
+# FIXED: Orphaned code - var setup_message = "Your Gemini AI service requires setup. Please enter your API key to continue."
 _add_message("assistant", setup_message, "Gemini AI Setup Required")
 
 # Create API key input dialog
@@ -160,7 +160,7 @@ add_child(api_key_dialog)
 api_key_dialog.popup_centered()
 
 
-var dialog = ConfirmationDialog.new()
+# FIXED: Orphaned code - var dialog = ConfirmationDialog.new()
 dialog.title = "Gemini API Key Setup"
 dialog.dialog_text = "Enter your Google Gemini API key:"
 dialog.min_size = Vector2(400, 200)
@@ -169,11 +169,11 @@ dialog.min_size = Vector2(400, 200)
 var vbox = VBoxContainer.new()
 dialog.add_child(vbox)
 
-var label = Label.new()
+# FIXED: Orphaned code - var label = Label.new()
 label.text = "You can get a free API key from https://ai.google.dev/"
 vbox.add_child(label)
 
-var input = LineEdit.new()
+# FIXED: Orphaned code - var input = LineEdit.new()
 input.name = "APIKeyInput"
 input.placeholder_text = "Enter your API key here"
 input.secret = true
@@ -184,17 +184,17 @@ vbox.add_child(input)
 dialog.confirmed.connect(
 func():
 var key = input.text.strip_edges()
-var gemini_ai = get_node_or_null("/root/GeminiAI")
-var setup_success = await gemini_ai.setup_api_key(key)
+# FIXED: Orphaned code - var gemini_ai = get_node_or_null("/root/GeminiAI")
+# FIXED: Orphaned code - var setup_success = await gemini_ai.setup_api_key(key)
 
-var message_container = VBoxContainer.new()
+# FIXED: Orphaned code - var message_container = VBoxContainer.new()
 	message_container.add_theme_constant_override("separation", UIThemeManager.get_spacing("xs"))
 
 	# Message header with sender and timestamp
 var header = HBoxContainer.new()
 
-var sender_label = UIComponentFactory.create_label("", "caption")
-var timestamp = UIComponentFactory.create_label(Time.get_time_string_from_system(), "caption")
+# FIXED: Orphaned code - var sender_label = UIComponentFactory.create_label("", "caption")
+# FIXED: Orphaned code - var timestamp = UIComponentFactory.create_label(Time.get_time_string_from_system(), "caption")
 	timestamp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	timestamp.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
@@ -203,7 +203,7 @@ var timestamp = UIComponentFactory.create_label(Time.get_time_string_from_system
 	message_container.add_child(header)
 
 	# Title (if provided)
-var title_label_2 = UIComponentFactory.create_label(title, "subheading")
+# FIXED: Orphaned code - var title_label_2 = UIComponentFactory.create_label(title, "subheading")
 	message_container.add_child(title_label)
 
 	# Message content
@@ -218,9 +218,9 @@ var content_label = RichTextLabel.new()
 
 	# Style message bubble
 var bubble = PanelContainer.new()
-var bubble_style = UIThemeManager.create_enhanced_glass_style(0.6)
+# FIXED: Orphaned code - var bubble_style = UIThemeManager.create_enhanced_glass_style(0.6)
 
-var oldest_message = messages_list.get_child(0)
+# FIXED: Orphaned code - var oldest_message = messages_list.get_child(0)
 	messages_list.remove_child(oldest_message)
 	oldest_message.queue_free()
 	message_count -= 1
@@ -250,7 +250,7 @@ var question = ""
 				ask_question(question)
 
 
-var color = UIThemeManager.ACCENT_GREEN
+# FIXED: Orphaned code - var color = UIThemeManager.ACCENT_GREEN
 var response = "I'm currently in offline mode. For full AI assistance, please ensure an internet connection and API configuration. In the meantime, you can explore the 3D brain model and view structure information in the information panel."
 
 	_add_message("assistant", response, "Offline Mode")
@@ -330,169 +330,153 @@ func get_chat_history() -> Array:
 func export_conversation() -> String:
 	"""Export conversation as text"""
 
-func _fix_orphaned_code():
-	if show_context_info:
-		_create_context_indicator()
-		main_container.add_child(context_indicator)
+if show_context_info:
+	_create_context_indicator()
+	main_container.add_child(context_indicator)
 
-		# Add rate limit indicator for Gemini
-		if ai_service and ai_service.ai_provider == AIAssistantService.AIProvider.GEMINI_USER:
-			_create_rate_limit_indicator()
-			main_container.add_child(rate_limit_container)
+	# Add rate limit indicator for Gemini
+	if ai_service and ai_service.ai_provider == AIAssistantService.AIProvider.GEMINI_USER:
+		_create_rate_limit_indicator()
+		main_container.add_child(rate_limit_container)
 
-			_create_chat_area()
-			main_container.add_child(chat_container)
+		_create_chat_area()
+		main_container.add_child(chat_container)
 
-			if enable_quick_questions:
-				_create_quick_questions()
-				main_container.add_child(quick_questions_container)
+		if enable_quick_questions:
+			_create_quick_questions()
+			main_container.add_child(quick_questions_container)
 
-				_create_input_area()
-				main_container.add_child(input_container)
+			_create_input_area()
+			main_container.add_child(input_container)
 
-				_create_status_area()
-				main_container.add_child(status_label)
-
-
-func _fix_orphaned_code():
-	if ai_service:
-func _fix_orphaned_code():
-	for i in range(providers.size()):
-		provider_selector.add_item(providers[i])
-		if i == ai_service.ai_provider:
-			provider_selector.select(i)
-			else:
-				provider_selector.add_item("MOCK_RESPONSES")
-
-				provider_selector.item_selected.connect(_on_provider_selected)
-				model_selector_container.add_child(provider_selector)
-
-				# Create and add Gemini model selector (initially hidden)
-				model_selector = GeminiModelSelector.new()
-				model_selector.visible = (
-				ai_service and ai_service.ai_provider == AIAssistantService.AIProvider.GOOGLE_GEMINI
-				)
-				model_selector.settings_requested.connect(_on_gemini_settings_requested)
-				model_selector_container.add_child(model_selector)
+			_create_status_area()
+			main_container.add_child(status_label)
 
 
-func _fix_orphaned_code():
-	if gemini:
-		gemini.rate_limit_updated.connect(_on_rate_limit_updated)
-
-
-func _fix_orphaned_code():
-	if gemini:
-		if not gemini.check_setup_status():
-			_update_status("Gemini AI not configured - run ai_gemini_setup")
-
-			_update_status("Connected to AI Assistant")
-
-
-func _fix_orphaned_code():
-	if model_selector:
-		model_selector.visible = provider == AIAssistantService.AIProvider.GOOGLE_GEMINI
-
-		# If switching to Gemini, check if it's configured
-		if provider == AIAssistantService.AIProvider.GOOGLE_GEMINI:
-			if not gemini_service or not gemini_service.is_api_key_valid():
-				# Show setup dialog on first use
-				_show_gemini_setup_dialog()
-
-				# If switching to user's Gemini, check if it's configured
-				if provider == AIAssistantService.AIProvider.GEMINI_USER:
-func _fix_orphaned_code():
-	if user_gemini and user_gemini.has_method("needs_setup") and user_gemini.needs_setup():
-		# Show setup message for user's Gemini service
-		_show_user_gemini_setup_message()
-
-
-func _fix_orphaned_code():
-	if key.is_empty():
-		return
-
-func _fix_orphaned_code():
-	if gemini_ai:
-		_handle_user_gemini_setup(gemini_ai, key)
+if ai_service:
+for i in range(providers.size()):
+	provider_selector.add_item(providers[i])
+	if i == ai_service.ai_provider:
+		provider_selector.select(i)
 		else:
-			_add_message(
-			"assistant",
-			"Unable to access GeminiAI service. Please restart the application.",
-			"Error"
+			provider_selector.add_item("MOCK_RESPONSES")
+
+			provider_selector.item_selected.connect(_on_provider_selected)
+			model_selector_container.add_child(provider_selector)
+
+			# Create and add Gemini model selector (initially hidden)
+			model_selector = GeminiModelSelector.new()
+			model_selector.visible = (
+			ai_service and ai_service.ai_provider == AIAssistantService.AIProvider.GOOGLE_GEMINI
 			)
-			)
+			model_selector.settings_requested.connect(_on_gemini_settings_requested)
+			model_selector_container.add_child(model_selector)
 
-			return dialog
+
+if gemini:
+	gemini.rate_limit_updated.connect(_on_rate_limit_updated)
 
 
-func _fix_orphaned_code():
-	if setup_success:
+if gemini:
+	if not gemini.check_setup_status():
+		_update_status("Gemini AI not configured - run ai_gemini_setup")
+
+		_update_status("Connected to AI Assistant")
+
+
+if model_selector:
+	model_selector.visible = provider == AIAssistantService.AIProvider.GOOGLE_GEMINI
+
+	# If switching to Gemini, check if it's configured
+	if provider == AIAssistantService.AIProvider.GOOGLE_GEMINI:
+		if not gemini_service or not gemini_service.is_api_key_valid():
+			# Show setup dialog on first use
+			_show_gemini_setup_dialog()
+
+			# If switching to user's Gemini, check if it's configured
+			if provider == AIAssistantService.AIProvider.GEMINI_USER:
+if user_gemini and user_gemini.has_method("needs_setup") and user_gemini.needs_setup():
+	# Show setup message for user's Gemini service
+	_show_user_gemini_setup_message()
+
+
+if key.is_empty():
+	return
+
+if gemini_ai:
+	_handle_user_gemini_setup(gemini_ai, key)
+	else:
 		_add_message(
 		"assistant",
-		"Gemini API configured successfully! You can now ask questions using your own API key.",
-		"Setup Complete"
+		"Unable to access GeminiAI service. Please restart the application.",
+		"Error"
 		)
-		_update_status("Using your Gemini API key")
-		else:
-			_add_message(
-			"assistant",
-			"Failed to configure Gemini API. Please check your API key and try again.",
-			"Setup Failed"
-			)
-			_update_status("Gemini API setup failed")
+		)
+
+		return dialog
 
 
-func _fix_orphaned_code():
-	if sender == "user":
-		sender_label.text = "👤 You"
-		sender_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_accent"))
-		else:
-			sender_label.text = "🤖 NeuroBot"
-			sender_label.add_theme_color_override(
-			"font_color", UIThemeManager.get_color("button_primary")
-			)
-
-func _fix_orphaned_code():
-	if title != "":
-func _fix_orphaned_code():
-	if sender == "user":
-		bubble_style.bg_color = UIThemeManager.get_color("surface_hover")
-		else:
-			bubble_style.bg_color = UIThemeManager.get_color("surface_bg")
-
-			bubble.add_theme_stylebox_override("panel", bubble_style)
-			bubble.add_child(content_label)
-			message_container.add_child(bubble)
-
-			# Add to messages list
-			messages_list.add_child(message_container)
-			message_count += 1
-
-			# Limit message history
-			if message_count > max_visible_messages:
-func _fix_orphaned_code():
-	for suggestion in suggestions:
-		suggestion_text += "• " + suggestion + "\n"
-
-		_add_message("assistant", suggestion_text, "Suggestions")
+if setup_success:
+	_add_message(
+	"assistant",
+	"Gemini API configured successfully! You can now ask questions using your own API key.",
+	"Setup Complete"
+	)
+	_update_status("Using your Gemini API key")
+	else:
+		_add_message(
+		"assistant",
+		"Failed to configure Gemini API. Please check your API key and try again.",
+		"Setup Failed"
+		)
+		_update_status("Gemini API setup failed")
 
 
-		# === EVENT HANDLERS ===
-func _fix_orphaned_code():
-	if used > limit * 0.8:
-		color = UIThemeManager.ACCENT_RED
-		elif used > limit * 0.5:
-			color = UIThemeManager.ACCENT_ORANGE
+if sender == "user":
+	sender_label.text = "👤 You"
+	sender_label.add_theme_color_override("font_color", UIThemeManager.get_color("text_accent"))
+	else:
+		sender_label.text = "🤖 NeuroBot"
+		sender_label.add_theme_color_override(
+		"font_color", UIThemeManager.get_color("button_primary")
+		)
 
-			UIThemeManager.apply_progress_bar_styling(rate_limit_bar, color)
+if title != "":
+if sender == "user":
+	bubble_style.bg_color = UIThemeManager.get_color("surface_hover")
+	else:
+		bubble_style.bg_color = UIThemeManager.get_color("surface_bg")
+
+		bubble.add_theme_stylebox_override("panel", bubble_style)
+		bubble.add_child(content_label)
+		message_container.add_child(bubble)
+
+		# Add to messages list
+		messages_list.add_child(message_container)
+		message_count += 1
+
+		# Limit message history
+		if message_count > max_visible_messages:
+for suggestion in suggestions:
+	suggestion_text += "• " + suggestion + "\n"
+
+	_add_message("assistant", suggestion_text, "Suggestions")
 
 
-			# === OFFLINE FALLBACK ===
-func _fix_orphaned_code():
-	for entry in history:
-		export_text += "%s: %s\n\n" % [entry.role.capitalize(), entry.content]
+	# === EVENT HANDLERS ===
+if used > limit * 0.8:
+	color = UIThemeManager.ACCENT_RED
+	elif used > limit * 0.5:
+		color = UIThemeManager.ACCENT_ORANGE
 
-		return export_text
+		UIThemeManager.apply_progress_bar_styling(rate_limit_bar, color)
+
+
+		# === OFFLINE FALLBACK ===
+for entry in history:
+	export_text += "%s: %s\n\n" % [entry.role.capitalize(), entry.content]
+
+	return export_text
 
 func _setup_component() -> void:
 	"""Setup the AI assistant panel"""

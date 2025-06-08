@@ -21,12 +21,12 @@ signal display_structure_info(structure_data: Dictionary)
 
 # Component references
 
-const AnatomicalKnowledgeDatabaseScript = prepreload(
+const AnatomicalKnowledgeDatabaseScript = preload(
 "res://core/knowledge/AnatomicalKnowledgeDatabase.gd"
 )
 
 
-var brain_visualizer: BrainVisualizer
+# FIXED: Orphaned code - var brain_visualizer: BrainVisualizer
 var ui_manager: UIManager
 var interaction_handler: InteractionHandler
 
@@ -43,15 +43,15 @@ var current_state: Dictionary = {
 
 # Preloaded scripts
 var structure_id = _find_structure_id_by_name(structure_name)
-var structure_data = knowledge_base.get_structure(structure_id)
-var mapped_id = brain_visualizer.map_mesh_name_to_structure_id(mesh_name)
-var lower_mesh_name = mesh_name.to_lower()
-var structure_ids = knowledge_base.get_all_structure_ids()
+# FIXED: Orphaned code - var structure_data = knowledge_base.get_structure(structure_id)
+# FIXED: Orphaned code - var mapped_id = brain_visualizer.map_mesh_name_to_structure_id(mesh_name)
+# FIXED: Orphaned code - var lower_mesh_name = mesh_name.to_lower()
+# FIXED: Orphaned code - var structure_ids = knowledge_base.get_all_structure_ids()
 
 # Try exact match with display name
 var structure = knowledge_base.get_structure(id)
-var structure_2 = knowledge_base.get_structure(id)
-var display_name = structure.displayName.to_lower()
+# FIXED: Orphaned code - var structure_2 = knowledge_base.get_structure(id)
+# FIXED: Orphaned code - var display_name = structure.displayName.to_lower()
 
 func _initialize_component() -> bool:
 	component_name = "StateManager"
@@ -103,60 +103,52 @@ func get_knowledge_base():
 	return knowledge_base
 
 
-func _fix_orphaned_code():
-	if structure_id.is_empty():
-		print("[StateManager] No matching structure found for: ", structure_name)
-		return
+if structure_id.is_empty():
+	print("[StateManager] No matching structure found for: ", structure_name)
+	return
 
-		# Get structure data
-func _fix_orphaned_code():
-	if structure_data.is_empty():
-		print("[StateManager] No data found for structure: ", structure_id)
-		return
+	# Get structure data
+if structure_data.is_empty():
+	print("[StateManager] No data found for structure: ", structure_id)
+	return
 
-		# Display in UI
-		if ui_manager:
-			ui_manager.show_panel("info", {"structure_data": structure_data})
+	# Display in UI
+	if ui_manager:
+		ui_manager.show_panel("info", {"structure_data": structure_data})
 
-			# Emit signal
-			display_structure_info.emit(structure_data)
+		# Emit signal
+		display_structure_info.emit(structure_data)
 
 
-			## Find structure ID by mesh name
-func _fix_orphaned_code():
-	if not mapped_id.is_empty():
-		return mapped_id
+		## Find structure ID by mesh name
+if not mapped_id.is_empty():
+	return mapped_id
 
-		# Fallback to knowledge base search
-		if not knowledge_base:
-			return ""
-
-func _fix_orphaned_code():
-	for id in structure_ids:
-func _fix_orphaned_code():
-	if structure.has("displayName") and structure.displayName.to_lower() == lower_mesh_name:
-		return id
-
-		# Try matching the ID directly
-		if structure_ids.has(mesh_name):
-			return mesh_name
-
-			# Try partial match
-			for id in structure_ids:
-func _fix_orphaned_code():
-	if structure.has("displayName"):
-func _fix_orphaned_code():
-	if lower_mesh_name.contains(display_name) or display_name.contains(lower_mesh_name):
-		return id
-
+	# Fallback to knowledge base search
+	if not knowledge_base:
 		return ""
 
+for id in structure_ids:
+if structure.has("displayName") and structure.displayName.to_lower() == lower_mesh_name:
+	return id
 
-		## Get current application state
+	# Try matching the ID directly
+	if structure_ids.has(mesh_name):
+		return mesh_name
 
-func _fix_orphaned_code():
-	if brain_visualizer and knowledge_base:
-		brain_visualizer.set_knowledge_base(knowledge_base)
+		# Try partial match
+		for id in structure_ids:
+if structure.has("displayName"):
+if lower_mesh_name.contains(display_name) or display_name.contains(lower_mesh_name):
+	return id
+
+	return ""
+
+
+	## Get current application state
+
+if brain_visualizer and knowledge_base:
+	brain_visualizer.set_knowledge_base(knowledge_base)
 
 
 func _validate_requirements() -> bool:

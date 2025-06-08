@@ -1,8 +1,9 @@
-extends Node
-
 ## Educational Debug Commands System
 ## Provides debug console for educational platform development
 ## @version: 1.0
+
+class_name DebugCommands
+extends Node
 
 # === SIGNALS ===
 signal command_executed(command: String, result: String)
@@ -165,8 +166,8 @@ func _cmd_performance_check(args: Array) -> String:
 
 func _cmd_memory_check(args: Array) -> String:
 	"""Check educational content memory usage"""
-	var static_mem = OS.get_static_memory_usage_bytes()
-	var dynamic_mem = OS.get_static_memory_peak_usage_bytes()
+	var static_mem = OS.get_static_memory_usage()
+	var dynamic_mem = OS.get_static_memory_peak_usage()
 	return (
 		"Memory: "
 		+ str(static_mem / 1024 / 1024)

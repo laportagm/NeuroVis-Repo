@@ -58,9 +58,9 @@ var camera: Camera3D
 # === PRIVATE VARIABLES ===
 var model_data = _lod_models[model_name]
 var distance = _calculate_model_distance(model_data.root_node)
-var target_lod = _determine_lod_level(distance)
+# FIXED: Orphaned code - var target_lod = _determine_lod_level(distance)
 
-var model_data_2 = {
+# FIXED: Orphaned code - var model_data_2 = {
 	"root_node": model, "lod_meshes": {}, "original_meshes": {}, "lod_variants": lod_variants
 	}
 
@@ -71,7 +71,7 @@ var model_data_2 = {
 var model_data_3 = _lod_models[model_name]
 var tween = _transition_tweens[model_name]
 var cameras = get_tree().get_nodes_in_group("Cameras")
-var camera_paths = [
+# FIXED: Orphaned code - var camera_paths = [
 	"/root/Main/Camera3D", "/root/Main/CameraRig/Camera3D", "/root/Node3D/Camera3D"
 	]
 
@@ -85,7 +85,7 @@ var aabb = model.mesh.get_aabb()
 var model_data_4 = _lod_models[model_name]
 var current_level = _current_lod_levels.get(model_name, 0)
 
-var tween_2 = _transition_tweens[model_name]
+# FIXED: Orphaned code - var tween_2 = _transition_tweens[model_name]
 var material = node.get_surface_override_material(i)
 	mesh_dict[node.get_path()].materials.append(material)
 
@@ -96,9 +96,9 @@ var original_meshes = model_data.original_meshes
 var quality_factor = (
 	quality_reduction_factors[level] if level < quality_reduction_factors.size() else 0.25
 	)
-var lod_meshes = {}
+# FIXED: Orphaned code - var lod_meshes = {}
 
-var original_data = original_meshes[node_path]
+# FIXED: Orphaned code - var original_data = original_meshes[node_path]
 
 # Create simplified mesh
 var simplified_mesh = _simplify_mesh(original_data.mesh, quality_factor)
@@ -116,47 +116,47 @@ var simplified_mesh_2
 
 var array_mesh = ArrayMesh.new()
 
-var arrays = original_mesh.surface_get_arrays(surface_idx)
-var vertex_count = arrays[Mesh.ARRAY_VERTEX].size()
+# FIXED: Orphaned code - var arrays = original_mesh.surface_get_arrays(surface_idx)
+# FIXED: Orphaned code - var vertex_count = arrays[Mesh.ARRAY_VERTEX].size()
 
 # If mesh is small enough, don't simplify further
 var stride = int(1.0 / quality_factor)
 	stride = max(1, stride)
 
-var new_arrays = []
+# FIXED: Orphaned code - var new_arrays = []
 	new_arrays.resize(Mesh.ARRAY_MAX)
 
 	# Keep every Nth vertex
 var vertices = PackedVector3Array()
-var normals = PackedVector3Array()
-var uvs = PackedVector2Array()
+# FIXED: Orphaned code - var normals = PackedVector3Array()
+# FIXED: Orphaned code - var uvs = PackedVector2Array()
 
-var indices = PackedInt32Array()
-var original_indices = arrays[Mesh.ARRAY_INDEX]
+# FIXED: Orphaned code - var indices = PackedInt32Array()
+# FIXED: Orphaned code - var original_indices = arrays[Mesh.ARRAY_INDEX]
 
 # Create a mapping from original vertices to simplified vertices
 var vertex_map = {}
-var a = original_indices[i]
+# FIXED: Orphaned code - var a = original_indices[i]
 var b = original_indices[i + 1]
 var c = original_indices[i + 2]
 
 # Skip triangles that use vertices we've excluded
 var material_2 = original_mesh.surface_get_material(surface_idx)
-var lod_meshes_2 = model_data.lod_meshes[level]
+# FIXED: Orphaned code - var lod_meshes_2 = model_data.lod_meshes[level]
 
 var node_path = NodePath(node_path_str)
-var node = model_data.root_node.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node = model_data.root_node.get_node_or_null(node_path)
 
-var mesh_data = lod_meshes[node_path_str]
+# FIXED: Orphaned code - var mesh_data = lod_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply materials
 var original_meshes_2 = model_data.original_meshes
 
 var node_path_2 = NodePath(node_path_str)
-var node_2 = model_data.root_node.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node_2 = model_data.root_node.get_node_or_null(node_path)
 
-var mesh_data_2 = original_meshes[node_path_str]
+# FIXED: Orphaned code - var mesh_data_2 = original_meshes[node_path_str]
 	node.mesh = mesh_data.mesh
 
 	# Apply original materials
@@ -174,11 +174,11 @@ var tween_3 = create_tween()
 var transition_duration = transition_time
 var node_paths
 var node_path_3 = NodePath(node_path_str)
-var node_3 = model_data.root_node.get_node_or_null(node_path)
+# FIXED: Orphaned code - var node_3 = model_data.root_node.get_node_or_null(node_path)
 
-var material_3 = node.get_surface_override_material(i)
+# FIXED: Orphaned code - var material_3 = node.get_surface_override_material(i)
 
-var start_alpha = 0.7
+# FIXED: Orphaned code - var start_alpha = 0.7
 var end_alpha = 1.0
 
 	material.albedo_color.a = start_alpha
@@ -199,11 +199,11 @@ var end_alpha = 1.0
 	)
 
 
-var model_data_5 = _lod_models[model_name]
+# FIXED: Orphaned code - var model_data_5 = _lod_models[model_name]
 var distance_2 = _calculate_model_distance(model_data.root_node)
-var target_lod_2 = _determine_lod_level(distance)
+# FIXED: Orphaned code - var target_lod_2 = _determine_lod_level(distance)
 
-var model_data_6 = _lod_models[model_name]
+# FIXED: Orphaned code - var model_data_6 = _lod_models[model_name]
 var current_level_3 = _current_lod_levels.get(model_name, 0)
 
 # Keep only current LOD level and adjacent levels
@@ -214,7 +214,7 @@ var quality_factor_2 = (
 	quality_reduction_factors[level]
 var lod_meshes_3 = {}
 
-var original_data_2 = model_data.original_meshes[node_path]
+# FIXED: Orphaned code - var original_data_2 = model_data.original_meshes[node_path]
 
 # Create simplified mesh
 var simplified_mesh_3 = _simplify_mesh(original_data.mesh, quality_factor)
@@ -230,9 +230,9 @@ var simplified_mesh_3 = _simplify_mesh(original_data.mesh, quality_factor)
 
 
 var _lod_models: Dictionary = {}
-var _current_lod_levels: Dictionary = {}
-var _transition_tweens: Dictionary = {}
-var _initialized: bool = false
+# FIXED: Orphaned code - var _current_lod_levels: Dictionary = {}
+# FIXED: Orphaned code - var _transition_tweens: Dictionary = {}
+# FIXED: Orphaned code - var _initialized: bool = false
 
 
 # === LIFECYCLE METHODS ===
@@ -351,283 +351,244 @@ func reset_to_highest_detail() -> bool:
 
 		# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if _initialized:
-		_update_lod_state()
+if _initialized:
+	_update_lod_state()
 
-		## Distance thresholds for LOD levels (in world units)
-func _fix_orphaned_code():
-	if not model_data.root_node or not model_data.root_node.is_inside_tree():
-		continue
+	## Distance thresholds for LOD levels (in world units)
+if not model_data.root_node or not model_data.root_node.is_inside_tree():
+	continue
 
-func _fix_orphaned_code():
-	if target_lod != _current_lod_levels.get(model_name, 0):
-		_switch_lod_level(model_name, target_lod)
+if target_lod != _current_lod_levels.get(model_name, 0):
+	_switch_lod_level(model_name, target_lod)
 
 
-		# === PUBLIC METHODS ===
-		## Register a model for LOD management
-		## @param model: Node3D root node of the model
-		## @param model_name: String name of the model
-		## @param lod_variants: Array of PackedScene LOD variants (optional)
-		## @returns: bool indicating success
-func _fix_orphaned_code():
-	if not lod_variants.is_empty():
-		model_data.has_variants = true
-		else:
-			# Generate simplified meshes
-			_generate_simplified_meshes(model_data)
+	# === PUBLIC METHODS ===
+	## Register a model for LOD management
+	## @param model: Node3D root node of the model
+	## @param model_name: String name of the model
+	## @param lod_variants: Array of PackedScene LOD variants (optional)
+	## @returns: bool indicating success
+if not lod_variants.is_empty():
+	model_data.has_variants = true
+	else:
+		# Generate simplified meshes
+		_generate_simplified_meshes(model_data)
 
-			# Add to managed models
-			_lod_models[model_name] = model_data
-			_current_lod_levels[model_name] = 0  # Start at highest detail
+		# Add to managed models
+		_lod_models[model_name] = model_data
+		_current_lod_levels[model_name] = 0  # Start at highest detail
 
-			print("[LODManager] Registered model: " + model_name)
-			return true
-
-
-			## Unregister a model from LOD management
-			## @param model_name: String name of the model
-			## @returns: bool indicating success
-func _fix_orphaned_code():
-	if _current_lod_levels.get(model_name, 0) != 0:
-		_restore_original_meshes(model_data)
-
-		# Clear any active transitions
-		if _transition_tweens.has(model_name):
-func _fix_orphaned_code():
-	if tween and tween.is_valid():
-		tween.kill()
-		_transition_tweens.erase(model_name)
-
-		# Remove from managed models
-		_lod_models.erase(model_name)
-		_current_lod_levels.erase(model_name)
-
-		print("[LODManager] Unregistered model: " + model_name)
+		print("[LODManager] Registered model: " + model_name)
 		return true
 
 
-		## Set LOD level manually for a model
+		## Unregister a model from LOD management
 		## @param model_name: String name of the model
-		## @param lod_level: int LOD level to set
-		## @param force_instant: bool whether to force instant transition
 		## @returns: bool indicating success
-func _fix_orphaned_code():
-	if not cameras.is_empty():
-		return cameras[0]
+if _current_lod_levels.get(model_name, 0) != 0:
+	_restore_original_meshes(model_data)
 
-		# Try to find by node path
-func _fix_orphaned_code():
-	for path in camera_paths:
-		if get_node_or_null(path) != null:
-			return get_node(path)
+	# Clear any active transitions
+	if _transition_tweens.has(model_name):
+if tween and tween.is_valid():
+	tween.kill()
+	_transition_tweens.erase(model_name)
 
-			push_warning("[LODManager] No camera found. LOD system needs a camera reference.")
-			return null
+	# Remove from managed models
+	_lod_models.erase(model_name)
+	_current_lod_levels.erase(model_name)
 
-
-func _fix_orphaned_code():
-	if model is MeshInstance3D and model.mesh != null:
-func _fix_orphaned_code():
-	return camera.global_position.distance_to(model_pos)
+	print("[LODManager] Unregistered model: " + model_name)
+	return true
 
 
-func _fix_orphaned_code():
-	if current_level == level:
-		return true  # Already at this level
+	## Set LOD level manually for a model
+	## @param model_name: String name of the model
+	## @param lod_level: int LOD level to set
+	## @param force_instant: bool whether to force instant transition
+	## @returns: bool indicating success
+if not cameras.is_empty():
+	return cameras[0]
 
-		# Cancel any active transition
-		if _transition_tweens.has(model_name):
-func _fix_orphaned_code():
-	if tween and tween.is_valid():
-		tween.kill()
-		_transition_tweens.erase(model_name)
+	# Try to find by node path
+for path in camera_paths:
+	if get_node_or_null(path) != null:
+		return get_node(path)
 
-		# Determine transition approach
-		if model_data.has_variants:
-			# Switch between variant models
-			_switch_variant_model(model_data, level)
-			else:
-				# Apply simplified meshes or transition between them
-				if smooth_transitions and not force_instant:
-					_transition_to_level(model_data, model_name, level)
-					else:
-						_apply_lod_level(model_data, level)
-
-						# Update current level
-						_current_lod_levels[model_name] = level
-
-						# Emit signal
-						lod_level_changed.emit(model_name, level)
-
-						return true
+		push_warning("[LODManager] No camera found. LOD system needs a camera reference.")
+		return null
 
 
-func _fix_orphaned_code():
-	for child in node.get_children():
-		_process_model_node(child, mesh_dict)
+if model is MeshInstance3D and model.mesh != null:
+return camera.global_position.distance_to(model_pos)
 
 
-func _fix_orphaned_code():
-	for level in range(1, MAX_LOD_LEVELS):
-func _fix_orphaned_code():
-	for node_path in original_meshes:
-func _fix_orphaned_code():
-	if original_mesh is ArrayMesh:
-		# For array meshes, we can create a simplified version
-func _fix_orphaned_code():
-	for surface_idx in range(original_mesh.get_surface_count()):
-func _fix_orphaned_code():
-	if vertex_count < 100:
-		array_mesh.add_surface_from_arrays(
-		original_mesh.surface_get_primitive_type(surface_idx), arrays
-		)
-		continue
+if current_level == level:
+	return true  # Already at this level
 
-		# Simplify by skipping vertices
-func _fix_orphaned_code():
-	for i in range(0, vertex_count, stride):
-		if i < arrays[Mesh.ARRAY_VERTEX].size():
-			vertices.append(arrays[Mesh.ARRAY_VERTEX][i])
+	# Cancel any active transition
+	if _transition_tweens.has(model_name):
+if tween and tween.is_valid():
+	tween.kill()
+	_transition_tweens.erase(model_name)
 
-			if arrays[Mesh.ARRAY_NORMAL].size() > i:
-				normals.append(arrays[Mesh.ARRAY_NORMAL][i])
-
-				if arrays[Mesh.ARRAY_TEX_UV].size() > i:
-					uvs.append(arrays[Mesh.ARRAY_TEX_UV][i])
-
-					new_arrays[Mesh.ARRAY_VERTEX] = vertices
-
-					if not normals.is_empty():
-						new_arrays[Mesh.ARRAY_NORMAL] = normals
-
-						if not uvs.is_empty():
-							new_arrays[Mesh.ARRAY_TEX_UV] = uvs
-
-							# Create simplified indices if present
-							if arrays[Mesh.ARRAY_INDEX].size() > 0:
-func _fix_orphaned_code():
-	for i in range(vertices.size()):
-		vertex_map[i * stride] = i
-
-		# Remap triangle indices
-		for i in range(0, original_indices.size(), 3):
-			if i + 2 < original_indices.size():
-func _fix_orphaned_code():
-	if vertex_map.has(a) and vertex_map.has(b) and vertex_map.has(c):
-		indices.append(vertex_map[a])
-		indices.append(vertex_map[b])
-		indices.append(vertex_map[c])
-
-		new_arrays[Mesh.ARRAY_INDEX] = indices
-
-		# Add the simplified surface
-		array_mesh.add_surface_from_arrays(
-		original_mesh.surface_get_primitive_type(surface_idx), new_arrays
-		)
-
-		# Copy material if present
-func _fix_orphaned_code():
-	if material:
-		array_mesh.surface_set_material(surface_idx, material)
-
-		simplified_mesh = array_mesh
+	# Determine transition approach
+	if model_data.has_variants:
+		# Switch between variant models
+		_switch_variant_model(model_data, level)
 		else:
-			# For other mesh types, create a simplified placeholder
-			# In a real implementation, you would properly simplify these meshes
-			simplified_mesh = original_mesh
+			# Apply simplified meshes or transition between them
+			if smooth_transitions and not force_instant:
+				_transition_to_level(model_data, model_name, level)
+				else:
+					_apply_lod_level(model_data, level)
 
-			return simplified_mesh
+					# Update current level
+					_current_lod_levels[model_name] = level
 
+					# Emit signal
+					lod_level_changed.emit(model_name, level)
 
-func _fix_orphaned_code():
-	for node_path_str in lod_meshes:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-func _fix_orphaned_code():
-	for i in range(mesh_data.materials.size()):
-		if i < node.get_surface_override_material_count():
-			node.set_surface_override_material(i, mesh_data.materials[i])
+					return true
 
 
-func _fix_orphaned_code():
-	for node_path_str in original_meshes:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-func _fix_orphaned_code():
-	for i in range(mesh_data.materials.size()):
-		if i < node.get_surface_override_material_count():
-			node.set_surface_override_material(i, mesh_data.materials[i])
+for child in node.get_children():
+	_process_model_node(child, mesh_dict)
 
 
-func _fix_orphaned_code():
-	if target_level == 0:
-		_restore_original_meshes(model_data)
-		else:
-			_apply_lod_level(model_data, target_level)
-
-			# If transitioning to higher detail, make it faster
-func _fix_orphaned_code():
-	if target_level < current_level:
-		transition_duration *= 0.7
-
-		# Apply material transition for all affected meshes
-func _fix_orphaned_code():
-	if target_level == 0:
-		node_paths = model_data.original_meshes.keys()
-		else:
-			node_paths = model_data.lod_meshes[target_level].keys()
-
-			for node_path_str in node_paths:
-func _fix_orphaned_code():
-	if node and node is MeshInstance3D:
-		# Fade in the new LOD level
-		if node.get_surface_override_material_count() > 0:
-			for i in range(node.get_surface_override_material_count()):
-func _fix_orphaned_code():
-	if material is StandardMaterial3D:
-		# Start with slight transparency
-func _fix_orphaned_code():
-	if not model_data.root_node or not model_data.root_node.is_inside_tree():
-		continue
-
-func _fix_orphaned_code():
-	if lod_enabled:
-		_switch_lod_level(model_name, target_lod, true)
-		else:
-			# Force highest detail if LOD is disabled
-			_switch_lod_level(model_name, 0, true)
-
-			return true
-
-
-func _fix_orphaned_code():
-	for level in range(MAX_LOD_LEVELS):
-		if (
-		level != current_level
-		and level != current_level - 1
-		and level != current_level + 1
-		):
-			if model_data.lod_meshes.has(level):
-				model_data.lod_meshes.erase(level)
-
-				1:  # Balanced
-				# Default strategy, no special handling
-				pass
-
-				2:  # Quality
-				# Ensure all LOD levels are loaded
-				for model_name in _lod_models:
-func _fix_orphaned_code():
-	for level in range(1, MAX_LOD_LEVELS):
-		if not model_data.lod_meshes.has(level):
-func _fix_orphaned_code():
-	if level < quality_reduction_factors.size()
-	else 0.25
+for level in range(1, MAX_LOD_LEVELS):
+for node_path in original_meshes:
+if original_mesh is ArrayMesh:
+	# For array meshes, we can create a simplified version
+for surface_idx in range(original_mesh.get_surface_count()):
+if vertex_count < 100:
+	array_mesh.add_surface_from_arrays(
+	original_mesh.surface_get_primitive_type(surface_idx), arrays
 	)
-func _fix_orphaned_code():
-	for node_path in model_data.original_meshes:
+	continue
+
+	# Simplify by skipping vertices
+for i in range(0, vertex_count, stride):
+	if i < arrays[Mesh.ARRAY_VERTEX].size():
+		vertices.append(arrays[Mesh.ARRAY_VERTEX][i])
+
+		if arrays[Mesh.ARRAY_NORMAL].size() > i:
+			normals.append(arrays[Mesh.ARRAY_NORMAL][i])
+
+			if arrays[Mesh.ARRAY_TEX_UV].size() > i:
+				uvs.append(arrays[Mesh.ARRAY_TEX_UV][i])
+
+				new_arrays[Mesh.ARRAY_VERTEX] = vertices
+
+				if not normals.is_empty():
+					new_arrays[Mesh.ARRAY_NORMAL] = normals
+
+					if not uvs.is_empty():
+						new_arrays[Mesh.ARRAY_TEX_UV] = uvs
+
+						# Create simplified indices if present
+						if arrays[Mesh.ARRAY_INDEX].size() > 0:
+for i in range(vertices.size()):
+	vertex_map[i * stride] = i
+
+	# Remap triangle indices
+	for i in range(0, original_indices.size(), 3):
+		if i + 2 < original_indices.size():
+if vertex_map.has(a) and vertex_map.has(b) and vertex_map.has(c):
+	indices.append(vertex_map[a])
+	indices.append(vertex_map[b])
+	indices.append(vertex_map[c])
+
+	new_arrays[Mesh.ARRAY_INDEX] = indices
+
+	# Add the simplified surface
+	array_mesh.add_surface_from_arrays(
+	original_mesh.surface_get_primitive_type(surface_idx), new_arrays
+	)
+
+	# Copy material if present
+if material:
+	array_mesh.surface_set_material(surface_idx, material)
+
+	simplified_mesh = array_mesh
+	else:
+		# For other mesh types, create a simplified placeholder
+		# In a real implementation, you would properly simplify these meshes
+		simplified_mesh = original_mesh
+
+		return simplified_mesh
+
+
+for node_path_str in lod_meshes:
+if node and node is MeshInstance3D:
+for i in range(mesh_data.materials.size()):
+	if i < node.get_surface_override_material_count():
+		node.set_surface_override_material(i, mesh_data.materials[i])
+
+
+for node_path_str in original_meshes:
+if node and node is MeshInstance3D:
+for i in range(mesh_data.materials.size()):
+	if i < node.get_surface_override_material_count():
+		node.set_surface_override_material(i, mesh_data.materials[i])
+
+
+if target_level == 0:
+	_restore_original_meshes(model_data)
+	else:
+		_apply_lod_level(model_data, target_level)
+
+		# If transitioning to higher detail, make it faster
+if target_level < current_level:
+	transition_duration *= 0.7
+
+	# Apply material transition for all affected meshes
+if target_level == 0:
+	node_paths = model_data.original_meshes.keys()
+	else:
+		node_paths = model_data.lod_meshes[target_level].keys()
+
+		for node_path_str in node_paths:
+if node and node is MeshInstance3D:
+	# Fade in the new LOD level
+	if node.get_surface_override_material_count() > 0:
+		for i in range(node.get_surface_override_material_count()):
+if material is StandardMaterial3D:
+	# Start with slight transparency
+if not model_data.root_node or not model_data.root_node.is_inside_tree():
+	continue
+
+if lod_enabled:
+	_switch_lod_level(model_name, target_lod, true)
+	else:
+		# Force highest detail if LOD is disabled
+		_switch_lod_level(model_name, 0, true)
+
+		return true
+
+
+for level in range(MAX_LOD_LEVELS):
+	if (
+	level != current_level
+	and level != current_level - 1
+	and level != current_level + 1
+	):
+		if model_data.lod_meshes.has(level):
+			model_data.lod_meshes.erase(level)
+
+			1:  # Balanced
+			# Default strategy, no special handling
+			pass
+
+			2:  # Quality
+			# Ensure all LOD levels are loaded
+			for model_name in _lod_models:
+for level in range(1, MAX_LOD_LEVELS):
+	if not model_data.lod_meshes.has(level):
+if level < quality_reduction_factors.size()
+else 0.25
+)
+for node_path in model_data.original_meshes:
 func _find_main_camera() -> Camera3D:
 	"""Find the main camera in the scene"""
 func _calculate_model_distance(model: Node3D) -> float:

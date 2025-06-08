@@ -98,7 +98,7 @@ enum CameraMode { ORBIT, PAN, ZOOM, FLY, FOCUS, LOCKED }  # Orbit around target 
 var current_view: int = AnatomicalView.CUSTOM
 
 ## Target position (center of orbit)
-var target_position: Vector3 = Vector3.ZERO
+# FIXED: Orphaned code - var target_position: Vector3 = Vector3.ZERO
 
 ## Whether camera is currently transitioning
 var is_transitioning: bool = false
@@ -120,10 +120,10 @@ var aabb = mesh_instance.mesh.get_aabb()
 
 	# Calculate camera position based on current view direction
 var view_dir = (camera.global_position - target_position).normalized()
-var distance = radius * 2.5 * distance_factor
+# FIXED: Orphaned code - var distance = radius * 2.5 * distance_factor
 	distance = clamp(distance, min_zoom_distance, max_zoom_distance)
 
-var new_camera_pos = center + view_dir * distance
+# FIXED: Orphaned code - var new_camera_pos = center + view_dir * distance
 var new_transform = camera.global_transform
 	new_transform.origin = new_camera_pos
 
@@ -143,24 +143,24 @@ var new_transform = camera.global_transform
 var mesh_instances = []
 	_find_visible_meshes(get_tree().root, mesh_instances)
 
-var combined_aabb = AABB()
-var first = true
+# FIXED: Orphaned code - var combined_aabb = AABB()
+# FIXED: Orphaned code - var first = true
 
 var mesh_aabb = mesh_instance.mesh.get_aabb()
-var global_aabb = AABB(
+# FIXED: Orphaned code - var global_aabb = AABB(
 	mesh_instance.global_transform * mesh_aabb.position,
 	mesh_instance.global_transform.basis * mesh_aabb.size
 	)
 
-var center_2 = combined_aabb.get_center()
-var radius_2 = combined_aabb.size.length() / 2.0
+# FIXED: Orphaned code - var center_2 = combined_aabb.get_center()
+# FIXED: Orphaned code - var radius_2 = combined_aabb.size.length() / 2.0
 
 # Calculate camera position based on current view direction
 var view_dir_2 = (camera.global_position - target_position).normalized()
-var distance_2 = radius * 2.0 * distance_factor
+# FIXED: Orphaned code - var distance_2 = radius * 2.0 * distance_factor
 	distance = clamp(distance, min_zoom_distance, max_zoom_distance)
 
-var new_camera_pos_2 = center + view_dir * distance
+# FIXED: Orphaned code - var new_camera_pos_2 = center + view_dir * distance
 var new_transform_2 = camera.global_transform
 	new_transform.origin = new_camera_pos
 
@@ -309,7 +309,7 @@ var original_basis = camera.global_transform.basis
 		)
 
 
-var dir = (camera.global_position - target_position).normalized()
+# FIXED: Orphaned code - var dir = (camera.global_position - target_position).normalized()
 	_orbit_rotation.y = asin(dir.y)
 	_orbit_rotation.x = atan2(dir.x, dir.z)
 
@@ -317,7 +317,7 @@ var dir = (camera.global_position - target_position).normalized()
 	camera_movement_completed.emit()
 
 
-var screenshot_env_2 = _environment.duplicate()
+# FIXED: Orphaned code - var screenshot_env_2 = _environment.duplicate()
 
 # Enhanced settings for screenshots
 	screenshot_env.ssao_enabled = true
@@ -340,7 +340,7 @@ var _orbit_rotation: Vector2 = Vector2.ZERO
 var _camera_distance: float = 10.0
 var _initial_transform: Transform3D
 var _view_presets: Dictionary = {}
-var _target_transform: Transform3D
+# FIXED: Orphaned code - var _target_transform: Transform3D
 var _focused_structure: String = ""
 var _environment: Environment
 var _is_initialized: bool = false
@@ -541,187 +541,168 @@ func update_camera_parameters(params: Dictionary) -> bool:
 
 								# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if instant:
-		_apply_transform(preset.transform)
-		else:
-			_transition_to_transform(preset.transform)
+if instant:
+	_apply_transform(preset.transform)
+	else:
+		_transition_to_transform(preset.transform)
 
-			# Update state
-			current_view = view
+		# Update state
+		current_view = view
 
-			# Apply depth of field if specified
-			if preset.has("use_dof"):
-				depth_of_field_enabled = preset.use_dof
+		# Apply depth of field if specified
+		if preset.has("use_dof"):
+			depth_of_field_enabled = preset.use_dof
 
-				# Emit signal
-				view_changed.emit(view)
+			# Emit signal
+			view_changed.emit(view)
 
-				return true
-
-
-				## Focus camera on a specific structure
-				## @param mesh_instance: MeshInstance3D to focus on
-				## @param structure_name: String name of the structure
-				## @param distance_factor: float for zoom level (1.0 = default)
-				## @returns: bool indicating success
-func _fix_orphaned_code():
-	if mesh_instance.mesh:
-func _fix_orphaned_code():
-	if camera_mode == CameraMode.FOCUS:
-		depth_of_field_enabled = true
-
-		# Emit signal
-		focused_on_structure.emit(structure_name)
-
-		return true
+			return true
 
 
-		## Focus camera on the entire model bounds
-		## @param distance_factor: float for zoom level (1.0 = default)
-		## @returns: bool indicating success
-func _fix_orphaned_code():
-	if mesh_instances.is_empty():
-		push_warning("[MedicalCameraController] No visible mesh instances found")
-		return false
+			## Focus camera on a specific structure
+			## @param mesh_instance: MeshInstance3D to focus on
+			## @param structure_name: String name of the structure
+			## @param distance_factor: float for zoom level (1.0 = default)
+			## @returns: bool indicating success
+if mesh_instance.mesh:
+if camera_mode == CameraMode.FOCUS:
+	depth_of_field_enabled = true
 
-		# Calculate combined bounds
-func _fix_orphaned_code():
-	for mesh_instance in mesh_instances:
-		if mesh_instance.mesh:
-func _fix_orphaned_code():
-	if first:
-		combined_aabb = global_aabb
-		first = false
-		else:
-			combined_aabb = combined_aabb.merge(global_aabb)
+	# Emit signal
+	focused_on_structure.emit(structure_name)
 
-			if combined_aabb.size == Vector3.ZERO:
-				push_warning("[MedicalCameraController] Could not calculate model bounds")
-				return false
-
-				# Calculate center and radius
-func _fix_orphaned_code():
 	return true
 
 
-	## Reset camera to initial state
+	## Focus camera on the entire model bounds
+	## @param distance_factor: float for zoom level (1.0 = default)
 	## @returns: bool indicating success
-func _fix_orphaned_code():
-	if width > 0 and height > 0:
-		# Custom resolution screenshot
+if mesh_instances.is_empty():
+	push_warning("[MedicalCameraController] No visible mesh instances found")
+	return false
+
+	# Calculate combined bounds
+for mesh_instance in mesh_instances:
+	if mesh_instance.mesh:
+if first:
+	combined_aabb = global_aabb
+	first = false
+	else:
+		combined_aabb = combined_aabb.merge(global_aabb)
+
+		if combined_aabb.size == Vector3.ZERO:
+			push_warning("[MedicalCameraController] Could not calculate model bounds")
+			return false
+
+			# Calculate center and radius
+return true
+
+
+## Reset camera to initial state
+## @returns: bool indicating success
+if width > 0 and height > 0:
+	# Custom resolution screenshot
+	image = get_viewport().get_texture().get_image()
+	image.resize(width, height)
+	else:
+		# Current resolution screenshot
 		image = get_viewport().get_texture().get_image()
-		image.resize(width, height)
-		else:
-			# Current resolution screenshot
-			image = get_viewport().get_texture().get_image()
 
-			# Save to file
-func _fix_orphaned_code():
-	return result == OK
+		# Save to file
+return result == OK
 
 
-	## Add a custom anatomical view preset
-	## @param name: String name for the preset
-	## @param transform: Transform3D camera transform
-	## @param use_dof: bool whether to enable depth of field
-	## @returns: bool indicating success
-func _fix_orphaned_code():
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-func _fix_orphaned_code():
-	if Input.is_key_pressed(KEY_LEFT):
-		input_dir.x += 1
-		if Input.is_key_pressed(KEY_RIGHT):
+## Add a custom anatomical view preset
+## @param name: String name for the preset
+## @param transform: Transform3D camera transform
+## @param use_dof: bool whether to enable depth of field
+## @returns: bool indicating success
+if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+if Input.is_key_pressed(KEY_LEFT):
+	input_dir.x += 1
+	if Input.is_key_pressed(KEY_RIGHT):
+		input_dir.x -= 1
+		if Input.is_key_pressed(KEY_UP):
+			input_dir.y += 1
+			if Input.is_key_pressed(KEY_DOWN):
+				input_dir.y -= 1
+
+				# Apply orbit rotation
+				if input_dir != Vector2.ZERO:
+					_orbit_rotation.x += input_dir.x * orbit_speed * delta
+					_orbit_rotation.y += input_dir.y * orbit_speed * delta
+
+					# Limit vertical rotation
+					_orbit_rotation.y = clamp(_orbit_rotation.y, -PI / 2 + 0.1, PI / 2 - 0.1)
+
+					# Calculate new camera position based on orbit
+if Input.is_key_pressed(KEY_Q):
+	zoom_input -= 1.0
+	if Input.is_key_pressed(KEY_E):
+		zoom_input += 1.0
+
+		# Apply zoom
+		if zoom_input != 0.0:
+			_camera_distance += zoom_input * zoom_speed * delta * _camera_distance * 0.5
+			_camera_distance = clamp(_camera_distance, min_zoom_distance, max_zoom_distance)
+
+			# Update camera position
+if Input.is_key_pressed(KEY_W):
+	input_dir.z -= 1
+	if Input.is_key_pressed(KEY_S):
+		input_dir.z += 1
+		if Input.is_key_pressed(KEY_A):
 			input_dir.x -= 1
-			if Input.is_key_pressed(KEY_UP):
-				input_dir.y += 1
-				if Input.is_key_pressed(KEY_DOWN):
+			if Input.is_key_pressed(KEY_D):
+				input_dir.x += 1
+				if Input.is_key_pressed(KEY_Q):
 					input_dir.y -= 1
+					if Input.is_key_pressed(KEY_E):
+						input_dir.y += 1
 
-					# Apply orbit rotation
-					if input_dir != Vector2.ZERO:
-						_orbit_rotation.x += input_dir.x * orbit_speed * delta
-						_orbit_rotation.y += input_dir.y * orbit_speed * delta
+						# Mouse pan
+						if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+if input_dir != Vector3.ZERO:
+if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
+	zoom_input -= 1.0
+	if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
+		zoom_input += 1.0
 
-						# Limit vertical rotation
-						_orbit_rotation.y = clamp(_orbit_rotation.y, -PI / 2 + 0.1, PI / 2 - 0.1)
+		# Get input from mouse wheel
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP):
+			zoom_input -= 1.0
+			if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_DOWN):
+				zoom_input += 1.0
 
-						# Calculate new camera position based on orbit
-func _fix_orphaned_code():
-	if Input.is_key_pressed(KEY_Q):
-		zoom_input -= 1.0
-		if Input.is_key_pressed(KEY_E):
-			zoom_input += 1.0
+				# Apply zoom
+				if zoom_input != 0.0:
+					_camera_distance += zoom_input * zoom_speed * delta * _camera_distance * 0.5
+					_camera_distance = clamp(_camera_distance, min_zoom_distance, max_zoom_distance)
 
-			# Apply zoom
-			if zoom_input != 0.0:
-				_camera_distance += zoom_input * zoom_speed * delta * _camera_distance * 0.5
-				_camera_distance = clamp(_camera_distance, min_zoom_distance, max_zoom_distance)
+					# Update camera position
+if Input.is_key_pressed(KEY_W):
+	input_dir.z -= 1
+	if Input.is_key_pressed(KEY_S):
+		input_dir.z += 1
+		if Input.is_key_pressed(KEY_A):
+			input_dir.x -= 1
+			if Input.is_key_pressed(KEY_D):
+				input_dir.x += 1
+				if Input.is_key_pressed(KEY_Q):
+					input_dir.y -= 1
+					if Input.is_key_pressed(KEY_E):
+						input_dir.y += 1
 
-				# Update camera position
-func _fix_orphaned_code():
-	if Input.is_key_pressed(KEY_W):
-		input_dir.z -= 1
-		if Input.is_key_pressed(KEY_S):
-			input_dir.z += 1
-			if Input.is_key_pressed(KEY_A):
-				input_dir.x -= 1
-				if Input.is_key_pressed(KEY_D):
-					input_dir.x += 1
-					if Input.is_key_pressed(KEY_Q):
-						input_dir.y -= 1
-						if Input.is_key_pressed(KEY_E):
-							input_dir.y += 1
-
-							# Mouse pan
-							if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-func _fix_orphaned_code():
-	if input_dir != Vector3.ZERO:
-func _fix_orphaned_code():
-	if Input.is_key_pressed(KEY_W) or Input.is_key_pressed(KEY_UP):
-		zoom_input -= 1.0
-		if Input.is_key_pressed(KEY_S) or Input.is_key_pressed(KEY_DOWN):
-			zoom_input += 1.0
-
-			# Get input from mouse wheel
-			if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP):
-				zoom_input -= 1.0
-				if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_DOWN):
-					zoom_input += 1.0
-
-					# Apply zoom
-					if zoom_input != 0.0:
-						_camera_distance += zoom_input * zoom_speed * delta * _camera_distance * 0.5
-						_camera_distance = clamp(_camera_distance, min_zoom_distance, max_zoom_distance)
-
-						# Update camera position
-func _fix_orphaned_code():
-	if Input.is_key_pressed(KEY_W):
-		input_dir.z -= 1
-		if Input.is_key_pressed(KEY_S):
-			input_dir.z += 1
-			if Input.is_key_pressed(KEY_A):
-				input_dir.x -= 1
-				if Input.is_key_pressed(KEY_D):
-					input_dir.x += 1
-					if Input.is_key_pressed(KEY_Q):
-						input_dir.y -= 1
-						if Input.is_key_pressed(KEY_E):
-							input_dir.y += 1
-
-							# Apply movement
-							if input_dir != Vector3.ZERO:
-func _fix_orphaned_code():
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-func _fix_orphaned_code():
-	return screenshot_env
+						# Apply movement
+						if input_dir != Vector3.ZERO:
+if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+return screenshot_env
 
 
-func _fix_orphaned_code():
-	if not _is_initialized or not camera or not mesh_instance:
-		return false
+if not _is_initialized or not camera or not mesh_instance:
+	return false
 
-		# Calculate structure center and bounding sphere
+	# Calculate structure center and bounding sphere
 func _input(event: InputEvent) -> void:
 	"""Handle input events"""
 	if not _is_initialized or not camera or not inputs_enabled:

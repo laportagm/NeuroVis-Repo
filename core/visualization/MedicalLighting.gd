@@ -112,10 +112,10 @@ var custom_preset = {
 	active_preset = LightingPreset.CUSTOM
 
 var new_key_position = position + Vector3(1.5, 2.0, 2.0)
-var new_fill_position = position + Vector3(-2.0, 0.5, 1.0)
-var new_rim_position = position + Vector3(0.0, 1.0, -2.5)
+# FIXED: Orphaned code - var new_fill_position = position + Vector3(-2.0, 0.5, 1.0)
+# FIXED: Orphaned code - var new_rim_position = position + Vector3(0.0, 1.0, -2.5)
 
-var base_preset = _preset_data[active_preset]
+# FIXED: Orphaned code - var base_preset = _preset_data[active_preset]
 
 	key_light_energy = base_preset.key_light_energy * intensity_multiplier
 	fill_light_energy = base_preset.fill_light_energy * intensity_multiplier
@@ -146,7 +146,7 @@ var tween = create_tween()
 	tween.play()
 
 
-var _key_light: DirectionalLight3D
+# FIXED: Orphaned code - var _key_light: DirectionalLight3D
 var _fill_light: OmniLight3D
 var _rim_light: OmniLight3D
 var _environment: Environment
@@ -336,153 +336,134 @@ func reset_to_preset_default() -> bool:
 
 		# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if _initialized:
-		_apply_preset(active_preset)
-		preset_changed.emit(active_preset)
+if _initialized:
+	_apply_preset(active_preset)
+	preset_changed.emit(active_preset)
 
-		## Whether to use HDR lighting
-func _fix_orphaned_code():
-	if _initialized:
-		_update_environment()
+	## Whether to use HDR lighting
+if _initialized:
+	_update_environment()
 
-		## Enable ambient occlusion for enhanced depth perception
-func _fix_orphaned_code():
-	if _initialized:
-		_update_environment()
+	## Enable ambient occlusion for enhanced depth perception
+if _initialized:
+	_update_environment()
 
-		## Enable subtle bloom effect
-func _fix_orphaned_code():
-	if _initialized:
-		_update_environment()
+	## Enable subtle bloom effect
+if _initialized:
+	_update_environment()
 
-		# === KEY LIGHT PROPERTIES ===
-		## Key light color
-func _fix_orphaned_code():
-	if _key_light:
-		_key_light.light_color = key_light_color
-		light_property_changed.emit("key", "color")
+	# === KEY LIGHT PROPERTIES ===
+	## Key light color
+if _key_light:
+	_key_light.light_color = key_light_color
+	light_property_changed.emit("key", "color")
 
-		## Key light energy
-func _fix_orphaned_code():
-	if _key_light:
-		_key_light.light_energy = key_light_energy
-		light_property_changed.emit("key", "energy")
+	## Key light energy
+if _key_light:
+	_key_light.light_energy = key_light_energy
+	light_property_changed.emit("key", "energy")
 
-		## Key light position
-func _fix_orphaned_code():
-	if _key_light:
-		_key_light.position = key_light_position
-		light_property_changed.emit("key", "position")
+	## Key light position
+if _key_light:
+	_key_light.position = key_light_position
+	light_property_changed.emit("key", "position")
 
-		# === FILL LIGHT PROPERTIES ===
-		## Fill light color
-func _fix_orphaned_code():
-	if _fill_light:
-		_fill_light.light_color = fill_light_color
-		light_property_changed.emit("fill", "color")
+	# === FILL LIGHT PROPERTIES ===
+	## Fill light color
+if _fill_light:
+	_fill_light.light_color = fill_light_color
+	light_property_changed.emit("fill", "color")
 
-		## Fill light energy
-func _fix_orphaned_code():
-	if _fill_light:
-		_fill_light.light_energy = fill_light_energy
-		light_property_changed.emit("fill", "energy")
+	## Fill light energy
+if _fill_light:
+	_fill_light.light_energy = fill_light_energy
+	light_property_changed.emit("fill", "energy")
 
-		## Fill light position
-func _fix_orphaned_code():
-	if _fill_light:
-		_fill_light.position = fill_light_position
-		light_property_changed.emit("fill", "position")
+	## Fill light position
+if _fill_light:
+	_fill_light.position = fill_light_position
+	light_property_changed.emit("fill", "position")
 
-		# === RIM LIGHT PROPERTIES ===
-		## Rim light color
-func _fix_orphaned_code():
-	if _rim_light:
-		_rim_light.light_color = rim_light_color
-		light_property_changed.emit("rim", "color")
+	# === RIM LIGHT PROPERTIES ===
+	## Rim light color
+if _rim_light:
+	_rim_light.light_color = rim_light_color
+	light_property_changed.emit("rim", "color")
 
-		## Rim light energy
-func _fix_orphaned_code():
-	if _rim_light:
-		_rim_light.light_energy = rim_light_energy
-		light_property_changed.emit("rim", "energy")
+	## Rim light energy
+if _rim_light:
+	_rim_light.light_energy = rim_light_energy
+	light_property_changed.emit("rim", "energy")
 
-		## Rim light position
-func _fix_orphaned_code():
-	if _rim_light:
-		_rim_light.position = rim_light_position
-		light_property_changed.emit("rim", "position")
+	## Rim light position
+if _rim_light:
+	_rim_light.position = rim_light_position
+	light_property_changed.emit("rim", "position")
 
-		# === AMBIENT LIGHT PROPERTIES ===
-		## Ambient light color
-func _fix_orphaned_code():
-	if _environment:
-		_environment.ambient_light_color = ambient_light_color
-		light_property_changed.emit("ambient", "color")
+	# === AMBIENT LIGHT PROPERTIES ===
+	## Ambient light color
+if _environment:
+	_environment.ambient_light_color = ambient_light_color
+	light_property_changed.emit("ambient", "color")
 
-		## Ambient light energy
-func _fix_orphaned_code():
-	if _environment:
-		_environment.ambient_light_energy = ambient_light_energy
-		light_property_changed.emit("ambient", "energy")
+	## Ambient light energy
+if _environment:
+	_environment.ambient_light_energy = ambient_light_energy
+	light_property_changed.emit("ambient", "energy")
 
-		# === PRIVATE VARIABLES ===
+	# === PRIVATE VARIABLES ===
 
-func _fix_orphaned_code():
-	return true
+return true
 
 
-	## Focus lighting on a specific position
-	## @param position: Vector3 position to focus lighting on
-	## @param transition_time: float time for transition in seconds (0 for instant)
-	## @returns: bool indicating success
-func _fix_orphaned_code():
-	if transition_time <= 0.0:
-		# Instant transition
-		_key_light.position = new_key_position
-		_fill_light.position = new_fill_position
-		_rim_light.position = new_rim_position
+## Focus lighting on a specific position
+## @param position: Vector3 position to focus lighting on
+## @param transition_time: float time for transition in seconds (0 for instant)
+## @returns: bool indicating success
+if transition_time <= 0.0:
+	# Instant transition
+	_key_light.position = new_key_position
+	_fill_light.position = new_fill_position
+	_rim_light.position = new_rim_position
 
+	key_light_position = new_key_position
+	fill_light_position = new_fill_position
+	rim_light_position = new_rim_position
+	else:
+		# Animated transition
+		_animate_property(
+		_key_light, "position", _key_light.position, new_key_position, transition_time
+		)
+		_animate_property(
+		_fill_light, "position", _fill_light.position, new_fill_position, transition_time
+		)
+		_animate_property(
+		_rim_light, "position", _rim_light.position, new_rim_position, transition_time
+		)
+
+		# Wait for animation to complete
+		await get_tree().create_timer(transition_time).timeout
+
+		# Update exported properties
 		key_light_position = new_key_position
 		fill_light_position = new_fill_position
 		rim_light_position = new_rim_position
-		else:
-			# Animated transition
-			_animate_property(
-			_key_light, "position", _key_light.position, new_key_position, transition_time
-			)
-			_animate_property(
-			_fill_light, "position", _fill_light.position, new_fill_position, transition_time
-			)
-			_animate_property(
-			_rim_light, "position", _rim_light.position, new_rim_position, transition_time
-			)
 
-			# Wait for animation to complete
-			await get_tree().create_timer(transition_time).timeout
-
-			# Update exported properties
-			key_light_position = new_key_position
-			fill_light_position = new_fill_position
-			rim_light_position = new_rim_position
-
-			return true
+		return true
 
 
-			## Adjust light intensity for all lights
-			## @param intensity_multiplier: float to multiply all light energies by
-			## @returns: bool indicating success
-func _fix_orphaned_code():
-	return true
+		## Adjust light intensity for all lights
+		## @param intensity_multiplier: float to multiply all light energies by
+		## @returns: bool indicating success
+return true
 
 
-	## Save current lighting setup as a custom preset
-	## @returns: bool indicating success
-func _fix_orphaned_code():
-	if _key_light:
-		_key_light.look_at(Vector3.ZERO)
+## Save current lighting setup as a custom preset
+## @returns: bool indicating success
+if _key_light:
+	_key_light.look_at(Vector3.ZERO)
 
-		print("[MedicalLighting] Applied preset: " + _get_preset_name(lighting_preset))
+	print("[MedicalLighting] Applied preset: " + _get_preset_name(lighting_preset))
 
 
 func _create_lighting_components() -> void:

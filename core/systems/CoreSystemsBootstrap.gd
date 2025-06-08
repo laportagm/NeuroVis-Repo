@@ -42,17 +42,17 @@ const SYSTEM_DEPENDENCIES = {
 # Core systems in initialization order
 
 var initialized_count = _initialized_systems.size()
-var system_name = _initialization_sequence[index]
+# FIXED: Orphaned code - var system_name = _initialization_sequence[index]
 
 # Skip if already initialized
 var success = _initialize_system(system_name)
 
-var dependencies = SYSTEM_DEPENDENCIES[system_name]
+# FIXED: Orphaned code - var dependencies = SYSTEM_DEPENDENCIES[system_name]
 var all_satisfied = true
 
 var system = _create_system_instance(system_name)
-var dependencies_2 = {}
-var init_success = true
+# FIXED: Orphaned code - var dependencies_2 = {}
+# FIXED: Orphaned code - var init_success = true
 var script_path = ""
 
 "event_bus":
@@ -73,16 +73,16 @@ var script_path = ""
 var panel_registry = Node.new()
 	panel_registry.name = "PanelRegistry"
 var script = load(script_path)
-var instance = script.new()
-var potential_autoload = _find_autoload_by_name(system_name)
-var use_multi_selection = true
+# FIXED: Orphaned code - var instance = script.new()
+# FIXED: Orphaned code - var potential_autoload = _find_autoload_by_name(system_name)
+# FIXED: Orphaned code - var use_multi_selection = true
 
 # Try loading FeatureFlags
-var feature_flags = preprepreload("res://core/features/FeatureFlags.gd")
-var script_path_2 = use_multi_selection ? "res://core/interaction/MultiStructureSelectionManager.gd" : "res://core/interaction/BrainStructureSelectionManager.gd"
+var feature_flags = preload("res://core/features/FeatureFlags.gd")
+# FIXED: Orphaned code - var script_path_2 = use_multi_selection ? "res://core/interaction/MultiStructureSelectionManager.gd" : "res://core/interaction/BrainStructureSelectionManager.gd"
 
 var script_2 = load(script_path)
-var instance_2 = script.new()
+# FIXED: Orphaned code - var instance_2 = script.new()
 
 # Configure instance
 var autoload_map = {
@@ -96,15 +96,15 @@ var autoload_map = {
 	"knowledge_service": "KnowledgeService"
 	}
 
-var autoload_name = autoload_map[system_name]
+# FIXED: Orphaned code - var autoload_name = autoload_map[system_name]
 var duration = (Time.get_ticks_msec() - _start_time) / 1000.0
 
 # Log results
 var success_count = _initialized_systems.size()
-var total_count = _initialization_sequence.size()
-var failed_count = _failed_systems.size()
+# FIXED: Orphaned code - var total_count = _initialization_sequence.size()
+# FIXED: Orphaned code - var failed_count = _failed_systems.size()
 
-var _initialization_sequence = [
+# FIXED: Orphaned code - var _initialization_sequence = [
 	"event_bus",
 	"app_state",
 	"service_locator",
@@ -122,7 +122,7 @@ var _initialization_sequence = [
 	# === PRIVATE VARIABLES ===
 	# Initialization tracking
 var _initialized_systems: Dictionary = {}
-var _initialization_complete: bool = false
+# FIXED: Orphaned code - var _initialization_complete: bool = false
 var _initialization_in_progress: bool = false
 var _failed_systems: Array = []
 
@@ -230,172 +230,153 @@ func get_failed_systems() -> Array:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	return (float(initialized_count) / float(_initialization_sequence.size())) * 100.0
+return (float(initialized_count) / float(_initialization_sequence.size())) * 100.0
 
-	## Get a list of all initialized systems
-	## @returns: Array of initialized system names
-func _fix_orphaned_code():
-	if _initialized_systems.has(system_name):
+## Get a list of all initialized systems
+## @returns: Array of initialized system names
+if _initialized_systems.has(system_name):
+	_process_next_system(index + 1)
+	return
+
+	# Check dependencies first
+	if not _check_dependencies(system_name):
+		# Failed due to dependencies - move to next
+		_failed_systems.append(system_name)
 		_process_next_system(index + 1)
 		return
 
-		# Check dependencies first
-		if not _check_dependencies(system_name):
-			# Failed due to dependencies - move to next
-			_failed_systems.append(system_name)
-			_process_next_system(index + 1)
-			return
+		# Initialize system
+if not success:
+	_failed_systems.append(system_name)
 
-			# Initialize system
-func _fix_orphaned_code():
-	if not success:
-		_failed_systems.append(system_name)
+	# Continue with next system
+	_process_next_system(index + 1)
 
-		# Continue with next system
-		_process_next_system(index + 1)
+for dependency in dependencies:
+	if not _initialized_systems.has(dependency):
+		push_warning("[Bootstrap] Dependency not initialized: %s (required by %s)" % [dependency, system_name])
+		all_satisfied = false
 
-func _fix_orphaned_code():
-	for dependency in dependencies:
-		if not _initialized_systems.has(dependency):
-			push_warning("[Bootstrap] Dependency not initialized: %s (required by %s)" % [dependency, system_name])
-			all_satisfied = false
+		return all_satisfied
 
-			return all_satisfied
+if not system:
+	push_error("[Bootstrap] Failed to create system: %s" % system_name)
+	initialization_failed.emit(system_name, "Failed to create system instance")
+	return false
 
-func _fix_orphaned_code():
-	if not system:
-		push_error("[Bootstrap] Failed to create system: %s" % system_name)
-		initialization_failed.emit(system_name, "Failed to create system instance")
-		return false
+	# Register system with registry
+	_registry.register_system(system_name, system)
 
-		# Register system with registry
-		_registry.register_system(system_name, system)
+	# Gather dependencies
+if SYSTEM_DEPENDENCIES.has(system_name):
+	for dependency in SYSTEM_DEPENDENCIES[system_name]:
+		if _initialized_systems.has(dependency):
+			dependencies[dependency] = _initialized_systems[dependency]
 
-		# Gather dependencies
-func _fix_orphaned_code():
-	if SYSTEM_DEPENDENCIES.has(system_name):
-		for dependency in SYSTEM_DEPENDENCIES[system_name]:
-			if _initialized_systems.has(dependency):
-				dependencies[dependency] = _initialized_systems[dependency]
+			# Initialize the system
+if system.has_method("initialize"):
+	if dependencies.is_empty():
+		init_success = system.initialize()
+		else:
+			init_success = system.initialize(dependencies)
 
-				# Initialize the system
-func _fix_orphaned_code():
-	if system.has_method("initialize"):
-		if dependencies.is_empty():
-			init_success = system.initialize()
-			else:
-				init_success = system.initialize(dependencies)
+			if init_success:
+				_initialized_systems[system_name] = system
+				if OS.is_debug_build():
+					print("[Bootstrap] Debug: ✓ Successfully initialized %s" % system_name)
+					system_initialized.emit(system_name)
+					return true
+					else:
+						push_error("[Bootstrap] System initialization failed: %s" % system_name)
+						initialization_failed.emit(system_name, "Initialization method returned false")
+						return false
 
-				if init_success:
-					_initialized_systems[system_name] = system
-					if OS.is_debug_build():
-						print("[Bootstrap] Debug: ✓ Successfully initialized %s" % system_name)
-						system_initialized.emit(system_name)
-						return true
-						else:
-							push_error("[Bootstrap] System initialization failed: %s" % system_name)
-							initialization_failed.emit(system_name, "Initialization method returned false")
-							return false
+if not ResourceLoader.exists(script_path) and Engine.has_singleton("AccessibilityManager"):
+	return Engine.get_singleton("AccessibilityManager")
 
-func _fix_orphaned_code():
-	if not ResourceLoader.exists(script_path) and Engine.has_singleton("AccessibilityManager"):
-		return Engine.get_singleton("AccessibilityManager")
+	"visual_feedback":
+		script_path = "res://core/visualization/EducationalVisualFeedback.gd"
 
-		"visual_feedback":
-			script_path = "res://core/visualization/EducationalVisualFeedback.gd"
+		"selection_system":
+			# Use factory pattern for selection system
+			return _create_selection_system()
 
-			"selection_system":
-				# Use factory pattern for selection system
-				return _create_selection_system()
+			"camera_controller":
+				script_path = "res://core/interaction/CameraBehaviorController.gd"
 
-				"camera_controller":
-					script_path = "res://core/interaction/CameraBehaviorController.gd"
+				"model_coordinator":
+					script_path = "res://core/models/ModelRegistry.gd"
 
-					"model_coordinator":
-						script_path = "res://core/models/ModelRegistry.gd"
+					"ui_theme_manager":
+						script_path = "res://ui/panels/UIThemeManager.gd"
+						# Fallback to existing autoload
+						if not ResourceLoader.exists(script_path) and Engine.has_singleton("UIThemeManager"):
+							return Engine.get_singleton("UIThemeManager")
 
-						"ui_theme_manager":
-							script_path = "res://ui/panels/UIThemeManager.gd"
-							# Fallback to existing autoload
-							if not ResourceLoader.exists(script_path) and Engine.has_singleton("UIThemeManager"):
-								return Engine.get_singleton("UIThemeManager")
+							"educational_panels":
+								# Create panel registry
+return panel_registry
 
-								"educational_panels":
-									# Create panel registry
-func _fix_orphaned_code():
-	return panel_registry
+"knowledge_service":
+	script_path = "res://core/knowledge/KnowledgeService.gd"
+	# Fallback to existing autoload
+	if not ResourceLoader.exists(script_path) and Engine.has_singleton("KnowledgeService"):
+		return Engine.get_singleton("KnowledgeService")
 
-	"knowledge_service":
-		script_path = "res://core/knowledge/KnowledgeService.gd"
-		# Fallback to existing autoload
-		if not ResourceLoader.exists(script_path) and Engine.has_singleton("KnowledgeService"):
-			return Engine.get_singleton("KnowledgeService")
-
-			_:
-				push_warning("[Bootstrap] Unknown system: %s" % system_name)
-				return null
-
-				# Load script and create instance
-				if ResourceLoader.exists(script_path):
-func _fix_orphaned_code():
-	if script:
-func _fix_orphaned_code():
-	return instance
-
-	# Check for existing autoload
-func _fix_orphaned_code():
-	if potential_autoload:
-		return potential_autoload
-
-		push_warning("[Bootstrap] Failed to create system '%s': Script not found at %s" % [system_name, script_path])
-		return null
-
-func _fix_orphaned_code():
-	if feature_flags and feature_flags.has_method("is_enabled"):
-		if feature_flags.has_method("is_enabled"):
-			use_multi_selection = feature_flags.is_enabled("MULTI_SELECTION_SYSTEM")
-
-			# Load appropriate script
-func _fix_orphaned_code():
-	if ResourceLoader.exists(script_path):
-func _fix_orphaned_code():
-	if script:
-func _fix_orphaned_code():
-	if instance.has_method("configure_highlight_colors"):
-		instance.configure_highlight_colors(Color(0.0, 1.0, 0.0, 1.0), Color(1.0, 0.7, 0.0, 0.6))
-
-		if instance.has_method("set_emission_energy"):
-			instance.set_emission_energy(0.5)
-
-			return instance
-
-			push_warning("[Bootstrap] Failed to create selection system: Script not found at %s" % script_path)
+		_:
+			push_warning("[Bootstrap] Unknown system: %s" % system_name)
 			return null
 
-func _fix_orphaned_code():
-	if autoload_map.has(system_name):
-func _fix_orphaned_code():
-	if Engine.has_singleton(autoload_name):
-		return Engine.get_singleton(autoload_name)
+			# Load script and create instance
+			if ResourceLoader.exists(script_path):
+if script:
+return instance
 
+# Check for existing autoload
+if potential_autoload:
+	return potential_autoload
+
+	push_warning("[Bootstrap] Failed to create system '%s': Script not found at %s" % [system_name, script_path])
+	return null
+
+if feature_flags and feature_flags.has_method("is_enabled"):
+	if feature_flags.has_method("is_enabled"):
+		use_multi_selection = feature_flags.is_enabled("MULTI_SELECTION_SYSTEM")
+
+		# Load appropriate script
+if ResourceLoader.exists(script_path):
+if script:
+if instance.has_method("configure_highlight_colors"):
+	instance.configure_highlight_colors(Color(0.0, 1.0, 0.0, 1.0), Color(1.0, 0.7, 0.0, 0.6))
+
+	if instance.has_method("set_emission_energy"):
+		instance.set_emission_energy(0.5)
+
+		return instance
+
+		push_warning("[Bootstrap] Failed to create selection system: Script not found at %s" % script_path)
 		return null
 
-func _fix_orphaned_code():
+if autoload_map.has(system_name):
+if Engine.has_singleton(autoload_name):
+	return Engine.get_singleton(autoload_name)
+
+	return null
+
+if OS.is_debug_build():
+	print("[Bootstrap] Debug: Initialization completed in %.2f seconds" % duration)
 	if OS.is_debug_build():
-		print("[Bootstrap] Debug: Initialization completed in %.2f seconds" % duration)
-		if OS.is_debug_build():
-			print("[Bootstrap] Debug: Systems initialized: %d/%d" % [success_count, total_count])
+		print("[Bootstrap] Debug: Systems initialized: %d/%d" % [success_count, total_count])
 
-			if failed_count > 0:
-				push_error("[Bootstrap] Initialization errors: Failed systems: %s" % _failed_systems)
+		if failed_count > 0:
+			push_error("[Bootstrap] Initialization errors: Failed systems: %s" % _failed_systems)
 
-				# Update state
-				_initialization_in_progress = false
-				_initialization_complete = true
+			# Update state
+			_initialization_in_progress = false
+			_initialization_complete = true
 
-				# Notify listeners
-				initialization_complete.emit(duration)
+			# Notify listeners
+			initialization_complete.emit(duration)
 
 func _check_dependencies(system_name: String) -> bool:
 	"""Check if all dependencies for a system are initialized"""

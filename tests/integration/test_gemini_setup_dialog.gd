@@ -6,7 +6,7 @@ extends Node
 
 # Dependency references
 
-const TEST_API_KEY = "AIzaSomeTestKey123456789012345678901234567890"
+const TEST_API_KEY = "AIzaSomeTestKey123456789012345678901234567890" # pragma: allowlist secret
 
 
 var gemini_service: GeminiAIService
@@ -157,28 +157,27 @@ func test_config_saving() -> void:
 
 	# Store original values to restore later
 
-func _fix_orphaned_code():
-	for category in dialog.DEFAULT_SAFETY_SETTINGS:
-		assert(gemini_service.safety_settings.has(category), "Safety category should exist")
-		assert(
-		gemini_service.safety_settings[category] == dialog.DEFAULT_SAFETY_SETTINGS[category],
-		"Safety setting for " + category + " should use educational default"
-		)
+for category in dialog.DEFAULT_SAFETY_SETTINGS:
+	assert(gemini_service.safety_settings.has(category), "Safety category should exist")
+	assert(
+	gemini_service.safety_settings[category] == dialog.DEFAULT_SAFETY_SETTINGS[category],
+	"Safety setting for " + category + " should use educational default"
+	)
 
-		print("[TEST] Configuration saved correctly with educational defaults")
+	print("[TEST] Configuration saved correctly with educational defaults")
 
-		# Restore original values
-		gemini_service.api_key = original_api_key
-		gemini_service.current_model = original_model
-		gemini_service.temperature = original_temperature
-		gemini_service.max_output_tokens = original_max_tokens
-		gemini_service.safety_settings = original_safety
+	# Restore original values
+	gemini_service.api_key = original_api_key
+	gemini_service.current_model = original_model
+	gemini_service.temperature = original_temperature
+	gemini_service.max_output_tokens = original_max_tokens
+	gemini_service.safety_settings = original_safety
 
-		# Clean up dialog
-		dialog.queue_free()
+	# Clean up dialog
+	dialog.queue_free()
 
 
-		# Signal handlers
+	# Signal handlers
 
 func _on_setup_completed(successful: bool, api_key: String) -> void:
 	print(

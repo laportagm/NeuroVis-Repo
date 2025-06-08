@@ -13,12 +13,12 @@ var ai_assistant = null
 var test_panel = null
 
 var status = ai_assistant.get_service_status()
-var panel = PanelContainer.new()
+# FIXED: Orphaned code - var panel = PanelContainer.new()
 panel.set_anchors_preset(Control.PRESET_CENTER)
 panel.custom_minimum_size = Vector2(600, 500)
 panel.position = Vector2(100, 100)
 
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 vbox.add_theme_constant_override("separation", 10)
 panel.add_child(vbox)
 
@@ -32,16 +32,16 @@ vbox.add_child(title)
 var provider_container = HBoxContainer.new()
 vbox.add_child(provider_container)
 
-var provider_label = Label.new()
+# FIXED: Orphaned code - var provider_label = Label.new()
 provider_label.text = "AI Provider:"
 provider_container.add_child(provider_label)
 
-var provider_option = OptionButton.new()
+# FIXED: Orphaned code - var provider_option = OptionButton.new()
 provider_option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 # Add provider options
 var providers = ai_assistant.get_available_providers()
-var setup_btn = Button.new()
+# FIXED: Orphaned code - var setup_btn = Button.new()
 setup_btn.text = "Setup Gemini API Key"
 vbox.add_child(setup_btn)
 
@@ -51,7 +51,7 @@ question_input.placeholder_text = "Ask a question about brain anatomy..."
 question_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 vbox.add_child(question_input)
 
-var send_btn = Button.new()
+# FIXED: Orphaned code - var send_btn = Button.new()
 send_btn.text = "Send"
 vbox.add_child(send_btn)
 
@@ -60,11 +60,11 @@ var scroll = ScrollContainer.new()
 scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 vbox.add_child(scroll)
 
-var output_container = VBoxContainer.new()
+# FIXED: Orphaned code - var output_container = VBoxContainer.new()
 output_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 scroll.add_child(output_container)
 
-var output = RichTextLabel.new()
+# FIXED: Orphaned code - var output = RichTextLabel.new()
 output.fit_content = true
 output.text = "Test the Gemini integration by selecting GEMINI_USER from the provider dropdown and sending a question."
 output_container.add_child(output)
@@ -72,19 +72,19 @@ output_container.add_child(output)
 # Connect signals
 setup_btn.pressed.connect(func():
 var provider_name = provider_option.get_item_text(index)
-var provider = ai_assistant.AIProvider.get(provider_name)
+# FIXED: Orphaned code - var provider = ai_assistant.AIProvider.get(provider_name)
 	ai_assistant.set_provider(provider)
 	output.text += "\nSwitched to " + provider_name + " provider."
 
 var question = question_input.text.strip_edges()
-var dialog_script = preprepreload("res://ui/panels/GeminiSetupDialog.gd")
-var dialog = dialog_script.new()
+# FIXED: Orphaned code - var dialog_script = preload("res://ui/panels/GeminiSetupDialog.gd")
+# FIXED: Orphaned code - var dialog = dialog_script.new()
 	add_child(dialog)
 
 	# Connect signals
 	dialog.setup_completed.connect(func(successful, _api_key):
 var output_2 = test_panel.get_meta("output")
-var output_3 = test_panel.get_meta("output")
+# FIXED: Orphaned code - var output_3 = test_panel.get_meta("output")
 	output.text += "\nError: GeminiSetupDialog not found."
 
 var output_4 = test_panel.get_meta("output")
@@ -137,78 +137,71 @@ func create_test_ui():
 
 	# Create a simple control panel
 
-func _fix_orphaned_code():
-	print("- Provider: " + status.provider)
-	print("- Initialized: " + str(status.initialized))
+print("- Provider: " + status.provider)
+print("- Initialized: " + str(status.initialized))
 
-	await get_tree().create_timer(0.5).timeout
+await get_tree().create_timer(0.5).timeout
 
-func _fix_orphaned_code():
+if ai_assistant:
+for i in range(providers.size()):
+	provider_option.add_item(providers[i])
+	if i == ai_assistant.ai_provider:
+		provider_option.select(i)
+
+		provider_container.add_child(provider_option)
+
+		# Create the setup button
+if gemini_service and gemini_service.has_method("needs_setup"):
+	if gemini_service.needs_setup():
+		_show_setup_dialog()
+		else:
+			output.text += "\nGemini API already configured."
+			)
+
+			provider_option.item_selected.connect(func(index):
+				if ai_assistant:
+if provider_name == "GEMINI_USER" and gemini_service and gemini_service.has_method("needs_setup"):
+	if gemini_service.needs_setup():
+		output.text += "\nGemini setup needed. Click the Setup button."
+		)
+
+		send_btn.pressed.connect(func():
+if question.is_empty():
+	return
+
+	output.text += "\n\nQ: " + question
+
 	if ai_assistant:
-func _fix_orphaned_code():
-	for i in range(providers.size()):
-		provider_option.add_item(providers[i])
-		if i == ai_assistant.ai_provider:
-			provider_option.select(i)
+		ai_assistant.ask_question(question)
+		output.text += "\nSending question to AI provider..."
+		question_input.text = ""
 
-			provider_container.add_child(provider_option)
-
-			# Create the setup button
-func _fix_orphaned_code():
-	if gemini_service and gemini_service.has_method("needs_setup"):
-		if gemini_service.needs_setup():
-			_show_setup_dialog()
-			else:
-				output.text += "\nGemini API already configured."
+		# Connect to response signal if not already connected
+		if not ai_assistant.response_received.is_connected(_on_ai_response):
+			ai_assistant.response_received.connect(_on_ai_response)
+			if not ai_assistant.error_occurred.is_connected(_on_ai_error):
+				ai_assistant.error_occurred.connect(_on_ai_error)
 				)
 
-				provider_option.item_selected.connect(func(index):
-					if ai_assistant:
-func _fix_orphaned_code():
-	if provider_name == "GEMINI_USER" and gemini_service and gemini_service.has_method("needs_setup"):
-		if gemini_service.needs_setup():
-			output.text += "\nGemini setup needed. Click the Setup button."
-			)
+				# Add to scene
+				add_child(panel)
+				test_panel = panel
 
-			send_btn.pressed.connect(func():
-func _fix_orphaned_code():
-	if question.is_empty():
-		return
+				# Store references for later access
+				panel.set_meta("output", output)
+				panel.set_meta("question_input", question_input)
 
-		output.text += "\n\nQ: " + question
+				print("✅ Test UI created")
+				await get_tree().create_timer(0.5).timeout
 
-		if ai_assistant:
-			ai_assistant.ask_question(question)
-			output.text += "\nSending question to AI provider..."
-			question_input.text = ""
+if successful:
+	output.text += "\nGemini API setup successful!"
+	else:
+		output.text += "\nGemini API setup failed."
+		)
 
-			# Connect to response signal if not already connected
-			if not ai_assistant.response_received.is_connected(_on_ai_response):
-				ai_assistant.response_received.connect(_on_ai_response)
-				if not ai_assistant.error_occurred.is_connected(_on_ai_error):
-					ai_assistant.error_occurred.connect(_on_ai_error)
-					)
-
-					# Add to scene
-					add_child(panel)
-					test_panel = panel
-
-					# Store references for later access
-					panel.set_meta("output", output)
-					panel.set_meta("question_input", question_input)
-
-					print("✅ Test UI created")
-					await get_tree().create_timer(0.5).timeout
-
-func _fix_orphaned_code():
-	if successful:
-		output.text += "\nGemini API setup successful!"
+		dialog.show_dialog()
 		else:
-			output.text += "\nGemini API setup failed."
-			)
-
-			dialog.show_dialog()
-			else:
 func _show_setup_dialog():
 	# Try to load GeminiSetupDialog
 	if ResourceLoader.exists("res://ui/panels/GeminiSetupDialog.gd"):

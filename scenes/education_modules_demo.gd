@@ -16,15 +16,15 @@ var current_mode: int = EducationalModuleCoordinator.EducationalMode.FREE_EXPLOR
 
 # === LIFECYCLE METHODS ===
 var brain_switcher = educational_coordinator.get_module("brain_system_switcher")
-var comparative = educational_coordinator.get_module("comparative_anatomy")
-var pathway = educational_coordinator.get_module("learning_pathway")
-var mode_name = EducationalModuleCoordinator.EducationalMode.keys()[mode_value]
+# FIXED: Orphaned code - var comparative = educational_coordinator.get_module("comparative_anatomy")
+# FIXED: Orphaned code - var pathway = educational_coordinator.get_module("learning_pathway")
+# FIXED: Orphaned code - var mode_name = EducationalModuleCoordinator.EducationalMode.keys()[mode_value]
 mode_selector.add_item(mode_name, mode_value)
 
 # Set current mode
 mode_selector.select(current_mode)
 
-var available_systems = brain_switcher.get_available_systems()
+# FIXED: Orphaned code - var available_systems = brain_switcher.get_available_systems()
 
 # Enable/disable buttons based on available systems
 system_switcher_ui.get_node("WholeButton").disabled = not available_systems.has(BrainSystemSwitcher.BrainSystem.WHOLE_BRAIN)
@@ -32,40 +32,40 @@ system_switcher_ui.get_node("HalfButton").disabled = not available_systems.has(B
 system_switcher_ui.get_node("InternalButton").disabled = not available_systems.has(BrainSystemSwitcher.BrainSystem.INTERNAL_STRUCTURES)
 system_switcher_ui.get_node("BrainstemButton").disabled = not available_systems.has(BrainSystemSwitcher.BrainSystem.BRAINSTEM_FOCUS)
 
-var comparative_dropdown = comparative_ui.get_node("ComparisonDropdown")
+# FIXED: Orphaned code - var comparative_dropdown = comparative_ui.get_node("ComparisonDropdown")
 comparative_dropdown.clear()
 
 # Add available comparisons
 var comparisons = comparative.get_available_comparisons()
-var pathway_dropdown = pathway_ui.get_node("PathwayDropdown")
+# FIXED: Orphaned code - var pathway_dropdown = pathway_ui.get_node("PathwayDropdown")
 pathway_dropdown.clear()
 
 # Add available pathways
 var pathways = pathway.get_available_pathways()
-var success = educational_coordinator.switch_brain_system(system)
+# FIXED: Orphaned code - var success = educational_coordinator.switch_brain_system(system)
 
-var dropdown = comparative_ui.get_node("ComparisonDropdown")
-var selected_id = dropdown.get_selected_metadata()
+# FIXED: Orphaned code - var dropdown = comparative_ui.get_node("ComparisonDropdown")
+# FIXED: Orphaned code - var selected_id = dropdown.get_selected_metadata()
 
-var success_2 = educational_coordinator.start_comparative_study(selected_id)
+# FIXED: Orphaned code - var success_2 = educational_coordinator.start_comparative_study(selected_id)
 
-var dropdown_2 = pathway_ui.get_node("PathwayDropdown")
-var selected_id_2 = dropdown.get_selected_metadata()
+# FIXED: Orphaned code - var dropdown_2 = pathway_ui.get_node("PathwayDropdown")
+# FIXED: Orphaned code - var selected_id_2 = dropdown.get_selected_metadata()
 
-var success_3 = educational_coordinator.start_learning_pathway(selected_id)
+# FIXED: Orphaned code - var success_3 = educational_coordinator.start_learning_pathway(selected_id)
 
-var success_4 = educational_coordinator.advance_learning_step()
+# FIXED: Orphaned code - var success_4 = educational_coordinator.advance_learning_step()
 
-var step = educational_coordinator.get_current_learning_step()
-var mode = mode_selector.get_item_id(index)
+# FIXED: Orphaned code - var step = educational_coordinator.get_current_learning_step()
+# FIXED: Orphaned code - var mode = mode_selector.get_item_id(index)
 current_mode = mode
 
 var success_5 = educational_coordinator.set_educational_mode(mode)
 
-var brain_switcher_2 = educational_coordinator.get_module("brain_system_switcher")
-var pathway_2 = educational_coordinator.get_module("learning_pathway")
-var brain_switcher_3 = educational_coordinator.get_module("brain_system_switcher")
-var comparative_2 = educational_coordinator.get_module("comparative_anatomy")
+# FIXED: Orphaned code - var brain_switcher_2 = educational_coordinator.get_module("brain_system_switcher")
+# FIXED: Orphaned code - var pathway_2 = educational_coordinator.get_module("learning_pathway")
+# FIXED: Orphaned code - var brain_switcher_3 = educational_coordinator.get_module("brain_system_switcher")
+# FIXED: Orphaned code - var comparative_2 = educational_coordinator.get_module("comparative_anatomy")
 
 @onready var ui_container = $UI/Container
 @onready var system_switcher_ui = $UI/Container/SystemSwitcherPanel
@@ -103,132 +103,115 @@ func _initialize_ui_elements() -> void:
 	"""Initialize UI elements based on available modules"""
 	# System Switcher UI
 
-func _fix_orphaned_code():
-	if brain_switcher:
-		system_switcher_ui.visible = true
-		_update_system_switcher_ui(brain_switcher)
-		else:
-			system_switcher_ui.visible = false
+if brain_switcher:
+	system_switcher_ui.visible = true
+	_update_system_switcher_ui(brain_switcher)
+	else:
+		system_switcher_ui.visible = false
 
-			# Comparative Anatomy UI
-func _fix_orphaned_code():
-	if comparative:
-		comparative_ui.visible = true
-		_update_comparative_ui(comparative)
+		# Comparative Anatomy UI
+if comparative:
+	comparative_ui.visible = true
+	_update_comparative_ui(comparative)
+	else:
+		comparative_ui.visible = false
+
+		# Learning Pathway UI
+if pathway:
+	pathway_ui.visible = true
+	_update_pathway_ui(pathway)
+	else:
+		pathway_ui.visible = false
+
+for comparison in comparisons:
+	comparative_dropdown.add_item(comparison.title, comparison.id)
+
+for p in pathways:
+	pathway_dropdown.add_item(p.name, p.id)
+
+	# Update next button state
+	pathway_ui.get_node("NextButton").disabled = pathway._current_pathway_id.is_empty()
+
+	# === ACTIONS ===
+if success:
+	status_label.text = "Switching to " + BrainSystemSwitcher.BrainSystem.keys()[system]
+	else:
+		status_label.text = "Failed to switch brain system"
+
+if selected_id == null or selected_id.is_empty():
+	status_label.text = "Please select a comparison"
+	return
+
+if success:
+	status_label.text = "Starting comparative study: " + dropdown.get_item_text(dropdown.selected)
+	else:
+		status_label.text = "Failed to start comparative study"
+
+if selected_id == null or selected_id.is_empty():
+	status_label.text = "Please select a pathway"
+	return
+
+if success:
+	status_label.text = "Starting pathway: " + dropdown.get_item_text(dropdown.selected)
+	pathway_ui.get_node("NextButton").disabled = false
+	else:
+		status_label.text = "Failed to start pathway"
+
+if success:
+if not step.is_empty():
+	status_label.text = "Current step: " + step.title
+	else:
+		status_label.text = "Pathway completed"
+		pathway_ui.get_node("NextButton").disabled = true
 		else:
+			status_label.text = "Failed to advance pathway or pathway complete"
+			pathway_ui.get_node("NextButton").disabled = true
+
+			# === SIGNAL HANDLERS ===
+if success:
+	status_label.text = "Mode changed to: " + EducationalModuleCoordinator.EducationalMode.keys()[mode]
+
+	# Update UI visibility based on mode
+	match mode:
+		EducationalModuleCoordinator.EducationalMode.FREE_EXPLORATION:
+			system_switcher_ui.visible = true
 			comparative_ui.visible = false
-
-			# Learning Pathway UI
-func _fix_orphaned_code():
-	if pathway:
-		pathway_ui.visible = true
-		_update_pathway_ui(pathway)
-		else:
 			pathway_ui.visible = false
 
-func _fix_orphaned_code():
-	for comparison in comparisons:
-		comparative_dropdown.add_item(comparison.title, comparison.id)
-
-func _fix_orphaned_code():
-	for p in pathways:
-		pathway_dropdown.add_item(p.name, p.id)
-
-		# Update next button state
-		pathway_ui.get_node("NextButton").disabled = pathway._current_pathway_id.is_empty()
-
-		# === ACTIONS ===
-func _fix_orphaned_code():
-	if success:
-		status_label.text = "Switching to " + BrainSystemSwitcher.BrainSystem.keys()[system]
-		else:
-			status_label.text = "Failed to switch brain system"
-
-func _fix_orphaned_code():
-	if selected_id == null or selected_id.is_empty():
-		status_label.text = "Please select a comparison"
-		return
-
-func _fix_orphaned_code():
-	if success:
-		status_label.text = "Starting comparative study: " + dropdown.get_item_text(dropdown.selected)
-		else:
-			status_label.text = "Failed to start comparative study"
-
-func _fix_orphaned_code():
-	if selected_id == null or selected_id.is_empty():
-		status_label.text = "Please select a pathway"
-		return
-
-func _fix_orphaned_code():
-	if success:
-		status_label.text = "Starting pathway: " + dropdown.get_item_text(dropdown.selected)
-		pathway_ui.get_node("NextButton").disabled = false
-		else:
-			status_label.text = "Failed to start pathway"
-
-func _fix_orphaned_code():
-	if success:
-func _fix_orphaned_code():
-	if not step.is_empty():
-		status_label.text = "Current step: " + step.title
-		else:
-			status_label.text = "Pathway completed"
-			pathway_ui.get_node("NextButton").disabled = true
-			else:
-				status_label.text = "Failed to advance pathway or pathway complete"
-				pathway_ui.get_node("NextButton").disabled = true
-
-				# === SIGNAL HANDLERS ===
-func _fix_orphaned_code():
-	if success:
-		status_label.text = "Mode changed to: " + EducationalModuleCoordinator.EducationalMode.keys()[mode]
-
-		# Update UI visibility based on mode
-		match mode:
-			EducationalModuleCoordinator.EducationalMode.FREE_EXPLORATION:
+			EducationalModuleCoordinator.EducationalMode.GUIDED_LEARNING:
 				system_switcher_ui.visible = true
 				comparative_ui.visible = false
-				pathway_ui.visible = false
+				pathway_ui.visible = true
 
-				EducationalModuleCoordinator.EducationalMode.GUIDED_LEARNING:
-					system_switcher_ui.visible = true
-					comparative_ui.visible = false
-					pathway_ui.visible = true
+				EducationalModuleCoordinator.EducationalMode.COMPARATIVE_STUDY:
+					system_switcher_ui.visible = false
+					comparative_ui.visible = true
+					pathway_ui.visible = false
 
-					EducationalModuleCoordinator.EducationalMode.COMPARATIVE_STUDY:
+					EducationalModuleCoordinator.EducationalMode.ASSESSMENT,
+					EducationalModuleCoordinator.EducationalMode.CLINICAL_CASE:
 						system_switcher_ui.visible = false
-						comparative_ui.visible = true
-						pathway_ui.visible = false
+						comparative_ui.visible = false
+						pathway_ui.visible = true
+						else:
+							status_label.text = "Failed to change mode"
+							# Revert selection
+							mode_selector.select(mode_selector.get_item_index(current_mode))
 
-						EducationalModuleCoordinator.EducationalMode.ASSESSMENT,
-						EducationalModuleCoordinator.EducationalMode.CLINICAL_CASE:
-							system_switcher_ui.visible = false
-							comparative_ui.visible = false
-							pathway_ui.visible = true
-							else:
-								status_label.text = "Failed to change mode"
-								# Revert selection
-								mode_selector.select(mode_selector.get_item_index(current_mode))
+if brain_switcher:
+	_update_system_switcher_ui(brain_switcher)
 
-func _fix_orphaned_code():
-	if brain_switcher:
-		_update_system_switcher_ui(brain_switcher)
+	"pathway_start", "pathway_complete":
+		# Pathway started or completed, update pathway UI
+if pathway:
+	_update_pathway_ui(pathway)
 
-		"pathway_start", "pathway_complete":
-			# Pathway started or completed, update pathway UI
-func _fix_orphaned_code():
-	if pathway:
-		_update_pathway_ui(pathway)
+if brain_switcher:
+	_update_system_switcher_ui(brain_switcher)
 
-func _fix_orphaned_code():
-	if brain_switcher:
-		_update_system_switcher_ui(brain_switcher)
-
-		"comparison":
-func _fix_orphaned_code():
-	if comparative:
-		_update_comparative_ui(comparative)
+	"comparison":
+if comparative:
+	_update_comparative_ui(comparative)
 
 func _connect_ui_signals() -> void:
 	"""Connect UI signals to handlers"""

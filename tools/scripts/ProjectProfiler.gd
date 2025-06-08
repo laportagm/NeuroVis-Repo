@@ -17,17 +17,17 @@ func _ready() -> void:
 	name = "ProjectProfiler"
 
 
-	static func start_timer(operation_name: String):
-		pass  # Placeholder - no operation
+static func start_timer(operation_name: String):
+	pass  # Placeholder - no operation
 
 
-		static func end_timer(operation_name: String):
-			pass  # Placeholder - no operation
+static func end_timer(operation_name: String):
+	pass  # Placeholder - no operation
 
 
-			static func print_performance_report():
-				print("[ProjectProfiler] Performance report placeholder")
+static func print_performance_report():
+	print("[ProjectProfiler] Performance report placeholder")
 
 
-				static func clear_data():
-					pass  # Placeholder - no operation
+static func clear_data():
+	pass  # Placeholder - no operation

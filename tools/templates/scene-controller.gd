@@ -42,7 +42,7 @@ var list = component as ItemList
 
 var _is_initialized: bool = false
 var _scene_state: Dictionary = {}
-var _ui_components: Array[Control] = []
+# FIXED: Orphaned code - var _ui_components: Array[Control] = []
 
 # === LIFECYCLE METHODS ===
 
@@ -140,27 +140,23 @@ func is_initialized() -> bool:
 	"""Check if the scene is fully initialized"""
 	return _is_initialized
 
-func _fix_orphaned_code():
-	for node in required_nodes:
-		if not node:
-			_log_error("Required node missing: " + str(node))
-			return false
+for node in required_nodes:
+	if not node:
+		_log_error("Required node missing: " + str(node))
+		return false
 
-			return true
+		return true
 
-func _fix_orphaned_code():
-	if button.pressed.is_connected(_on_button_pressed):
-		button.pressed.disconnect(_on_button_pressed)
-		"LineEdit":
-func _fix_orphaned_code():
-	if input.text_submitted.is_connected(_on_input_submitted):
-		input.text_submitted.disconnect(_on_input_submitted)
-		"ItemList":
-func _fix_orphaned_code():
-	if list.item_selected.is_connected(_on_list_item_selected):
-		list.item_selected.disconnect(_on_list_item_selected)
+if button.pressed.is_connected(_on_button_pressed):
+	button.pressed.disconnect(_on_button_pressed)
+	"LineEdit":
+if input.text_submitted.is_connected(_on_input_submitted):
+	input.text_submitted.disconnect(_on_input_submitted)
+	"ItemList":
+if list.item_selected.is_connected(_on_list_item_selected):
+	list.item_selected.disconnect(_on_list_item_selected)
 
-		# === EVENT HANDLERS ===
+	# === EVENT HANDLERS ===
 
 func _validate_required_nodes() -> bool:
 	"""Validate that all required nodes are present"""

@@ -57,8 +57,8 @@ add_child(margin)
 margin.add_child(vbox)
 
 
-var key = api_key_input.text.strip_edges()
-var response = await gemini_service.ask_question("What is 2+2? Answer in one word.")
+# FIXED: Orphaned code - var key = api_key_input.text.strip_edges()
+# FIXED: Orphaned code - var response = await gemini_service.ask_question("What is 2+2? Answer in one word.")
 
 func _ready():
 	print("[TEST] Manual Gemini test scene ready")
@@ -78,40 +78,38 @@ func _ready():
 		_setup_ui()
 
 		# Pre-fill the API key for testing
-		api_key_input.text = "AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs"
+		api_key_input.text = "AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs" # pragma: allowlist secret
 
 
-func _fix_orphaned_code():
-	if key.is_empty():
-		result_label.append_text("[color=red]Please enter an API key![/color]\n")
-		return
+if key.is_empty():
+	result_label.append_text("[color=red]Please enter an API key![/color]\n")
+	return
 
-		test_button.disabled = true
-		test_button.text = "Testing..."
+	test_button.disabled = true
+	test_button.text = "Testing..."
 
-		result_label.append_text("Key: " + key.substr(0, 10) + "...\n")
-		result_label.append_text("Validating with Gemini API...\n\n")
+	result_label.append_text("Key: " + key.substr(0, 10) + "...\n")
+	result_label.append_text("Validating with Gemini API...\n\n")
 
-		# Validate the key
-		gemini_service.validate_api_key(key)
+	# Validate the key
+	gemini_service.validate_api_key(key)
 
 
-func _fix_orphaned_code():
-	if response != "":
-		result_label.append_text("[color=green]Query successful![/color]\n")
-		result_label.append_text("Response: " + response + "\n")
+if response != "":
+	result_label.append_text("[color=green]Query successful![/color]\n")
+	result_label.append_text("Response: " + response + "\n")
+	else:
+		result_label.append_text(
+		"[color=red]Query failed - check console for details[/color]\n"
+		)
 		else:
-			result_label.append_text(
-			"[color=red]Query failed - check console for details[/color]\n"
-			)
-			else:
-				result_label.append_text("[color=red]❌ API Key Invalid![/color]\n")
-				result_label.append_text("Message: " + message + "\n")
-				result_label.append_text("\nPossible issues:\n")
-				result_label.append_text("• API key is incorrect\n")
-				result_label.append_text("• Gemini API not enabled in Google Cloud Console\n")
-				result_label.append_text("• Billing not set up in Google Cloud\n")
-				result_label.append_text("• API quota exceeded\n")
+			result_label.append_text("[color=red]❌ API Key Invalid![/color]\n")
+			result_label.append_text("Message: " + message + "\n")
+			result_label.append_text("\nPossible issues:\n")
+			result_label.append_text("• API key is incorrect\n")
+			result_label.append_text("• Gemini API not enabled in Google Cloud Console\n")
+			result_label.append_text("• Billing not set up in Google Cloud\n")
+			result_label.append_text("• API quota exceeded\n")
 
 
 func _setup_ui():

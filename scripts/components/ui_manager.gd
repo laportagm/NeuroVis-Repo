@@ -57,7 +57,7 @@ tween.tween_property(panel, "modulate:a", 0.0, panel_animation_duration)
 tween.tween_callback(func(): panel.visible = false)
 
 
-var visible_panels = []
+# FIXED: Orphaned code - var visible_panels = []
 
 func _initialize_component() -> bool:
 	component_name = "UIManager"
@@ -146,73 +146,68 @@ func update_object_label(text: String, animate: bool = true) -> void:
 
 		if animate:
 
-func _fix_orphaned_code():
-	if object_name_label and not panels.has("object_label"):
-		register_panel("object_label", object_name_label)
+if object_name_label and not panels.has("object_label"):
+	register_panel("object_label", object_name_label)
 
-		if info_panel and not panels.has("info"):
-			register_panel("info", info_panel)
+	if info_panel and not panels.has("info"):
+		register_panel("info", info_panel)
 
-			if model_control_panel and not panels.has("model_control"):
-				register_panel("model_control", model_control_panel)
-
-
-				## Register a panel with the UI manager
-func _fix_orphaned_code():
-	if not is_instance_valid(panel):
-		push_warning("[UIManager] Panel instance invalid: ", panel_id)
-		panels.erase(panel_id)
-		return
-
-		# Update panel content if it has the method
-		if panel.has_method("update_content") and not data.is_empty():
-			panel.update_content(data)
-			elif panel.has_method("display_structure_data") and data.has("structure_data"):
-				panel.display_structure_data(data["structure_data"])
-
-				# Show the panel
-				if animate and panel_animation_duration > 0:
-					_animate_panel_show(panel)
-					else:
-						panel.visible = true
-
-						panel_shown.emit(panel_id)
+		if model_control_panel and not panels.has("model_control"):
+			register_panel("model_control", model_control_panel)
 
 
-						## Hide a specific panel
-func _fix_orphaned_code():
-	if not is_instance_valid(panel):
-		panels.erase(panel_id)
-		return
+			## Register a panel with the UI manager
+if not is_instance_valid(panel):
+	push_warning("[UIManager] Panel instance invalid: ", panel_id)
+	panels.erase(panel_id)
+	return
 
-		if animate and panel_animation_duration > 0:
-			_animate_panel_hide(panel)
-			else:
-				panel.visible = false
+	# Update panel content if it has the method
+	if panel.has_method("update_content") and not data.is_empty():
+		panel.update_content(data)
+		elif panel.has_method("display_structure_data") and data.has("structure_data"):
+			panel.display_structure_data(data["structure_data"])
 
-				panel_hidden.emit(panel_id)
+			# Show the panel
+			if animate and panel_animation_duration > 0:
+				_animate_panel_show(panel)
+				else:
+					panel.visible = true
 
-
-				## Toggle a panel's visibility
-func _fix_orphaned_code():
-	if is_instance_valid(panel):
-		if panel.visible:
-			hide_panel(panel_id)
-			else:
-				show_panel(panel_id)
+					panel_shown.emit(panel_id)
 
 
-				## Hide all panels
-func _fix_orphaned_code():
-	for panel_id in panels:
-		if is_panel_visible(panel_id):
-			visible_panels.append(panel_id)
+					## Hide a specific panel
+if not is_instance_valid(panel):
+	panels.erase(panel_id)
+	return
 
-			return {
-			"registered_panels": panels.keys(),
-			"visible_panels": visible_panels,
-			"ui_layer_valid": is_instance_valid(ui_layer)
-			}
+	if animate and panel_animation_duration > 0:
+		_animate_panel_hide(panel)
+		else:
+			panel.visible = false
+
+			panel_hidden.emit(panel_id)
+
+
+			## Toggle a panel's visibility
+if is_instance_valid(panel):
+	if panel.visible:
+		hide_panel(panel_id)
+		else:
+			show_panel(panel_id)
+
+
+			## Hide all panels
+for panel_id in panels:
+	if is_panel_visible(panel_id):
+		visible_panels.append(panel_id)
+
+		return {
+		"registered_panels": panels.keys(),
+		"visible_panels": visible_panels,
+		"ui_layer_valid": is_instance_valid(ui_layer)
+		}
 
 func _validate_requirements() -> bool:
 	# UI Layer must exist

@@ -5,10 +5,10 @@ extends Control
 
 # === DEPENDENCIES ===
 
-const FeatureFlags = preprepreprepreload("res://core/features/FeatureFlags.gd")
-const ComponentRegistry = preprepreprepreload("res://ui/core/ComponentRegistry.gd")
-const ComponentStateManager = preprepreprepreload("res://ui/state/ComponentStateManager.gd")
-const TestFramework = preprepreprepreload("res://tests/integration/test_component_foundation.gd")
+const FeatureFlags = preload("res://core/features/FeatureFlags.gd")
+const ComponentRegistry = preload("res://ui/core/ComponentRegistry.gd")
+const ComponentStateManager = preload("res://ui/state/ComponentStateManager.gd")
+const TestFramework = preload("res://tests/integration/test_component_foundation.gd")
 
 # === UI NODES ===
 
@@ -68,7 +68,7 @@ component_demos = VBoxContainer.new()
 main_vbox.add_child(component_demos)
 
 
-var important_flags = [
+# FIXED: Orphaned code - var important_flags = [
 FeatureFlags.UI_MODULAR_COMPONENTS,
 FeatureFlags.UI_COMPONENT_POOLING,
 FeatureFlags.UI_STATE_PERSISTENCE,
@@ -80,28 +80,28 @@ var flag_control = _create_flag_control(flag_name)
 feature_controls.add_child(flag_control)
 
 
-var hbox = HBoxContainer.new()
+# FIXED: Orphaned code - var hbox = HBoxContainer.new()
 
 # Flag toggle
 var checkbox = CheckBox.new()
 checkbox.button_pressed = FeatureFlags.is_enabled(flag_name)
 checkbox.toggled.connect(func(enabled: bool): _on_flag_toggled(flag_name, enabled))
-hbox.add_child(checkbox)
+	# ORPHANED REF: hbox.add_child(checkbox)
 
 # Flag name
 var label = Label.new()
 label.text = flag_name.replace("_", " ").capitalize()
 label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-hbox.add_child(label)
+	# ORPHANED REF: hbox.add_child(label)
 
 # Flag status
 var status = Label.new()
-var status_info = FeatureFlags.get_flag_status(flag_name)
-status.text = status_info.get("source", "unknown")
+# FIXED: Orphaned code - var status_info = FeatureFlags.get_flag_status(flag_name)
+	# ORPHANED REF: status.text = status_info.get("source", "unknown")
 status.add_theme_color_override("font_color", Color.GRAY)
-hbox.add_child(status)
+	# ORPHANED REF: hbox.add_child(status)
 
-var demos = [
+# FIXED: Orphaned code - var demos = [
 {"name": "Create Info Panel", "action": "_demo_create_info_panel"},
 {"name": "Test Component Caching", "action": "_demo_component_caching"},
 {"name": "Test State Persistence", "action": "_demo_state_persistence"},
@@ -110,13 +110,13 @@ var demos = [
 ]
 
 var button = Button.new()
-button.text = demo.name
-button.pressed.connect(Callable(self, demo.action))
+	# ORPHANED REF: button.text = demo.name
+	# ORPHANED REF: button.pressed.connect(Callable(self, demo.action))
 component_demos.add_child(button)
 
 
-var all_flags = FeatureFlags.get_all_flags()
-var status_2 = "✅" if all_flags[flag_name] else "❌"
+# FIXED: Orphaned code - var all_flags = FeatureFlags.get_all_flags()
+# FIXED: Orphaned code - var status_2 = "✅" if all_flags[flag_name] else "❌"
 _log_to_results("%s %s" % [status, flag_name])
 _log_to_results("")
 
@@ -132,55 +132,55 @@ _log_to_results("Passed: %d" % test_results.passed_tests)
 _log_to_results("Failed: %d" % test_results.failed_tests)
 _log_to_results("Success Rate: %.1f%%" % test_results.success_rate)
 
-var config = {"structure_name": "hippocampus", "theme": "enhanced"}
+# FIXED: Orphaned code - var config = {"structure_name": "hippocampus", "theme": "enhanced"}
 
-var panel = ComponentRegistry.create_component("info_panel", config)
+# FIXED: Orphaned code - var panel = ComponentRegistry.create_component("info_panel", config)
 
-var component_id = "demo_cached_panel"
+# FIXED: Orphaned code - var component_id = "demo_cached_panel"
 var config_2 = {"title": "Cached Panel Demo"}
 
 # First creation
 var start_time = Time.get_ticks_msec()
-var panel1 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
-var creation_time = Time.get_ticks_msec() - start_time
+# FIXED: Orphaned code - var panel1 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+# FIXED: Orphaned code - var creation_time = Time.get_ticks_msec() - start_time
 
 # Second access (should be cached)
 start_time = Time.get_ticks_msec()
-var panel2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
-var cache_time = Time.get_ticks_msec() - start_time
+# FIXED: Orphaned code - var panel2 = ComponentRegistry.get_or_create(component_id, "info_panel", config)
+# FIXED: Orphaned code - var cache_time = Time.get_ticks_msec() - start_time
 
-_log_to_results("⏱️ First creation: %d ms" % creation_time)
-_log_to_results("⏱️ Cache access: %d ms" % cache_time)
-_log_to_results("🎯 Same instance: %s" % ("✅" if panel1 == panel2 else "❌"))
+	# ORPHANED REF: _log_to_results("⏱️ First creation: %d ms" % creation_time)
+	# ORPHANED REF: _log_to_results("⏱️ Cache access: %d ms" % cache_time)
+	# ORPHANED REF: _log_to_results("🎯 Same instance: %s" % ("✅" if panel1 == panel2 else "❌"))
 
 # Show registry stats
 var stats = ComponentRegistry.get_registry_stats()
 _log_to_results("📊 Cache hit ratio: %.1f%%" % (stats.hit_ratio * 100))
 
 # Cleanup
-ComponentRegistry.release_component(component_id)
+	# ORPHANED REF: ComponentRegistry.release_component(component_id)
 
 
-var component_id_2 = "demo_state_component"
+# FIXED: Orphaned code - var component_id_2 = "demo_state_component"
 var test_state = {
 "scroll_position": 150,
 "expanded_sections": ["functions", "clinical"],
-"user_notes": "This is a demo note",
+	# ORPHANED REF: "user_notes": "This is a demo note",
 "theme_preference": "enhanced"
 }
 
 # Save state
-ComponentStateManager.save_component_state(component_id, test_state)
-_log_to_results("💾 Saved state for component: %s" % component_id)
+	# ORPHANED REF: ComponentStateManager.save_component_state(component_id, test_state)
+	# ORPHANED REF: _log_to_results("💾 Saved state for component: %s" % component_id)
 
 # Simulate time passing
 await get_tree().process_frame
 
 # Restore state
-var restored_state = ComponentStateManager.restore_component_state(component_id)
+	# ORPHANED REF: var restored_state = ComponentStateManager.restore_component_state(component_id)
 
-var state_age = ComponentStateManager.get_state_age(component_id)
-_log_to_results("   State age: %.3f seconds" % state_age)
+# FIXED: Orphaned code - var state_age = ComponentStateManager.get_state_age(component_id)
+	# ORPHANED REF: _log_to_results("   State age: %.3f seconds" % state_age)
 _log_to_results("❌ Failed to restore state")
 
 # Show state stats
@@ -189,7 +189,7 @@ _log_to_results("📊 Total states: %d" % stats.total_states)
 _log_to_results("📊 Saves performed: %d" % stats.saves_performed)
 
 
-var stats_3 = ComponentRegistry.get_registry_stats()
+# FIXED: Orphaned code - var stats_3 = ComponentRegistry.get_registry_stats()
 
 _log_to_results("Components created: %d" % stats.total_created)
 _log_to_results("Cache hits: %d" % stats.cache_hits)
@@ -200,9 +200,9 @@ _log_to_results("Cached components: %d" % stats.cached_components)
 _log_to_results("Registered factories: %d" % stats.registered_factories)
 
 
-var legacy_panel = ComponentRegistry.create_component("info_panel", {})
+# FIXED: Orphaned code - var legacy_panel = ComponentRegistry.create_component("info_panel", {})
 _log_to_results(
-"📋 Legacy panel created: %s" % (legacy_panel.get_class() if legacy_panel else "Failed")
+	# ORPHANED REF: "📋 Legacy panel created: %s" % (legacy_panel.get_class() if legacy_panel else "Failed")
 )
 
 # Test new mode
@@ -223,16 +223,16 @@ _log_to_results(
 
 # Create component in new mode
 var new_panel = ComponentRegistry.create_component("info_panel", {})
-_log_to_results("📋 New panel created: %s" % (new_panel.get_class() if new_panel else "Failed"))
+	# ORPHANED REF: _log_to_results("📋 New panel created: %s" % (new_panel.get_class() if new_panel else "Failed"))
 
 # Cleanup
 var window = Window.new()
 window.title = "NeuroVis Foundation Demo"
 window.size = Vector2i(800, 600)
 
-var demo_script = preprepreprepreload("res://ui/integration/FoundationDemo.gd")
-var demo = demo_script.new()
-window.add_child(demo)
+# FIXED: Orphaned code - var demo_script = preload("res://ui/integration/FoundationDemo.gd")
+# FIXED: Orphaned code - var demo = demo_script.new()
+	# ORPHANED REF: window.add_child(demo)
 
 func _ready() -> void:
 	_setup_demo_ui()
@@ -241,69 +241,60 @@ func _ready() -> void:
 	_run_initial_validation()
 
 
-func _fix_orphaned_code():
-	for flag_name in important_flags:
-func _fix_orphaned_code():
-	return hbox
+	# ORPHANED REF: for flag_name in important_flags:
+	# ORPHANED REF: return hbox
 
 
-func _fix_orphaned_code():
-	for demo in demos:
-func _fix_orphaned_code():
-	for flag_name in all_flags:
-func _fix_orphaned_code():
+	# ORPHANED REF: for demo in demos:
+	# ORPHANED REF: for flag_name in all_flags:
 	if test_results.success_rate == 100.0:
-		_log_to_results("[color=green]🎉 ALL TESTS PASSED![/color]")
-		status_label.text = "🎉 Foundation layer fully validated"
-		status_label.add_theme_color_override("font_color", Color.GREEN)
-		else:
-			_log_to_results("[color=red]⚠️ Some tests failed[/color]")
-			status_label.text = "⚠️ Foundation layer has issues"
-			status_label.add_theme_color_override("font_color", Color.RED)
+	_log_to_results("[color=green]🎉 ALL TESTS PASSED![/color]")
+	status_label.text = "🎉 Foundation layer fully validated"
+	status_label.add_theme_color_override("font_color", Color.GREEN)
+else:
+	_log_to_results("[color=red]⚠️ Some tests failed[/color]")
+	status_label.text = "⚠️ Foundation layer has issues"
+	status_label.add_theme_color_override("font_color", Color.RED)
 
-			test_button.disabled = false
-
-
-			# === COMPONENT DEMOS ===
-func _fix_orphaned_code():
-	if panel:
-		_log_to_results("✅ Successfully created info panel: %s" % panel.get_class())
-		_log_to_results("   Panel type: %s" % panel.get_meta("component_type", "unknown"))
-		_log_to_results(
-		(
-		"   Creation time: %s"
-		% Time.get_datetime_string_from_unix_time(panel.get_meta("creation_time", 0))
-		)
-		)
-
-		# Cleanup demo panel
-		panel.queue_free()
-		else:
-			_log_to_results("❌ Failed to create info panel")
+	test_button.disabled = false
 
 
-func _fix_orphaned_code():
+		# === COMPONENT DEMOS ===
+	# ORPHANED REF: if panel:
+	# ORPHANED REF: _log_to_results("✅ Successfully created info panel: %s" % panel.get_class())
+	# ORPHANED REF: _log_to_results("   Panel type: %s" % panel.get_meta("component_type", "unknown"))
+	_log_to_results(
+	(
+	"   Creation time: %s"
+	# ORPHANED REF: % Time.get_datetime_string_from_unix_time(panel.get_meta("creation_time", 0))
+	)
+	)
+
+	# Cleanup demo panel
+	# ORPHANED REF: panel.queue_free()
+else:
+	# ORPHANED REF: _log_to_results("❌ Failed to create info panel")
+
+
 	if not restored_state.is_empty():
-		_log_to_results("✅ Successfully restored state:")
-		_log_to_results("   Scroll position: %d" % restored_state.get("scroll_position", 0))
-		_log_to_results(
-		"   Expanded sections: %s" % str(restored_state.get("expanded_sections", []))
-		)
-		_log_to_results("   User notes: %s" % restored_state.get("user_notes", ""))
+	_log_to_results("✅ Successfully restored state:")
+	_log_to_results("   Scroll position: %d" % restored_state.get("scroll_position", 0))
+	_log_to_results(
+	"   Expanded sections: %s" % str(restored_state.get("expanded_sections", []))
+	)
+	_log_to_results("   User notes: %s" % restored_state.get("user_notes", ""))
 
-func _fix_orphaned_code():
-	if legacy_panel:
-		legacy_panel.queue_free()
-		if new_panel:
-			new_panel.queue_free()
+	# ORPHANED REF: if legacy_panel:
+	# ORPHANED REF: legacy_panel.queue_free()
+	if new_panel:
+	new_panel.queue_free()
 
 
-			# === UTILITY METHODS ===
-func _fix_orphaned_code():
+		# === UTILITY METHODS ===
 	return window
 
 func _setup_demo_ui() -> void:
-	"""Setup demo interface"""
+	# ORPHANED REF: """Setup demo interface"""
 
 	# Main layout
 func _setup_feature_controls() -> void:
@@ -329,11 +320,11 @@ func _run_initial_validation() -> void:
 func _on_flag_toggled(flag_name: String, enabled: bool) -> void:
 	"""Handle feature flag toggle"""
 	if enabled:
-		FeatureFlags.enable_feature(flag_name)
-		else:
-			FeatureFlags.disable_feature(flag_name)
+	FeatureFlags.enable_feature(flag_name)
+else:
+	FeatureFlags.disable_feature(flag_name)
 
-			_log_to_results("🎛️ %s: %s" % [flag_name, "enabled" if enabled else "disabled"])
+	_log_to_results("🎛️ %s: %s" % [flag_name, "enabled" if enabled else "disabled"])
 
 
 func _run_foundation_tests() -> void:
@@ -343,7 +334,7 @@ func _run_foundation_tests() -> void:
 
 	# Run tests
 func _demo_create_info_panel() -> void:
-	"""Demo: Create info panel through new system"""
+	# ORPHANED REF: """Demo: Create info panel through new system"""
 	_log_to_results("[b]📋 Creating Info Panel Demo[/b]")
 
 	# Enable new systems for demo
@@ -394,5 +385,7 @@ func _log_to_results(message: String) -> void:
 
 
 	# === STANDALONE DEMO RUNNER ===
-	static func create_demo_window() -> Window:
-		"""Create standalone demo window"""
+static func create_demo_window() -> Window:
+	# ORPHANED REF: """Create standalone demo window"""
+
+	return null

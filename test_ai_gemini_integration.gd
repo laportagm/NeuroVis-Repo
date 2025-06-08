@@ -5,10 +5,10 @@ extends Node
 
 
 var ai_assistant = get_node_or_null("/root/AIAssistant")
-var status = ai_assistant.get_service_status()
-var gemini_service = get_node_or_null("/root/GeminiAI")
-var rate_status = gemini_service.get_rate_limit_status()
-var final_status = ai_assistant.get_service_status()
+# FIXED: Orphaned code - var status = ai_assistant.get_service_status()
+# FIXED: Orphaned code - var gemini_service = get_node_or_null("/root/GeminiAI")
+# FIXED: Orphaned code - var rate_status = gemini_service.get_rate_limit_status()
+# FIXED: Orphaned code - var final_status = ai_assistant.get_service_status()
 
 func _ready() -> void:
 	print("\n=== Testing AI Assistant Gemini Integration ===\n")
@@ -18,70 +18,65 @@ func _ready() -> void:
 
 	# Test 1: Check if AIAssistant service is available
 
-func _fix_orphaned_code():
-	if ai_assistant:
-		print("✅ AIAssistant service found")
+if ai_assistant:
+	print("✅ AIAssistant service found")
 
-		# Check service status
-func _fix_orphaned_code():
-	print("📊 Service Status:")
-	for key in status:
-		print("  - %s: %s" % [key, status[key]])
+	# Check service status
+print("📊 Service Status:")
+for key in status:
+	print("  - %s: %s" % [key, status[key]])
+	else:
+		print("❌ AIAssistant service not found!")
+		return
+
+		# Test 2: Check if GeminiAI service is available
+if gemini_service:
+	print("\n✅ GeminiAI service found")
+
+	# Check if setup is complete
+	if gemini_service.check_setup_status():
+		print("✅ Gemini is configured and ready")
+
+		# Check rate limit status
+print("📊 Rate Limit Status:")
+for key in rate_status:
+	print("  - %s: %s" % [key, rate_status[key]])
+	else:
+		print("⚠️ Gemini needs setup - use 'ai_gemini_setup' command")
 		else:
-			print("❌ AIAssistant service not found!")
-			return
+			print("❌ GeminiAI service not found!")
 
-			# Test 2: Check if GeminiAI service is available
-func _fix_orphaned_code():
-	if gemini_service:
-		print("\n✅ GeminiAI service found")
+			# Test 3: Set AI provider to GEMINI_USER
+			print("\n🔄 Setting AI provider to GEMINI_USER...")
+			ai_assistant.ai_provider = AIAssistantService.AIProvider.GEMINI_USER
 
-		# Check if setup is complete
-		if gemini_service.check_setup_status():
-			print("✅ Gemini is configured and ready")
+			# Test 4: Connect to signals for testing
+			ai_assistant.response_received.connect(_on_response_received)
+			ai_assistant.error_occurred.connect(_on_error_occurred)
 
-			# Check rate limit status
-func _fix_orphaned_code():
-	print("📊 Rate Limit Status:")
-	for key in rate_status:
-		print("  - %s: %s" % [key, rate_status[key]])
-		else:
-			print("⚠️ Gemini needs setup - use 'ai_gemini_setup' command")
-			else:
-				print("❌ GeminiAI service not found!")
+			# Test 5: Try asking a question
+			print("\n🤖 Testing question handling...")
 
-				# Test 3: Set AI provider to GEMINI_USER
-				print("\n🔄 Setting AI provider to GEMINI_USER...")
-				ai_assistant.ai_provider = AIAssistantService.AIProvider.GEMINI_USER
+			# First set a context structure
+			ai_assistant.update_context("Hippocampus")
 
-				# Test 4: Connect to signals for testing
-				ai_assistant.response_received.connect(_on_response_received)
-				ai_assistant.error_occurred.connect(_on_error_occurred)
+			# Ask a test question
+			print("📝 Asking: 'What is the main function of this structure?'")
+			ai_assistant.ask_question("What is the main function of this structure?")
 
-				# Test 5: Try asking a question
-				print("\n🤖 Testing question handling...")
+			# Wait for response
+			await get_tree().create_timer(5.0).timeout
 
-				# First set a context structure
-				ai_assistant.update_context("Hippocampus")
+			# Test 6: Check updated status
+			print("\n📊 Final Service Status:")
+for key in final_status:
+	print("  - %s: %s" % [key, final_status[key]])
 
-				# Ask a test question
-				print("📝 Asking: 'What is the main function of this structure?'")
-				ai_assistant.ask_question("What is the main function of this structure?")
+	print("\n=== Test Complete ===")
 
-				# Wait for response
-				await get_tree().create_timer(5.0).timeout
-
-				# Test 6: Check updated status
-				print("\n📊 Final Service Status:")
-func _fix_orphaned_code():
-	for key in final_status:
-		print("  - %s: %s" % [key, final_status[key]])
-
-		print("\n=== Test Complete ===")
-
-		# Exit after test
-		await get_tree().create_timer(2.0).timeout
-		get_tree().quit()
+	# Exit after test
+	await get_tree().create_timer(2.0).timeout
+	get_tree().quit()
 
 
 func _on_response_received(question: String, response: String) -> void:

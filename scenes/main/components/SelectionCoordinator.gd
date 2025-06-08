@@ -35,7 +35,7 @@ var is_multi_selection_enabled: bool = false
 
 # === AUTOLOAD REFERENCES ===
 var FeatureFlags = null
-var MultiStructureSelectionManagerScript = prepreload(
+var MultiStructureSelectionManagerScript = preload(
 "res://core/interaction/MultiStructureSelectionManager.gd"
 )
 
@@ -50,9 +50,9 @@ add_child(selection_manager)
 
 # Setup standard selection signals
 var success = selection_manager.initialize(camera, brain_model_parent)
-var selection = selections[0]
+# FIXED: Orphaned code - var selection = selections[0]
 _display_structure_info(selection["name"])
-var names = []
+# FIXED: Orphaned code - var names = []
 var notification = Label.new()
 notification.text = "Maximum 3 structures can be selected for comparison"
 notification.add_theme_color_override("font_color", Color(1, 0.8, 0))
@@ -65,7 +65,7 @@ notification.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 # Add to UI layer
 var ui_layer = get_node_or_null("/root/UI_Layer")
-var selected_meshes = []
+# FIXED: Orphaned code - var selected_meshes = []
 
 func _ready() -> void:
 	"""Initialize selection coordinator"""
@@ -132,85 +132,79 @@ func is_multi_selection_active() -> bool:
 	"""Check if multi-selection mode is active"""
 	return is_multi_selection_enabled
 
-func _fix_orphaned_code():
-	if selection_manager.has_signal("structure_selected"):
-		selection_manager.structure_selected.connect(_on_structure_selected)
-		if selection_manager.has_signal("selection_cleared"):
-			selection_manager.selection_cleared.connect(_on_selection_cleared)
+if selection_manager.has_signal("structure_selected"):
+	selection_manager.structure_selected.connect(_on_structure_selected)
+	if selection_manager.has_signal("selection_cleared"):
+		selection_manager.selection_cleared.connect(_on_selection_cleared)
 
-			# Pass required references to selection manager
-			if selection_manager.has_method("initialize"):
-func _fix_orphaned_code():
-	if not success:
-		push_error("[SelectionCoordinator] Failed to initialize selection manager")
+		# Pass required references to selection manager
+		if selection_manager.has_method("initialize"):
+if not success:
+	push_error("[SelectionCoordinator] Failed to initialize selection manager")
+	return false
+	else:
+		push_error("[SelectionCoordinator] Selection manager missing initialize method")
 		return false
+
+		# Configure visual properties
+		if selection_manager.has_method("configure_highlight"):
+			selection_manager.configure_highlight(highlight_color, emission_energy)
+
+			print("[SelectionCoordinator] Info: ✓ Selection system initialized")
+			return true
+
+
+			# === STANDARD SELECTION HANDLERS ===
+if object_name_label:
+	object_name_label.text = "Selected: " + selection["name"]
+
+	# Update AI context
+	if ai_integration:
+		ai_integration.set_current_structure(selection["name"])
+
 		else:
-			push_error("[SelectionCoordinator] Selection manager missing initialize method")
-			return false
+			# Multiple selections - show comparative panel
+			if info_panel:
+				info_panel.hide()
+				_show_comparative_panel(selections)
 
-			# Configure visual properties
-			if selection_manager.has_method("configure_highlight"):
-				selection_manager.configure_highlight(highlight_color, emission_energy)
-
-				print("[SelectionCoordinator] Info: ✓ Selection system initialized")
-				return true
-
-
-				# === STANDARD SELECTION HANDLERS ===
-func _fix_orphaned_code():
+				# Update label to show multiple selections
+for sel in selections:
+	names.append(sel["name"])
 	if object_name_label:
-		object_name_label.text = "Selected: " + selection["name"]
+		object_name_label.text = "Comparing: " + ", ".join(names)
 
-		# Update AI context
-		if ai_integration:
-			ai_integration.set_current_structure(selection["name"])
+		# Update AI context with first selection
+		if ai_integration and selections.size() > 0:
+			ai_integration.set_current_structure(selections[0]["name"])
 
+			print("[SelectionCoordinator] Info: Selection changed: %d structures" % selections.size())
+
+
+if not ui_layer and get_parent():
+	ui_layer = get_parent().get_node_or_null("UI_Layer")
+
+	if ui_layer:
+		ui_layer.add_child(notification)
+
+		# Auto-remove after 3 seconds
+		await get_tree().create_timer(3.0).timeout
+		notification.queue_free()
+
+
+for sel in selections:
+	if sel.has("mesh"):
+		selected_meshes.append(sel["mesh"])
+
+		# Initialize comparative panel
+		if comparative_panel.has_method("initialize"):
+			comparative_panel.initialize(selected_meshes)
+			comparative_panel.show()
 			else:
-				# Multiple selections - show comparative panel
-				if info_panel:
-					info_panel.hide()
-					_show_comparative_panel(selections)
-
-					# Update label to show multiple selections
-func _fix_orphaned_code():
-	for sel in selections:
-		names.append(sel["name"])
-		if object_name_label:
-			object_name_label.text = "Comparing: " + ", ".join(names)
-
-			# Update AI context with first selection
-			if ai_integration and selections.size() > 0:
-				ai_integration.set_current_structure(selections[0]["name"])
-
-				print("[SelectionCoordinator] Info: Selection changed: %d structures" % selections.size())
+				push_warning("[SelectionCoordinator] Comparative panel missing initialize method")
 
 
-func _fix_orphaned_code():
-	if not ui_layer and get_parent():
-		ui_layer = get_parent().get_node_or_null("UI_Layer")
-
-		if ui_layer:
-			ui_layer.add_child(notification)
-
-			# Auto-remove after 3 seconds
-			await get_tree().create_timer(3.0).timeout
-			notification.queue_free()
-
-
-func _fix_orphaned_code():
-	for sel in selections:
-		if sel.has("mesh"):
-			selected_meshes.append(sel["mesh"])
-
-			# Initialize comparative panel
-			if comparative_panel.has_method("initialize"):
-				comparative_panel.initialize(selected_meshes)
-				comparative_panel.show()
-				else:
-					push_warning("[SelectionCoordinator] Comparative panel missing initialize method")
-
-
-					# === PUBLIC METHODS ===
+				# === PUBLIC METHODS ===
 
 func _on_structure_selected(structure_name: String, _mesh: MeshInstance3D) -> void:
 	"""Handle selection of a brain structure"""

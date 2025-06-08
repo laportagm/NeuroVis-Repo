@@ -32,16 +32,16 @@ const SETTINGS_PATH = "user://ai_provider_settings.dat"
 
 var file = FileAccess.open_encrypted_with_pass(path, FileAccess.WRITE, OS.get_unique_id())
 
-var json_data = JSON.stringify(data)
+# FIXED: Orphaned code - var json_data = JSON.stringify(data)
 file.store_string(json_data)
 file.close()
-var file_2 = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, OS.get_unique_id())
+# FIXED: Orphaned code - var file_2 = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, OS.get_unique_id())
 
-var json_data_2 = file.get_as_text()
+# FIXED: Orphaned code - var json_data_2 = file.get_as_text()
 file.close()
 
-var json = JSON.new()
-var parse_result = json.parse(json_data)
+# FIXED: Orphaned code - var json = JSON.new()
+# FIXED: Orphaned code - var parse_result = json.parse(json_data)
 
 func initialize() -> bool:
 	"""Initialize the AI provider with required services"""
@@ -162,21 +162,17 @@ func set_max_tokens(value: int) -> void:
 	# These methods can be used by provider implementations
 
 
-func _fix_orphaned_code():
-	if file:
-func _fix_orphaned_code():
-	return true
+if file:
+return true
 
-	return false
+return false
 
 
-func _fix_orphaned_code():
-	if file:
-func _fix_orphaned_code():
-	if parse_result == OK:
-		return json.data
+if file:
+if parse_result == OK:
+	return json.data
 
-		return {}
+	return {}
 
 func _save_encrypted_settings(data: Dictionary, path: String = SETTINGS_PATH) -> bool:
 	"""Save encrypted settings to a file"""

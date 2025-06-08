@@ -1,28 +1,28 @@
 class_name ModelSwitcherUnitTest
 extends RefCounted
 
-const TestFramework = prepreprepreload("res://tests/framework/TestFramework.gd")
+const TestFramework = preload("res://tests/framework/TestFramework.gd")
 
-var framework
+# FIXED: Orphaned code - var framework
 
 
-var model_switcher = prepreprepreload("res://core/models/ModelVisibilityManager.gd").new()
+var model_switcher = preload("res://core/models/ModelVisibilityManager.gd").new()
 framework.assert_not_null(model_switcher, "ModelSwitcher should instantiate")
 framework.assert_true(
 model_switcher.has_signal("model_visibility_changed"), "Should have visibility signal"
 )
-var test1_result = framework.end_test()
+# FIXED: Orphaned code - var test1_result = framework.end_test()
 
 # Test 2: Model Registration
 framework.start_test("Model Registration")
-var mock_node = TestFramework.MockNode3D.new()
+# FIXED: Orphaned code - var mock_node = TestFramework.MockNode3D.new()
 mock_node.name = "TestModel"
 model_switcher.register_model(mock_node, "Test Model")
 
-var model_names = model_switcher.get_model_names()
+# FIXED: Orphaned code - var model_names = model_switcher.get_model_names()
 framework.assert_true(model_names.has("Test Model"), "Model should be registered")
 framework.assert_equal(1, model_names.size(), "Should have one registered model")
-var test2_result = framework.end_test()
+# FIXED: Orphaned code - var test2_result = framework.end_test()
 
 # Test 3: Model Visibility Toggle
 framework.start_test("Model Visibility Toggle")
@@ -42,12 +42,12 @@ model_switcher.toggle_model_visibility("Test Model")
 framework.assert_true(
 model_switcher.is_model_visible("Test Model"), "Model should be visible after second toggle"
 )
-var test3_result = framework.end_test()
+# FIXED: Orphaned code - var test3_result = framework.end_test()
 
 # Test 4: Invalid Model Handling
 framework.start_test("Invalid Model Handling")
-var invalid_model_names = model_switcher.get_model_names()
-var initial_count = invalid_model_names.size()
+# FIXED: Orphaned code - var invalid_model_names = model_switcher.get_model_names()
+# FIXED: Orphaned code - var initial_count = invalid_model_names.size()
 
 # Try to toggle non-existent model
 model_switcher.toggle_model_visibility("NonExistentModel")
@@ -62,7 +62,7 @@ model_switcher.register_model(null, "NullModel")
 framework.assert_equal(
 initial_count, model_switcher.get_model_names().size(), "Should not register null model"
 )
-var test4_result = framework.end_test()
+# FIXED: Orphaned code - var test4_result = framework.end_test()
 
 # Test 5: Show/Hide All Models
 framework.start_test("Show/Hide All Models")
@@ -88,14 +88,14 @@ model_switcher.is_model_visible("Test Model"), "First model should be visible"
 framework.assert_true(
 model_switcher.is_model_visible("Test Model 2"), "Second model should be visible"
 )
-var test5_result = framework.end_test()
+# FIXED: Orphaned code - var test5_result = framework.end_test()
 
 # Cleanup
 mock_node.queue_free()
 mock_node2.queue_free()
 model_switcher.queue_free()
 
-var summary = framework.get_test_summary()
+# FIXED: Orphaned code - var summary = framework.get_test_summary()
 
 func run_test() -> bool:
 	framework = TestFramework.get_instance()
@@ -103,12 +103,10 @@ func run_test() -> bool:
 	# Test 1: ModelSwitcher Instantiation
 	framework.start_test("ModelSwitcher Instantiation")
 
-func _fix_orphaned_code():
-	print("\n📊 Model Switcher Test Summary:")
-func _fix_orphaned_code():
-	print("Total Tests: %d" % summary.total_tests)
-	print("Passed Tests: %d" % summary.passed_tests)
-	print("Failed Tests: %d" % summary.failed_tests)
-	print("Success Rate: %.1f%%" % summary.success_rate)
+print("\n📊 Model Switcher Test Summary:")
+print("Total Tests: %d" % summary.total_tests)
+print("Passed Tests: %d" % summary.passed_tests)
+print("Failed Tests: %d" % summary.failed_tests)
+print("Success Rate: %.1f%%" % summary.success_rate)
 
-	return test1_result and test2_result and test3_result and test4_result and test5_result
+return test1_result and test2_result and test3_result and test4_result and test5_result

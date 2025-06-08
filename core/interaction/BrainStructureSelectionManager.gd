@@ -51,7 +51,7 @@ const COLLISION_INFLATION: Dictionary = {
 
 	# Configuration variables - will be initialized in _ready()
 
-var structure_sizes: Dictionary = {}  # mesh -> screen_size_percentage
+# FIXED: Orphaned code - var structure_sizes: Dictionary = {}  # mesh -> screen_size_percentage
 var last_camera_position: Vector3
 var last_camera_rotation: Vector3
 
@@ -96,12 +96,12 @@ var accessibility_manager: Node
 
 # Signals
 var hit_result: Dictionary = _cast_single_ray(screen_position)
-var hit_mesh: MeshInstance3D = hit_result.get("mesh", null) if hit_result else null
+# FIXED: Orphaned code - var hit_mesh: MeshInstance3D = hit_result.get("mesh", null) if hit_result else null
 
 # Handle hover state changes
 var hit_data: Dictionary = _cast_multi_ray_selection(screen_position, true)
 
-var hit_mesh_2: MeshInstance3D = hit_data["mesh"]
+# FIXED: Orphaned code - var hit_mesh_2: MeshInstance3D = hit_data["mesh"]
 	last_selection_confidence = hit_data.get("confidence", 1.0)
 
 	# Apply highlighting
@@ -125,7 +125,7 @@ var hover_material = StandardMaterial3D.new()
 	hover_material.rim = 0.5
 
 var surface_count = mesh.mesh.get_surface_count()
-var original_mat_2 = original_materials.get(mesh)
+# FIXED: Orphaned code - var original_mat_2 = original_materials.get(mesh)
 	visual_feedback.clear_feedback(mesh, original_mat)
 	# Clean up any running animations
 	_cleanup_mesh_animations(mesh)
@@ -157,12 +157,12 @@ var highlight_material = StandardMaterial3D.new()
 
 	# Apply highlight to all surfaces
 var surface_count_2 = mesh.mesh.get_surface_count()
-var original_material = original_materials[mesh]
+# FIXED: Orphaned code - var original_material = original_materials[mesh]
 var surface_count_3 = mesh.mesh.get_surface_count() if mesh.mesh else 1
 
 # Restore original material to all surfaces
 var camera: Camera3D = get_viewport().get_camera_3d()
-var mesh_candidates: Array[Dictionary] = []
+# FIXED: Orphaned code - var mesh_candidates: Array[Dictionary] = []
 var selection_tolerance_pixels: float = (
 	get_adaptive_tolerance(screen_position) if use_tolerance else 0.0
 	)
@@ -184,7 +184,7 @@ var sample_offsets: Array[Vector2] = [
 
 	# Add even more samples for extremely small structures
 	# Medical Context: Extra samples for structures like subthalamic nucleus (DBS target)
-var extra_radius: float = SAMPLE_RADIUS * 0.7
+# FIXED: Orphaned code - var extra_radius: float = SAMPLE_RADIUS * 0.7
 	(
 	sample_offsets
 	. append_array(
@@ -201,7 +201,7 @@ var extra_radius: float = SAMPLE_RADIUS * 0.7
 var sample_pos: Vector2 = screen_position + offset
 var raycast_result: Dictionary = _cast_single_ray(sample_pos)
 
-var mesh_already_candidate: bool = false
+# FIXED: Orphaned code - var mesh_already_candidate: bool = false
 var best_candidate: Dictionary = mesh_candidates[0]
 var total_samples: int = MULTI_RAY_SAMPLES
 var confidence: float = float(best_candidate["hit_count"]) / float(total_samples)
@@ -209,25 +209,25 @@ var confidence: float = float(best_candidate["hit_count"]) / float(total_samples
 # Apply structure size boost for small structures
 # Educational Context: Boost confidence for tiny structures to ensure they're selectable
 var avg_dist_a = _calculate_average(a["distances"])
-var avg_dist_b = _calculate_average(b["distances"])
+# FIXED: Orphaned code - var avg_dist_b = _calculate_average(b["distances"])
 
-var camera_2: Camera3D = get_viewport().get_camera_3d()
-var nearby_structures: Array[Dictionary] = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
+# FIXED: Orphaned code - var camera_2: Camera3D = get_viewport().get_camera_3d()
+# FIXED: Orphaned code - var nearby_structures: Array[Dictionary] = _find_nearby_structures(screen_position, 50.0)  # 50 pixel radius
 
 var smallest_size: float = 1.0
 
 var mesh: MeshInstance3D = structure_data["mesh"]
 var normalized_name: String = mesh.name.to_lower().replace(" ", "_")
 
-var base_tolerance: float = MIN_SELECTION_TOLERANCE
+# FIXED: Orphaned code - var base_tolerance: float = MIN_SELECTION_TOLERANCE
 
 var tolerance_range: float = MAX_SELECTION_TOLERANCE - MIN_SELECTION_TOLERANCE
 var size_factor: float = 1.0 - min(smallest_size / 0.2, 1.0)  # Normalize to 0-1
 	base_tolerance = MIN_SELECTION_TOLERANCE + (tolerance_range * size_factor)
 
-var camera_3: Camera3D = get_viewport().get_camera_3d()
-var ray_origin: Vector3 = camera.project_ray_origin(screen_position)
-var ray_end: Vector3 = ray_origin + camera.project_ray_normal(screen_position) * RAY_LENGTH
+# FIXED: Orphaned code - var camera_3: Camera3D = get_viewport().get_camera_3d()
+# FIXED: Orphaned code - var ray_origin: Vector3 = camera.project_ray_origin(screen_position)
+# FIXED: Orphaned code - var ray_end: Vector3 = ray_origin + camera.project_ray_normal(screen_position) * RAY_LENGTH
 
 # Setup raycast
 var space_state: PhysicsDirectSpaceState3D = get_viewport().world_3d.direct_space_state
@@ -241,10 +241,10 @@ var ray_params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create
 	# Perform raycast
 var raycast_result_2: Dictionary = space_state.intersect_ray(ray_params)
 
-var hit_mesh_3: MeshInstance3D = _extract_mesh_from_collision(raycast_result)
-var camera_4 = get_viewport().get_camera_3d()
-var from = camera.project_ray_origin(screen_position)
-var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
+# FIXED: Orphaned code - var hit_mesh_3: MeshInstance3D = _extract_mesh_from_collision(raycast_result)
+# FIXED: Orphaned code - var camera_4 = get_viewport().get_camera_3d()
+# FIXED: Orphaned code - var from = camera.project_ray_origin(screen_position)
+# FIXED: Orphaned code - var to = from + camera.project_ray_normal(screen_position) * RAY_LENGTH
 
 # Setup raycast parameters
 var space_state_2 = get_viewport().world_3d.direct_space_state
@@ -259,34 +259,34 @@ var collider = collision_result.collider
 
 # Direct mesh instance hit
 var parent: Node = collider.get_parent()
-var collision_point: Vector3 = collision_result.get("position", Vector3.ZERO)
-var mesh_aabb: AABB = sibling.get_aabb()
-var local_point: Vector3 = (
+# FIXED: Orphaned code - var collision_point: Vector3 = collision_result.get("position", Vector3.ZERO)
+# FIXED: Orphaned code - var mesh_aabb: AABB = sibling.get_aabb()
+# FIXED: Orphaned code - var local_point: Vector3 = (
 	sibling.global_transform.inverse() * collision_point
 	)
 
 	# Check if collision point is within mesh bounds (with tolerance)
-var bounds_tolerance: float = 0.1
+# FIXED: Orphaned code - var bounds_tolerance: float = 0.1
 var parent_2: Node = collider.get_parent()
-var grandparent: Node = parent.get_parent()
-var parent_3: Node = collider.get_parent()
-var current_material = mesh.get_surface_override_material(0)
-var nearby_structures_2: Array[Dictionary] = []
+# FIXED: Orphaned code - var grandparent: Node = parent.get_parent()
+# FIXED: Orphaned code - var parent_3: Node = collider.get_parent()
+# FIXED: Orphaned code - var current_material = mesh.get_surface_override_material(0)
+# FIXED: Orphaned code - var nearby_structures_2: Array[Dictionary] = []
 var camera_5: Camera3D = get_viewport().get_camera_3d()
-var brain_model: Node = get_node_or_null("/root/Node3D/BrainModel")
-var all_meshes: Array[MeshInstance3D] = _get_all_meshes_recursive(brain_model)
+# FIXED: Orphaned code - var brain_model: Node = get_node_or_null("/root/Node3D/BrainModel")
+# FIXED: Orphaned code - var all_meshes: Array[MeshInstance3D] = _get_all_meshes_recursive(brain_model)
 
 # Check each mesh
 var screen_pos: Vector2 = _get_mesh_screen_position(mesh)
-var meshes: Array[MeshInstance3D] = []
+# FIXED: Orphaned code - var meshes: Array[MeshInstance3D] = []
 
 var camera_6 = get_viewport().get_camera_3d()
-var aabb = mesh.get_aabb()
-var center = mesh.global_transform * aabb.get_center()
+# FIXED: Orphaned code - var aabb = mesh.get_aabb()
+# FIXED: Orphaned code - var center = mesh.global_transform * aabb.get_center()
 
-var camera_7 = get_viewport().get_camera_3d()
-var aabb_2 = mesh.get_aabb()
-var corners = [
+# FIXED: Orphaned code - var camera_7 = get_viewport().get_camera_3d()
+# FIXED: Orphaned code - var aabb_2 = mesh.get_aabb()
+# FIXED: Orphaned code - var corners = [
 	mesh.global_transform * aabb.position, mesh.global_transform * (aabb.position + aabb.size)
 	]
 
@@ -297,16 +297,16 @@ var screen_pos_2 = camera.unproject_position(corner)
 	screen_min = screen_min.min(screen_pos)
 	screen_max = screen_max.max(screen_pos)
 
-var screen_size = screen_max - screen_min
+# FIXED: Orphaned code - var screen_size = screen_max - screen_min
 var viewport_size = get_viewport().get_visible_rect().size
 var size_percentage = (screen_size.length() / viewport_size.length()) * 100.0
 
 	structure_sizes[mesh] = size_percentage
 var camera_8 = get_viewport().get_camera_3d()
-var sum = 0.0
-var VisualFeedbackClass = preprepreload("res://core/visualization/EducationalVisualFeedback.gd")
-var settings = accessibility_manager.get_settings()
-var tween = mesh.create_tween()
+# FIXED: Orphaned code - var sum = 0.0
+var VisualFeedbackClass = preload("res://core/visualization/EducationalVisualFeedback.gd")
+# FIXED: Orphaned code - var settings = accessibility_manager.get_settings()
+# FIXED: Orphaned code - var tween = mesh.create_tween()
 	tween.set_loops()
 
 	# Animate the scale with a subtle pulse
@@ -320,7 +320,7 @@ var pulse_scale = original_scale * 1.02
 	mesh.set_meta("hover_tween", tween)
 
 
-var tween_2 = mesh.create_tween()
+# FIXED: Orphaned code - var tween_2 = mesh.create_tween()
 
 # Quick scale pulse for confirmation - sequential animation
 var original_scale_2 = mesh.scale
@@ -331,7 +331,7 @@ var original_scale_2 = mesh.scale
 
 	# Quick glow pulse if material supports it
 var material = mesh.get_surface_override_material(0)
-var original_energy = material.emission_energy_multiplier
+# FIXED: Orphaned code - var original_energy = material.emission_energy_multiplier
 # Create a separate tween for emission to avoid conflicts
 var emission_tween = mesh.create_tween()
 	emission_tween.tween_method(
@@ -351,27 +351,27 @@ var emission_tween = mesh.create_tween()
 	# Modern Godot 4 approach using lambda (see above)
 	# Legacy approach with corrected parameter order:
 var mesh_hover_tween = mesh.get_meta("hover_tween")
-var normalized_name_2: String = mesh.name.to_lower().replace(" ", "_")
-var inflation_factor: float = COLLISION_INFLATION.get(normalized_name, 1.0)
+# FIXED: Orphaned code - var normalized_name_2: String = mesh.name.to_lower().replace(" ", "_")
+# FIXED: Orphaned code - var inflation_factor: float = COLLISION_INFLATION.get(normalized_name, 1.0)
 
-var original_aabb: AABB = mesh.get_aabb()
-var inflated_aabb: AABB = original_aabb.grow(
+# FIXED: Orphaned code - var original_aabb: AABB = mesh.get_aabb()
+# FIXED: Orphaned code - var inflated_aabb: AABB = original_aabb.grow(
 	original_aabb.size.length() * (inflation_factor - 1.0) * 0.5
 	)
-var local_point_2: Vector3 = mesh.global_transform.inverse() * world_position
+# FIXED: Orphaned code - var local_point_2: Vector3 = mesh.global_transform.inverse() * world_position
 
 var brain_model_2 = get_node_or_null("/root/Node3D/BrainModel")
-var all_meshes_2 = _get_all_meshes_recursive(brain_model)
-var aabb_3 = mesh.get_aabb()
-var normalized_name_3 = mesh.name.to_lower().replace(" ", "_")
+# FIXED: Orphaned code - var all_meshes_2 = _get_all_meshes_recursive(brain_model)
+# FIXED: Orphaned code - var aabb_3 = mesh.get_aabb()
+# FIXED: Orphaned code - var normalized_name_3 = mesh.name.to_lower().replace(" ", "_")
 
 # Apply inflation if needed
 var inflation_factor_2 = COLLISION_INFLATION.get(normalized_name, 1.0)
-var connections = get_signal_connection_list("structure_selected")
-var anatomical_manager = _find_anatomical_model_manager()
-var manager = get_node_or_null("/root/Node3D/ModelCoordinator/AnatomicalModelManager")
-var result_2 = _search_for_node_type(child, type_name)
-var professional_tolerances = {
+# FIXED: Orphaned code - var connections = get_signal_connection_list("structure_selected")
+# FIXED: Orphaned code - var anatomical_manager = _find_anatomical_model_manager()
+# FIXED: Orphaned code - var manager = get_node_or_null("/root/Node3D/ModelCoordinator/AnatomicalModelManager")
+# FIXED: Orphaned code - var result_2 = _search_for_node_type(child, type_name)
+# FIXED: Orphaned code - var professional_tolerances = {
 	"pineal_gland": 20.0,
 	"pituitary_gland": 20.0,
 	"subthalamic_nucleus": 18.0,
@@ -587,499 +587,437 @@ func dispose() -> void:
 		# Disconnect any remaining signals
 		if has_signal("structure_selected"):
 
-func _fix_orphaned_code():
-	if hit_mesh != current_hovered_mesh:
-		# Clear previous hover
+if hit_mesh != current_hovered_mesh:
+	# Clear previous hover
+	if current_hovered_mesh and current_hovered_mesh != current_selected_mesh:
+		clear_hover_effect(current_hovered_mesh)
+		structure_unhovered.emit()
+
+		# Apply new hover
+		current_hovered_mesh = hit_mesh
 		if current_hovered_mesh and current_hovered_mesh != current_selected_mesh:
-			clear_hover_effect(current_hovered_mesh)
-			structure_unhovered.emit()
-
-			# Apply new hover
-			current_hovered_mesh = hit_mesh
-			if current_hovered_mesh and current_hovered_mesh != current_selected_mesh:
-				apply_hover_effect(current_hovered_mesh)
-				structure_hovered.emit(current_hovered_mesh.name, current_hovered_mesh)
+			apply_hover_effect(current_hovered_mesh)
+			structure_hovered.emit(current_hovered_mesh.name, current_hovered_mesh)
 
 
-				# Enhanced selection with multi-ray sampling and adaptive tolerance
-func _fix_orphaned_code():
-	if hit_data and hit_data.has("mesh") and hit_data["mesh"]:
-func _fix_orphaned_code():
-	if current_hovered_mesh == hit_mesh:
-		current_hovered_mesh = null
+			# Enhanced selection with multi-ray sampling and adaptive tolerance
+if hit_data and hit_data.has("mesh") and hit_data["mesh"]:
+if current_hovered_mesh == hit_mesh:
+	current_hovered_mesh = null
 
-		# Emit signals
-		structure_selected.emit(hit_mesh.name, hit_mesh)
-		selection_confidence_changed.emit(last_selection_confidence)
+	# Emit signals
+	structure_selected.emit(hit_mesh.name, hit_mesh)
+	selection_confidence_changed.emit(last_selection_confidence)
 
-		# Log selection details for debugging
-		if OS.is_debug_build():
-			print(
-			(
-			"[Selection] Selected: %s (Confidence: %.1f%%, Method: %s)"
-			% [
-			hit_mesh.name,
-			last_selection_confidence * 100,
-			hit_data.get("method", "unknown")
-			]
-			)
-			)
-			else:
-				structure_deselected.emit()
-
-
-				# Clears the current selection and restores original materials
-func _fix_orphaned_code():
-	for surface_idx in range(surface_count):
-		mesh.set_surface_override_material(surface_idx, hover_material)
-
-		# Animation handled by visual feedback system when available
-		# _animate_hover_pulse(mesh)
-
-
-		# Clears hover effect with smooth transition
-func _fix_orphaned_code():
-	for surface_idx in range(surface_count):
-		mesh.set_surface_override_material(surface_idx, highlight_material)
-
-		# Animation handled by visual feedback system when available
-		# _animate_selection_pulse(mesh)
-
-
-		# Restores the original material for a mesh
-func _fix_orphaned_code():
-	for surface_idx in range(surface_count):
-		mesh.set_surface_override_material(surface_idx, original_material)
-
-		# Remove from tracking dictionary
-		original_materials.erase(mesh)
-
-
-		# Returns the name of the currently selected structure, or empty string if none
-func _fix_orphaned_code():
-	if not camera:
-		return {}
-
-func _fix_orphaned_code():
-	if selection_tolerance_pixels > 20.0:
-func _fix_orphaned_code():
-	for offset in sample_offsets:
-func _fix_orphaned_code():
-	if raycast_result:
-		# Check if we already have this mesh as a candidate
-func _fix_orphaned_code():
-	for candidate in mesh_candidates:
-		if candidate["mesh"] == raycast_result["mesh"]:
-			candidate["hit_count"] += 1
-			candidate["distances"].append(raycast_result["distance"])
-			mesh_already_candidate = true
-			break
-
-			if not mesh_already_candidate:
-				mesh_candidates.append(
-				{
-				"mesh": raycast_result["mesh"],
-				"hit_count": 1,
-				"distances": [raycast_result["distance"]],
-				"first_hit_position": raycast_result["position"],
-				"structure_size": _get_structure_screen_size(raycast_result["mesh"])
-				}
-				)
-
-				# Process candidates to find best selection
-				return _process_selection_candidates(
-				mesh_candidates, screen_position, selection_tolerance_pixels
-				)
-
-
-				## Process selection candidates with intelligent prioritization
-func _fix_orphaned_code():
-	if selection_tolerance_pixels > 20.0:
-		total_samples += 4  # Extra inner corner samples
-func _fix_orphaned_code():
-	if best_candidate["structure_size"] < SMALL_STRUCTURE_THRESHOLD:
-		confidence = min(confidence * 1.5, 1.0)
-
-		return {
-		"mesh": best_candidate["mesh"],
-		"confidence": confidence,
-		"method": "multi_ray",
-		"hit_count": best_candidate["hit_count"],
-		"avg_distance": _calculate_average(best_candidate["distances"])
-		}
-
-
-		## Compare function for sorting selection candidates
-func _fix_orphaned_code():
-	if abs(avg_dist_a - avg_dist_b) > 0.1:
-		return avg_dist_a < avg_dist_b
-
-		# Priority 3: Smaller structures get priority (harder to select)
-		return a["structure_size"] < b["structure_size"]
-
-
-		## Get adaptive selection tolerance for a given position
-		## Educational Importance: Adaptive tolerance ensures all structures are selectable
-		## regardless of their size, critical for comprehensive neuroanatomy education
-func _fix_orphaned_code():
-	if not camera:
-		return MIN_SELECTION_TOLERANCE
-
-		# Find structures near the click position
-func _fix_orphaned_code():
-	if nearby_structures.is_empty():
-		return MIN_SELECTION_TOLERANCE
-
-		# Check for structure-specific overrides first
-func _fix_orphaned_code():
-	for structure_data in nearby_structures:
-func _fix_orphaned_code():
-	if structure_tolerance_overrides.has(normalized_name):
-		# Found a structure with override, use its tolerance
-		# Medical Context: These are critically important small structures
-		return structure_tolerance_overrides[normalized_name]
-
-		# Track smallest structure for adaptive calculation
-		if structure_data["screen_size"] < smallest_size:
-			smallest_size = structure_data["screen_size"]
-
-			# Adaptive tolerance calculation
-func _fix_orphaned_code():
-	if smallest_size < SMALL_STRUCTURE_THRESHOLD:
-		# Small structures get maximum tolerance
-		# Educational Rationale: Ensures students can select small but important structures
-		base_tolerance = MAX_SELECTION_TOLERANCE
-
-		# Extra boost for very tiny structures
-		# Medical Context: Structures <2% screen size include critical deep brain nuclei
-		if smallest_size < 0.02:  # Less than 2% of screen
-		base_tolerance *= 1.5
-		else:
-			# Larger structures get proportionally less tolerance
-func _fix_orphaned_code():
-	return base_tolerance
-
-
-	## Cast a single selection ray
-func _fix_orphaned_code():
-	if not camera:
-		return {}
-
-		# Calculate ray
-func _fix_orphaned_code():
-	if not space_state:
-		return {}
-
-func _fix_orphaned_code():
-	if raycast_result.is_empty():
-		return {}
-
-func _fix_orphaned_code():
-	if not hit_mesh:
-		return {}
-
-		return {
-		"mesh": hit_mesh,
-		"position": raycast_result["position"],
-		"distance": ray_origin.distance_to(raycast_result["position"]),
-		"normal": raycast_result.get("normal", Vector3.UP)
-		}
-
-
-		# Casts a ray from the camera through the screen position and returns the hit mesh
-func _fix_orphaned_code():
-	if not camera:
-		push_warning("[Selection] Camera access error: No camera found for selection raycast")
-		return null
-
-		# Calculate ray origin and direction
-func _fix_orphaned_code():
-	if not space_state:
-		push_warning("[Selection] Physics error: No physics space found for selection raycast")
-		return null
-
-func _fix_orphaned_code():
-	if not result.is_empty():
-		return _extract_mesh_from_collision(result)
-
-		return null
-
-
-		# Enhanced mesh extraction with better StaticBody3D handling for overlapping geometry
-func _fix_orphaned_code():
-	if collider is MeshInstance3D:
-		return collider
-
-		# Enhanced StaticBody3D handling
-		if collider is StaticBody3D:
-			# Check parent first
-func _fix_orphaned_code():
-	if parent is MeshInstance3D:
-		return parent
-
-		# Check children (sometimes mesh is child of StaticBody3D)
-		for child in collider.get_children():
-			if child is MeshInstance3D:
-				return child
-
-				# Check siblings for related mesh
-				if parent:
-					for sibling in parent.get_children():
-						if sibling is MeshInstance3D:
-							# First check inflated collision for small structures
-func _fix_orphaned_code():
-	if _check_inflated_collision(sibling, collision_point):
-		return sibling
-
-		# Then check normal bounds
-		if sibling != collider:
-			# Verify this mesh is related to the collision
-func _fix_orphaned_code():
-	if mesh_aabb.grow(bounds_tolerance).has_point(local_point):
-		return sibling
-
-		# CollisionShape3D handling
-		if collider is CollisionShape3D:
-func _fix_orphaned_code():
-	if parent is StaticBody3D:
-func _fix_orphaned_code():
-	if grandparent is MeshInstance3D:
-		return grandparent
-
-		# Area3D handling for trigger-based selection
-		if collider is Area3D:
-func _fix_orphaned_code():
-	if parent is MeshInstance3D:
-		return parent
-
-		return null
-
-
-		# Stores original materials for a mesh before highlighting
-func _fix_orphaned_code():
-	if current_material == null and mesh.mesh != null:
-		current_material = mesh.mesh.surface_get_material(0)
-
-		# If still no material, create a default one
-		if current_material == null:
-			current_material = StandardMaterial3D.new()
-			current_material.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
-
-			# Store a duplicate to preserve the original
-			original_materials[mesh] = current_material.duplicate()
-
-
-			# Enhanced configuration methods
-func _fix_orphaned_code():
-	if not camera:
-		return nearby_structures
-
-		# Get all potential meshes
-func _fix_orphaned_code():
-	if not brain_model:
-		return nearby_structures
-
-func _fix_orphaned_code():
-	for mesh in all_meshes:
-func _fix_orphaned_code():
-	if screen_pos.distance_to(screen_position) <= radius:
-		nearby_structures.append(
-		{
-		"mesh": mesh,
-		"screen_position": screen_pos,
-		"screen_size": _get_structure_screen_size(mesh),
-		"distance": screen_pos.distance_to(screen_position)
-		}
+	# Log selection details for debugging
+	if OS.is_debug_build():
+		print(
+		(
+		"[Selection] Selected: %s (Confidence: %.1f%%, Method: %s)"
+		% [
+		hit_mesh.name,
+		last_selection_confidence * 100,
+		hit_data.get("method", "unknown")
+		]
 		)
-
-		return nearby_structures
-
-
-		## Get all meshes recursively
-func _fix_orphaned_code():
-	if node is MeshInstance3D:
-		meshes.append(node)
-
-		for child in node.get_children():
-			if child is Node3D:
-				meshes.append_array(_get_all_meshes_recursive(child))
-
-				return meshes
-
-
-				## Calculate mesh screen position
-func _fix_orphaned_code():
-	if not camera or not mesh.mesh:
-		return Vector2.ZERO
-
-func _fix_orphaned_code():
-	if camera.is_position_behind(center):
-		return Vector2(-1000, -1000)  # Off-screen
-
-		return camera.unproject_position(center)
-
-
-		## Calculate structure screen size percentage
-func _fix_orphaned_code():
-	if not camera or not mesh.mesh:
-		return 0.0
-
-func _fix_orphaned_code():
-	for corner in corners:
-		if not camera.is_position_behind(corner):
-func _fix_orphaned_code():
-	return size_percentage
-
-
-	## Update structure size cache
-func _fix_orphaned_code():
-	if not camera:
-		return
-
-		# Check if camera has moved significantly
-		if (
-		camera.position.distance_to(last_camera_position) > 0.1
-		or camera.rotation.distance_to(last_camera_rotation) > 0.01
-		):
-			structure_sizes.clear()
-			last_camera_position = camera.position
-			last_camera_rotation = camera.rotation
-
-
-			## Calculate average of an array
-func _fix_orphaned_code():
-	for value in values:
-		sum += value
-
-		return sum / values.size()
-
-
-		# Cleanup method to prevent memory leaks
-func _fix_orphaned_code():
-	if VisualFeedbackClass:
-		visual_feedback = VisualFeedbackClass.new()
-		visual_feedback.name = "VisualFeedback"
-		add_child(visual_feedback)
-		print("[SELECTION] Visual feedback system initialized")
+		)
 		else:
-			push_warning("[SELECTION] EducationalVisualFeedback.gd not found")
-
-			# Check for accessibility manager
-			if has_node("/root/AccessibilityManager"):
-				accessibility_manager = get_node("/root/AccessibilityManager")
-				print("[SELECTION] Connected to AccessibilityManager")
-
-				# Apply accessibility settings
-				if accessibility_manager.has_method("get_settings"):
-func _fix_orphaned_code():
-	if visual_feedback and settings.has("colorblind_mode"):
-		visual_feedback.set_color_scheme(settings["colorblind_mode"])
-		visual_feedback.reduce_motion = settings.get("reduce_motion", false)
-		visual_feedback.high_contrast_mode = settings.get("high_contrast", false)
-		visual_feedback.enhanced_outlines = settings.get("enhanced_outlines", false)
+			structure_deselected.emit()
 
 
-		# Modern animation functions
-func _fix_orphaned_code():
-	if material and material is StandardMaterial3D and material.emission_enabled:
-func _fix_orphaned_code():
-	if mesh_hover_tween and is_instance_valid(mesh_hover_tween):
-		mesh_hover_tween.kill()
-		mesh.remove_meta("hover_tween")
+			# Clears the current selection and restores original materials
+for surface_idx in range(surface_count):
+	mesh.set_surface_override_material(surface_idx, hover_material)
 
-		# Reset scale to normal
-		mesh.scale = Vector3.ONE
+	# Animation handled by visual feedback system when available
+	# _animate_hover_pulse(mesh)
 
 
-		## Enhanced collision detection with inflation for small structures
-		## Medical/Educational Rationale: Inflated collision boxes ensure that tiny but
-		## clinically important structures (pineal gland, pituitary) can be reliably selected
-		## for educational exploration, despite their small physical size
-func _fix_orphaned_code():
-	if inflation_factor > 1.0:
-		# Check inflated bounds
-func _fix_orphaned_code():
-	return inflated_aabb.has_point(local_point)
+	# Clears hover effect with smooth transition
+for surface_idx in range(surface_count):
+	mesh.set_surface_override_material(surface_idx, highlight_material)
 
-	return false
+	# Animation handled by visual feedback system when available
+	# _animate_selection_pulse(mesh)
 
 
-	## Precalculate collision bounds for all structures
-func _fix_orphaned_code():
-	if not brain_model:
-		return
+	# Restores the original material for a mesh
+for surface_idx in range(surface_count):
+	mesh.set_surface_override_material(surface_idx, original_material)
 
-func _fix_orphaned_code():
-	print("[Selection] Precalculating bounds for %d structures" % all_meshes.size())
-
-	for mesh in all_meshes:
-		if mesh.mesh:
-func _fix_orphaned_code():
-	if inflation_factor > 1.0:
-		aabb = aabb.grow(aabb.size.length() * (inflation_factor - 1.0) * 0.5)
-
-		# Cache the bounds
-		mesh.set_meta("precalculated_aabb", aabb)
+	# Remove from tracking dictionary
+	original_materials.erase(mesh)
 
 
-		## Enable/disable debug visualization
-func _fix_orphaned_code():
-	for connection in connections:
-		if connection.signal.is_connected(connection.callable):
-			connection.signal.disconnect(connection.callable)
+	# Returns the name of the currently selected structure, or empty string if none
+if not camera:
+	return {}
 
-			# Call _exit_tree cleanup
-			_exit_tree()
+if selection_tolerance_pixels > 20.0:
+for offset in sample_offsets:
+if raycast_result:
+	# Check if we already have this mesh as a candidate
+for candidate in mesh_candidates:
+	if candidate["mesh"] == raycast_result["mesh"]:
+		candidate["hit_count"] += 1
+		candidate["distances"].append(raycast_result["distance"])
+		mesh_already_candidate = true
+		break
+
+		if not mesh_already_candidate:
+			mesh_candidates.append(
+			{
+			"mesh": raycast_result["mesh"],
+			"hit_count": 1,
+			"distances": [raycast_result["distance"]],
+			"first_hit_position": raycast_result["position"],
+			"structure_size": _get_structure_screen_size(raycast_result["mesh"])
+			}
+			)
+
+			# Process candidates to find best selection
+			return _process_selection_candidates(
+			mesh_candidates, screen_position, selection_tolerance_pixels
+			)
 
 
-			# === PROFESSIONAL MODEL SUPPORT ===
+			## Process selection candidates with intelligent prioritization
+if selection_tolerance_pixels > 20.0:
+	total_samples += 4  # Extra inner corner samples
+if best_candidate["structure_size"] < SMALL_STRUCTURE_THRESHOLD:
+	confidence = min(confidence * 1.5, 1.0)
+
+	return {
+	"mesh": best_candidate["mesh"],
+	"confidence": confidence,
+	"method": "multi_ray",
+	"hit_count": best_candidate["hit_count"],
+	"avg_distance": _calculate_average(best_candidate["distances"])
+	}
 
 
-			## Initialize support for professional anatomical models
-func _fix_orphaned_code():
-	if anatomical_manager:
-		if anatomical_manager.has_signal("anatomical_model_loaded"):
-			anatomical_manager.anatomical_model_loaded.connect(_on_anatomical_model_loaded)
-			if anatomical_manager.has_signal("brain_tissue_materials_enhanced"):
-				anatomical_manager.brain_tissue_materials_enhanced.connect(_on_materials_enhanced)
+	## Compare function for sorting selection candidates
+if abs(avg_dist_a - avg_dist_b) > 0.1:
+	return avg_dist_a < avg_dist_b
 
-				print("[SELECTION] Connected to professional AnatomicalModelManager")
-				else:
-					print("[SELECTION] Professional AnatomicalModelManager not available")
+	# Priority 3: Smaller structures get priority (harder to select)
+	return a["structure_size"] < b["structure_size"]
 
 
-					## Find AnatomicalModelManager in the scene tree
-func _fix_orphaned_code():
+	## Get adaptive selection tolerance for a given position
+	## Educational Importance: Adaptive tolerance ensures all structures are selectable
+	## regardless of their size, critical for comprehensive neuroanatomy education
+if not camera:
+	return MIN_SELECTION_TOLERANCE
+
+	# Find structures near the click position
+if nearby_structures.is_empty():
+	return MIN_SELECTION_TOLERANCE
+
+	# Check for structure-specific overrides first
+for structure_data in nearby_structures:
+if structure_tolerance_overrides.has(normalized_name):
+	# Found a structure with override, use its tolerance
+	# Medical Context: These are critically important small structures
+	return structure_tolerance_overrides[normalized_name]
+
+	# Track smallest structure for adaptive calculation
+	if structure_data["screen_size"] < smallest_size:
+		smallest_size = structure_data["screen_size"]
+
+		# Adaptive tolerance calculation
+if smallest_size < SMALL_STRUCTURE_THRESHOLD:
+	# Small structures get maximum tolerance
+	# Educational Rationale: Ensures students can select small but important structures
+	base_tolerance = MAX_SELECTION_TOLERANCE
+
+	# Extra boost for very tiny structures
+	# Medical Context: Structures <2% screen size include critical deep brain nuclei
+	if smallest_size < 0.02:  # Less than 2% of screen
+	base_tolerance *= 1.5
+	else:
+		# Larger structures get proportionally less tolerance
+return base_tolerance
+
+
+## Cast a single selection ray
+if not camera:
+	return {}
+
+	# Calculate ray
+if not space_state:
+	return {}
+
+if raycast_result.is_empty():
+	return {}
+
+if not hit_mesh:
+	return {}
+
+	return {
+	"mesh": hit_mesh,
+	"position": raycast_result["position"],
+	"distance": ray_origin.distance_to(raycast_result["position"]),
+	"normal": raycast_result.get("normal", Vector3.UP)
+	}
+
+
+	# Casts a ray from the camera through the screen position and returns the hit mesh
+if not camera:
+	push_warning("[Selection] Camera access error: No camera found for selection raycast")
+	return null
+
+	# Calculate ray origin and direction
+if not space_state:
+	push_warning("[Selection] Physics error: No physics space found for selection raycast")
+	return null
+
+if not result.is_empty():
+	return _extract_mesh_from_collision(result)
+
+	return null
+
+
+	# Enhanced mesh extraction with better StaticBody3D handling for overlapping geometry
+if collider is MeshInstance3D:
+	return collider
+
+	# Enhanced StaticBody3D handling
+	if collider is StaticBody3D:
+		# Check parent first
+if parent is MeshInstance3D:
+	return parent
+
+	# Check children (sometimes mesh is child of StaticBody3D)
+	for child in collider.get_children():
+		if child is MeshInstance3D:
+			return child
+
+			# Check siblings for related mesh
+			if parent:
+				for sibling in parent.get_children():
+					if sibling is MeshInstance3D:
+						# First check inflated collision for small structures
+if _check_inflated_collision(sibling, collision_point):
+	return sibling
+
+	# Then check normal bounds
+	if sibling != collider:
+		# Verify this mesh is related to the collision
+if mesh_aabb.grow(bounds_tolerance).has_point(local_point):
+	return sibling
+
+	# CollisionShape3D handling
+	if collider is CollisionShape3D:
+if parent is StaticBody3D:
+if grandparent is MeshInstance3D:
+	return grandparent
+
+	# Area3D handling for trigger-based selection
+	if collider is Area3D:
+if parent is MeshInstance3D:
+	return parent
+
+	return null
+
+
+	# Stores original materials for a mesh before highlighting
+if current_material == null and mesh.mesh != null:
+	current_material = mesh.mesh.surface_get_material(0)
+
+	# If still no material, create a default one
+	if current_material == null:
+		current_material = StandardMaterial3D.new()
+		current_material.albedo_color = Color(0.8, 0.8, 0.8, 1.0)
+
+		# Store a duplicate to preserve the original
+		original_materials[mesh] = current_material.duplicate()
+
+
+		# Enhanced configuration methods
+if not camera:
+	return nearby_structures
+
+	# Get all potential meshes
+if not brain_model:
+	return nearby_structures
+
+for mesh in all_meshes:
+if screen_pos.distance_to(screen_position) <= radius:
+	nearby_structures.append(
+	{
+	"mesh": mesh,
+	"screen_position": screen_pos,
+	"screen_size": _get_structure_screen_size(mesh),
+	"distance": screen_pos.distance_to(screen_position)
+	}
+	)
+
+	return nearby_structures
+
+
+	## Get all meshes recursively
+if node is MeshInstance3D:
+	meshes.append(node)
+
+	for child in node.get_children():
+		if child is Node3D:
+			meshes.append_array(_get_all_meshes_recursive(child))
+
+			return meshes
+
+
+			## Calculate mesh screen position
+if not camera or not mesh.mesh:
+	return Vector2.ZERO
+
+if camera.is_position_behind(center):
+	return Vector2(-1000, -1000)  # Off-screen
+
+	return camera.unproject_position(center)
+
+
+	## Calculate structure screen size percentage
+if not camera or not mesh.mesh:
+	return 0.0
+
+for corner in corners:
+	if not camera.is_position_behind(corner):
+return size_percentage
+
+
+## Update structure size cache
+if not camera:
+	return
+
+	# Check if camera has moved significantly
+	if (
+	camera.position.distance_to(last_camera_position) > 0.1
+	or camera.rotation.distance_to(last_camera_rotation) > 0.01
+	):
+		structure_sizes.clear()
+		last_camera_position = camera.position
+		last_camera_rotation = camera.rotation
+
+
+		## Calculate average of an array
+for value in values:
+	sum += value
+
+	return sum / values.size()
+
+
+	# Cleanup method to prevent memory leaks
+if VisualFeedbackClass:
+	visual_feedback = VisualFeedbackClass.new()
+	visual_feedback.name = "VisualFeedback"
+	add_child(visual_feedback)
+	print("[SELECTION] Visual feedback system initialized")
+	else:
+		push_warning("[SELECTION] EducationalVisualFeedback.gd not found")
+
+		# Check for accessibility manager
+		if has_node("/root/AccessibilityManager"):
+			accessibility_manager = get_node("/root/AccessibilityManager")
+			print("[SELECTION] Connected to AccessibilityManager")
+
+			# Apply accessibility settings
+			if accessibility_manager.has_method("get_settings"):
+if visual_feedback and settings.has("colorblind_mode"):
+	visual_feedback.set_color_scheme(settings["colorblind_mode"])
+	visual_feedback.reduce_motion = settings.get("reduce_motion", false)
+	visual_feedback.high_contrast_mode = settings.get("high_contrast", false)
+	visual_feedback.enhanced_outlines = settings.get("enhanced_outlines", false)
+
+
+	# Modern animation functions
+if material and material is StandardMaterial3D and material.emission_enabled:
+if mesh_hover_tween and is_instance_valid(mesh_hover_tween):
+	mesh_hover_tween.kill()
+	mesh.remove_meta("hover_tween")
+
+	# Reset scale to normal
+	mesh.scale = Vector3.ONE
+
+
+	## Enhanced collision detection with inflation for small structures
+	## Medical/Educational Rationale: Inflated collision boxes ensure that tiny but
+	## clinically important structures (pineal gland, pituitary) can be reliably selected
+	## for educational exploration, despite their small physical size
+if inflation_factor > 1.0:
+	# Check inflated bounds
+return inflated_aabb.has_point(local_point)
+
+return false
+
+
+## Precalculate collision bounds for all structures
+if not brain_model:
+	return
+
+print("[Selection] Precalculating bounds for %d structures" % all_meshes.size())
+
+for mesh in all_meshes:
+	if mesh.mesh:
+if inflation_factor > 1.0:
+	aabb = aabb.grow(aabb.size.length() * (inflation_factor - 1.0) * 0.5)
+
+	# Cache the bounds
+	mesh.set_meta("precalculated_aabb", aabb)
+
+
+	## Enable/disable debug visualization
+for connection in connections:
+	if connection.signal.is_connected(connection.callable):
+		connection.signal.disconnect(connection.callable)
+
+		# Call _exit_tree cleanup
+		_exit_tree()
+
+
+		# === PROFESSIONAL MODEL SUPPORT ===
+
+
+		## Initialize support for professional anatomical models
+if anatomical_manager:
+	if anatomical_manager.has_signal("anatomical_model_loaded"):
+		anatomical_manager.anatomical_model_loaded.connect(_on_anatomical_model_loaded)
+		if anatomical_manager.has_signal("brain_tissue_materials_enhanced"):
+			anatomical_manager.brain_tissue_materials_enhanced.connect(_on_materials_enhanced)
+
+			print("[SELECTION] Connected to professional AnatomicalModelManager")
+			else:
+				print("[SELECTION] Professional AnatomicalModelManager not available")
+
+
+				## Find AnatomicalModelManager in the scene tree
+if not manager:
+	manager = get_node_or_null("/root/AnatomicalModelManager")
 	if not manager:
-		manager = get_node_or_null("/root/AnatomicalModelManager")
-		if not manager:
-			# Search for it in the tree
-			manager = _search_for_node_type(get_tree().root, "AnatomicalModelManager")
-			return manager
+		# Search for it in the tree
+		manager = _search_for_node_type(get_tree().root, "AnatomicalModelManager")
+		return manager
 
 
-			## Search for a node of specific type in the tree
-func _fix_orphaned_code():
-	if result:
-		return result
-		return null
+		## Search for a node of specific type in the tree
+if result:
+	return result
+	return null
 
 
-		## Handle professional anatomical model being loaded
-func _fix_orphaned_code():
-	for structure in professional_tolerances:
-		structure_tolerance_overrides[structure] = professional_tolerances[structure]
+	## Handle professional anatomical model being loaded
+for structure in professional_tolerances:
+	structure_tolerance_overrides[structure] = professional_tolerances[structure]
 
-		print("[SELECTION] Updated tolerance overrides for professional model: %s" % model_name)
+	print("[SELECTION] Updated tolerance overrides for professional model: %s" % model_name)
 
-func _fix_orphaned_code():
-	if mesh_candidates.is_empty():
-		return {}
+if mesh_candidates.is_empty():
+	return {}
 
-		# Sort candidates by priority
-		mesh_candidates.sort_custom(_compare_selection_candidates)
+	# Sort candidates by priority
+	mesh_candidates.sort_custom(_compare_selection_candidates)
 
-		# Calculate selection confidence
+	# Calculate selection confidence
 func _cast_multi_ray_selection(screen_position: Vector2, use_tolerance: bool) -> Dictionary:
 	"""Cast multiple rays for improved selection accuracy"""
 func _compare_selection_candidates(a: Dictionary, b: Dictionary) -> bool:

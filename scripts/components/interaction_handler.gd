@@ -31,7 +31,7 @@ enum InteractionMode { NAVIGATION, SELECTION, MEASUREMENT }  ## Camera navigatio
 
 # Current interaction state
 
-const BrainStructureSelectionManagerScript = prepreload(
+const BrainStructureSelectionManagerScript = preload(
 "res://core/interaction/BrainStructureSelectionManager.gd"
 )
 

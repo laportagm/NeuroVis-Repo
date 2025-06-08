@@ -13,7 +13,7 @@ dialog._show_return_state()
 await get_tree().create_timer(1.0).timeout
 
 # Set a valid-looking key
-dialog.api_key_input.text = "AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz123456789"
+dialog.api_key_input.text = "AIzaSyAbCdEfGhIjKlMnOpQrStUvWxYz123456789" # pragma: allowlist secret
 dialog._on_key_input_changed(dialog.api_key_input.text)
 
 await get_tree().create_timer(0.5).timeout
@@ -29,86 +29,83 @@ func _ready() -> void:
 
 	# Create and show the dialog
 
-func _fix_orphaned_code():
-	print("[TEST] Initial state:")
-	print("[TEST] - Status text: '", dialog.status_label.text, "'")
-	print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
-	print("[TEST] - Button should be enabled for valid format")
+print("[TEST] Initial state:")
+print("[TEST] - Status text: '", dialog.status_label.text, "'")
+print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
+print("[TEST] - Button should be enabled for valid format")
 
-	# Monitor state changes
-func _fix_orphaned_code():
-	print("\n[TEST] Clicking Connect button...")
-	dialog._on_connect_button_pressed()
+# Monitor state changes
+print("\n[TEST] Clicking Connect button...")
+dialog._on_connect_button_pressed()
 
-	# Check immediate state change
-	print("\n[TEST] Loading state (immediate):")
-	print("[TEST] - Status text: '", dialog.status_label.text, "'")
-	print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
-	print("[TEST] - Expected: Button disabled, status shows 'Validating API key...'")
+# Check immediate state change
+print("\n[TEST] Loading state (immediate):")
+print("[TEST] - Status text: '", dialog.status_label.text, "'")
+print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
+print("[TEST] - Expected: Button disabled, status shows 'Validating API key...'")
 
-	if dialog.next_button.disabled and dialog.status_label.text == "Validating API key...":
-		print("[TEST] ✓ Loading state correctly displayed")
-		else:
-			print("[TEST] ✗ Loading state not properly set!")
+if dialog.next_button.disabled and dialog.status_label.text == "Validating API key...":
+	print("[TEST] ✓ Loading state correctly displayed")
+	else:
+		print("[TEST] ✗ Loading state not properly set!")
 
-			# Wait a bit to see if state changes
-			await get_tree().create_timer(1.0).timeout
+		# Wait a bit to see if state changes
+		await get_tree().create_timer(1.0).timeout
 
-			print("\n[TEST] State after 1 second:")
-			print("[TEST] - Status text: '", dialog.status_label.text, "'")
-			print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
-
-			# Mock a validation response if service is not available
-func _fix_orphaned_code():
-	if not gemini_service:
-		print("\n[TEST] No GeminiAI service - simulating validation response...")
-		# Simulate validation failure
-		dialog._on_api_key_validated_for_save(false, "Invalid API key")
-
-		await get_tree().create_timer(0.5).timeout
-
-		print("\n[TEST] After simulated failure:")
+		print("\n[TEST] State after 1 second:")
 		print("[TEST] - Status text: '", dialog.status_label.text, "'")
 		print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
-		print("[TEST] - Expected: Error message shown, button re-enabled")
 
-		if not dialog.next_button.disabled:
-			print("[TEST] ✓ Button correctly re-enabled after failure")
-			else:
-				print("[TEST] ✗ Button still disabled after failure!")
+		# Mock a validation response if service is not available
+if not gemini_service:
+	print("\n[TEST] No GeminiAI service - simulating validation response...")
+	# Simulate validation failure
+	dialog._on_api_key_validated_for_save(false, "Invalid API key")
 
-				# Test success scenario
-				await get_tree().create_timer(1.0).timeout
-				print("\n[TEST] Simulating successful validation...")
+	await get_tree().create_timer(0.5).timeout
 
-				# Click again
-				dialog._on_connect_button_pressed()
-				await get_tree().create_timer(0.1).timeout
+	print("\n[TEST] After simulated failure:")
+	print("[TEST] - Status text: '", dialog.status_label.text, "'")
+	print("[TEST] - Button enabled: ", not dialog.next_button.disabled)
+	print("[TEST] - Expected: Error message shown, button re-enabled")
 
-				# Simulate success
-				dialog._on_api_key_validated_for_save(true, "API key validated successfully")
+	if not dialog.next_button.disabled:
+		print("[TEST] ✓ Button correctly re-enabled after failure")
+		else:
+			print("[TEST] ✗ Button still disabled after failure!")
 
-				await get_tree().create_timer(1.0).timeout
+			# Test success scenario
+			await get_tree().create_timer(1.0).timeout
+			print("\n[TEST] Simulating successful validation...")
 
-				print("\n[TEST] After simulated success:")
-				print("[TEST] - Current state: ", dialog.current_state)
-				print("[TEST] - Expected: Should be in SUCCESS state")
+			# Click again
+			dialog._on_connect_button_pressed()
+			await get_tree().create_timer(0.1).timeout
 
-				if dialog.current_state == GeminiSetupDialog.SetupState.SUCCESS:
-					print("[TEST] ✓ Successfully transitioned to success state")
-					else:
-						print("[TEST] ✗ Failed to transition to success state!")
+			# Simulate success
+			dialog._on_api_key_validated_for_save(true, "API key validated successfully")
 
-						# Test color coding
-						print("\n[TEST] Testing status message colors:")
-						print("[TEST] The status messages should use appropriate colors:")
-						print("[TEST] - Loading: text_secondary (gray/neutral)")
-						print("[TEST] - Error: text_error (red)")
-						print("[TEST] - Success: text_success (green)")
+			await get_tree().create_timer(1.0).timeout
 
-						await get_tree().create_timer(3.0).timeout
+			print("\n[TEST] After simulated success:")
+			print("[TEST] - Current state: ", dialog.current_state)
+			print("[TEST] - Expected: Should be in SUCCESS state")
 
-						# Cleanup
-						dialog.queue_free()
-						print("\n[TEST] === Validation Loading States Test Complete ===")
-						queue_free()
+			if dialog.current_state == GeminiSetupDialog.SetupState.SUCCESS:
+				print("[TEST] ✓ Successfully transitioned to success state")
+				else:
+					print("[TEST] ✗ Failed to transition to success state!")
+
+					# Test color coding
+					print("\n[TEST] Testing status message colors:")
+					print("[TEST] The status messages should use appropriate colors:")
+					print("[TEST] - Loading: text_secondary (gray/neutral)")
+					print("[TEST] - Error: text_error (red)")
+					print("[TEST] - Success: text_success (green)")
+
+					await get_tree().create_timer(3.0).timeout
+
+					# Cleanup
+					dialog.queue_free()
+					print("\n[TEST] === Validation Loading States Test Complete ===")
+					queue_free()

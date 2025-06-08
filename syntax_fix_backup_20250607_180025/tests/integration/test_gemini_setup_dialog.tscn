@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwknr8g5t3k67"]
-
-[ext_resource type="Script" path="res://tests/integration/test_gemini_setup_dialog.gd" id="1_fhx7m"]
-
-[node name="TestGeminiSetupDialog" type="Node"]
-script = ExtResource("1_fhx7m")

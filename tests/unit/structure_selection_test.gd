@@ -16,30 +16,30 @@ var brain_model_parent = main_scene.brain_model_parent
 var mesh_instances = []
 _find_mesh_instances(brain_model_parent, mesh_instances)
 
-var max_to_show = min(5, mesh_instances.size())
-var center_screen_pos = get_viewport().get_visible_rect().size / 2.0
+# FIXED: Orphaned code - var max_to_show = min(5, mesh_instances.size())
+# FIXED: Orphaned code - var center_screen_pos = get_viewport().get_visible_rect().size / 2.0
 var did_hit_object = _test_raycast(center_screen_pos, "center of screen")
 
 # Try multiple rays if first one doesn't hit
 var upper_pos = Vector2(center_screen_pos.x, center_screen_pos.y * 0.7)
 did_hit_object = _test_raycast(upper_pos, "upper center")
 
-var lower_pos = Vector2(center_screen_pos.x, center_screen_pos.y * 1.3)
+# FIXED: Orphaned code - var lower_pos = Vector2(center_screen_pos.x, center_screen_pos.y * 1.3)
 did_hit_object = _test_raycast(lower_pos, "lower center")
 
-var left_pos = Vector2(center_screen_pos.x * 0.7, center_screen_pos.y)
+# FIXED: Orphaned code - var left_pos = Vector2(center_screen_pos.x * 0.7, center_screen_pos.y)
 did_hit_object = _test_raycast(left_pos, "left center")
 
-var right_pos = Vector2(center_screen_pos.x * 1.3, center_screen_pos.y)
+# FIXED: Orphaned code - var right_pos = Vector2(center_screen_pos.x * 1.3, center_screen_pos.y)
 did_hit_object = _test_raycast(right_pos, "right center")
 
-var current_selected_mesh = main_scene.current_selected_mesh
+# FIXED: Orphaned code - var current_selected_mesh = main_scene.current_selected_mesh
 
 var object_name_label = main_scene.object_name_label
 var previously_selected_mesh = current_selected_mesh
 
 # Simulate a click on empty space (using far corner of screen likely to miss any object)
-var corner_pos = Vector2(10, 10)  # Top-left corner
+# FIXED: Orphaned code - var corner_pos = Vector2(10, 10)  # Top-left corner
 main_scene._handle_selection(corner_pos)
 
 # Give a frame to process
@@ -48,7 +48,7 @@ await get_tree().process_frame
 # Check if selection was cleared
 var signal_data = {"received": false, "name": ""}
 
-var info_panel = main_scene.info_panel
+# FIXED: Orphaned code - var info_panel = main_scene.info_panel
 var original_handle_selection = main_scene._handle_selection
 
 # Replace with our instrumented version
@@ -89,147 +89,133 @@ func run_test() -> void:
 	print("Structure Selection test initialized. Tests will run shortly...")
 
 
-func _fix_orphaned_code():
-	if not brain_model_parent:
-		_report_failure("Brain model parent not found in main scene")
+if not brain_model_parent:
+	_report_failure("Brain model parent not found in main scene")
+	return
+
+	print("✓ Camera and brain model references found")
+
+	print("Test 2: Checking for mesh instances in brain models")
+if mesh_instances.size() == 0:
+	_report_failure("No mesh instances found in brain models")
+	return
+
+	print("  - Found " + str(mesh_instances.size()) + " mesh instances in brain models")
+
+	# Print the first few mesh instances for debugging
+for i in range(max_to_show):
+	print("  - Mesh " + str(i) + ": " + mesh_instances[i].name)
+
+	print("✓ Brain model meshes verified")
+
+	print("Test 3: Checking for selection handling method")
+	if not main_scene.has_method("_handle_selection"):
+		_report_failure("Main scene doesn't have _handle_selection method")
 		return
 
-		print("✓ Camera and brain model references found")
+		print("✓ Selection handling method found")
 
-		print("Test 2: Checking for mesh instances in brain models")
-func _fix_orphaned_code():
-	if mesh_instances.size() == 0:
-		_report_failure("No mesh instances found in brain models")
+		print("Test 4: Testing raycasting and selection")
+
+		# Test 1: Simple ray straight forward from camera
+if not did_hit_object:
+	print("  - Center ray didn't hit, trying additional ray positions")
+
+	# Try upper center
+if not did_hit_object:
+	# Try lower center
+if not did_hit_object:
+	# Try left center
+if not did_hit_object:
+	# Try right center
+if not did_hit_object:
+	_report_failure(
+	"Raycast failed to hit any objects. Camera may be incorrectly positioned or model not visible."
+	)
+	return
+
+	print("✓ Raycasting test passed")
+
+	print("Test 5: Testing structure highlighting")
+	# Get current selected mesh (if any)
+if not current_selected_mesh:
+	_report_failure("No mesh was selected after raycasting")
+	return
+
+	print("  - Selected structure: " + current_selected_mesh.name)
+
+	# Verify UI label update
+if not object_name_label:
+	_report_failure("Object name label not found")
+	return
+
+	if object_name_label.text == "Selected: None":
+		_report_failure("Object name label not updated after selection")
 		return
 
-		print("  - Found " + str(mesh_instances.size()) + " mesh instances in brain models")
+		print("  - Object name label updated: " + object_name_label.text)
 
-		# Print the first few mesh instances for debugging
-func _fix_orphaned_code():
-	for i in range(max_to_show):
-		print("  - Mesh " + str(i) + ": " + mesh_instances[i].name)
+		# Test additional selection functionality
+		print("Test 6: Testing selection clearing")
 
-		print("✓ Brain model meshes verified")
+		# Store current mesh
+if main_scene.current_selected_mesh == previously_selected_mesh:
+	print("  - Warning: Selection not cleared when clicking empty space")
+	# Not a failure as this might depend on scene configuration
+	else:
+		print("  - Selection successfully cleared")
 
-		print("Test 3: Checking for selection handling method")
-		if not main_scene.has_method("_handle_selection"):
-			_report_failure("Main scene doesn't have _handle_selection method")
-			return
+		print("✓ Selection clearing test completed")
 
-			print("✓ Selection handling method found")
-
-			print("Test 4: Testing raycasting and selection")
-
-			# Test 1: Simple ray straight forward from camera
-func _fix_orphaned_code():
-	if not did_hit_object:
-		print("  - Center ray didn't hit, trying additional ray positions")
-
-		# Try upper center
-func _fix_orphaned_code():
-	if not did_hit_object:
-		# Try lower center
-func _fix_orphaned_code():
-	if not did_hit_object:
-		# Try left center
-func _fix_orphaned_code():
-	if not did_hit_object:
-		# Try right center
-func _fix_orphaned_code():
-	if not did_hit_object:
-		_report_failure(
-		"Raycast failed to hit any objects. Camera may be incorrectly positioned or model not visible."
+		print("Test 7: Testing structure selected signal")
+		# Hook up to the signal
+if main_scene.has_signal("structure_selected"):
+	main_scene.structure_selected.connect(
+	func(structure_name):
+		signal_data.received = true
+		signal_data.name = structure_name
 		)
-		return
 
-		print("✓ Raycasting test passed")
+		# Perform a selection at center screen again
+		main_scene._handle_selection(center_screen_pos)
 
-		print("Test 5: Testing structure highlighting")
-		# Get current selected mesh (if any)
-func _fix_orphaned_code():
-	if not current_selected_mesh:
-		_report_failure("No mesh was selected after raycasting")
-		return
+		# Wait a bit for signal to process
+		await get_tree().create_timer(0.1).timeout
 
-		print("  - Selected structure: " + current_selected_mesh.name)
-
-		# Verify UI label update
-func _fix_orphaned_code():
-	if not object_name_label:
-		_report_failure("Object name label not found")
-		return
-
-		if object_name_label.text == "Selected: None":
-			_report_failure("Object name label not updated after selection")
-			return
-
-			print("  - Object name label updated: " + object_name_label.text)
-
-			# Test additional selection functionality
-			print("Test 6: Testing selection clearing")
-
-			# Store current mesh
-func _fix_orphaned_code():
-	if main_scene.current_selected_mesh == previously_selected_mesh:
-		print("  - Warning: Selection not cleared when clicking empty space")
-		# Not a failure as this might depend on scene configuration
-		else:
-			print("  - Selection successfully cleared")
-
-			print("✓ Selection clearing test completed")
-
-			print("Test 7: Testing structure selected signal")
-			# Hook up to the signal
-func _fix_orphaned_code():
-	if main_scene.has_signal("structure_selected"):
-		main_scene.structure_selected.connect(
-		func(structure_name):
-			signal_data.received = true
-			signal_data.name = structure_name
-			)
-
-			# Perform a selection at center screen again
-			main_scene._handle_selection(center_screen_pos)
-
-			# Wait a bit for signal to process
-			await get_tree().create_timer(0.1).timeout
-
-			if not signal_data.received:
-				print("  - Warning: structure_selected signal not emitted")
+		if not signal_data.received:
+			print("  - Warning: structure_selected signal not emitted")
+			else:
+				print("  - Received structure_selected signal with name: " + signal_data.name)
 				else:
-					print("  - Received structure_selected signal with name: " + signal_data.name)
-					else:
-						print("  - Warning: structure_selected signal not defined")
+					print("  - Warning: structure_selected signal not defined")
 
-						print("✓ Signal emission test completed")
+					print("✓ Signal emission test completed")
 
-						print("Test 8: Testing integration with info panel")
-func _fix_orphaned_code():
-	if not info_panel:
-		print("  - Warning: Info panel reference not found")
-		else:
-			if info_panel.visible:
-				print("  - Info panel was shown after selection")
-				else:
-					print("  - Warning: Info panel not shown after selection")
+					print("Test 8: Testing integration with info panel")
+if not info_panel:
+	print("  - Warning: Info panel reference not found")
+	else:
+		if info_panel.visible:
+			print("  - Info panel was shown after selection")
+			else:
+				print("  - Warning: Info panel not shown after selection")
 
-					print("✓ Info panel integration test completed")
+				print("✓ Info panel integration test completed")
 
-					# All tests passed
-					_report_success("All structure selection tests passed successfully!")
+				# All tests passed
+				_report_success("All structure selection tests passed successfully!")
 
 
-					# Tests a raycast at a specific screen position and returns whether it hit something
-func _fix_orphaned_code():
-	if hit_something_ref.value:
-		print("  - Raycast hit object: " + main_scene.current_selected_mesh.name)
-		else:
-			print("  - Raycast did not hit any object")
+				# Tests a raycast at a specific screen position and returns whether it hit something
+if hit_something_ref.value:
+	print("  - Raycast hit object: " + main_scene.current_selected_mesh.name)
+	else:
+		print("  - Raycast did not hit any object")
 
-			return hit_something_ref.value
+		return hit_something_ref.value
 
 
-			# Recursively find all mesh instances in a node
+		# Recursively find all mesh instances in a node
 
 func _run_tests() -> void:
 	# Get required references

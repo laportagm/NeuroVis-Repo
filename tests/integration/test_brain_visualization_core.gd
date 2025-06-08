@@ -38,7 +38,7 @@ var invalid_id = core.map_mesh_name_to_structure_id("InvalidStructure")
 	"should emit neural_net_ready signal",
 	func():
 var core_3 = BrainVisualizationCore.new()
-var signal_received = false
+# FIXED: Orphaned code - var signal_received = false
 
 	core.neural_net_ready.connect(func(): signal_received = true)
 	core._ready()
@@ -49,7 +49,7 @@ var signal_received = false
 
 
 	# Test knowledge base integration
-var kb = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
+var kb = preload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	kb.load_knowledge_base("res://data/anatomical_data.json")
 
 	assert_true(kb.is_loaded)
@@ -59,10 +59,10 @@ var kb = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	it(
 	"should retrieve structure data",
 	func():
-var kb_2 = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
+var kb_2 = preload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	kb.load_knowledge_base("res://data/anatomical_data.json")
 
-var hippocampus_data = kb.get_structure("hippocampus")
+# FIXED: Orphaned code - var hippocampus_data = kb.get_structure("hippocampus")
 	assert_not_null(hippocampus_data)
 	assert_has_property(hippocampus_data, "displayName")
 	assert_has_property(hippocampus_data, "shortDescription")
@@ -72,14 +72,14 @@ var hippocampus_data = kb.get_structure("hippocampus")
 
 	# Test error handling
 var core_4 = BrainVisualizationCore.new()
-var result = core.map_mesh_name_to_structure_id("")
+# FIXED: Orphaned code - var result = core.map_mesh_name_to_structure_id("")
 	assert_equals(result, "")
 	)
 
 	it(
 	"should handle invalid knowledge base path",
 	func():
-var kb_3 = prepreprepreload("res://core/knowledge_base/KnowledgeBase.gd").new()
+var kb_3 = preload("res://core/knowledge_base/KnowledgeBase.gd").new()
 	kb.load_knowledge_base("res://invalid/path.json")
 	assert_false(kb.is_loaded)
 	)

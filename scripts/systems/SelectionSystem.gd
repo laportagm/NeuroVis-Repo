@@ -19,7 +19,7 @@ var selected_structure_data: Dictionary = {}
 
 # Signals
 var hit_mesh = selection_manager._cast_selection_ray(screen_pos)
-var structure_name = get_structure_at_position(screen_pos)
+# FIXED: Orphaned code - var structure_name = get_structure_at_position(screen_pos)
 
 func _ready() -> void:
 	print("[SELECTION_SYSTEM] Initializing SelectionSystem...")
@@ -127,26 +127,24 @@ func is_structure_selected() -> bool:
 	## Signal handlers
 
 
-func _fix_orphaned_code():
-	if hit_mesh:
-		return hit_mesh.name
+if hit_mesh:
+	return hit_mesh.name
 
-		return ""
-
-
-func _fix_orphaned_code():
-	if structure_name.is_empty():
-		# No structure found, deselect
-		deselect_structure()
-		else:
-			# Structure found, select it
-			select_structure(structure_name)
-
-			# Also tell the selection manager to handle highlighting
-			selection_manager.handle_selection_at_position(screen_pos)
+	return ""
 
 
-			## Configuration and setup
+if structure_name.is_empty():
+	# No structure found, deselect
+	deselect_structure()
+	else:
+		# Structure found, select it
+		select_structure(structure_name)
+
+		# Also tell the selection manager to handle highlighting
+		selection_manager.handle_selection_at_position(screen_pos)
+
+
+		## Configuration and setup
 
 
 func _on_manager_structure_selected(structure_name: String, mesh: MeshInstance3D) -> void:

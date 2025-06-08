@@ -52,14 +52,14 @@ var main_tween = create_tween()
 	main_tween.tween_callback(func(): show_step(0))
 
 
-var viewport_size = Vector2(get_viewport().size)
+# FIXED: Orphaned code - var viewport_size = Vector2(get_viewport().size)
 	tooltip.position = (viewport_size - tooltip.size) / 2.0
 
 	# Animate entrance
 	_animate_entrance(tooltip)
 
 
-var panel = PanelContainer.new()
+# FIXED: Orphaned code - var panel = PanelContainer.new()
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP  # Allow interaction
 
 	# Premium glass morphism style
@@ -83,7 +83,7 @@ var style = StyleBoxFlat.new()
 	style.content_margin_bottom = 32
 	panel.add_theme_stylebox_override("panel", style)
 
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 20)
 	vbox.custom_minimum_size.x = 400
 	panel.add_child(vbox)
@@ -93,11 +93,11 @@ var progress_container = HBoxContainer.new()
 	progress_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_child(progress_container)
 
-var dot = Panel.new()
+# FIXED: Orphaned code - var dot = Panel.new()
 	dot.custom_minimum_size = Vector2(12, 12)
 
-var dot_style = StyleBoxFlat.new()
-var spacer = Control.new()
+# FIXED: Orphaned code - var dot_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var spacer = Control.new()
 	spacer.custom_minimum_size.x = 8
 	progress_container.add_child(spacer)
 
@@ -127,7 +127,7 @@ var desc = RichTextLabel.new()
 	vbox.add_child(desc)
 
 	# Gesture hint (if applicable)
-var gesture_hint = _create_gesture_hint(step.gesture)
+# FIXED: Orphaned code - var gesture_hint = _create_gesture_hint(step.gesture)
 	vbox.add_child(gesture_hint)
 
 	# Action buttons
@@ -137,7 +137,7 @@ var button_container = HBoxContainer.new()
 	vbox.add_child(button_container)
 
 	# Skip button (always available)
-var skip_btn = _create_modern_button("Skip Tutorial", Color("#B8BCC8"))  # Text secondary
+# FIXED: Orphaned code - var skip_btn = _create_modern_button("Skip Tutorial", Color("#B8BCC8"))  # Text secondary
 	skip_btn.pressed.connect(complete_onboarding)
 	button_container.add_child(skip_btn)
 
@@ -145,13 +145,13 @@ var skip_btn = _create_modern_button("Skip Tutorial", Color("#B8BCC8"))  # Text 
 var start_btn = _create_modern_button("Let's Start!", Color("#00D9FF"))  # Primary cyan
 	start_btn.pressed.connect(_next_step)
 	button_container.add_child(start_btn)
-var next_btn = _create_modern_button("Next", Color("#00D9FF"))  # Primary cyan
+# FIXED: Orphaned code - var next_btn = _create_modern_button("Next", Color("#00D9FF"))  # Primary cyan
 	next_btn.pressed.connect(_next_step)
 	button_container.add_child(next_btn)
 
-var hint_panel = PanelContainer.new()
+# FIXED: Orphaned code - var hint_panel = PanelContainer.new()
 
-var hint_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var hint_style = StyleBoxFlat.new()
 	hint_style.bg_color = Color("#FFB700").darkened(0.7)  # Warning amber darkened
 	hint_style.corner_radius_top_left = 8
 	hint_style.corner_radius_top_right = 8
@@ -163,7 +163,7 @@ var hint_style = StyleBoxFlat.new()
 	hint_style.content_margin_bottom = 8
 	hint_panel.add_theme_stylebox_override("panel", hint_style)
 
-var hint_label = Label.new()
+# FIXED: Orphaned code - var hint_label = Label.new()
 	hint_label.add_theme_color_override("font_color", Color("#FFB700"))  # Warning amber
 	hint_label.add_theme_font_size_override("font_size", 14)
 	hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -180,7 +180,7 @@ var hint_label = Label.new()
 						hint_label.text = "💡 Try it out!"
 
 						hint_panel.add_child(hint_label)
-var btn = Button.new()
+# FIXED: Orphaned code - var btn = Button.new()
 	btn.text = text
 	btn.custom_minimum_size.x = 120
 
@@ -208,7 +208,7 @@ var btn_hover = btn_style.duplicate()
 	)
 	btn.add_theme_font_size_override("font_size", 16)
 
-var config = ConfigFile.new()
+# FIXED: Orphaned code - var config = ConfigFile.new()
 	config.set_value("onboarding", "completed", true)
 	config.set_value("onboarding", "completed_date", Time.get_datetime_string_from_system())
 	config.save("user://settings.cfg")
@@ -217,8 +217,8 @@ var config = ConfigFile.new()
 var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0.0, 0.7)
-var tween_2 = control.create_tween()
-var tween_3 = control.create_tween()
+# FIXED: Orphaned code - var tween_2 = control.create_tween()
+# FIXED: Orphaned code - var tween_3 = control.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(control, "modulate:a", 0.0, duration)
 	tween.tween_property(control, "scale", Vector2(0.9, 0.9), duration)
@@ -228,7 +228,7 @@ var tween_3 = control.create_tween()
 	# Public method to check if user has completed onboarding
 	static func has_completed_onboarding() -> bool:
 var config_2 = ConfigFile.new()
-var error = config.load("user://settings.cfg")
+# FIXED: Orphaned code - var error = config.load("user://settings.cfg")
 
 func _ready() -> void:
 	# Set up full screen control
@@ -273,64 +273,54 @@ func complete_onboarding():
 
 	# Save completion status
 
-func _fix_orphaned_code():
-	for i in range(steps.size()):
-func _fix_orphaned_code():
-	if i <= current_step:
-		dot_style.bg_color = Color("#00D9FF")  # Primary cyan
-		else:
-			dot_style.bg_color = Color(1, 1, 1, 0.3)
-			dot_style.corner_radius_top_left = 6
-			dot_style.corner_radius_top_right = 6
-			dot_style.corner_radius_bottom_left = 6
-			dot_style.corner_radius_bottom_right = 6
-			dot.add_theme_stylebox_override("panel", dot_style)
+for i in range(steps.size()):
+if i <= current_step:
+	dot_style.bg_color = Color("#00D9FF")  # Primary cyan
+	else:
+		dot_style.bg_color = Color(1, 1, 1, 0.3)
+		dot_style.corner_radius_top_left = 6
+		dot_style.corner_radius_top_right = 6
+		dot_style.corner_radius_bottom_left = 6
+		dot_style.corner_radius_bottom_right = 6
+		dot.add_theme_stylebox_override("panel", dot_style)
 
-			progress_container.add_child(dot)
+		progress_container.add_child(dot)
 
-			if i < steps.size() - 1:
-func _fix_orphaned_code():
-	if step.has("gesture"):
-func _fix_orphaned_code():
-	if step.action == "start":
-func _fix_orphaned_code():
-	return panel
+		if i < steps.size() - 1:
+if step.has("gesture"):
+if step.action == "start":
+return panel
 
 
-func _fix_orphaned_code():
-	return hint_panel
+return hint_panel
 
 
-func _fix_orphaned_code():
-	return btn
+return btn
 
 
-func _fix_orphaned_code():
-	if overlay:
-		tween.tween_property(overlay, "modulate:a", 0.0, 0.7)
-		tween.tween_callback(
-		func():
-			onboarding_completed.emit()
-			queue_free()
-			)
-
-
-			# Animation helper functions
-func _fix_orphaned_code():
-	if delay > 0:
-		tween.tween_interval(delay)
-
-		tween.set_parallel(true)
-		tween.tween_property(control, "modulate:a", 1.0, 0.3).set_ease(Tween.EASE_OUT)
-		tween.tween_property(control, "scale", Vector2.ONE, 0.3).set_ease(Tween.EASE_OUT).set_trans(
-		Tween.TRANS_BACK
+if overlay:
+	tween.tween_property(overlay, "modulate:a", 0.0, 0.7)
+	tween.tween_callback(
+	func():
+		onboarding_completed.emit()
+		queue_free()
 		)
 
 
-func _fix_orphaned_code():
-	if error != OK:
-		return false
-		return config.get_value("onboarding", "completed", false)
+		# Animation helper functions
+if delay > 0:
+	tween.tween_interval(delay)
+
+	tween.set_parallel(true)
+	tween.tween_property(control, "modulate:a", 1.0, 0.3).set_ease(Tween.EASE_OUT)
+	tween.tween_property(control, "scale", Vector2.ONE, 0.3).set_ease(Tween.EASE_OUT).set_trans(
+	Tween.TRANS_BACK
+	)
+
+
+if error != OK:
+	return false
+	return config.get_value("onboarding", "completed", false)
 
 func _create_step_tooltip(step: Dictionary) -> PanelContainer:
 func _create_gesture_hint(gesture: String) -> PanelContainer:

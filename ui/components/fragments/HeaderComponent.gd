@@ -11,8 +11,8 @@ signal title_changed(new_title: String)
 
 # === UI ELEMENTS ===
 
-const FeatureFlags = preprepreprepreload("res://core/features/FeatureFlags.gd")
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const FeatureFlags = preload("res://core/features/FeatureFlags.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # === SIGNALS ===
 
@@ -22,7 +22,7 @@ var action_buttons: Dictionary = {}
 
 # === CONFIGURATION ===
 var header_config: Dictionary = {}
-var current_theme: String = "enhanced"
+# FIXED: Orphaned code - var current_theme: String = "enhanced"
 var is_mobile: bool = false
 
 # === STATE ===
@@ -47,7 +47,7 @@ var button_type = "primary" if bookmarked else "secondary"
 UIThemeManager.apply_enhanced_button_style(bookmark_btn, button_type)
 
 
-var button = Button.new()
+# FIXED: Orphaned code - var button = Button.new()
 button.text = icon if icon != "" else _get_default_icon(action)
 button.custom_minimum_size = Vector2(36, 36)
 button.tooltip_text = tooltip if tooltip != "" else _get_default_tooltip(action)
@@ -69,9 +69,9 @@ button.queue_free()
 action_buttons.erase(action)
 
 
-var mobile_size = Vector2(32, 32)
-var desktop_size = Vector2(36, 36)
-var button_3 = action_buttons[action]
+# FIXED: Orphaned code - var mobile_size = Vector2(32, 32)
+# FIXED: Orphaned code - var desktop_size = Vector2(36, 36)
+# FIXED: Orphaned code - var button_3 = action_buttons[action]
 var button_type_3 = "danger" if action == "close" else "secondary"
 var icons = {
 "close": "×",
@@ -87,7 +87,7 @@ var icons = {
 "save": "💾",
 "cancel": "✖"
 }
-var tooltips = {
+# FIXED: Orphaned code - var tooltips = {
 "close": "Close panel",
 "bookmark": "Bookmark this structure",
 "share": "Share structure information",
@@ -101,13 +101,13 @@ var tooltips = {
 "save": "Save changes",
 "cancel": "Cancel operation"
 }
-var button_4 = action_buttons[action]
+# FIXED: Orphaned code - var button_4 = action_buttons[action]
 UIThemeManager.animate_button_press(button)
 
 
 # === ACCESSIBILITY ===
 var buttons = action_buttons.values()
-var current_button = buttons[i]
+# FIXED: Orphaned code - var current_button = buttons[i]
 
 var prev_button = buttons[i - 1]
 current_button.focus_neighbor_left = prev_button.get_path()
@@ -115,7 +115,7 @@ prev_button.focus_neighbor_right = current_button.get_path()
 
 # Set accessible names
 title_label.set_meta("accessible_name", "Panel title")
-var button_5 = action_buttons[action]
+# FIXED: Orphaned code - var button_5 = action_buttons[action]
 button.set_meta("accessible_name", _get_default_tooltip(action))
 
 
@@ -185,56 +185,46 @@ func apply_theme(theme: String) -> void:
 	# Update button styling
 	for action in action_buttons:
 
-func _fix_orphaned_code():
-	if not actions_container:
-		_setup_header_structure()
+if not actions_container:
+	_setup_header_structure()
 
-		# Add to container and track
-		actions_container.add_child(button)
-		action_buttons[action] = button
+	# Add to container and track
+	actions_container.add_child(button)
+	action_buttons[action] = button
 
-		return button
-
-
-func _fix_orphaned_code():
-	for action in action_buttons:
-		action_buttons[action].custom_minimum_size = mobile_size
-
-		# Smaller title font
-		UIThemeManager.apply_enhanced_typography(title_label, "subheading")
-		else:
-			# Regular size for desktop
-func _fix_orphaned_code():
-	for action in action_buttons:
-		action_buttons[action].custom_minimum_size = desktop_size
-
-		# Regular title font
-		UIThemeManager.apply_enhanced_typography(title_label, "heading")
+	return button
 
 
-func _fix_orphaned_code():
-	if action == "bookmark" and bookmark_state:
-		button_type = "primary"
-		UIThemeManager.apply_enhanced_button_style(button, button_type)
+for action in action_buttons:
+	action_buttons[action].custom_minimum_size = mobile_size
+
+	# Smaller title font
+	UIThemeManager.apply_enhanced_typography(title_label, "subheading")
+	else:
+		# Regular size for desktop
+for action in action_buttons:
+	action_buttons[action].custom_minimum_size = desktop_size
+
+	# Regular title font
+	UIThemeManager.apply_enhanced_typography(title_label, "heading")
 
 
-		# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	return icons.get(action, "•")
+if action == "bookmark" and bookmark_state:
+	button_type = "primary"
+	UIThemeManager.apply_enhanced_button_style(button, button_type)
 
 
-func _fix_orphaned_code():
-	return tooltips.get(action, "Action: " + action)
+	# === PRIVATE METHODS ===
+return icons.get(action, "•")
 
 
-func _fix_orphaned_code():
-	for i in range(buttons.size()):
-func _fix_orphaned_code():
-	if i > 0:
-func _fix_orphaned_code():
-	for action in action_buttons:
-func _fix_orphaned_code():
-	return header
+return tooltips.get(action, "Action: " + action)
+
+
+for i in range(buttons.size()):
+if i > 0:
+for action in action_buttons:
+return header
 
 func _setup_header_structure() -> void:
 	"""Setup the header layout and components"""

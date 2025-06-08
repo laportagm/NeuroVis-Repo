@@ -19,10 +19,10 @@ const MIN_FOCUS_DISTANCE: float = 0.01
 
 # Reference to brain model (safely accessed)
 
-var current_state: CameraState = CameraState.IDLE
+# FIXED: Orphaned code - var current_state: CameraState = CameraState.IDLE
 
 # Camera control settings (matching Godot editor exactly)
-var focus_point: Vector3 = Vector3.ZERO
+# FIXED: Orphaned code - var focus_point: Vector3 = Vector3.ZERO
 var zoom_distance: float = 5.0
 var target_zoom_distance: float = 5.0
 var last_mouse_position: Vector2 = Vector2.ZERO
@@ -32,14 +32,14 @@ var pan_enabled: bool = false
 # Debug visualization
 var debug_draw_enabled: bool = true
 var debug_meshes: Dictionary = {}
-var debug_font: Font
+# FIXED: Orphaned code - var debug_font: Font
 
 # Safety bounds
 var brain_model: Node3D = null
 
 
 var parent = get_parent()
-var sphere_mesh = SphereMesh.new()
+# FIXED: Orphaned code - var sphere_mesh = SphereMesh.new()
 sphere_mesh.radial_segments = 16
 sphere_mesh.rings = 8
 sphere_mesh.radius = 0.05
@@ -60,7 +60,7 @@ debug_meshes["focus_point"] = focus_instance
 
 
 var viewport = get_viewport()
-var viewport_size = viewport.get_visible_rect().size
+# FIXED: Orphaned code - var viewport_size = viewport.get_visible_rect().size
 var delta = mouse_pos - last_mouse_position
 
 # Prevent zero delta
@@ -73,8 +73,8 @@ var distance = cam_to_focus.length()
 
 # Safety check for zero distance
 var yaw_rotation = Transform3D(Basis(Vector3.UP, yaw), Vector3.ZERO)
-var right = transform.basis.x.normalized()
-var pitch_rotation = Transform3D(Basis(right, pitch), Vector3.ZERO)
+# FIXED: Orphaned code - var right = transform.basis.x.normalized()
+# FIXED: Orphaned code - var pitch_rotation = Transform3D(Basis(right, pitch), Vector3.ZERO)
 
 # Apply rotations
 var new_transform = transform
@@ -109,7 +109,7 @@ focus_point = new_focus
 _validate_transform()
 
 
-var zoom_mult = pow(ZOOM_FACTOR, direction)
+# FIXED: Orphaned code - var zoom_mult = pow(ZOOM_FACTOR, direction)
 
 # Get zoom target point
 var zoom_target = _get_zoom_target(mouse_pos)
@@ -132,9 +132,9 @@ look_at(focus_point, Vector3.UP)
 # Validate transform
 _validate_transform()
 
-var viewport_2 = get_viewport()
-var from = project_ray_origin(mouse_pos)
-var to = from + project_ray_normal(mouse_pos) * 1000.0
+# FIXED: Orphaned code - var viewport_2 = get_viewport()
+# FIXED: Orphaned code - var from = project_ray_origin(mouse_pos)
+# FIXED: Orphaned code - var to = from + project_ray_normal(mouse_pos) * 1000.0
 
 # Create ray query
 var space_state = get_world_3d().direct_space_state
@@ -143,26 +143,26 @@ ray_query.collision_mask = 0xFFFFFFFF  # Check all layers
 
 var result = space_state.intersect_ray(ray_query)
 
-var ray_dir = project_ray_normal(mouse_pos)
-var sphere_center = focus_point
+# FIXED: Orphaned code - var ray_dir = project_ray_normal(mouse_pos)
+# FIXED: Orphaned code - var sphere_center = focus_point
 var sphere_radius = zoom_distance * 0.5
 
 # Ray-sphere intersection
 var oc = from - sphere_center
 var b = oc.dot(ray_dir)
-var c = oc.dot(oc) - sphere_radius * sphere_radius
+# FIXED: Orphaned code - var c = oc.dot(oc) - sphere_radius * sphere_radius
 var discriminant = b * b - c
 
 var t = -b - sqrt(discriminant)
-var cam_dir = (position - focus_point).normalized()
+# FIXED: Orphaned code - var cam_dir = (position - focus_point).normalized()
 position = focus_point + cam_dir * zoom_distance
 _validate_transform()
 
 # Update debug visualization
 var distance_2 = position.distance_to(focus_point)
-var cam_dir_2 = (position - focus_point).normalized()
+# FIXED: Orphaned code - var cam_dir_2 = (position - focus_point).normalized()
 
-var _original_pos = position
+# FIXED: Orphaned code - var _original_pos = position
 var _original_focus = focus_point
 
 # Simulate orbit
@@ -292,131 +292,114 @@ func get_camera_state_info() -> Dictionary:
 	"debug_enabled": debug_draw_enabled
 	}
 
-func _fix_orphaned_code():
-	for child in parent.get_children():
-		if child.name == "BrainModel" and child is Node3D:
-			brain_model = child
-			print("[Camera3D] Found brain model: ", brain_model.name)
-			break
+for child in parent.get_children():
+	if child.name == "BrainModel" and child is Node3D:
+		brain_model = child
+		print("[Camera3D] Found brain model: ", brain_model.name)
+		break
 
-			if not brain_model:
-				push_warning("[Camera3D] Brain model not found - camera will still function")
-
-
-func _fix_orphaned_code():
-	if not viewport:
-		return
-
-func _fix_orphaned_code():
-	if (
-	event.position.x < 0
-	or event.position.x > viewport_size.x
-	or event.position.y < 0
-	or event.position.y > viewport_size.y
-	):
-		return
-
-		match current_state:
-			CameraState.ORBITING:
-				_update_orbit(event.position)
-				CameraState.PANNING:
-					_update_pan(event.position)
-
-					last_mouse_position = event.position
+		if not brain_model:
+			push_warning("[Camera3D] Brain model not found - camera will still function")
 
 
-func _fix_orphaned_code():
-	if delta.length_squared() < 0.0001:
-		return
+if not viewport:
+	return
 
-		# Calculate rotation angles
-func _fix_orphaned_code():
-	if distance < MIN_FOCUS_DISTANCE:
-		distance = MIN_FOCUS_DISTANCE
-		position = focus_point - transform.basis.z * distance
+if (
+event.position.x < 0
+or event.position.x > viewport_size.x
+or event.position.y < 0
+or event.position.y > viewport_size.y
+):
+	return
 
-		# Create rotation transforms
-func _fix_orphaned_code():
-	if abs(new_up.dot(Vector3.UP)) < 0.1:
-		# Too close to gimbal lock, skip this rotation
-		return
+	match current_state:
+		CameraState.ORBITING:
+			_update_orbit(event.position)
+			CameraState.PANNING:
+				_update_pan(event.position)
 
-		# Apply the new transform
-		transform = new_transform
-
-		# Ensure we're still looking at focus point
-		look_at(focus_point, Vector3.UP)
-
-		# Validate transform
-		_validate_transform()
+				last_mouse_position = event.position
 
 
-func _fix_orphaned_code():
-	if delta.length_squared() < 0.0001:
-		return
+if delta.length_squared() < 0.0001:
+	return
 
-		# Calculate pan offset in camera space
-func _fix_orphaned_code():
-	if current_distance < MIN_FOCUS_DISTANCE:
-		current_distance = MIN_FOCUS_DISTANCE
+	# Calculate rotation angles
+if distance < MIN_FOCUS_DISTANCE:
+	distance = MIN_FOCUS_DISTANCE
+	position = focus_point - transform.basis.z * distance
 
-		# Apply zoom with clamping
-		target_zoom_distance = clamp(current_distance * zoom_mult, MIN_ZOOM_DISTANCE, MAX_ZOOM_DISTANCE)
+	# Create rotation transforms
+if abs(new_up.dot(Vector3.UP)) < 0.1:
+	# Too close to gimbal lock, skip this rotation
+	return
 
-		# Update zoom distance for smooth interpolation
-		zoom_distance = target_zoom_distance
+	# Apply the new transform
+	transform = new_transform
 
-		# Move camera toward target
-		if cam_to_target.length_squared() > 0.0001:
-func _fix_orphaned_code():
-	print("[Camera3D] Zoomed to distance: ", zoom_distance)
+	# Ensure we're still looking at focus point
+	look_at(focus_point, Vector3.UP)
 
-
-func _fix_orphaned_code():
-	if not viewport:
-		return focus_point
-
-func _fix_orphaned_code():
-	if result and result.has("position"):
-		return result.position
-		else:
-			# Fallback to focus sphere intersection
-func _fix_orphaned_code():
-	if discriminant > 0:
-func _fix_orphaned_code():
-	if t > 0:
-		return from + ray_dir * t
-
-		return focus_point
+	# Validate transform
+	_validate_transform()
 
 
-func _fix_orphaned_code():
-	if debug_draw_enabled:
-		_update_debug_visualization()
+if delta.length_squared() < 0.0001:
+	return
+
+	# Calculate pan offset in camera space
+if current_distance < MIN_FOCUS_DISTANCE:
+	current_distance = MIN_FOCUS_DISTANCE
+
+	# Apply zoom with clamping
+	target_zoom_distance = clamp(current_distance * zoom_mult, MIN_ZOOM_DISTANCE, MAX_ZOOM_DISTANCE)
+
+	# Update zoom distance for smooth interpolation
+	zoom_distance = target_zoom_distance
+
+	# Move camera toward target
+	if cam_to_target.length_squared() > 0.0001:
+print("[Camera3D] Zoomed to distance: ", zoom_distance)
 
 
-func _fix_orphaned_code():
-	if distance < MIN_FOCUS_DISTANCE:
-		position = focus_point - transform.basis.z * MIN_ZOOM_DISTANCE
-		push_warning("[Camera3D] Camera too close to focus - adjusting distance")
+if not viewport:
+	return focus_point
+
+if result and result.has("position"):
+	return result.position
+	else:
+		# Fallback to focus sphere intersection
+if discriminant > 0:
+if t > 0:
+	return from + ray_dir * t
+
+	return focus_point
 
 
-func _fix_orphaned_code():
-	if not cam_dir.is_normalized():
-		cam_dir = Vector3.BACK
-
-		position = focus_point + cam_dir * zoom_distance
-		look_at(focus_point, Vector3.UP)
-		_validate_transform()
+if debug_draw_enabled:
+	_update_debug_visualization()
 
 
-func _fix_orphaned_code():
-	for i in range(36):
-		_update_orbit(last_mouse_position + Vector2(10, 0))
-		last_mouse_position += Vector2(10, 0)
-		_validate_transform()
+if distance < MIN_FOCUS_DISTANCE:
+	position = focus_point - transform.basis.z * MIN_ZOOM_DISTANCE
+	push_warning("[Camera3D] Camera too close to focus - adjusting distance")
 
-		print("[Camera3D TEST] Orbit test complete")
+
+if not cam_dir.is_normalized():
+	cam_dir = Vector3.BACK
+
+	position = focus_point + cam_dir * zoom_distance
+	look_at(focus_point, Vector3.UP)
+	_validate_transform()
+
+
+for i in range(36):
+	_update_orbit(last_mouse_position + Vector2(10, 0))
+	last_mouse_position += Vector2(10, 0)
+	_validate_transform()
+
+	print("[Camera3D TEST] Orbit test complete")
 
 
 func _find_brain_model() -> void:

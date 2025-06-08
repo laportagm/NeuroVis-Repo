@@ -5,48 +5,45 @@ extends Node
 
 
 var gemini_service = get_node_or_null("/root/GeminiAI")
-var gemini_service_2 = get_node("/root/GeminiAI")
-var response = await gemini_service.ask_question("Say 'Hello NeuroVis!'")
+# FIXED: Orphaned code - var gemini_service_2 = get_node("/root/GeminiAI")
+# FIXED: Orphaned code - var response = await gemini_service.ask_question("Say 'Hello NeuroVis!'")
 
 func _ready():
 	print("\n=== DIRECT GEMINI API KEY TEST ===")
-	print("Testing API key: AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs")
+	print("Testing API key: AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs")  # pragma: allowlist secret
 
 	# Get the GeminiAI service
 
-func _fix_orphaned_code():
-	if not gemini_service:
-		print("ERROR: GeminiAI service not found in autoloads!")
-		return
+if not gemini_service:
+	print("ERROR: GeminiAI service not found in autoloads!")
+	return
 
-		print("GeminiAI service found, connecting to validation signal...")
+	print("GeminiAI service found, connecting to validation signal...")
 
-		# Connect to the validation signal
-		if not gemini_service.api_key_validated.is_connected(_on_validation_result):
-			gemini_service.api_key_validated.connect(_on_validation_result)
+	# Connect to the validation signal
+	if not gemini_service.api_key_validated.is_connected(_on_validation_result):
+		gemini_service.api_key_validated.connect(_on_validation_result)
 
-			# Start validation
-			print("Starting API key validation...")
-			gemini_service.validate_api_key("AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs")
+		# Start validation
+		print("Starting API key validation...")
+		gemini_service.validate_api_key("AIzaSyCWuf9EQXHHngsb3ZITHxesnq3Yq_pxFvs")  # pragma: allowlist secret
 
 
-func _fix_orphaned_code():
-	print("Testing a simple query...")
-func _fix_orphaned_code():
-	print("Query response: ", response)
-	else:
-		print("❌ API key validation FAILED")
-		print("Please check:")
-		print("1. API key is correct")
-		print("2. API key has Gemini API enabled in Google Cloud Console")
-		print("3. Internet connection is working")
-		print("4. No firewall blocking requests to generativelanguage.googleapis.com")
+print("Testing a simple query...")
+print("Query response: ", response)
+else:
+	print("❌ API key validation FAILED")
+	print("Please check:")
+	print("1. API key is correct")
+	print("2. API key has Gemini API enabled in Google Cloud Console")
+	print("3. Internet connection is working")
+	print("4. No firewall blocking requests to generativelanguage.googleapis.com")
 
-		print("\nTest completed.")
+	print("\nTest completed.")
 
-		# Wait a bit before quitting
-		await get_tree().create_timer(2.0).timeout
-		get_tree().quit()
+	# Wait a bit before quitting
+	await get_tree().create_timer(2.0).timeout
+	get_tree().quit()
 
 func _on_validation_result(success: bool, message: String):
 	print("\n=== VALIDATION RESULT ===")

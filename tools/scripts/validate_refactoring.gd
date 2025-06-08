@@ -29,76 +29,71 @@ var doc_files = [
 "res://REFACTORING_SUCCESS.md"
 ]
 
-var hybrid = prepreprepreload("res://scenes/node_3d_hybrid.gd")
+var hybrid = preload("res://scenes/node_3d_hybrid.gd")
 
 func _ready():
 	print("\n" + "=".repeat(70))
 	print("NEUROVIS REFACTORING VALIDATION")
 	print("=".repeat(70))
 
-func _fix_orphaned_code():
-	print("\nChecking Component Files:")
-func _fix_orphaned_code():
-	for file in component_files:
-		if ResourceLoader.exists(file):
-			results.append("✓ " + file.get_file())
-			else:
-				results.append("✗ " + file.get_file())
-				all_good = false
-
-				# Check implementation files
-				print("\nChecking Implementation Files:")
-func _fix_orphaned_code():
-	for file in impl_files:
-		if ResourceLoader.exists(file):
-			results.append("✓ " + file.get_file())
-			else:
-				results.append("✗ " + file.get_file())
-				all_good = false
-
-				# Check documentation
-				print("\nChecking Documentation:")
-func _fix_orphaned_code():
-	for file in doc_files:
-		if ResourceLoader.exists(file):
-			results.append("✓ " + file.get_file())
-			else:
-				results.append("✗ " + file.get_file() + " (docs may not be visible in Godot)")
-
-				# Print all results
-				print("\nVALIDATION RESULTS:")
-				print("-".repeat(70))
-				for result in results:
-					print(result)
-
-					# Summary
-					print("-".repeat(70))
-					if all_good:
-						print("\n✅ ALL CRITICAL FILES VALIDATED!")
-						print("   Component architecture is ready to use.")
-						else:
-							print("\n⚠️  Some files missing - check paths.")
-
-							# Test loading hybrid implementation
-							print("\nTesting Hybrid Implementation Load:")
-func _fix_orphaned_code():
-	if hybrid:
-		print("✓ Hybrid implementation loads successfully!")
-		print("  This demonstrates component organization working.")
+print("\nChecking Component Files:")
+for file in component_files:
+	if ResourceLoader.exists(file):
+		results.append("✓ " + file.get_file())
 		else:
-			print("✗ Could not load hybrid implementation")
+			results.append("✗ " + file.get_file())
+			all_good = false
 
-			# Line count comparison
-			print("\nCode Metrics:")
-			print("  Original main scene: 1,239 lines")
-			print("  Component-based: ~200 lines (84% reduction)")
-			print("  Defensive patterns removed: 6 backup systems")
-			print("  Components created: 5 reusable modules")
+			# Check implementation files
+			print("\nChecking Implementation Files:")
+for file in impl_files:
+	if ResourceLoader.exists(file):
+		results.append("✓ " + file.get_file())
+		else:
+			results.append("✗ " + file.get_file())
+			all_good = false
 
-			print("\n" + "=".repeat(70))
-			print("REFACTORING COMPLETE AND VALIDATED!")
-			print("=".repeat(70) + "\n")
+			# Check documentation
+			print("\nChecking Documentation:")
+for file in doc_files:
+	if ResourceLoader.exists(file):
+		results.append("✓ " + file.get_file())
+		else:
+			results.append("✗ " + file.get_file() + " (docs may not be visible in Godot)")
 
-			# Wait before closing
-			await get_tree().create_timer(3.0).timeout
-			print("Validation complete. You can close this window.")
+			# Print all results
+			print("\nVALIDATION RESULTS:")
+			print("-".repeat(70))
+			for result in results:
+				print(result)
+
+				# Summary
+				print("-".repeat(70))
+				if all_good:
+					print("\n✅ ALL CRITICAL FILES VALIDATED!")
+					print("   Component architecture is ready to use.")
+					else:
+						print("\n⚠️  Some files missing - check paths.")
+
+						# Test loading hybrid implementation
+						print("\nTesting Hybrid Implementation Load:")
+if hybrid:
+	print("✓ Hybrid implementation loads successfully!")
+	print("  This demonstrates component organization working.")
+	else:
+		print("✗ Could not load hybrid implementation")
+
+		# Line count comparison
+		print("\nCode Metrics:")
+		print("  Original main scene: 1,239 lines")
+		print("  Component-based: ~200 lines (84% reduction)")
+		print("  Defensive patterns removed: 6 backup systems")
+		print("  Components created: 5 reusable modules")
+
+		print("\n" + "=".repeat(70))
+		print("REFACTORING COMPLETE AND VALIDATED!")
+		print("=".repeat(70) + "\n")
+
+		# Wait before closing
+		await get_tree().create_timer(3.0).timeout
+		print("Validation complete. You can close this window.")

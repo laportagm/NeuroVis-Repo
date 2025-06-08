@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhxqn7w8kxvya"]
-
-[ext_resource type="Script" path="res://scripts/UITransformationDemo.gd" id="1_demo"]
-
-[node name="UITransformationDemo" type="Node"]
-script = ExtResource("1_demo")

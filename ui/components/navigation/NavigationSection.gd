@@ -45,8 +45,8 @@ var prev_item = _item_nodes[_selected_item]
 var item = _item_nodes[id]
 var item_2 = _item_nodes[id]
 var item_3 = _item_nodes[item_id]
-var safe_autoload_script = prepreprepreload("res://ui/components/core/SafeAutoloadAccess.gd")
-var main_container = VBoxContainer.new()
+var safe_autoload_script = preload("res://ui/components/core/SafeAutoloadAccess.gd")
+# FIXED: Orphaned code - var main_container = VBoxContainer.new()
 main_container.add_theme_constant_override("separation", 0)
 add_child(main_container)
 
@@ -69,16 +69,16 @@ _icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 var item_data = _items[item_id]
 
 # Try to instantiate via script
-var item_script = prepreprepreload("res://ui/components/navigation/NavigationItem.gd")
-var item_4
+var item_script = preload("res://ui/components/navigation/NavigationItem.gd")
+# FIXED: Orphaned code - var item_4
 
 var hbox = HBoxContainer.new()
 hbox.add_theme_constant_override("separation", 8)
 item.add_child(hbox)
 
-var icon_rect = TextureRect.new()
+# FIXED: Orphaned code - var icon_rect = TextureRect.new()
 icon_rect.custom_minimum_size = Vector2(16, 16)
-var label = Label.new()
+# FIXED: Orphaned code - var label = Label.new()
 label.text = item_data.text
 label.visible = show_item_labels
 hbox.add_child(label)
@@ -134,8 +134,8 @@ tween.tween_property(_content_container, "custom_minimum_size:y", 0, ANIMATION_D
 
 var _id: String = ""
 var _items: Dictionary = {}
-var _item_nodes: Dictionary = {}
-var _selected_item: String = ""
+# FIXED: Orphaned code - var _item_nodes: Dictionary = {}
+# FIXED: Orphaned code - var _selected_item: String = ""
 var _header_height: float = 40
 var _safe_autoload_access = null
 var _theme_manager = null
@@ -258,140 +258,128 @@ func show_labels(show: bool) -> void:
 		# Update item labels
 		for item_id in _item_nodes:
 
-func _fix_orphaned_code():
-	if prev_item.has_method("set_selected"):
-		prev_item.set_selected(false)
+if prev_item.has_method("set_selected"):
+	prev_item.set_selected(false)
 
-		# Select new item
-		_selected_item = id
-		if id in _item_nodes:
-func _fix_orphaned_code():
-	if item.has_method("set_selected"):
-		item.set_selected(true)
+	# Select new item
+	_selected_item = id
+	if id in _item_nodes:
+if item.has_method("set_selected"):
+	item.set_selected(true)
+
+	return true
+
+	## Deselect the specified item
+	## @param id: ID of the item to deselect
+	## @returns: Boolean indicating success
+if item.has_method("set_selected"):
+	item.set_selected(false)
+
+	if _selected_item == id:
+		_selected_item = ""
 
 		return true
 
-		## Deselect the specified item
-		## @param id: ID of the item to deselect
-		## @returns: Boolean indicating success
-func _fix_orphaned_code():
-	if item.has_method("set_selected"):
-		item.set_selected(false)
+		## Set whether the section is expanded
+		## @param is_expanded: Whether the section should be expanded
+if item.has_method("show_label"):
+	item.show_label(show)
 
-		if _selected_item == id:
-			_selected_item = ""
+	# === PRIVATE METHODS ===
+if safe_autoload_script:
+	_safe_autoload_access = safe_autoload_script.new()
 
-			return true
+	# Load UIThemeManager
+	if _safe_autoload_access and _safe_autoload_access.has_method("get_autoload"):
+		_theme_manager = _safe_autoload_access.get_autoload("UIThemeManager")
+		else:
+			_theme_manager = get_node_or_null("/root/UIThemeManager")
 
-			## Set whether the section is expanded
-			## @param is_expanded: Whether the section should be expanded
-func _fix_orphaned_code():
-	if item.has_method("show_label"):
-		item.show_label(show)
+if icon:
+	_icon_rect.texture = icon
+	header_hbox.add_child(_icon_rect)
 
-		# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if safe_autoload_script:
-		_safe_autoload_access = safe_autoload_script.new()
+	# Title
+	_title_label = Label.new()
+	_title_label.name = "TitleLabel"
+	_title_label.text = title
+	_title_label.add_theme_font_size_override("font_size", 14)
+	_title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header_hbox.add_child(_title_label)
 
-		# Load UIThemeManager
-		if _safe_autoload_access and _safe_autoload_access.has_method("get_autoload"):
-			_theme_manager = _safe_autoload_access.get_autoload("UIThemeManager")
-			else:
-				_theme_manager = get_node_or_null("/root/UIThemeManager")
+	# Expand/collapse indicator
+	_toggle_indicator = Label.new()
+	_toggle_indicator.name = "ToggleIndicator"
+	_toggle_indicator.text = "▼"
+	_toggle_indicator.add_theme_font_size_override("font_size", 12)
+	header_hbox.add_child(_toggle_indicator)
 
-func _fix_orphaned_code():
-	if icon:
-		_icon_rect.texture = icon
-		header_hbox.add_child(_icon_rect)
+	# Content container with shadow
+	_content_container = MarginContainer.new()
+	_content_container.name = "ContentContainer"
+	_content_container.add_theme_constant_override("margin_left", 4)
+	_content_container.add_theme_constant_override("margin_top", 4)
+	_content_container.add_theme_constant_override("margin_right", 4)
+	_content_container.add_theme_constant_override("margin_bottom", 4)
+	main_container.add_child(_content_container)
 
-		# Title
-		_title_label = Label.new()
-		_title_label.name = "TitleLabel"
-		_title_label.text = title
-		_title_label.add_theme_font_size_override("font_size", 14)
-		_title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		header_hbox.add_child(_title_label)
+	# Items container
+	_items_container = VBoxContainer.new()
+	_items_container.name = "ItemsContainer"
+	_items_container.add_theme_constant_override("separation", ITEM_SPACING)
+	_content_container.add_child(_items_container)
 
-		# Expand/collapse indicator
-		_toggle_indicator = Label.new()
-		_toggle_indicator.name = "ToggleIndicator"
-		_toggle_indicator.text = "▼"
-		_toggle_indicator.add_theme_font_size_override("font_size", 12)
-		header_hbox.add_child(_toggle_indicator)
+	# Create items
+	for item_id in _items:
+		_create_item_ui(item_id)
 
-		# Content container with shadow
-		_content_container = MarginContainer.new()
-		_content_container.name = "ContentContainer"
-		_content_container.add_theme_constant_override("margin_left", 4)
-		_content_container.add_theme_constant_override("margin_top", 4)
-		_content_container.add_theme_constant_override("margin_right", 4)
-		_content_container.add_theme_constant_override("margin_bottom", 4)
-		main_container.add_child(_content_container)
+if item_script:
+	item = item_script.new()
+	item.name = "Item_" + item_id
 
-		# Items container
-		_items_container = VBoxContainer.new()
-		_items_container.name = "ItemsContainer"
-		_items_container.add_theme_constant_override("separation", ITEM_SPACING)
-		_content_container.add_child(_items_container)
+	# Configure item
+	if item.has_method("configure"):
+		item.configure({
+		"id": item_id,
+		"text": item_data.text,
+		"icon": item_data.icon,
+		"show_label": show_item_labels
+		})
+		else:
+			# Fallback to basic item creation
+			item = PanelContainer.new()
+			item.name = "Item_" + item_id
 
-		# Create items
-		for item_id in _items:
-			_create_item_ui(item_id)
+if item_data.icon:
+	icon_rect.texture = item_data.icon
+	hbox.add_child(icon_rect)
 
-func _fix_orphaned_code():
-	if item_script:
-		item = item_script.new()
-		item.name = "Item_" + item_id
+if item.has_signal("clicked"):
+	item.clicked.connect(_on_item_clicked.bind(item_id))
 
-		# Configure item
-		if item.has_method("configure"):
-			item.configure({
-			"id": item_id,
-			"text": item_data.text,
-			"icon": item_data.icon,
-			"show_label": show_item_labels
-			})
-			else:
-				# Fallback to basic item creation
-				item = PanelContainer.new()
-				item.name = "Item_" + item_id
+	# Add to container with left margin
+if _theme_manager:
+	if _theme_manager.has_method("get_color"):
+		accent_color = _theme_manager.get_color("accent") if _theme_manager.get_color("accent") else accent_color
+		bg_color = _theme_manager.get_color("surface") if _theme_manager.get_color("surface") else bg_color
+		hover_color = _theme_manager.get_color("surface_hover") if _theme_manager.get_color("surface_hover") else hover_color
+		text_color = _theme_manager.get_color("text_primary") if _theme_manager.get_color("text_primary") else text_color
+		secondary_color = _theme_manager.get_color("text_secondary") if _theme_manager.get_color("text_secondary") else secondary_color
 
-func _fix_orphaned_code():
-	if item_data.icon:
-		icon_rect.texture = item_data.icon
-		hbox.add_child(icon_rect)
+		# Section background (transparent)
+if style:
+	style.corner_radius_bottom_left = expanded ? 0 : 6
+	style.corner_radius_bottom_right = expanded ? 0 : 6
+	_header_container.add_theme_stylebox_override("panel", style)
 
-func _fix_orphaned_code():
-	if item.has_signal("clicked"):
-		item.clicked.connect(_on_item_clicked.bind(item_id))
+	# Animate height change
+	if expanded:
+		# Get content size
+if _items_container and _items_container.get_child_count() > 0:
+	await get_tree().process_frame  # Wait for layout
+	content_size.y = _items_container.get_combined_minimum_size().y + 8  # Add margin
 
-		# Add to container with left margin
-func _fix_orphaned_code():
-	if _theme_manager:
-		if _theme_manager.has_method("get_color"):
-			accent_color = _theme_manager.get_color("accent") if _theme_manager.get_color("accent") else accent_color
-			bg_color = _theme_manager.get_color("surface") if _theme_manager.get_color("surface") else bg_color
-			hover_color = _theme_manager.get_color("surface_hover") if _theme_manager.get_color("surface_hover") else hover_color
-			text_color = _theme_manager.get_color("text_primary") if _theme_manager.get_color("text_primary") else text_color
-			secondary_color = _theme_manager.get_color("text_secondary") if _theme_manager.get_color("text_secondary") else secondary_color
-
-			# Section background (transparent)
-func _fix_orphaned_code():
-	if style:
-		style.corner_radius_bottom_left = expanded ? 0 : 6
-		style.corner_radius_bottom_right = expanded ? 0 : 6
-		_header_container.add_theme_stylebox_override("panel", style)
-
-		# Animate height change
-		if expanded:
-			# Get content size
-func _fix_orphaned_code():
-	if _items_container and _items_container.get_child_count() > 0:
-		await get_tree().process_frame  # Wait for layout
-		content_size.y = _items_container.get_combined_minimum_size().y + 8  # Add margin
-
-		# Animate expansion
+	# Animate expansion
 func _load_dependencies() -> void:
 	"""Load required dependencies safely"""
 	# Try to load SafeAutoloadAccess first if available

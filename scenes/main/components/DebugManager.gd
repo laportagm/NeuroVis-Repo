@@ -25,36 +25,36 @@ var UIComponentFactoryScript = null
 # === INITIALIZATION ===
 var UIComponentFactoryPath = "res://ui/core/UIComponentFactory.gd"
 var active_provider = ai_integration.get_active_provider_id()
-var status = ai_integration.get_provider_status()
+# FIXED: Orphaned code - var status = ai_integration.get_provider_status()
 
-var provider_id = ""
+# FIXED: Orphaned code - var provider_id = ""
 var providers = ai_integration.get_available_providers()
-var active = ai_integration.get_active_provider_id()
+# FIXED: Orphaned code - var active = ai_integration.get_active_provider_id()
 
-var status_2 = ai_integration.get_provider_status(provider)
-var provider_id_2 = args[0]
+# FIXED: Orphaned code - var status_2 = ai_integration.get_provider_status(provider)
+# FIXED: Orphaned code - var provider_id_2 = args[0]
 var result = ai_integration.set_active_provider(provider_id)
 
-var test_btn = ComponentRegistryScript.create_component("button", {"text": "Test"})
-var data = ComponentStateManagerScript.restore_component_state("test_key")
-var button = UIComponentFactoryScript.create_button("Test Button", "primary")
-var label = UIComponentFactoryScript.create_label("Test Label", "body")
-var header_config = {"title": "Test Header", "subtitle": "Test Subtitle", "icon": "info"}
-var header = ComponentRegistryScript.create_component("header", header_config)
-var content_config = {"sections": ["description", "functions", "clinical_relevance"]}
-var content = ComponentRegistryScript.create_component("content", content_config)
-var actions_config = {
+# FIXED: Orphaned code - var test_btn = ComponentRegistryScript.create_component("button", {"text": "Test"})
+# FIXED: Orphaned code - var data = ComponentStateManagerScript.restore_component_state("test_key")
+# FIXED: Orphaned code - var button = UIComponentFactoryScript.create_button("Test Button", "primary")
+# FIXED: Orphaned code - var label = UIComponentFactoryScript.create_label("Test Label", "body")
+# FIXED: Orphaned code - var header_config = {"title": "Test Header", "subtitle": "Test Subtitle", "icon": "info"}
+# FIXED: Orphaned code - var header = ComponentRegistryScript.create_component("header", header_config)
+# FIXED: Orphaned code - var content_config = {"sections": ["description", "functions", "clinical_relevance"]}
+# FIXED: Orphaned code - var content = ComponentRegistryScript.create_component("content", content_config)
+# FIXED: Orphaned code - var actions_config = {
 "preset": "default",
 "buttons":
 	[{"text": "Learn More", "action": "learn"}, {"text": "Bookmark", "action": "bookmark"}]
 	}
-var actions = ComponentRegistryScript.create_component("actions", actions_config)
-var section_config = {
+# FIXED: Orphaned code - var actions = ComponentRegistryScript.create_component("actions", actions_config)
+# FIXED: Orphaned code - var section_config = {
 	"name": "description", "title": "Description", "collapsible": true, "expanded": true
 	}
-var section = ComponentRegistryScript.create_component("section", section_config)
-var test_script = prepreprepreload("res://test_phase3_features.gd")
-var test_instance = test_script.new()
+# FIXED: Orphaned code - var section = ComponentRegistryScript.create_component("section", section_config)
+# FIXED: Orphaned code - var test_script = preload("res://test_phase3_features.gd")
+# FIXED: Orphaned code - var test_instance = test_script.new()
 	get_tree().root.add_child(test_instance)
 
 	# Auto-remove test instance after completion
@@ -76,163 +76,147 @@ func setup(dependencies: Dictionary) -> void:
 
 	# === DEBUG COMMAND REGISTRATION ===
 
-func _fix_orphaned_code():
-	if ResourceLoader.exists(UIComponentFactoryPath):
-		UIComponentFactoryScript = load(UIComponentFactoryPath)
-		else:
-			push_warning(
-			"[DebugManager] Warning: UIComponentFactory not found at " + UIComponentFactoryPath
-			)
+if ResourceLoader.exists(UIComponentFactoryPath):
+	UIComponentFactoryScript = load(UIComponentFactoryPath)
+	else:
+		push_warning(
+		"[DebugManager] Warning: UIComponentFactory not found at " + UIComponentFactoryPath
+		)
 
 
-func _fix_orphaned_code():
-	print("[DebugManager] Info: === AI INTEGRATION STATUS ===")
-	print("[DebugManager] Info: Active Provider: %s" % active_provider)
-	print("[DebugManager] Info: Status: %s" % str(status))
-	print("[DebugManager] Info: Current Structure: %s" % ai_integration.get_current_structure())
+print("[DebugManager] Info: === AI INTEGRATION STATUS ===")
+print("[DebugManager] Info: Active Provider: %s" % active_provider)
+print("[DebugManager] Info: Status: %s" % str(status))
+print("[DebugManager] Info: Current Structure: %s" % ai_integration.get_current_structure())
+print(
+(
+"[DebugManager] Info: Available Providers: %s"
+% str(ai_integration.get_available_providers())
+)
+)
+print("[DebugManager] Info: ============================\n")
+
+
+if args.size() > 0:
+	provider_id = args[0]
+
 	print(
 	(
-	"[DebugManager] Info: Available Providers: %s"
-	% str(ai_integration.get_available_providers())
+	"[DebugManager] Info: Showing setup dialog for provider: %s"
+	% (provider_id if not provider_id.is_empty() else "default")
 	)
 	)
-	print("[DebugManager] Info: ============================\n")
+	ai_integration.show_setup_dialog(provider_id)
 
 
-func _fix_orphaned_code():
-	if args.size() > 0:
-		provider_id = args[0]
+print("[DebugManager] Info: === AVAILABLE AI PROVIDERS ===")
+for provider in providers:
+print(
+(
+"[DebugManager] Info: %s %s - %s"
+% ["►" if provider == active else " ", provider, str(status)]
+)
+)
+print("[DebugManager] Info: =============================\n")
 
+print("[DebugManager] Info: Use 'ai_provider <provider_id>' to change provider")
+else:
+	# Change provider
+if result:
+	print("[DebugManager] Info: Changed provider to: %s" % provider_id)
+	else:
+		push_error("[DebugManager] Error: Failed to change provider to: %s" % provider_id)
 		print(
 		(
-		"[DebugManager] Info: Showing setup dialog for provider: %s"
-		% (provider_id if not provider_id.is_empty() else "default")
+		"[DebugManager] Info: Available providers: %s"
+		% str(ai_integration.get_available_providers())
 		)
 		)
-		ai_integration.show_setup_dialog(provider_id)
 
 
-func _fix_orphaned_code():
-	print("[DebugManager] Info: === AVAILABLE AI PROVIDERS ===")
-	for provider in providers:
-func _fix_orphaned_code():
-	print(
-	(
-	"[DebugManager] Info: %s %s - %s"
-	% ["►" if provider == active else " ", provider, str(status)]
-	)
-	)
-	print("[DebugManager] Info: =============================\n")
-
-	print("[DebugManager] Info: Use 'ai_provider <provider_id>' to change provider")
+		# === FOUNDATION TESTING COMMANDS ===
+if test_btn:
+	print("[DebugManager] Info:   - Component creation: Working")
+	test_btn.queue_free()
 	else:
-		# Change provider
-func _fix_orphaned_code():
-	if result:
-		print("[DebugManager] Info: Changed provider to: %s" % provider_id)
+		push_warning("[DebugManager] Warning:   - Component creation: Failed")
 		else:
-			push_error("[DebugManager] Error: Failed to change provider to: %s" % provider_id)
-			print(
-			(
-			"[DebugManager] Info: Available providers: %s"
-			% str(ai_integration.get_available_providers())
-			)
-			)
+			push_warning("[DebugManager] Warning: ✗ ComponentRegistry: Not available")
 
-
-			# === FOUNDATION TESTING COMMANDS ===
-func _fix_orphaned_code():
-	if test_btn:
-		print("[DebugManager] Info:   - Component creation: Working")
-		test_btn.queue_free()
+			# Test state manager
+			if (
+			ComponentStateManagerScript
+			and ComponentStateManagerScript.has_method("save_component_state")
+			):
+				print("[DebugManager] Info: ✓ ComponentStateManager: Available")
+				ComponentStateManagerScript.save_component_state("test_key", {"test": true})
+if data and data.has("test"):
+	print("[DebugManager] Info:   - State save/restore: Working")
+	else:
+		push_warning("[DebugManager] Warning:   - State save/restore: Failed")
+		ComponentStateManagerScript.remove_component_state("test_key")
 		else:
-			push_warning("[DebugManager] Warning:   - Component creation: Failed")
-			else:
-				push_warning("[DebugManager] Warning: ✗ ComponentRegistry: Not available")
+			push_warning("[DebugManager] Warning: ✗ ComponentStateManager: Not available")
 
-				# Test state manager
-				if (
-				ComponentStateManagerScript
-				and ComponentStateManagerScript.has_method("save_component_state")
-				):
-					print("[DebugManager] Info: ✓ ComponentStateManager: Available")
-					ComponentStateManagerScript.save_component_state("test_key", {"test": true})
-func _fix_orphaned_code():
-	if data and data.has("test"):
-		print("[DebugManager] Info:   - State save/restore: Working")
+			print("[DebugManager] Info: ===============================\n")
+
+
+if button:
+	print("[DebugManager] Info:   - Button creation: Working")
+	button.queue_free()
+	else:
+		push_warning("[DebugManager] Warning:   - Button creation: Failed")
+
+if label:
+	print("[DebugManager] Info:   - Label creation: Working")
+	label.queue_free()
+	else:
+		push_warning("[DebugManager] Warning:   - Label creation: Failed")
 		else:
-			push_warning("[DebugManager] Warning:   - State save/restore: Failed")
-			ComponentStateManagerScript.remove_component_state("test_key")
-			else:
-				push_warning("[DebugManager] Warning: ✗ ComponentStateManager: Not available")
+			push_warning("[DebugManager] Warning: ✗ UIComponentFactory: Not available")
 
-				print("[DebugManager] Info: ===============================\n")
+			# Test component registry
+			print("[DebugManager] Info: Testing fragment components:")
 
+			# Test header fragment
+if header:
+	print("[DebugManager] Info: ✓ Header fragment created")
+	header.queue_free()
+	else:
+		push_warning("[DebugManager] Warning: ✗ Header fragment failed")
 
-func _fix_orphaned_code():
-	if button:
-		print("[DebugManager] Info:   - Button creation: Working")
-		button.queue_free()
-		else:
-			push_warning("[DebugManager] Warning:   - Button creation: Failed")
+		# Test content fragment
+if content:
+	print("[DebugManager] Info: ✓ Content fragment created")
+	content.queue_free()
+	else:
+		push_warning("[DebugManager] Warning: ✗ Content fragment failed")
 
-func _fix_orphaned_code():
-	if label:
-		print("[DebugManager] Info:   - Label creation: Working")
-		label.queue_free()
-		else:
-			push_warning("[DebugManager] Warning:   - Label creation: Failed")
-			else:
-				push_warning("[DebugManager] Warning: ✗ UIComponentFactory: Not available")
+		# Test actions fragment
+if actions:
+	print("[DebugManager] Info: ✓ Actions fragment created")
+	actions.queue_free()
+	else:
+		push_warning("[DebugManager] Warning: ✗ Actions fragment failed")
 
-				# Test component registry
-				print("[DebugManager] Info: Testing fragment components:")
+		# Test section fragment
+if section:
+	print("[DebugManager] Info: ✓ Section fragment created")
+	section.queue_free()
+	else:
+		push_warning("[DebugManager] Warning: ✗ Section fragment failed")
 
-				# Test header fragment
-func _fix_orphaned_code():
-	if header:
-		print("[DebugManager] Info: ✓ Header fragment created")
-		header.queue_free()
-		else:
-			push_warning("[DebugManager] Warning: ✗ Header fragment failed")
-
-			# Test content fragment
-func _fix_orphaned_code():
-	if content:
-		print("[DebugManager] Info: ✓ Content fragment created")
-		content.queue_free()
-		else:
-			push_warning("[DebugManager] Warning: ✗ Content fragment failed")
-
-			# Test actions fragment
-func _fix_orphaned_code():
-	if actions:
-		print("[DebugManager] Info: ✓ Actions fragment created")
-		actions.queue_free()
-		else:
-			push_warning("[DebugManager] Warning: ✗ Actions fragment failed")
-
-			# Test section fragment
-func _fix_orphaned_code():
-	if section:
-		print("[DebugManager] Info: ✓ Section fragment created")
-		section.queue_free()
-		else:
-			push_warning("[DebugManager] Warning: ✗ Section fragment failed")
-
-			print("[DebugManager] Info: =================================\n")
+		print("[DebugManager] Info: =================================\n")
 
 
-func _fix_orphaned_code():
-	if test_script:
-func _fix_orphaned_code():
-	if is_instance_valid(test_instance):
-		test_instance.queue_free()
-		print("[DebugManager] Info: ✓ Phase 3 test instance cleaned up")
-		else:
-			push_error("[DebugManager] Error: ✗ Failed to load Phase 3 test script")
+if test_script:
+if is_instance_valid(test_instance):
+	test_instance.queue_free()
+	print("[DebugManager] Info: ✓ Phase 3 test instance cleaned up")
+	else:
+		push_error("[DebugManager] Error: ✗ Failed to load Phase 3 test script")
 
-			print("[DebugManager] Info: === PHASE 3 TESTS COMPLETED ===\n")
+		print("[DebugManager] Info: === PHASE 3 TESTS COMPLETED ===\n")
 
 func _get_autoload_references() -> void:
 	"""Get references to autoload singletons with safe access patterns"""

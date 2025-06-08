@@ -38,9 +38,9 @@ const DEFAULT_SAFETY_SETTINGS = {
 }
 
 
-var main_container: VBoxContainer
+# FIXED: Orphaned code - var main_container: VBoxContainer
 var state_containers: Dictionary = {}
-var api_key_input: LineEdit
+# FIXED: Orphaned code - var api_key_input: LineEdit
 var validation_indicator: TextureRect
 var next_button: Button
 var cancel_button: Button
@@ -95,7 +95,7 @@ main_container.size_flags_vertical = Control.SIZE_FILL
 padding_container.add_child(main_container)
 
 
-var container = _create_state_container(state)
+# FIXED: Orphaned code - var container = _create_state_container(state)
 state_containers[state] = container
 main_container.add_child(container)
 container.hide()  # Hide initially
@@ -115,14 +115,14 @@ SetupState.INITIAL:
 			SetupState.SUCCESS:
 				_create_success_state_ui(container)
 
-var title = UIComponentFactory.create_label("Connect to Gemini AI", "heading")
+# FIXED: Orphaned code - var title = UIComponentFactory.create_label("Connect to Gemini AI", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.set_meta("_accessible_description", "Dialog title: Connect to Gemini AI")
 	container.add_child(title)
 
 	# Logo/Image
 var image_container = CenterContainer.new()
-var image = TextureRect.new()
+# FIXED: Orphaned code - var image = TextureRect.new()
 	image.custom_minimum_size = Vector2(150, 150)
 	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -142,15 +142,15 @@ var description = UIComponentFactory.create_label(
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 	# Ensure font size meets accessibility standards (minimum 16px)
-var min_font_size = 16
+# FIXED: Orphaned code - var min_font_size = 16
 var current_size = description.get_theme_font_size("font_size")
-var spacer = Control.new()
+# FIXED: Orphaned code - var spacer = Control.new()
 	spacer.custom_minimum_size.y = 20
 	container.add_child(spacer)
 
 	# Connect button
 var button_container = CenterContainer.new()
-var connect_button = UIComponentFactory.create_button("Let's Get Started", "primary")
+# FIXED: Orphaned code - var connect_button = UIComponentFactory.create_button("Let's Get Started", "primary")
 	connect_button.custom_minimum_size.x = 200
 	connect_button.custom_minimum_size.y = 44  # WCAG minimum touch target size
 	connect_button.pressed.connect(_on_next_button_pressed)
@@ -177,10 +177,10 @@ var title_2 = UIComponentFactory.create_label("Get Your API Key", "heading")
 var instructions = VBoxContainer.new()
 	instructions.add_theme_constant_override("separation", 16)
 
-var step1 = _create_step_label("1", "Google Cloud Console will open in your browser")
-var step2 = _create_step_label("2", "Sign in with your Google account")
-var step3 = _create_step_label("3", "Create a new API key or use an existing one")
-var step4 = _create_step_label("4", "Copy your API key and return here")
+# FIXED: Orphaned code - var step1 = _create_step_label("1", "Google Cloud Console will open in your browser")
+# FIXED: Orphaned code - var step2 = _create_step_label("2", "Sign in with your Google account")
+# FIXED: Orphaned code - var step3 = _create_step_label("3", "Create a new API key or use an existing one")
+# FIXED: Orphaned code - var step4 = _create_step_label("4", "Copy your API key and return here")
 
 	instructions.add_child(step1)
 	instructions.add_child(step2)
@@ -190,8 +190,8 @@ var step4 = _create_step_label("4", "Copy your API key and return here")
 
 	# Note
 var note_container = HBoxContainer.new()
-var note_icon = TextureRect.new()
-var note_text = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var note_icon = TextureRect.new()
+# FIXED: Orphaned code - var note_text = UIComponentFactory.create_label(
 	"Your key stays on your device and is never shared.", "caption"
 	)
 	note_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -237,7 +237,7 @@ var key_label = UIComponentFactory.create_label("Paste your API key below:", "bo
 	key_label.set_meta("_accessible_description", "Label for API key input field")
 	input_container.add_child(key_label)
 
-var key_input_row = HBoxContainer.new()
+# FIXED: Orphaned code - var key_input_row = HBoxContainer.new()
 	key_input_row.add_theme_constant_override("separation", 8)
 
 	api_key_input = LineEdit.new()
@@ -255,7 +255,7 @@ var key_input_row = HBoxContainer.new()
 	api_key_input.focus_mode = Control.FOCUS_ALL
 
 var contrast_color = UIThemeManager.get_color("text_primary")
-var educational_note = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var educational_note = UIComponentFactory.create_label(
 	(
 	"Your API key lets you access Gemini AI's neuroanatomy knowledge, "
 	+ "providing detailed explanations of brain structures and functions "
@@ -268,7 +268,7 @@ var educational_note = UIComponentFactory.create_label(
 	# Ensure minimum font size
 var min_font_size_2 = 16
 var current_size_2 = educational_note.get_theme_font_size("font_size")
-var button_container_3 = HBoxContainer.new()
+# FIXED: Orphaned code - var button_container_3 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	button_container.add_theme_constant_override("separation", 16)
 
@@ -304,7 +304,7 @@ var title_4 = UIComponentFactory.create_label("🎉 Setup Complete!", "heading")
 
 	# Success icon
 var icon_container = CenterContainer.new()
-var success_texture = TextureRect.new()
+# FIXED: Orphaned code - var success_texture = TextureRect.new()
 
 # Use appropriate success icon instead of warning icon
 var tween = success_texture.create_tween()
@@ -327,16 +327,16 @@ var success_message = UIComponentFactory.create_label(
 	# Ensure minimum font size and proper contrast
 var min_font_size_3 = 16
 var current_size_3 = success_message.get_theme_font_size("font_size")
-var examples_title = UIComponentFactory.create_label("Try asking about:", "subheading")
+# FIXED: Orphaned code - var examples_title = UIComponentFactory.create_label("Try asking about:", "subheading")
 	examples_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	examples_title.set_meta("_accessible_description", "Example questions section")
 	container.add_child(examples_title)
 
-var examples_container = VBoxContainer.new()
+# FIXED: Orphaned code - var examples_container = VBoxContainer.new()
 	examples_container.add_theme_constant_override("separation", 12)  # Increased for readability
 	examples_container.set_meta("_accessible_description", "List of example questions")
 
-var examples = [
+# FIXED: Orphaned code - var examples = [
 	"• Functions of the hippocampus",
 	"• Clinical relevance of the basal ganglia",
 	"• Relationship between the thalamus and cortex",
@@ -349,7 +349,7 @@ var example_label = UIComponentFactory.create_label(example, "caption")
 
 	# Make captions more readable with proper contrast
 var button_container_4 = CenterContainer.new()
-var get_started_button = UIComponentFactory.create_button("Get Started", "primary")
+# FIXED: Orphaned code - var get_started_button = UIComponentFactory.create_button("Get Started", "primary")
 	get_started_button.custom_minimum_size.x = 200
 	get_started_button.custom_minimum_size.y = 44  # WCAG minimum touch target size
 	get_started_button.pressed.connect(_on_success_button_pressed)
@@ -377,7 +377,7 @@ var auto_close_notice = UIComponentFactory.create_label(
 var container_3 = HBoxContainer.new()
 	container.add_theme_constant_override("separation", 16)
 
-var number = Label.new()
+# FIXED: Orphaned code - var number = Label.new()
 	number.text = step_number
 	number.add_theme_color_override("font_color", Color(0, 0.84, 1))  # Cyan
 var content = Label.new()
@@ -452,7 +452,7 @@ var button_container_5 = HBoxContainer.new()
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_container.add_child(button_container)
 
-var start_button = UIComponentFactory.create_button("Let's Get Started", "primary")
+# FIXED: Orphaned code - var start_button = UIComponentFactory.create_button("Let's Get Started", "primary")
 	start_button.custom_minimum_size = Vector2(200, 48)
 	start_button.pressed.connect(_on_start_button_pressed)
 	button_container.add_child(start_button)
@@ -488,7 +488,7 @@ var instruction = UIComponentFactory.create_label(
 	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	instruction.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	instruction.add_theme_font_size_override("font_size", 16)
-var visual_container = MarginContainer.new()
+# FIXED: Orphaned code - var visual_container = MarginContainer.new()
 	visual_container.add_theme_constant_override("margin_left", 40)
 	visual_container.add_theme_constant_override("margin_right", 40)
 	visual_container.add_theme_constant_override("margin_top", 16)
@@ -526,7 +526,7 @@ var inner_margin = MarginContainer.new()
 	inner_margin.add_theme_constant_override("margin_bottom", 20)
 	preview_content.add_child(inner_margin)
 
-var inner_content = VBoxContainer.new()
+# FIXED: Orphaned code - var inner_content = VBoxContainer.new()
 	inner_content.add_theme_constant_override("separation", 12)
 	inner_margin.add_child(inner_content)
 
@@ -540,12 +540,12 @@ var steps_container = VBoxContainer.new()
 	steps_container.add_theme_constant_override("separation", 8)
 	inner_content.add_child(steps_container)
 
-var step1_2 = UIComponentFactory.create_label("1. Sign in with Google", "caption")
-var step2_2 = UIComponentFactory.create_label('2. Click "Get API key"', "caption")
-var step3_2 = UIComponentFactory.create_label('3. Click "Create API key"', "caption")
-var step4_2 = UIComponentFactory.create_label("4. Copy your key", "caption")
+# FIXED: Orphaned code - var step1_2 = UIComponentFactory.create_label("1. Sign in with Google", "caption")
+# FIXED: Orphaned code - var step2_2 = UIComponentFactory.create_label('2. Click "Get API key"', "caption")
+# FIXED: Orphaned code - var step3_2 = UIComponentFactory.create_label('3. Click "Create API key"', "caption")
+# FIXED: Orphaned code - var step4_2 = UIComponentFactory.create_label("4. Copy your key", "caption")
 
-var help_text = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var help_text = UIComponentFactory.create_label(
 	'Look for the blue "Create API key" button.\n' + 'Your key will start with "AIza..."',
 	"body"
 	)
@@ -597,11 +597,11 @@ var instruction_2 = UIComponentFactory.create_label(
 	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	instruction.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	instruction.add_theme_font_size_override("font_size", 16)
-var tip_container = HBoxContainer.new()
+# FIXED: Orphaned code - var tip_container = HBoxContainer.new()
 	tip_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_container.add_child(tip_container)
 
-var tip_icon = TextureRect.new()
+# FIXED: Orphaned code - var tip_icon = TextureRect.new()
 	tip_icon.custom_minimum_size = Vector2(16, 16)
 	tip_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tip_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -609,10 +609,10 @@ var tip_spacer = Control.new()
 	tip_spacer.custom_minimum_size.x = 8
 	tip_container.add_child(tip_spacer)
 
-var tip_text = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var tip_text = UIComponentFactory.create_label(
 	'Your key should start with "AIza" and be about 39 characters long', "caption"
 	)
-var input_container_2 = MarginContainer.new()
+# FIXED: Orphaned code - var input_container_2 = MarginContainer.new()
 	input_container.add_theme_constant_override("margin_left", 60)
 	input_container.add_theme_constant_override("margin_right", 60)
 	input_container.add_theme_constant_override("margin_top", 16)
@@ -627,7 +627,7 @@ var input_container_2 = MarginContainer.new()
 
 	# Style the input field
 var style = api_key_input.get_theme_stylebox("normal")
-var new_style = style.duplicate()
+# FIXED: Orphaned code - var new_style = style.duplicate()
 	new_style.content_margin_left = 16
 	new_style.content_margin_right = 16
 	new_style.content_margin_top = 12
@@ -673,7 +673,7 @@ var bottom_spacer_3 = Control.new()
 	api_key_input.grab_focus()
 
 
-var key_4 = text.strip_edges()
+# FIXED: Orphaned code - var key_4 = text.strip_edges()
 
 # Basic validation
 var key_event = event as InputEventKey
@@ -706,8 +706,8 @@ var checkmark = TextureRect.new()
 	# Try to use a checkmark icon
 var image_2 = Image.create(80, 80, false, Image.FORMAT_RGBA8)
 	image.fill(Color(0, 0, 0, 0))
-var dist = Vector2(x - 40, y - 40).length()
-var texture = ImageTexture.create_from_image(image)
+# FIXED: Orphaned code - var dist = Vector2(x - 40, y - 40).length()
+# FIXED: Orphaned code - var texture = ImageTexture.create_from_image(image)
 	checkmark.texture = texture
 
 	# Apply green tint to checkmark
@@ -731,7 +731,7 @@ var rotate_tween = checkmark.create_tween()
 var title_8 = UIComponentFactory.create_label("You're Connected!", "heading")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 32)
-var message = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var message = UIComponentFactory.create_label(
 	(
 	"Gemini AI is ready to help you explore neuroanatomy!\n"
 	+ "Ask questions about any brain structure to enhance your learning."
@@ -741,11 +741,11 @@ var message = UIComponentFactory.create_label(
 	message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.add_theme_font_size_override("font_size", 16)
-var examples_container_2 = VBoxContainer.new()
+# FIXED: Orphaned code - var examples_container_2 = VBoxContainer.new()
 	examples_container.add_theme_constant_override("separation", 8)
 	content_container.add_child(examples_container)
 
-var examples_title_2 = UIComponentFactory.create_label("Try asking:", "caption")
+# FIXED: Orphaned code - var examples_title_2 = UIComponentFactory.create_label("Try asking:", "caption")
 	examples_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 var examples_box = PanelContainer.new()
 	examples_box.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -764,19 +764,19 @@ var style_2 = StyleBoxFlat.new()
 
 	examples_container.add_child(examples_box)
 
-var examples_list = VBoxContainer.new()
+# FIXED: Orphaned code - var examples_list = VBoxContainer.new()
 	examples_list.add_theme_constant_override("separation", 4)
 	examples_box.add_child(examples_list)
 
-var example1 = UIComponentFactory.create_label('• "What does the hippocampus do?"', "caption")
-var example2 = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var example1 = UIComponentFactory.create_label('• "What does the hippocampus do?"', "caption")
+# FIXED: Orphaned code - var example2 = UIComponentFactory.create_label(
 	'• "How is the thalamus connected to the cortex?"', "caption"
 	)
-var example3 = UIComponentFactory.create_label(
+# FIXED: Orphaned code - var example3 = UIComponentFactory.create_label(
 	'• "What happens if the cerebellum is damaged?"', "caption"
 	)
 
-var button_spacer_4 = Control.new()
+# FIXED: Orphaned code - var button_spacer_4 = Control.new()
 	button_spacer.custom_minimum_size.y = 24
 	content_container.add_child(button_spacer)
 
@@ -791,15 +791,15 @@ var start_button_2 = UIComponentFactory.create_button("Start Using Gemini", "pri
 
 	# Add a subtle green tint to the button
 var button_style = start_button.get_theme_stylebox("normal")
-var success_style = button_style.duplicate()
+# FIXED: Orphaned code - var success_style = button_style.duplicate()
 	success_style.bg_color = Color(0.2, 0.7, 0.3, 1.0)
 	start_button.add_theme_stylebox_override("normal", success_style)
 
-var hover_style = button_style.duplicate()
+# FIXED: Orphaned code - var hover_style = button_style.duplicate()
 	hover_style.bg_color = Color(0.3, 0.8, 0.4, 1.0)
 	start_button.add_theme_stylebox_override("hover", hover_style)
 
-var pressed_style = button_style.duplicate()
+# FIXED: Orphaned code - var pressed_style = button_style.duplicate()
 	pressed_style.bg_color = Color(0.1, 0.6, 0.2, 1.0)
 	start_button.add_theme_stylebox_override("pressed", pressed_style)
 
@@ -819,7 +819,7 @@ var auto_close_timer_2 = get_tree().create_timer(30.0)
 	auto_close_timer.timeout.connect(_on_success_auto_close)
 
 
-var particle = Control.new()
+# FIXED: Orphaned code - var particle = Control.new()
 	particle.size = Vector2(8, 8)
 	particle.position = Vector2(randf_range(-100, 100), randf_range(-50, -100))
 	parent.add_child(particle)
@@ -843,7 +843,7 @@ var tween_4 = particle.create_tween()
 	tween.chain().tween_callback(particle.queue_free)
 
 
-var key_5 = ""
+# FIXED: Orphaned code - var key_5 = ""
 var key_6 = ""
 
 func _ready() -> void:
@@ -891,378 +891,330 @@ func show_dialog() -> void:
 		modulate = Color(1, 1, 1, 0)
 		show()
 
-func _fix_orphaned_code():
-	if UIThemeManager:
-		UIThemeManager.apply_enhanced_panel_style(dialog_panel, "elevated")
+if UIThemeManager:
+	UIThemeManager.apply_enhanced_panel_style(dialog_panel, "elevated")
 
-		add_child(dialog_panel)
+	add_child(dialog_panel)
 
-		# Add padding to improve readability
-func _fix_orphaned_code():
+	# Add padding to improve readability
+return container
+
+
+if ResourceLoader.exists(texture_path):
+	image.texture = load(texture_path)
+
+	image_container.add_child(image)
+	container.add_child(image_container)
+
+	# Description text
+if UIThemeManager:
+if current_size < min_font_size:
+	description.add_theme_font_size_override("font_size", min_font_size)
+
+	container.add_child(description)
+
+	# Spacer
+if has_theme_icon("NodeWarning", "EditorIcons"):
+	note_icon.texture = get_theme_icon("NodeWarning", "EditorIcons")
+	note_icon.custom_minimum_size = Vector2(24, 24)
+	note_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	note_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+
+if UIThemeManager:
+	UIThemeManager.apply_search_field_styling(api_key_input)
+
+	# Ensure contrast meets WCAG AA standard (4.5:1 ratio)
+if contrast_color.get_luminance() < 0.5:
+	# If dark text on light background, darken text further
+	api_key_input.add_theme_color_override("font_color", contrast_color.darkened(0.2))
+	else:
+		# If light text on dark background, lighten text further
+		api_key_input.add_theme_color_override("font_color", contrast_color.lightened(0.2))
+
+		validation_indicator = TextureRect.new()
+		validation_indicator.custom_minimum_size = Vector2(24, 24)
+		validation_indicator.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		validation_indicator.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		validation_indicator.visible = false
+		validation_indicator.set_meta("_accessible_description", "Validation status indicator")
+
+		key_input_row.add_child(api_key_input)
+		key_input_row.add_child(validation_indicator)
+		input_container.add_child(key_input_row)
+
+		status_label = UIComponentFactory.create_label("", "caption")
+		status_label.set_meta("_accessible_description", "API key validation status")
+		input_container.add_child(status_label)
+
+		container.add_child(input_container)
+
+		# Educational note
+if UIThemeManager:
+if current_size < min_font_size:
+	educational_note.add_theme_font_size_override("font_size", min_font_size)
+
+	container.add_child(educational_note)
+
+	# Button container
+if success_icon:
+	success_texture.texture = success_icon
+	elif has_theme_icon("StatusSuccess", "EditorIcons"):
+		success_texture.texture = get_theme_icon("StatusSuccess", "EditorIcons")
+		elif has_theme_icon("GuiChecked", "EditorIcons"):
+			success_texture.texture = get_theme_icon("GuiChecked", "EditorIcons")
+
+			success_texture.modulate = Color(0, 1, 0.5)  # Green tint
+			success_texture.custom_minimum_size = Vector2(100, 100)
+			success_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			success_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			success_texture.set_meta("_accessible_description", "Success checkmark icon")
+
+			icon_container.add_child(success_texture)
+			container.add_child(icon_container)
+
+			# Create a celebratory animation
+if UIThemeManager:
+if current_size < min_font_size:
+	success_message.add_theme_font_size_override("font_size", min_font_size)
+
+	# Ensure high contrast for readability
+	success_message.add_theme_color_override(
+	"font_color", UIThemeManager.get_color("text_primary")
+	)
+
+	container.add_child(success_message)
+
+	# Example questions
+for i in range(examples.size()):
+if UIThemeManager:
+	example_label.add_theme_color_override(
+	"font_color", UIThemeManager.get_color("text_secondary")
+	)
+
+	example_label.set_meta("_accessible_description", "Example question " + str(i + 1))
+	examples_container.add_child(example_label)
+
+	container.add_child(examples_container)
+
+	# Get started button
+if UIThemeManager:
+	number.add_theme_font_size_override("font_size", 18)
+
+if UIThemeManager:
+	content.add_theme_font_size_override("font_size", 14)
+
+	container.add_child(number)
+	container.add_child(content)
+
 	return container
 
 
-func _fix_orphaned_code():
-	if ResourceLoader.exists(texture_path):
-		image.texture = load(texture_path)
+if key.length() < 30 or not key.begins_with("AIza"):
+	_update_validation_ui(false)
+	return
 
-		image_container.add_child(image)
-		container.add_child(image_container)
-
-		# Description text
-func _fix_orphaned_code():
+	# Set validating state
+	is_validating = true
+	status_label.text = "Validating..."
 	if UIThemeManager:
-func _fix_orphaned_code():
-	if current_size < min_font_size:
-		description.add_theme_font_size_override("font_size", min_font_size)
-
-		container.add_child(description)
-
-		# Spacer
-func _fix_orphaned_code():
-	if has_theme_icon("NodeWarning", "EditorIcons"):
-		note_icon.texture = get_theme_icon("NodeWarning", "EditorIcons")
-		note_icon.custom_minimum_size = Vector2(24, 24)
-		note_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		note_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-
-func _fix_orphaned_code():
-	if UIThemeManager:
-		UIThemeManager.apply_search_field_styling(api_key_input)
-
-		# Ensure contrast meets WCAG AA standard (4.5:1 ratio)
-func _fix_orphaned_code():
-	if contrast_color.get_luminance() < 0.5:
-		# If dark text on light background, darken text further
-		api_key_input.add_theme_color_override("font_color", contrast_color.darkened(0.2))
-		else:
-			# If light text on dark background, lighten text further
-			api_key_input.add_theme_color_override("font_color", contrast_color.lightened(0.2))
-
-			validation_indicator = TextureRect.new()
-			validation_indicator.custom_minimum_size = Vector2(24, 24)
-			validation_indicator.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			validation_indicator.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			validation_indicator.visible = false
-			validation_indicator.set_meta("_accessible_description", "Validation status indicator")
-
-			key_input_row.add_child(api_key_input)
-			key_input_row.add_child(validation_indicator)
-			input_container.add_child(key_input_row)
-
-			status_label = UIComponentFactory.create_label("", "caption")
-			status_label.set_meta("_accessible_description", "API key validation status")
-			input_container.add_child(status_label)
-
-			container.add_child(input_container)
-
-			# Educational note
-func _fix_orphaned_code():
-	if UIThemeManager:
-func _fix_orphaned_code():
-	if current_size < min_font_size:
-		educational_note.add_theme_font_size_override("font_size", min_font_size)
-
-		container.add_child(educational_note)
-
-		# Button container
-func _fix_orphaned_code():
-	if success_icon:
-		success_texture.texture = success_icon
-		elif has_theme_icon("StatusSuccess", "EditorIcons"):
-			success_texture.texture = get_theme_icon("StatusSuccess", "EditorIcons")
-			elif has_theme_icon("GuiChecked", "EditorIcons"):
-				success_texture.texture = get_theme_icon("GuiChecked", "EditorIcons")
-
-				success_texture.modulate = Color(0, 1, 0.5)  # Green tint
-				success_texture.custom_minimum_size = Vector2(100, 100)
-				success_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-				success_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-				success_texture.set_meta("_accessible_description", "Success checkmark icon")
-
-				icon_container.add_child(success_texture)
-				container.add_child(icon_container)
-
-				# Create a celebratory animation
-func _fix_orphaned_code():
-	if UIThemeManager:
-func _fix_orphaned_code():
-	if current_size < min_font_size:
-		success_message.add_theme_font_size_override("font_size", min_font_size)
-
-		# Ensure high contrast for readability
-		success_message.add_theme_color_override(
-		"font_color", UIThemeManager.get_color("text_primary")
-		)
-
-		container.add_child(success_message)
-
-		# Example questions
-func _fix_orphaned_code():
-	for i in range(examples.size()):
-func _fix_orphaned_code():
-	if UIThemeManager:
-		example_label.add_theme_color_override(
+		status_label.add_theme_color_override(
 		"font_color", UIThemeManager.get_color("text_secondary")
 		)
 
-		example_label.set_meta("_accessible_description", "Example question " + str(i + 1))
-		examples_container.add_child(example_label)
+		# Call validation service
+		if gemini_service:
+			gemini_service.validate_api_key(key)
+			else:
+				# Simulate validation for testing
+				await get_tree().create_timer(1.0).timeout
+				_on_api_key_validated(true, "API key validated")
 
-		container.add_child(examples_container)
 
-		# Get started button
-func _fix_orphaned_code():
+if not is_api_key_valid or key.strip_edges().is_empty():
+	return
+
+	# Save configuration with educational defaults
+	if gemini_service:
+		gemini_service.save_configuration(key, DEFAULT_MODEL)
+		gemini_service.set_safety_settings(DEFAULT_SAFETY_SETTINGS)
+		gemini_service.temperature = DEFAULT_TEMPERATURE
+		gemini_service.max_output_tokens = DEFAULT_MAX_TOKENS
+
+		# Signal completion
+		setup_completed.emit(true, key)
+
+
+		# === SIGNAL HANDLERS ===
+if is_instance_valid(api_key_input):
+	key = api_key_input.text.strip_edges()
+	setup_completed.emit(true, key)
+	queue_free()
+
+
+if UIThemeManager:
+	subtitle.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+
+	content_container.add_child(subtitle)
+
+	# Add some spacing before the button
+if start_button.focus_mode == Control.FOCUS_ALL:
+	start_button.grab_focus()
+
+
+if UIThemeManager:
+	instruction.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+	content_container.add_child(instruction)
+
+	# Add visual placeholder for Google Console
+if UIThemeManager:
+for step in [step1, step2, step3, step4]:
+	step.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	if UIThemeManager:
-		number.add_theme_font_size_override("font_size", 18)
+		step.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+		steps_container.add_child(step)
 
-func _fix_orphaned_code():
-	if UIThemeManager:
-		content.add_theme_font_size_override("font_size", 14)
+		# Add helpful text
+if UIThemeManager:
+	help_text.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	content_container.add_child(help_text)
 
-		container.add_child(number)
-		container.add_child(content)
+	# Add some spacing before the button
+if continue_button.focus_mode == Control.FOCUS_ALL:
+	continue_button.grab_focus()
 
-		return container
 
+if UIThemeManager:
+	instruction.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+	content_container.add_child(instruction)
 
-func _fix_orphaned_code():
-	if key.length() < 30 or not key.begins_with("AIza"):
-		_update_validation_ui(false)
-		return
+	# Add helpful tip about key format
+if has_theme_icon("NodeInfo", "EditorIcons"):
+	tip_icon.texture = get_theme_icon("NodeInfo", "EditorIcons")
+	tip_icon.modulate = Color(0.7, 0.8, 1.0)  # Light blue tint
+	tip_container.add_child(tip_icon)
 
-		# Set validating state
-		is_validating = true
-		status_label.text = "Validating..."
+if UIThemeManager:
+	tip_text.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	tip_container.add_child(tip_text)
+
+	# Add input field container with margins
+if UIThemeManager:
+	UIThemeManager.apply_search_field_styling(api_key_input)
+	# Add some padding
+if style and style is StyleBoxFlat:
+if key.is_empty():
+	status_label.text = ""
+	next_button.disabled = true
+	is_api_key_valid = false
+	elif not key.begins_with("AIza"):
+		status_label.text = 'Key should start with "AIza"'
 		if UIThemeManager:
 			status_label.add_theme_color_override(
-			"font_color", UIThemeManager.get_color("text_secondary")
+			"font_color", UIThemeManager.get_color("text_error")
 			)
-
-			# Call validation service
-			if gemini_service:
-				gemini_service.validate_api_key(key)
-				else:
-					# Simulate validation for testing
-					await get_tree().create_timer(1.0).timeout
-					_on_api_key_validated(true, "API key validated")
-
-
-func _fix_orphaned_code():
-	if not is_api_key_valid or key.strip_edges().is_empty():
-		return
-
-		# Save configuration with educational defaults
-		if gemini_service:
-			gemini_service.save_configuration(key, DEFAULT_MODEL)
-			gemini_service.set_safety_settings(DEFAULT_SAFETY_SETTINGS)
-			gemini_service.temperature = DEFAULT_TEMPERATURE
-			gemini_service.max_output_tokens = DEFAULT_MAX_TOKENS
-
-			# Signal completion
-			setup_completed.emit(true, key)
-
-
-			# === SIGNAL HANDLERS ===
-func _fix_orphaned_code():
-	if is_instance_valid(api_key_input):
-		key = api_key_input.text.strip_edges()
-		setup_completed.emit(true, key)
-		queue_free()
+			next_button.disabled = true
+			is_api_key_valid = false
+			elif key.length() < 35:
+				status_label.text = "Key seems too short (should be ~39 characters)"
+				if UIThemeManager:
+					status_label.add_theme_color_override(
+					"font_color", UIThemeManager.get_color("text_warning")
+					)
+					next_button.disabled = true
+					is_api_key_valid = false
+					elif key.length() > 45:
+						status_label.text = "Key seems too long (should be ~39 characters)"
+						if UIThemeManager:
+							status_label.add_theme_color_override(
+							"font_color", UIThemeManager.get_color("text_warning")
+							)
+							next_button.disabled = true
+							is_api_key_valid = false
+							else:
+								# Key format looks valid
+								status_label.text = "Key format looks good!"
+								if UIThemeManager:
+									status_label.add_theme_color_override(
+									"font_color", UIThemeManager.get_color("text_success")
+									)
+									next_button.disabled = false
+									is_api_key_valid = true
 
 
-func _fix_orphaned_code():
+if key_event.pressed and key_event.keycode == KEY_V:
+	if key_event.ctrl_pressed or key_event.meta_pressed:
+		# Give visual feedback for paste action
+		print("[GeminiSetupDialog] User pasted content")
+
+
+if gemini_service:
+	# Connect to validation signal if not already connected
+	if not gemini_service.api_key_validated.is_connected(_on_api_key_validated_for_save):
+		gemini_service.api_key_validated.connect(_on_api_key_validated_for_save)
+
+		# Start validation
+		gemini_service.validate_api_key(key_to_validate)
+		else:
+			# Fallback if service not available
+			push_warning("[GeminiSetupDialog] GeminiAI service not available, skipping validation")
+			_save_configuration()
+			current_state = SetupState.SUCCESS
+			_show_success_state()
+
+
+if has_theme_icon("GuiChecked", "EditorIcons"):
+	checkmark.texture = get_theme_icon("GuiChecked", "EditorIcons")
+	elif has_theme_icon("StatusSuccess", "EditorIcons"):
+		checkmark.texture = get_theme_icon("StatusSuccess", "EditorIcons")
+		else:
+			# Fallback - create a simple green circle
+for x in range(80):
+	for y in range(80):
+if dist < 35:
+	image.set_pixel(x, y, Color(0.2, 0.8, 0.3, 1.0))
+if UIThemeManager:
+	title.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
+	content_container.add_child(title)
+
+	# Create success message
+if UIThemeManager:
+	message.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
+	content_container.add_child(message)
+
+	# Add some example questions with subtle styling
+if UIThemeManager:
+	examples_title.add_theme_color_override(
+	"font_color", UIThemeManager.get_color("text_tertiary")
+	)
+	examples_container.add_child(examples_title)
+
+	# Add example questions in a subtle box
+if UIThemeManager:
+for example in [example1, example2, example3]:
+	example.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	if UIThemeManager:
-		subtitle.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
-
-		content_container.add_child(subtitle)
-
-		# Add some spacing before the button
-func _fix_orphaned_code():
-	if start_button.focus_mode == Control.FOCUS_ALL:
-		start_button.grab_focus()
-
-
-func _fix_orphaned_code():
-	if UIThemeManager:
-		instruction.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
-		content_container.add_child(instruction)
-
-		# Add visual placeholder for Google Console
-func _fix_orphaned_code():
-	if UIThemeManager:
-func _fix_orphaned_code():
-	for step in [step1, step2, step3, step4]:
-		step.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		if UIThemeManager:
-			step.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
-			steps_container.add_child(step)
-
-			# Add helpful text
-func _fix_orphaned_code():
-	if UIThemeManager:
-		help_text.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
-		content_container.add_child(help_text)
-
-		# Add some spacing before the button
-func _fix_orphaned_code():
-	if continue_button.focus_mode == Control.FOCUS_ALL:
-		continue_button.grab_focus()
-
-
-func _fix_orphaned_code():
-	if UIThemeManager:
-		instruction.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
-		content_container.add_child(instruction)
-
-		# Add helpful tip about key format
-func _fix_orphaned_code():
-	if has_theme_icon("NodeInfo", "EditorIcons"):
-		tip_icon.texture = get_theme_icon("NodeInfo", "EditorIcons")
-		tip_icon.modulate = Color(0.7, 0.8, 1.0)  # Light blue tint
-		tip_container.add_child(tip_icon)
-
-func _fix_orphaned_code():
-	if UIThemeManager:
-		tip_text.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
-		tip_container.add_child(tip_text)
-
-		# Add input field container with margins
-func _fix_orphaned_code():
-	if UIThemeManager:
-		UIThemeManager.apply_search_field_styling(api_key_input)
-		# Add some padding
-func _fix_orphaned_code():
-	if style and style is StyleBoxFlat:
-func _fix_orphaned_code():
-	if key.is_empty():
-		status_label.text = ""
-		next_button.disabled = true
-		is_api_key_valid = false
-		elif not key.begins_with("AIza"):
-			status_label.text = 'Key should start with "AIza"'
-			if UIThemeManager:
-				status_label.add_theme_color_override(
-				"font_color", UIThemeManager.get_color("text_error")
-				)
-				next_button.disabled = true
-				is_api_key_valid = false
-				elif key.length() < 35:
-					status_label.text = "Key seems too short (should be ~39 characters)"
-					if UIThemeManager:
-						status_label.add_theme_color_override(
-						"font_color", UIThemeManager.get_color("text_warning")
-						)
-						next_button.disabled = true
-						is_api_key_valid = false
-						elif key.length() > 45:
-							status_label.text = "Key seems too long (should be ~39 characters)"
-							if UIThemeManager:
-								status_label.add_theme_color_override(
-								"font_color", UIThemeManager.get_color("text_warning")
-								)
-								next_button.disabled = true
-								is_api_key_valid = false
-								else:
-									# Key format looks valid
-									status_label.text = "Key format looks good!"
-									if UIThemeManager:
-										status_label.add_theme_color_override(
-										"font_color", UIThemeManager.get_color("text_success")
-										)
-										next_button.disabled = false
-										is_api_key_valid = true
-
-
-func _fix_orphaned_code():
-	if key_event.pressed and key_event.keycode == KEY_V:
-		if key_event.ctrl_pressed or key_event.meta_pressed:
-			# Give visual feedback for paste action
-			print("[GeminiSetupDialog] User pasted content")
-
-
-func _fix_orphaned_code():
-	if gemini_service:
-		# Connect to validation signal if not already connected
-		if not gemini_service.api_key_validated.is_connected(_on_api_key_validated_for_save):
-			gemini_service.api_key_validated.connect(_on_api_key_validated_for_save)
-
-			# Start validation
-			gemini_service.validate_api_key(key_to_validate)
-			else:
-				# Fallback if service not available
-				push_warning("[GeminiSetupDialog] GeminiAI service not available, skipping validation")
-				_save_configuration()
-				current_state = SetupState.SUCCESS
-				_show_success_state()
-
-
-func _fix_orphaned_code():
-	if has_theme_icon("GuiChecked", "EditorIcons"):
-		checkmark.texture = get_theme_icon("GuiChecked", "EditorIcons")
-		elif has_theme_icon("StatusSuccess", "EditorIcons"):
-			checkmark.texture = get_theme_icon("StatusSuccess", "EditorIcons")
-			else:
-				# Fallback - create a simple green circle
-func _fix_orphaned_code():
-	for x in range(80):
-		for y in range(80):
-func _fix_orphaned_code():
-	if dist < 35:
-		image.set_pixel(x, y, Color(0.2, 0.8, 0.3, 1.0))
-func _fix_orphaned_code():
-	if UIThemeManager:
-		title.add_theme_color_override("font_color", UIThemeManager.get_color("text_primary"))
-		content_container.add_child(title)
-
-		# Create success message
-func _fix_orphaned_code():
-	if UIThemeManager:
-		message.add_theme_color_override("font_color", UIThemeManager.get_color("text_secondary"))
-		content_container.add_child(message)
-
-		# Add some example questions with subtle styling
-func _fix_orphaned_code():
-	if UIThemeManager:
-		examples_title.add_theme_color_override(
+		example.add_theme_color_override(
 		"font_color", UIThemeManager.get_color("text_tertiary")
 		)
-		examples_container.add_child(examples_title)
+		examples_list.add_child(example)
 
-		# Add example questions in a subtle box
-func _fix_orphaned_code():
-	if UIThemeManager:
-func _fix_orphaned_code():
-	for example in [example1, example2, example3]:
-		example.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		if UIThemeManager:
-			example.add_theme_color_override(
-			"font_color", UIThemeManager.get_color("text_tertiary")
-			)
-			examples_list.add_child(example)
+		# Add some spacing before the button
+if UIThemeManager:
+if button_style and button_style is StyleBoxFlat:
+if start_button.focus_mode == Control.FOCUS_ALL:
+	start_button.grab_focus()
 
-			# Add some spacing before the button
-func _fix_orphaned_code():
-	if UIThemeManager:
-func _fix_orphaned_code():
-	if button_style and button_style is StyleBoxFlat:
-func _fix_orphaned_code():
-	if start_button.focus_mode == Control.FOCUS_ALL:
-		start_button.grab_focus()
-
-		# Auto-close after a delay if not interacted with
-func _fix_orphaned_code():
-	if is_instance_valid(api_key_input):
-		key = api_key_input.text.strip_edges()
-		setup_completed.emit(true, key)
-		queue_free()
+	# Auto-close after a delay if not interacted with
+if is_instance_valid(api_key_input):
+	key = api_key_input.text.strip_edges()
+	setup_completed.emit(true, key)
+	queue_free()
 
 
-func _fix_orphaned_code():
-	if is_instance_valid(api_key_input):
-		key = api_key_input.text.strip_edges()
-		setup_completed.emit(true, key)
-		queue_free()
+if is_instance_valid(api_key_input):
+	key = api_key_input.text.strip_edges()
+	setup_completed.emit(true, key)
+	queue_free()
 
 
 func _load_resources() -> void:

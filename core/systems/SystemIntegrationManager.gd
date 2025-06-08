@@ -58,7 +58,7 @@ LegacySystem.SELECTION_MANAGER:
 
 					# Update status
 var adapter_node = Node.new()
-var system_name_2 = LegacySystem.keys()[system_type]
+# FIXED: Orphaned code - var system_name_2 = LegacySystem.keys()[system_type]
 	adapter_node.name = system_name + "Adapter"
 
 	add_child(adapter_node)
@@ -77,29 +77,29 @@ var system_name_2 = LegacySystem.keys()[system_type]
 						_setup_panel_adapter(adapter_node)
 
 						legacy_system_adapted.emit(system_name, adapter_node)
-var legacy_selection = _find_legacy_system("MultiStructureSelectionManager")
+# FIXED: Orphaned code - var legacy_selection = _find_legacy_system("MultiStructureSelectionManager")
 
 # Find new selection system
 var new_selection = _find_new_system("SelectionSystem/StructureSelector")
 
-var legacy_camera = _find_legacy_system("CameraBehaviorController")
+# FIXED: Orphaned code - var legacy_camera = _find_legacy_system("CameraBehaviorController")
 
 # Find new camera system
 var new_camera = _find_new_system("InteractionSystem/CameraController")
 
-var legacy_model = _find_legacy_system("ModelRegistry")
+# FIXED: Orphaned code - var legacy_model = _find_legacy_system("ModelRegistry")
 
 # Find new model system
 var new_model = _find_new_system("ModelSets")
 
-var legacy_factory = _find_legacy_system("InfoPanelFactory")
+# FIXED: Orphaned code - var legacy_factory = _find_legacy_system("InfoPanelFactory")
 
-var system = _legacy_root.get_node_or_null(system_name)
-var systems_path = "SceneManager/MainEducationalScene/Systems/"
+# FIXED: Orphaned code - var system = _legacy_root.get_node_or_null(system_name)
+# FIXED: Orphaned code - var systems_path = "SceneManager/MainEducationalScene/Systems/"
 var system_2 = _new_root.get_node_or_null(systems_path + system_path)
-var result = _find_node_recursive(child, node_name)
+# FIXED: Orphaned code - var result = _find_node_recursive(child, node_name)
 
-var _system_status: Dictionary = {}
+# FIXED: Orphaned code - var _system_status: Dictionary = {}
 
 # Adapter nodes for legacy systems
 var _system_adapters: Dictionary = {}
@@ -200,133 +200,123 @@ func get_adapter(system_type: LegacySystem) -> Node:
 	# === PRIVATE METHODS ===
 	## Find architecture nodes in scene tree
 
-func _fix_orphaned_code():
-	print("[SystemIntegrationManager] Migrating system: " + system_name)
+print("[SystemIntegrationManager] Migrating system: " + system_name)
 
-	# Perform system-specific migration
-func _fix_orphaned_code():
-	if success:
-		_system_status[system_type] = MigrationStatus.COMPLETED
-		print("[SystemIntegrationManager] Successfully migrated: " + system_name)
-		system_migrated.emit(system_name)
+# Perform system-specific migration
+if success:
+	_system_status[system_type] = MigrationStatus.COMPLETED
+	print("[SystemIntegrationManager] Successfully migrated: " + system_name)
+	system_migrated.emit(system_name)
+	else:
+		_system_status[system_type] = MigrationStatus.FAILED
+		push_error("[SystemIntegrationManager] Failed to migrate: " + system_name)
+
+		# Check if all systems are migrated
+		if _check_all_migrated():
+			print("[SystemIntegrationManager] All systems successfully migrated to new architecture")
+			migration_completed.emit()
+
+			return success
+
+
+			## Get migration status for a specific system
+			## @param system_type: The system to check
+			## @returns: The current migration status
+print("[SystemIntegrationManager] Created adapter for: " + system_name)
+
+
+## Setup selection manager adapter
+if legacy_selection and new_selection:
+	# Connect signals to forward events
+	if legacy_selection.has_signal("structure_selected"):
+		legacy_selection.structure_selected.connect(
+		func(structure_name, mesh):
+			if _structure_manager:
+				_structure_manager.select_structure(structure_name)
+				)
+
+				if verbose_logging:
+					print("[SystemIntegrationManager] Connected selection signals between architectures")
+					else:
+						push_warning(
+						"[SystemIntegrationManager] Could not setup selection adapter - components not found"
+						)
+
+
+						## Setup camera controller adapter
+if legacy_camera and new_camera:
+	# Connect camera methods between systems
+	adapter.set_script(preload("res://core/systems/adapters/CameraAdapter.gd"))
+
+	if verbose_logging:
+		print("[SystemIntegrationManager] Connected camera systems between architectures")
 		else:
-			_system_status[system_type] = MigrationStatus.FAILED
-			push_error("[SystemIntegrationManager] Failed to migrate: " + system_name)
-
-			# Check if all systems are migrated
-			if _check_all_migrated():
-				print("[SystemIntegrationManager] All systems successfully migrated to new architecture")
-				migration_completed.emit()
-
-				return success
+			push_warning(
+			"[SystemIntegrationManager] Could not setup camera adapter - components not found"
+			)
 
 
-				## Get migration status for a specific system
-				## @param system_type: The system to check
-				## @returns: The current migration status
-func _fix_orphaned_code():
-	print("[SystemIntegrationManager] Created adapter for: " + system_name)
-
-
-	## Setup selection manager adapter
-func _fix_orphaned_code():
-	if legacy_selection and new_selection:
-		# Connect signals to forward events
-		if legacy_selection.has_signal("structure_selected"):
-			legacy_selection.structure_selected.connect(
-			func(structure_name, mesh):
-				if _structure_manager:
-					_structure_manager.select_structure(structure_name)
-					)
-
-					if verbose_logging:
-						print("[SystemIntegrationManager] Connected selection signals between architectures")
-						else:
-							push_warning(
-							"[SystemIntegrationManager] Could not setup selection adapter - components not found"
-							)
-
-
-							## Setup camera controller adapter
-func _fix_orphaned_code():
-	if legacy_camera and new_camera:
-		# Connect camera methods between systems
-		adapter.set_script(preprepreload("res://core/systems/adapters/CameraAdapter.gd"))
-
-		if verbose_logging:
-			print("[SystemIntegrationManager] Connected camera systems between architectures")
-			else:
-				push_warning(
-				"[SystemIntegrationManager] Could not setup camera adapter - components not found"
+			## Setup model registry adapter
+if legacy_model and new_model:
+	# Connect model loading events
+	if legacy_model.has_signal("models_loaded"):
+		legacy_model.models_loaded.connect(
+		func(model_names):
+			if _new_root:
+				_new_root.models_loaded.emit(model_names)
 				)
 
-
-				## Setup model registry adapter
-func _fix_orphaned_code():
-	if legacy_model and new_model:
-		# Connect model loading events
-		if legacy_model.has_signal("models_loaded"):
-			legacy_model.models_loaded.connect(
-			func(model_names):
-				if _new_root:
-					_new_root.models_loaded.emit(model_names)
-					)
-
-					if verbose_logging:
-						print("[SystemIntegrationManager] Connected model systems between architectures")
-						else:
-							push_warning(
-							"[SystemIntegrationManager] Could not setup model adapter - components not found"
-							)
+				if verbose_logging:
+					print("[SystemIntegrationManager] Connected model systems between architectures")
+					else:
+						push_warning(
+						"[SystemIntegrationManager] Could not setup model adapter - components not found"
+						)
 
 
-							## Setup knowledge service adapter
-func _fix_orphaned_code():
-	if legacy_factory and _new_root:
-		# Redirect panel creation to component pool
-		adapter.set_script(preprepreload("res://core/systems/adapters/PanelAdapter.gd"))
-		adapter.root = _new_root
+						## Setup knowledge service adapter
+if legacy_factory and _new_root:
+	# Redirect panel creation to component pool
+	adapter.set_script(preload("res://core/systems/adapters/PanelAdapter.gd"))
+	adapter.root = _new_root
 
-		if verbose_logging:
-			print("[SystemIntegrationManager] Connected panel factory to component pool")
-			else:
-				push_warning(
-				"[SystemIntegrationManager] Could not setup panel adapter - components not found"
-				)
+	if verbose_logging:
+		print("[SystemIntegrationManager] Connected panel factory to component pool")
+		else:
+			push_warning(
+			"[SystemIntegrationManager] Could not setup panel adapter - components not found"
+			)
 
 
-				## Find a legacy system by name
-func _fix_orphaned_code():
+			## Find a legacy system by name
+if system:
+	return system
+
+	# Try as autoload
+	system = _legacy_root.get_node_or_null("/root/" + system_name)
 	if system:
 		return system
 
-		# Try as autoload
-		system = _legacy_root.get_node_or_null("/root/" + system_name)
-		if system:
-			return system
-
-			# Try to find recursively
-			return _find_node_recursive(_legacy_root, system_name)
+		# Try to find recursively
+		return _find_node_recursive(_legacy_root, system_name)
 
 
-			## Find a new system by path
-func _fix_orphaned_code():
-	if system:
-		return system
+		## Find a new system by path
+if system:
+	return system
 
-		# Try direct path
-		return _new_root.get_node_or_null(system_path)
-
-
-		## Find a service in the new architecture
-func _fix_orphaned_code():
-	if result:
-		return result
-
-		return null
+	# Try direct path
+	return _new_root.get_node_or_null(system_path)
 
 
-		## Migrate selection manager
+	## Find a service in the new architecture
+if result:
+	return result
+
+	return null
+
+
+	## Migrate selection manager
 
 func _find_architecture_nodes() -> void:
 	"""Locate both legacy and new architecture nodes"""

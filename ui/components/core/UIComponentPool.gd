@@ -58,68 +58,68 @@ component.visible = true
 # Emit signal
 component_retrieved.emit(component_type, component)
 
-var instance_id_2 = component.get_instance_id()
+# FIXED: Orphaned code - var instance_id_2 = component.get_instance_id()
 
-var component_type = _active_components[instance_id]
+# FIXED: Orphaned code - var component_type = _active_components[instance_id]
 
 # Reset component if needed
 var stats = _stats.duplicate()
 
 # Add current pool sizes
 stats["pool_sizes"] = {}
-var active_counts = {}
-var type = _active_components[instance_id]
+# FIXED: Orphaned code - var active_counts = {}
+# FIXED: Orphaned code - var type = _active_components[instance_id]
 var stats_2 = get_pool_stats()
 
-var available = stats["pool_sizes"][type]
+# FIXED: Orphaned code - var available = stats["pool_sizes"][type]
 var active = stats["active_counts"].get(type, 0)
-var created_count = 0
+# FIXED: Orphaned code - var created_count = 0
 var component_2 = _create_component(component_type)
-var panel = PanelContainer.new()
-var vbox = VBoxContainer.new()
+# FIXED: Orphaned code - var panel = PanelContainer.new()
+# FIXED: Orphaned code - var vbox = VBoxContainer.new()
 panel.add_child(vbox)
-var title = Label.new()
+# FIXED: Orphaned code - var title = Label.new()
 title.name = "Title"
 vbox.add_child(title)
-var section = VBoxContainer.new()
-var header = HBoxContainer.new()
+# FIXED: Orphaned code - var section = VBoxContainer.new()
+# FIXED: Orphaned code - var header = HBoxContainer.new()
 section.add_child(header)
-var label = Label.new()
+# FIXED: Orphaned code - var label = Label.new()
 header.add_child(label)
-var tooltip = PanelContainer.new()
-var label_2 = Label.new()
+# FIXED: Orphaned code - var tooltip = PanelContainer.new()
+# FIXED: Orphaned code - var label_2 = Label.new()
 tooltip.add_child(label)
-var panel_2 = PanelContainer.new()
-var vbox_2 = VBoxContainer.new()
+# FIXED: Orphaned code - var panel_2 = PanelContainer.new()
+# FIXED: Orphaned code - var vbox_2 = VBoxContainer.new()
 panel.add_child(vbox)
 
-var header_2 = HBoxContainer.new()
+# FIXED: Orphaned code - var header_2 = HBoxContainer.new()
 vbox.add_child(header)
 
-var title_2 = Label.new()
+# FIXED: Orphaned code - var title_2 = Label.new()
 title.name = "Title"
 header.add_child(title)
 
-var content = VBoxContainer.new()
+# FIXED: Orphaned code - var content = VBoxContainer.new()
 content.name = "Content"
 vbox.add_child(content)
 
-var section_2 = VBoxContainer.new()
+# FIXED: Orphaned code - var section_2 = VBoxContainer.new()
 
-var header_3 = HBoxContainer.new()
+# FIXED: Orphaned code - var header_3 = HBoxContainer.new()
 section.add_child(header)
 
-var toggle = Button.new()
+# FIXED: Orphaned code - var toggle = Button.new()
 toggle.flat = true
 toggle.text = "▼"
 toggle.custom_minimum_size = Vector2(24, 24)
 header.add_child(toggle)
 
-var title_3 = Label.new()
+# FIXED: Orphaned code - var title_3 = Label.new()
 title.name = "Title"
 header.add_child(title)
 
-var content_2 = VBoxContainer.new()
+# FIXED: Orphaned code - var content_2 = VBoxContainer.new()
 content.name = "Content"
 section.add_child(content)
 
@@ -130,9 +130,9 @@ func():
 	toggle.text = "▼" if content.visible else "▶"
 	)
 
-var active_count = _active_components.size()
+# FIXED: Orphaned code - var active_count = _active_components.size()
 
-var _pools: Dictionary = {}
+# FIXED: Orphaned code - var _pools: Dictionary = {}
 
 # Currently active components
 var _active_components: Dictionary = {}
@@ -215,157 +215,140 @@ func get_pool_stats() -> Dictionary:
 func print_pool_stats() -> void:
 	"""Print educational metrics about component pool efficiency"""
 
-func _fix_orphaned_code():
-	if _pools.has(component_type) and not _pools[component_type].is_empty():
-		# Get from pool
-		component = _pools[component_type].pop_back()
-		_track_stats("hit", component_type)
-		print_verbose("[UIComponentPool] Retrieved " + component_type + " from pool")
-		else:
-			# Create new component
-			component = _create_component(component_type)
-			_track_stats("miss", component_type)
+if _pools.has(component_type) and not _pools[component_type].is_empty():
+	# Get from pool
+	component = _pools[component_type].pop_back()
+	_track_stats("hit", component_type)
+	print_verbose("[UIComponentPool] Retrieved " + component_type + " from pool")
+	else:
+		# Create new component
+		component = _create_component(component_type)
+		_track_stats("miss", component_type)
 
-			if not component:
-				push_error("[UIComponentPool] Failed to create component: " + component_type)
-				return null
+		if not component:
+			push_error("[UIComponentPool] Failed to create component: " + component_type)
+			return null
 
-				# Apply configuration
-				_configure_component(component, config)
+			# Apply configuration
+			_configure_component(component, config)
 
-				# Track active component
-func _fix_orphaned_code():
-	return component
+			# Track active component
+return component
 
 
-	## Release a component back to its pool
-	## @param component: The component to release
-func _fix_orphaned_code():
-	if not _active_components.has(instance_id):
-		push_warning("[UIComponentPool] Attempted to release untracked component")
-		return
+## Release a component back to its pool
+## @param component: The component to release
+if not _active_components.has(instance_id):
+	push_warning("[UIComponentPool] Attempted to release untracked component")
+	return
 
-func _fix_orphaned_code():
-	if reset_on_release:
-		_reset_component(component)
+if reset_on_release:
+	_reset_component(component)
 
-		# Hide component
-		component.visible = false
+	# Hide component
+	component.visible = false
 
-		# Return to pool
-		if not _pools.has(component_type):
-			_pools[component_type] = []
+	# Return to pool
+	if not _pools.has(component_type):
+		_pools[component_type] = []
 
-			_pools[component_type].push_back(component)
-			_active_components.erase(instance_id)
+		_pools[component_type].push_back(component)
+		_active_components.erase(instance_id)
 
-			print_verbose("[UIComponentPool] Released " + component_type + " back to pool")
+		print_verbose("[UIComponentPool] Released " + component_type + " back to pool")
 
-			# Emit signal
-			component_released.emit(component_type, component)
+		# Emit signal
+		component_released.emit(component_type, component)
 
 
-			## Clear all pools and destroy components
-func _fix_orphaned_code():
-	for component_type in _pools:
-		stats["pool_sizes"][component_type] = _pools[component_type].size()
+		## Clear all pools and destroy components
+for component_type in _pools:
+	stats["pool_sizes"][component_type] = _pools[component_type].size()
 
-		# Add active component counts
-		stats["active_counts"] = {}
-func _fix_orphaned_code():
-	for instance_id in _active_components:
-func _fix_orphaned_code():
-	if not active_counts.has(type):
-		active_counts[type] = 0
-		active_counts[type] += 1
+	# Add active component counts
+	stats["active_counts"] = {}
+for instance_id in _active_components:
+if not active_counts.has(type):
+	active_counts[type] = 0
+	active_counts[type] += 1
 
-		stats["active_counts"] = active_counts
-		stats["total_active"] = _active_components.size()
+	stats["active_counts"] = active_counts
+	stats["total_active"] = _active_components.size()
 
-		return stats
+	return stats
 
 
-		## Print pool statistics to console
-func _fix_orphaned_code():
-	print("\n=== UI COMPONENT POOL STATS ===")
-	print("Total Created: " + str(stats["total_created"]))
-	print("Total Reused: " + str(stats["total_reused"]))
-	print(
-	(
-	"Pool Efficiency: "
-	+ str(
-	snapped(
-	(
-	float(stats["total_reused"])
-	/ max(1, stats["total_created"] + stats["total_reused"])
-	* 100
-	),
-	0.1
-	)
-	)
-	+ "%"
-	)
-	)
-	print("Peak Active Components: " + str(stats["peak_active"]))
+	## Print pool statistics to console
+print("\n=== UI COMPONENT POOL STATS ===")
+print("Total Created: " + str(stats["total_created"]))
+print("Total Reused: " + str(stats["total_reused"]))
+print(
+(
+"Pool Efficiency: "
++ str(
+snapped(
+(
+float(stats["total_reused"])
+/ max(1, stats["total_created"] + stats["total_reused"])
+* 100
+),
+0.1
+)
+)
++ "%"
+)
+)
+print("Peak Active Components: " + str(stats["peak_active"]))
 
-	print("\nPool Sizes:")
-	for type in stats["pool_sizes"]:
-func _fix_orphaned_code():
-	print("  - " + type + ": " + str(available) + " available, " + str(active) + " active")
+print("\nPool Sizes:")
+for type in stats["pool_sizes"]:
+print("  - " + type + ": " + str(available) + " available, " + str(active) + " active")
 
-	print("===============================\n")
+print("===============================\n")
 
 
-	# === PRIVATE METHODS ===
-	## Create a new pool for a component type
-func _fix_orphaned_code():
-	for i in range(size):
-func _fix_orphaned_code():
-	if component:
-		component.visible = false  # Hide pooled components
-		_pools[component_type].append(component)
-		created_count += 1
+# === PRIVATE METHODS ===
+## Create a new pool for a component type
+for i in range(size):
+if component:
+	component.visible = false  # Hide pooled components
+	_pools[component_type].append(component)
+	created_count += 1
 
-		if created_count > 0:
-			print("[UIComponentPool] Created " + str(created_count) + " instances of " + component_type)
-			_stats["total_created"] += created_count
+	if created_count > 0:
+		print("[UIComponentPool] Created " + str(created_count) + " instances of " + component_type)
+		_stats["total_created"] += created_count
 
 
-			## Create a new component instance
-func _fix_orphaned_code():
-	return panel
-	"section":
-func _fix_orphaned_code():
-	return section
-	"tooltip":
-func _fix_orphaned_code():
-	return tooltip
-	_:
-		push_warning("[UIComponentPool] No factory defined for: " + component_type)
-		return Control.new()
+		## Create a new component instance
+return panel
+"section":
+return section
+"tooltip":
+return tooltip
+_:
+	push_warning("[UIComponentPool] No factory defined for: " + component_type)
+	return Control.new()
 
 
-		## Configure a component with provided properties
-func _fix_orphaned_code():
-	return panel
+	## Configure a component with provided properties
+return panel
 
-	# Create section factory
-	_component_factories["section"] = func():
-func _fix_orphaned_code():
-	return section
+# Create section factory
+_component_factories["section"] = func():
+return section
 
 
-	## Track usage statistics
-func _fix_orphaned_code():
-	if active_count > _stats["peak_active"]:
-		_stats["peak_active"] = active_count
+## Track usage statistics
+if active_count > _stats["peak_active"]:
+	_stats["peak_active"] = active_count
 
-		# Emit stats update occasionally
-		if (_stats["hits"] + _stats["misses"]) % 10 == 0:
-			pool_stats_updated.emit(get_pool_stats())
+	# Emit stats update occasionally
+	if (_stats["hits"] + _stats["misses"]) % 10 == 0:
+		pool_stats_updated.emit(get_pool_stats())
 
 
-			## Dummy button handler to avoid connection errors
+		## Dummy button handler to avoid connection errors
 
 func _create_pool(component_type: String, size: int) -> void:
 	"""Initialize a component pool with pre-created instances"""

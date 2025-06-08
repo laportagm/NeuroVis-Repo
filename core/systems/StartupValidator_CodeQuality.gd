@@ -59,7 +59,7 @@ validation_completed.emit(final_results)
 # Print summary
 _print_validation_summary(final_results)
 
-var required_autoloads: Array[String] = [
+# FIXED: Orphaned code - var required_autoloads: Array[String] = [
 "KnowledgeService",
 "AIAssistant",
 "UIThemeManager",
@@ -71,10 +71,10 @@ var required_autoloads: Array[String] = [
 var passed: int = 0
 var total: int = required_autoloads.size()
 
-var autoload_name: String = required_autoloads[i]
+# FIXED: Orphaned code - var autoload_name: String = required_autoloads[i]
 var node: Node = get_node_or_null("/root/" + autoload_name)
 
-var result: ValidationResult = (
+# FIXED: Orphaned code - var result: ValidationResult = (
 ValidationResult.PASS if passed == total else ValidationResult.FAIL
 )
 _validation_results[ValidationCategory.AUTOLOADS] = {
@@ -85,7 +85,7 @@ _validation_results[ValidationCategory.AUTOLOADS] = {
 }
 
 
-var critical_resources: Array[Dictionary] = [
+# FIXED: Orphaned code - var critical_resources: Array[Dictionary] = [
 {"path": "res://assets/data/anatomical_data.json", "type": "educational_data"},
 {"path": "res://assets/models/Half_Brain.glb", "type": "3d_model"},
 {"path": "res://assets/models/Internal_Structures.glb", "type": "3d_model"}
@@ -94,10 +94,10 @@ var critical_resources: Array[Dictionary] = [
 var passed_2: int = 0
 var total_2: int = critical_resources.size()
 
-var resource_info: Dictionary = critical_resources[i]
+# FIXED: Orphaned code - var resource_info: Dictionary = critical_resources[i]
 var exists: bool = ResourceLoader.exists(resource_info["path"])
 
-var error_msg: String = (
+# FIXED: Orphaned code - var error_msg: String = (
 "Missing %s: %s" % [resource_info["type"], resource_info["path"]]
 )
 _critical_errors.append(error_msg)
@@ -117,23 +117,23 @@ _validation_results[ValidationCategory.RESOURCES] = {
 }
 
 
-var InfoPanelFactory: GDScript = preprepreload("res://ui/panels/InfoPanelFactory.gd") as GDScript
+# FIXED: Orphaned code - var InfoPanelFactory: GDScript = preload("res://ui/panels/InfoPanelFactory.gd") as GDScript
 var test_panel: Control = InfoPanelFactory.create_info_panel()
-var knowledge_service: Node = get_node_or_null("/root/KnowledgeService")
-var test_structure: Dictionary = knowledge_service.get_structure("hippocampus")
-var fps: float = Engine.get_frames_per_second()
-var memory_mb: float = OS.get_static_memory_usage() / 1048576.0
+# FIXED: Orphaned code - var knowledge_service: Node = get_node_or_null("/root/KnowledgeService")
+# FIXED: Orphaned code - var test_structure: Dictionary = knowledge_service.get_structure("hippocampus")
+# FIXED: Orphaned code - var fps: float = Engine.get_frames_per_second()
+# FIXED: Orphaned code - var memory_mb: float = OS.get_static_memory_usage() / 1048576.0
 
 validation_progress.emit(ValidationCategory.PERFORMANCE, 0.5)
 
-var has_issues: bool = false
+# FIXED: Orphaned code - var has_issues: bool = false
 var perf_warnings: Array[String] = []
 
 var theme_manager: Node = get_node_or_null("/root/UIThemeManager")
 
 validation_progress.emit(ValidationCategory.ACCESSIBILITY, 0.5)
 
-var category_errors: Array[String] = []
+# FIXED: Orphaned code - var category_errors: Array[String] = []
 var passed_count: int = 0
 var warning_count: int = 0
 var failed_count: int = 0
@@ -147,7 +147,7 @@ ValidationResult.PASS:
 			failed_count += 1
 
 var _validation_results: Dictionary = {}
-var _is_validating: bool = false
+# FIXED: Orphaned code - var _is_validating: bool = false
 var _validation_start_time: float = 0.0
 var _critical_errors: Array[String] = []
 var _warnings: Array[String] = []
@@ -196,155 +196,141 @@ func get_last_results() -> Dictionary:
 	# === PRIVATE VALIDATION METHODS ===
 
 
-func _fix_orphaned_code():
-	return final_results
+return final_results
 
 
-	## Get current validation status
-	## @return bool - True if validation is in progress
-func _fix_orphaned_code():
-	for i in range(total):
-func _fix_orphaned_code():
-	if node:
-		passed += 1
-		else:
-			_critical_errors.append("Missing autoload: " + autoload_name)
-			critical_error.emit(
-			ValidationCategory.AUTOLOADS, "Required autoload not found: " + autoload_name
-			)
+## Get current validation status
+## @return bool - True if validation is in progress
+for i in range(total):
+if node:
+	passed += 1
+	else:
+		_critical_errors.append("Missing autoload: " + autoload_name)
+		critical_error.emit(
+		ValidationCategory.AUTOLOADS, "Required autoload not found: " + autoload_name
+		)
 
-			validation_progress.emit(ValidationCategory.AUTOLOADS, float(i + 1) / float(total))
-			await get_tree().process_frame
+		validation_progress.emit(ValidationCategory.AUTOLOADS, float(i + 1) / float(total))
+		await get_tree().process_frame
 
-func _fix_orphaned_code():
-	for i in range(total):
-func _fix_orphaned_code():
-	if exists:
-		passed += 1
-		else:
-func _fix_orphaned_code():
-	if not InfoPanelFactory:
-		_critical_errors.append("InfoPanelFactory not found")
-		critical_error.emit(ValidationCategory.UI_COMPONENTS, "Cannot load InfoPanelFactory")
+for i in range(total):
+if exists:
+	passed += 1
+	else:
+if not InfoPanelFactory:
+	_critical_errors.append("InfoPanelFactory not found")
+	critical_error.emit(ValidationCategory.UI_COMPONENTS, "Cannot load InfoPanelFactory")
+	_validation_results[ValidationCategory.UI_COMPONENTS] = {
+	"result": ValidationResult.FAIL, "errors": ["InfoPanelFactory not available"]
+	}
+	return
+
+	# Try to create test panel
+	validation_progress.emit(ValidationCategory.UI_COMPONENTS, 0.5)
+
+if test_panel:
+	test_panel.queue_free()
+	_validation_results[ValidationCategory.UI_COMPONENTS] = {
+	"result": ValidationResult.PASS, "message": "UI components functional"
+	}
+	else:
+		_warnings.append("Info panel creation returned null")
 		_validation_results[ValidationCategory.UI_COMPONENTS] = {
-		"result": ValidationResult.FAIL, "errors": ["InfoPanelFactory not available"]
+		"result": ValidationResult.WARNING, "warnings": ["Panel creation issues"]
 		}
-		return
 
-		# Try to create test panel
-		validation_progress.emit(ValidationCategory.UI_COMPONENTS, 0.5)
+		validation_progress.emit(ValidationCategory.UI_COMPONENTS, 1.0)
 
-func _fix_orphaned_code():
-	if test_panel:
-		test_panel.queue_free()
-		_validation_results[ValidationCategory.UI_COMPONENTS] = {
-		"result": ValidationResult.PASS, "message": "UI components functional"
+
+if not knowledge_service:
+	_critical_errors.append("KnowledgeService not available")
+	_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
+	"result": ValidationResult.FAIL, "errors": ["Knowledge service unavailable"]
+	}
+	return
+
+	# Test content retrieval
+	validation_progress.emit(ValidationCategory.EDUCATIONAL_CONTENT, 0.5)
+
+	if knowledge_service.has_method("get_structure"):
+if not test_structure.is_empty():
+	_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
+	"result": ValidationResult.PASS, "message": "Educational content accessible"
+	}
+	else:
+		_warnings.append("Test structure retrieval returned empty")
+		_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
+		"result": ValidationResult.WARNING, "warnings": ["Content retrieval issues"]
 		}
 		else:
-			_warnings.append("Info panel creation returned null")
-			_validation_results[ValidationCategory.UI_COMPONENTS] = {
-			"result": ValidationResult.WARNING, "warnings": ["Panel creation issues"]
-			}
-
-			validation_progress.emit(ValidationCategory.UI_COMPONENTS, 1.0)
-
-
-func _fix_orphaned_code():
-	if not knowledge_service:
-		_critical_errors.append("KnowledgeService not available")
-		_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
-		"result": ValidationResult.FAIL, "errors": ["Knowledge service unavailable"]
-		}
-		return
-
-		# Test content retrieval
-		validation_progress.emit(ValidationCategory.EDUCATIONAL_CONTENT, 0.5)
-
-		if knowledge_service.has_method("get_structure"):
-func _fix_orphaned_code():
-	if not test_structure.is_empty():
-		_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
-		"result": ValidationResult.PASS, "message": "Educational content accessible"
-		}
-		else:
-			_warnings.append("Test structure retrieval returned empty")
+			_critical_errors.append("KnowledgeService missing get_structure method")
 			_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
-			"result": ValidationResult.WARNING, "warnings": ["Content retrieval issues"]
+			"result": ValidationResult.FAIL, "errors": ["Invalid knowledge service interface"]
 			}
-			else:
-				_critical_errors.append("KnowledgeService missing get_structure method")
-				_validation_results[ValidationCategory.EDUCATIONAL_CONTENT] = {
-				"result": ValidationResult.FAIL, "errors": ["Invalid knowledge service interface"]
-				}
 
-				validation_progress.emit(ValidationCategory.EDUCATIONAL_CONTENT, 1.0)
+			validation_progress.emit(ValidationCategory.EDUCATIONAL_CONTENT, 1.0)
 
 
-func _fix_orphaned_code():
-	if fps < PERFORMANCE_THRESHOLD_FPS and fps > 0:
-		perf_warnings.append("Low FPS: %.1f (target: %.1f)" % [fps, PERFORMANCE_THRESHOLD_FPS])
+if fps < PERFORMANCE_THRESHOLD_FPS and fps > 0:
+	perf_warnings.append("Low FPS: %.1f (target: %.1f)" % [fps, PERFORMANCE_THRESHOLD_FPS])
+	has_issues = true
+
+	if memory_mb > MEMORY_WARNING_THRESHOLD_MB:
+		perf_warnings.append("High memory usage: %d MB" % memory_mb)
 		has_issues = true
 
-		if memory_mb > MEMORY_WARNING_THRESHOLD_MB:
-			perf_warnings.append("High memory usage: %d MB" % memory_mb)
-			has_issues = true
+		validation_progress.emit(ValidationCategory.PERFORMANCE, 1.0)
 
-			validation_progress.emit(ValidationCategory.PERFORMANCE, 1.0)
-
-			if has_issues:
-				_warnings.append_array(perf_warnings)
-				_validation_results[ValidationCategory.PERFORMANCE] = {
-				"result": ValidationResult.WARNING,
-				"warnings": perf_warnings,
-				"metrics": {"fps": fps, "memory_mb": memory_mb}
-				}
-				else:
-					_validation_results[ValidationCategory.PERFORMANCE] = {
-					"result": ValidationResult.PASS, "metrics": {"fps": fps, "memory_mb": memory_mb}
-					}
-
-
-func _fix_orphaned_code():
-	if theme_manager:
-		_validation_results[ValidationCategory.ACCESSIBILITY] = {
-		"result": ValidationResult.PASS, "message": "Accessibility features available"
-		}
-		else:
-			_warnings.append("UIThemeManager not available for accessibility")
-			_validation_results[ValidationCategory.ACCESSIBILITY] = {
-			"result": ValidationResult.WARNING, "warnings": ["Limited accessibility support"]
+		if has_issues:
+			_warnings.append_array(perf_warnings)
+			_validation_results[ValidationCategory.PERFORMANCE] = {
+			"result": ValidationResult.WARNING,
+			"warnings": perf_warnings,
+			"metrics": {"fps": fps, "memory_mb": memory_mb}
 			}
-
-			validation_progress.emit(ValidationCategory.ACCESSIBILITY, 1.0)
-
-
-			# === HELPER METHODS ===
-
-
-func _fix_orphaned_code():
-	for error in _critical_errors:
-		if error.contains(_get_category_name(category)):
-			category_errors.append(error)
-			return category_errors
+			else:
+				_validation_results[ValidationCategory.PERFORMANCE] = {
+				"result": ValidationResult.PASS, "metrics": {"fps": fps, "memory_mb": memory_mb}
+				}
 
 
-func _fix_orphaned_code():
-	for category in _validation_results:
-func _fix_orphaned_code():
-	return {
-	"validation_time": total_time,
-	"categories": _validation_results,
-	"summary":
-		{
-		"passed": passed_count,
-		"warnings": warning_count,
-		"failed": failed_count,
-		"total": _validation_results.size()
-		},
-		"critical_errors": _critical_errors,
-		"warnings": _warnings,
-		"is_ready": failed_count == 0
+if theme_manager:
+	_validation_results[ValidationCategory.ACCESSIBILITY] = {
+	"result": ValidationResult.PASS, "message": "Accessibility features available"
+	}
+	else:
+		_warnings.append("UIThemeManager not available for accessibility")
+		_validation_results[ValidationCategory.ACCESSIBILITY] = {
+		"result": ValidationResult.WARNING, "warnings": ["Limited accessibility support"]
 		}
+
+		validation_progress.emit(ValidationCategory.ACCESSIBILITY, 1.0)
+
+
+		# === HELPER METHODS ===
+
+
+for error in _critical_errors:
+	if error.contains(_get_category_name(category)):
+		category_errors.append(error)
+		return category_errors
+
+
+for category in _validation_results:
+return {
+"validation_time": total_time,
+"categories": _validation_results,
+"summary":
+	{
+	"passed": passed_count,
+	"warnings": warning_count,
+	"failed": failed_count,
+	"total": _validation_results.size()
+	},
+	"critical_errors": _critical_errors,
+	"warnings": _warnings,
+	"is_ready": failed_count == 0
+	}
 
 
 func _validate_autoloads() -> void:

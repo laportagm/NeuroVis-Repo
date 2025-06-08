@@ -53,8 +53,8 @@ const MAX_TRACE_EVENTS = 100
 # === INITIALIZATION ===
 
 var removed = _listeners[event_name].erase(callback)
-var listener_count = _listeners[event_name].size()
-var trace_entry = {
+# FIXED: Orphaned code - var listener_count = _listeners[event_name].size()
+# FIXED: Orphaned code - var trace_entry = {
 "timestamp": Time.get_unix_time_from_system(),
 "event": event_name,
 "data": str(event_data).substr(0, 100)  # Limit data length
@@ -177,24 +177,21 @@ func print_event_statistics() -> void:
 		else:
 			for event_name in _listeners.keys():
 
-func _fix_orphaned_code():
-	if removed:
-		print("[EventBus] Unregistered listener for: %s" % event_name)
+if removed:
+	print("[EventBus] Unregistered listener for: %s" % event_name)
 
 
-		## Emit an event with optional data
-		## @param event_name: Name of the event to emit
-		## @param event_data: Optional data to pass to listeners
-func _fix_orphaned_code():
-	print("Event: %s - %d listener(s)" % [event_name, listener_count])
+	## Emit an event with optional data
+	## @param event_name: Name of the event to emit
+	## @param event_data: Optional data to pass to listeners
+print("Event: %s - %d listener(s)" % [event_name, listener_count])
 
-	print("===========================\n")
+print("===========================\n")
 
 
-	# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if _recent_events.size() > MAX_TRACE_EVENTS:
-		_recent_events.pop_front()
+# === PRIVATE METHODS ===
+if _recent_events.size() > MAX_TRACE_EVENTS:
+	_recent_events.pop_front()
 
 func _trace_event(event_name: String, event_data) -> void:
 	"""Record event for debugging purposes"""

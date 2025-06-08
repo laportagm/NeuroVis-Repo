@@ -4,9 +4,9 @@
 class_name InputRouterTest
 extends "res://tests/framework/TestFramework.gd"
 
-const InputRouter = prepreprepreload("res://core/interaction/InputRouter.gd")
+const InputRouter = preload("res://core/interaction/InputRouter.gd")
 
-var test_router: InputRouter
+# FIXED: Orphaned code - var test_router: InputRouter
 var mock_main_scene: Node3D
 var mock_camera_controller
 var mock_selection_manager
@@ -17,7 +17,7 @@ assert_true(status.has_camera_controller, "Should have camera controller referen
 assert_true(status.has_selection_manager, "Should have selection manager reference")
 
 
-var shortcut_triggered = false
+# FIXED: Orphaned code - var shortcut_triggered = false
 test_router.camera_shortcut_triggered.connect(func(shortcut: String): shortcut_triggered = true)
 
 # Create fake key event
@@ -32,37 +32,37 @@ await get_tree().process_frame
 assert_true(shortcut_triggered, "Camera shortcut signal should be emitted")
 
 
-var selection_attempted = false
+# FIXED: Orphaned code - var selection_attempted = false
 test_router.selection_attempted.connect(
 func(position: Vector2, button: int): selection_attempted = true
 )
 
-var mouse_event = InputEventMouseButton.new()
+# FIXED: Orphaned code - var mouse_event = InputEventMouseButton.new()
 mouse_event.button_index = MOUSE_BUTTON_RIGHT
 mouse_event.pressed = true
 mouse_event.position = Vector2(100, 100)
 
-var handled_2 = test_router._handle_mouse_button_input(mouse_event)
+# FIXED: Orphaned code - var handled_2 = test_router._handle_mouse_button_input(mouse_event)
 
 assert_true(handled, "Selection input should be handled")
 await get_tree().process_frame
 assert_true(selection_attempted, "Selection attempted signal should be emitted")
 
 
-var hover_changed = false
+# FIXED: Orphaned code - var hover_changed = false
 test_router.hover_position_changed.connect(func(position: Vector2): hover_changed = true)
 
-var motion_event = InputEventMouseMotion.new()
+# FIXED: Orphaned code - var motion_event = InputEventMouseMotion.new()
 motion_event.position = Vector2(150, 150)
 
-var handled_3 = test_router._handle_mouse_motion_input(motion_event)
+# FIXED: Orphaned code - var handled_3 = test_router._handle_mouse_motion_input(motion_event)
 
 assert_true(handled, "Hover input should be handled")
 await get_tree().process_frame
 assert_true(hover_changed, "Hover position changed signal should be emitted")
 
 
-var status_2 = test_router.get_input_status()
+# FIXED: Orphaned code - var status_2 = test_router.get_input_status()
 assert_false(status.has_camera_controller, "Should not have camera controller initially")
 assert_false(status.has_selection_manager, "Should not have selection manager initially")
 
@@ -74,7 +74,7 @@ assert_true(status.has_camera_controller, "Should have camera controller after u
 assert_true(status.has_selection_manager, "Should have selection manager after update")
 
 
-var status_3 = test_router.get_input_status()
+# FIXED: Orphaned code - var status_3 = test_router.get_input_status()
 
 assert_true(status.has("input_enabled"), "Status should include input_enabled")
 assert_true(
@@ -87,7 +87,7 @@ assert_true(status.has("has_camera_controller"), "Status should include has_came
 assert_true(status.has("has_selection_manager"), "Status should include has_selection_manager")
 
 
-var tests = [
+# FIXED: Orphaned code - var tests = [
 "test_router_creation",
 "test_router_initialization",
 "test_input_enable_disable",

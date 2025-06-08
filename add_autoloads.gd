@@ -1,25 +1,26 @@
+@tool
 extends EditorScript
 
 # This script must be run from the Godot editor using the "Run Current Script" button
 # It will add the AI architecture autoloads to the project.godot file
 
-var editor = get_editor_interface()
-
-# Add autoloads
-	EditorInterface.get_editor_settings().set_setting(
-	"autoload/AIConfig", "res://core/ai/config/AIConfigurationManager.gd"
-	)
-	EditorInterface.get_editor_settings().set_setting(
-	"autoload/AIRegistry", "res://core/ai/AIProviderRegistry.gd"
-	)
-	EditorInterface.get_editor_settings().set_setting(
-	"autoload/AIIntegration", "res://core/ai/AIIntegrationManager.gd"
-	)
 
 func _run() -> void:
 	print("Adding AI architecture autoloads...")
 
-	# Get the EditorInterface singleton
-func _fix_orphaned_code():
-	print("Autoloads added successfully!")
-	print("Remember to restart the editor for these changes to take effect.")@tool
+	# Get the project settings
+	var settings = ProjectSettings
+
+	# Add autoloads
+	settings.set_setting("autoload/AIConfig", "*res://core/ai/config/AIConfigurationManager.gd")
+	settings.set_setting("autoload/AIRegistry", "*res://core/ai/AIProviderRegistry.gd")
+	settings.set_setting("autoload/AIIntegration", "*res://core/ai/AIIntegrationManager.gd")
+
+	# Save the project settings
+	var error = settings.save()
+
+	if error == OK:
+		print("Autoloads added successfully!")
+		print("Remember to restart the editor for these changes to take effect.")
+	else:
+		print("Failed to save project settings!")

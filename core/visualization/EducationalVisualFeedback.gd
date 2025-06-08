@@ -103,7 +103,7 @@ var select_mat = _get_or_create_selection_material(mesh, original_material)
 var outline_color = _current_colors["outline"]
 var related_mat = _get_or_create_related_material(mesh, original_material)
 
-var color = _current_colors[key]
+# FIXED: Orphaned code - var color = _current_colors[key]
 # Increase saturation and value for better contrast
 	color.s = min(color.s * 1.3, 1.0)
 	color.v = min(color.v * 1.2, 1.0)
@@ -174,7 +174,7 @@ var base_color_3 = _current_colors["related"]
 
 	_material_cache[cache_key] = related_mat
 var surface_count = mesh.mesh.get_surface_count()
-var tween = mesh.create_tween()
+# FIXED: Orphaned code - var tween = mesh.create_tween()
 	tween.set_loops()
 
 	# Subtle scale pulse
@@ -195,13 +195,13 @@ var original_scale_2 = mesh.scale
 	tween.tween_property(mesh, "scale", original_scale, 0.2 / animation_speed)
 
 
-var mesh_id = mesh.get_instance_id()
+# FIXED: Orphaned code - var mesh_id = mesh.get_instance_id()
 
 # Stop main tween
 var hover_key = "%s_hover" % mesh_id
 
 var _current_colors: Dictionary = {}
-var _material_cache: Dictionary = {}  # Cache materials for performance
+# FIXED: Orphaned code - var _material_cache: Dictionary = {}  # Cache materials for performance
 var _shader_cache: Dictionary = {}  # Cache compiled shaders
 var _active_tweens: Dictionary = {}  # Track active animations
 
@@ -292,102 +292,89 @@ func get_accessibility_info() -> Dictionary:
 
 	# === PRIVATE METHODS ===
 
-func _fix_orphaned_code():
-	if enable_animations and not reduce_motion:
-		_animate_material_transition(mesh, hover_mat, HOVER_FADE_TIME)
-		else:
-			_apply_material_instant(mesh, hover_mat)
+if enable_animations and not reduce_motion:
+	_animate_material_transition(mesh, hover_mat, HOVER_FADE_TIME)
+	else:
+		_apply_material_instant(mesh, hover_mat)
 
-			# Add outline for better visibility
-			if enable_outline:
-				_add_outline_effect(mesh, _current_colors["outline"])
+		# Add outline for better visibility
+		if enable_outline:
+			_add_outline_effect(mesh, _current_colors["outline"])
 
-				# Add subtle animation
-				if enable_animations and not reduce_motion:
-					_add_hover_animation(mesh)
+			# Add subtle animation
+			if enable_animations and not reduce_motion:
+				_add_hover_animation(mesh)
 
-					visual_feedback_applied.emit(mesh, "hover")
-
-
-					## Apply selection visual feedback
-func _fix_orphaned_code():
-	if enable_animations and not reduce_motion:
-		_animate_material_transition(mesh, select_mat, SELECTION_PULSE_TIME)
-		_add_selection_pulse(mesh)
-		else:
-			_apply_material_instant(mesh, select_mat)
-
-			# Enhanced outline for selection
-			if enable_outline:
-func _fix_orphaned_code():
-	if enhanced_outlines:
-		_add_outline_effect(mesh, outline_color, OUTLINE_THICKNESS * 1.5)
-		else:
-			_add_outline_effect(mesh, outline_color)
-
-			visual_feedback_applied.emit(mesh, "selected")
+				visual_feedback_applied.emit(mesh, "hover")
 
 
-			## Apply related structure feedback (for connected anatomy)
-func _fix_orphaned_code():
-	if enable_animations and not reduce_motion:
-		_animate_material_transition(mesh, related_mat, HOVER_FADE_TIME * 1.5)
-		else:
-			_apply_material_instant(mesh, related_mat)
+				## Apply selection visual feedback
+if enable_animations and not reduce_motion:
+	_animate_material_transition(mesh, select_mat, SELECTION_PULSE_TIME)
+	_add_selection_pulse(mesh)
+	else:
+		_apply_material_instant(mesh, select_mat)
 
-			visual_feedback_applied.emit(mesh, "related")
+		# Enhanced outline for selection
+		if enable_outline:
+if enhanced_outlines:
+	_add_outline_effect(mesh, outline_color, OUTLINE_THICKNESS * 1.5)
+	else:
+		_add_outline_effect(mesh, outline_color)
 
-
-			## Clear all visual feedback
-func _fix_orphaned_code():
-	if _material_cache.has(cache_key):
-		return _material_cache[cache_key]
-
-		# Create new hover material
-func _fix_orphaned_code():
-	if enable_depth_fade:
-		hover_mat.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_PIXEL_DITHER
-		hover_mat.distance_fade_min_distance = 0.1
-		hover_mat.distance_fade_max_distance = 10.0
-
-		_material_cache[cache_key] = hover_mat
-		return hover_mat
+		visual_feedback_applied.emit(mesh, "selected")
 
 
-func _fix_orphaned_code():
-	if _material_cache.has(cache_key):
-		return _material_cache[cache_key]
+		## Apply related structure feedback (for connected anatomy)
+if enable_animations and not reduce_motion:
+	_animate_material_transition(mesh, related_mat, HOVER_FADE_TIME * 1.5)
+	else:
+		_apply_material_instant(mesh, related_mat)
 
-func _fix_orphaned_code():
-	return select_mat
-
-
-func _fix_orphaned_code():
-	if _material_cache.has(cache_key):
-		return _material_cache[cache_key]
-
-func _fix_orphaned_code():
-	return related_mat
+		visual_feedback_applied.emit(mesh, "related")
 
 
-func _fix_orphaned_code():
-	for i in range(surface_count):
-		mesh.set_surface_override_material(i, material)
+		## Clear all visual feedback
+if _material_cache.has(cache_key):
+	return _material_cache[cache_key]
+
+	# Create new hover material
+if enable_depth_fade:
+	hover_mat.distance_fade_mode = BaseMaterial3D.DISTANCE_FADE_PIXEL_DITHER
+	hover_mat.distance_fade_min_distance = 0.1
+	hover_mat.distance_fade_max_distance = 10.0
+
+	_material_cache[cache_key] = hover_mat
+	return hover_mat
 
 
-func _fix_orphaned_code():
-	if _active_tweens.has(mesh_id):
-		_active_tweens[mesh_id].kill()
-		_active_tweens.erase(mesh_id)
+if _material_cache.has(cache_key):
+	return _material_cache[cache_key]
 
-		# Stop hover animation
-func _fix_orphaned_code():
-	if _active_tweens.has(hover_key):
-		_active_tweens[hover_key].kill()
-		_active_tweens.erase(hover_key)
+return select_mat
 
-		# Reset scale
-		mesh.scale = Vector3.ONE
+
+if _material_cache.has(cache_key):
+	return _material_cache[cache_key]
+
+return related_mat
+
+
+for i in range(surface_count):
+	mesh.set_surface_override_material(i, material)
+
+
+if _active_tweens.has(mesh_id):
+	_active_tweens[mesh_id].kill()
+	_active_tweens.erase(mesh_id)
+
+	# Stop hover animation
+if _active_tweens.has(hover_key):
+	_active_tweens[hover_key].kill()
+	_active_tweens.erase(hover_key)
+
+	# Reset scale
+	mesh.scale = Vector3.ONE
 
 
 func _load_color_scheme(scheme_name: String) -> void:

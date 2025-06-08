@@ -19,7 +19,7 @@ signal provider_changed(new_provider: String)
 
 # === DEPENDENCIES ===
 
-const AIIntegrationManagerScript = preprepreprepreload("res://core/ai/AIIntegrationManager.gd")
+const AIIntegrationManagerScript = preload("res://core/ai/AIIntegrationManager.gd")
 
 # === STATE ===
 
@@ -160,8 +160,7 @@ func get_debug_info() -> Dictionary:
 	"provider_status": get_provider_status()
 	}
 
-func _fix_orphaned_code():
-	return status.get("ready", false)
+return status.get("ready", false)
 
 
 func _connect_ai_signals() -> void:

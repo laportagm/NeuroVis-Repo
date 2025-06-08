@@ -10,7 +10,7 @@ signal tooltip_shown(target_node: Control, content: Dictionary)
 signal tooltip_hidden(target_node: Control)
 
 
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # Tooltip components
 const HOVER_DELAY = 0.5
@@ -126,7 +126,7 @@ var educational_tooltips: Dictionary = {
 																				}
 																				}
 
-var margin = MarginContainer.new()
+# FIXED: Orphaned code - var margin = MarginContainer.new()
 	margin.add_theme_constant_override("margin_top", UIThemeManager.MARGIN_MEDIUM)
 	margin.add_theme_constant_override("margin_bottom", UIThemeManager.MARGIN_MEDIUM)
 	margin.add_theme_constant_override("margin_left", UIThemeManager.MARGIN_MEDIUM)
@@ -189,9 +189,9 @@ var header_container = HBoxContainer.new()
 	tooltip_footer.add_child(tooltip_difficulty)
 
 
-var display_name = structure_data.get("displayName", structure_id)
-var description = structure_data.get("shortDescription", "Brain structure")
-var functions = structure_data.get("functions", [])
+# FIXED: Orphaned code - var display_name = structure_data.get("displayName", structure_id)
+# FIXED: Orphaned code - var description = structure_data.get("shortDescription", "Brain structure")
+# FIXED: Orphaned code - var functions = structure_data.get("functions", [])
 
 	educational_tooltips["brain_structures"][structure_id] = {
 	"title": "🧠 " + display_name,
@@ -205,11 +205,11 @@ var functions = structure_data.get("functions", [])
 	register_tooltip(target, structure_id, "brain_structures")
 
 
-var word_count = description.split(" ").size()
-var function_count = functions.size()
-var complexity_score = word_count + (function_count * 10)
+# FIXED: Orphaned code - var word_count = description.split(" ").size()
+# FIXED: Orphaned code - var function_count = functions.size()
+# FIXED: Orphaned code - var complexity_score = word_count + (function_count * 10)
 
-var facts = []
+# FIXED: Orphaned code - var facts = []
 var function_text = str(functions[i])
 # Simplify to key phrase
 var tips = {
@@ -220,22 +220,22 @@ var tips = {
 	"Cortex": "Gray matter that matters - where thinking happens!"
 	}
 
-var category_data = educational_tooltips.get(category, {})
+# FIXED: Orphaned code - var category_data = educational_tooltips.get(category, {})
 	tooltip_data = category_data.get(tooltip_id, {})
 
-var description_2 = tooltip_data.get("description", "")
-var quick_facts = tooltip_data.get("quick_facts", [])
-var learning_tip = tooltip_data.get("learning_tip", "")
+# FIXED: Orphaned code - var description_2 = tooltip_data.get("description", "")
+# FIXED: Orphaned code - var quick_facts = tooltip_data.get("quick_facts", [])
+# FIXED: Orphaned code - var learning_tip = tooltip_data.get("learning_tip", "")
 
-var content = (
+# FIXED: Orphaned code - var content = (
 	"[font_size=%d][color=%s]%s[/color][/font_size]"
 	% [UIThemeManager.FONT_SIZE_SMALL, UIThemeManager.TEXT_PRIMARY.to_html(), description]
 	)
 
 	# Add quick facts if available
 var difficulty = tooltip_data.get("difficulty", "beginner")
-var difficulty_icon = _get_difficulty_icon(difficulty)
-var difficulty_color = _get_difficulty_color(difficulty)
+# FIXED: Orphaned code - var difficulty_icon = _get_difficulty_icon(difficulty)
+# FIXED: Orphaned code - var difficulty_color = _get_difficulty_color(difficulty)
 
 	tooltip_difficulty.text = "%s %s" % [difficulty_icon, difficulty.capitalize()]
 	UIThemeManager.apply_modern_label(
@@ -243,14 +243,14 @@ var difficulty_color = _get_difficulty_color(difficulty)
 	)
 
 
-var target_global_pos = target.global_position
+# FIXED: Orphaned code - var target_global_pos = target.global_position
 var target_size = target.size
 
 # Get viewport size
 var viewport_size = get_viewport().get_visible_rect().size
 
 # Calculate preferred position (above and to the right of target)
-var preferred_pos = target_global_pos + Vector2(target_size.x, 0) + TOOLTIP_OFFSET
+# FIXED: Orphaned code - var preferred_pos = target_global_pos + Vector2(target_size.x, 0) + TOOLTIP_OFFSET
 
 # Ensure tooltip fits within viewport
 var tooltip_size = tooltip_panel.get_combined_minimum_size()
@@ -269,7 +269,7 @@ var tween = create_tween()
 	)
 
 
-var tween_2 = create_tween()
+# FIXED: Orphaned code - var tween_2 = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0.0, UIThemeManager.ANIM_DURATION_FAST).set_ease(
 	Tween.EASE_IN
@@ -294,8 +294,8 @@ var tooltip_entry = educational_tooltips["brain_structures"][structure_id]
 
 # Update with new data
 var display_name_2 = structure_data.get("displayName", structure_id)
-var description_3 = structure_data.get("shortDescription", "Brain structure")
-var functions_2 = structure_data.get("functions", [])
+# FIXED: Orphaned code - var description_3 = structure_data.get("shortDescription", "Brain structure")
+# FIXED: Orphaned code - var functions_2 = structure_data.get("functions", [])
 
 	tooltip_entry["title"] = "🧠 " + display_name
 	tooltip_entry["description"] = description
@@ -376,124 +376,113 @@ func dispose() -> void:
 	educational_tooltips.clear()
 
 
-func _fix_orphaned_code():
-	if complexity_score < 30:
-		return "beginner"
-		elif complexity_score < 60:
-			return "intermediate"
-			else:
-				return "advanced"
+if complexity_score < 30:
+	return "beginner"
+	elif complexity_score < 60:
+		return "intermediate"
+		else:
+			return "advanced"
 
 
-func _fix_orphaned_code():
-	for i in range(min(3, functions.size())):
-func _fix_orphaned_code():
-	if function_text.length() > 50:
-		function_text = function_text.substr(0, 47) + "..."
-		facts.append(function_text)
-		return facts
+for i in range(min(3, functions.size())):
+if function_text.length() > 50:
+	function_text = function_text.substr(0, 47) + "..."
+	facts.append(function_text)
+	return facts
 
 
-func _fix_orphaned_code():
-	return tips.get(structure_name, "Break down the name to remember its function!")
+return tips.get(structure_name, "Break down the name to remember its function!")
 
 
-func _fix_orphaned_code():
-	if tooltip_data.is_empty():
-		print(
-		(
-		"[TOOLTIP_MANAGER] No tooltip data found for: %s in category: %s"
-		% [tooltip_id, category]
-		)
-		)
-		return
+if tooltip_data.is_empty():
+	print(
+	(
+	"[TOOLTIP_MANAGER] No tooltip data found for: %s in category: %s"
+	% [tooltip_id, category]
+	)
+	)
+	return
 
-		current_target = target
-		_update_tooltip_content()
-		_position_tooltip(target)
-		_show_with_animation()
+	current_target = target
+	_update_tooltip_content()
+	_position_tooltip(target)
+	_show_with_animation()
 
-		tooltip_shown.emit(target, tooltip_data)
+	tooltip_shown.emit(target, tooltip_data)
 
 
-func _fix_orphaned_code():
-	if quick_facts.size() > 0:
+if quick_facts.size() > 0:
+	content += (
+	"\n\n[font_size=%d][color=%s][b]Quick Facts:[/b][/color][/font_size]"
+	% [UIThemeManager.FONT_SIZE_TINY, UIThemeManager.ACCENT_CYAN.to_html()]
+	)
+
+	for fact in quick_facts:
 		content += (
-		"\n\n[font_size=%d][color=%s][b]Quick Facts:[/b][/color][/font_size]"
-		% [UIThemeManager.FONT_SIZE_TINY, UIThemeManager.ACCENT_CYAN.to_html()]
+		"\n[font_size=%d][color=%s]• %s[/color][/font_size]"
+		% [
+		UIThemeManager.FONT_SIZE_TINY,
+		UIThemeManager.TEXT_SECONDARY.to_html(),
+		str(fact)
+		]
 		)
 
-		for fact in quick_facts:
+		# Add learning tip if available
+		if learning_tip != "":
 			content += (
-			"\n[font_size=%d][color=%s]• %s[/color][/font_size]"
-			% [
-			UIThemeManager.FONT_SIZE_TINY,
-			UIThemeManager.TEXT_SECONDARY.to_html(),
-			str(fact)
-			]
+			"\n\n[font_size=%d][color=%s][b]💡 Learning Tip:[/b][/color][/font_size]"
+			% [UIThemeManager.FONT_SIZE_TINY, UIThemeManager.ACCENT_YELLOW.to_html()]
+			)
+			content += (
+			"\n[font_size=%d][color=%s][i]%s[/i][/color][/font_size]"
+			% [UIThemeManager.FONT_SIZE_TINY, UIThemeManager.TEXT_SECONDARY.to_html(), learning_tip]
 			)
 
-			# Add learning tip if available
-			if learning_tip != "":
-				content += (
-				"\n\n[font_size=%d][color=%s][b]💡 Learning Tip:[/b][/color][/font_size]"
-				% [UIThemeManager.FONT_SIZE_TINY, UIThemeManager.ACCENT_YELLOW.to_html()]
-				)
-				content += (
-				"\n[font_size=%d][color=%s][i]%s[/i][/color][/font_size]"
-				% [UIThemeManager.FONT_SIZE_TINY, UIThemeManager.TEXT_SECONDARY.to_html(), learning_tip]
-				)
+			tooltip_body.text = content
 
-				tooltip_body.text = content
+			# Difficulty indicator
+if preferred_pos.x + tooltip_size.x > viewport_size.x:
+	preferred_pos.x = target_global_pos.x - tooltip_size.x - TOOLTIP_OFFSET.x
 
-				# Difficulty indicator
-func _fix_orphaned_code():
-	if preferred_pos.x + tooltip_size.x > viewport_size.x:
-		preferred_pos.x = target_global_pos.x - tooltip_size.x - TOOLTIP_OFFSET.x
+	# Adjust vertical position if needed
+	if preferred_pos.y + tooltip_size.y > viewport_size.y:
+		preferred_pos.y = target_global_pos.y - tooltip_size.y + TOOLTIP_OFFSET.y
 
-		# Adjust vertical position if needed
-		if preferred_pos.y + tooltip_size.y > viewport_size.y:
-			preferred_pos.y = target_global_pos.y - tooltip_size.y + TOOLTIP_OFFSET.y
+		# Ensure not off-screen
+		preferred_pos.x = max(10, min(preferred_pos.x, viewport_size.x - tooltip_size.x - 10))
+		preferred_pos.y = max(10, min(preferred_pos.y, viewport_size.y - tooltip_size.y - 10))
 
-			# Ensure not off-screen
-			preferred_pos.x = max(10, min(preferred_pos.x, viewport_size.x - tooltip_size.x - 10))
-			preferred_pos.y = max(10, min(preferred_pos.y, viewport_size.y - tooltip_size.y - 10))
-
-			global_position = preferred_pos
+		global_position = preferred_pos
 
 
-func _fix_orphaned_code():
-	print("[TOOLTIP_MANAGER] Updated structure data: %s" % structure_id)
+print("[TOOLTIP_MANAGER] Updated structure data: %s" % structure_id)
 
 
-func _fix_orphaned_code():
-	if not target:
-		print("[TOOLTIP_MANAGER] Warning: Null target provided for tooltip registration")
-		return
+if not target:
+	print("[TOOLTIP_MANAGER] Warning: Null target provided for tooltip registration")
+	return
 
-		# Connect hover signals
-		if not target.mouse_entered.is_connected(_on_target_mouse_entered):
-			target.mouse_entered.connect(_on_target_mouse_entered.bind(target, tooltip_id, category))
+	# Connect hover signals
+	if not target.mouse_entered.is_connected(_on_target_mouse_entered):
+		target.mouse_entered.connect(_on_target_mouse_entered.bind(target, tooltip_id, category))
 
-			if not target.mouse_exited.is_connected(_on_target_mouse_exited):
-				target.mouse_exited.connect(_on_target_mouse_exited.bind(target))
+		if not target.mouse_exited.is_connected(_on_target_mouse_exited):
+			target.mouse_exited.connect(_on_target_mouse_exited.bind(target))
 
-				print("[TOOLTIP_MANAGER] Registered tooltip for: %s" % tooltip_id)
+			print("[TOOLTIP_MANAGER] Registered tooltip for: %s" % tooltip_id)
 
 
-func _fix_orphaned_code():
-	if not target:
-		return
+if not target:
+	return
 
-		# Create or update tooltip data for this structure
-		if not educational_tooltips["brain_structures"].has(structure_id):
-			# Generate tooltip from structure data
-func _fix_orphaned_code():
-	if not educational_tooltips.has(category):
-		educational_tooltips[category] = {}
+	# Create or update tooltip data for this structure
+	if not educational_tooltips["brain_structures"].has(structure_id):
+		# Generate tooltip from structure data
+if not educational_tooltips.has(category):
+	educational_tooltips[category] = {}
 
-		educational_tooltips[category][tooltip_id] = content
-		print("[TOOLTIP_MANAGER] Added educational content: %s" % tooltip_id)
+	educational_tooltips[category][tooltip_id] = content
+	print("[TOOLTIP_MANAGER] Added educational content: %s" % tooltip_id)
 
 
 func _setup_tooltip_ui() -> void:

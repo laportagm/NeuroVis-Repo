@@ -17,7 +17,7 @@ INFO, SUCCESS, WARNING, ERROR, LEARNING_TIP, ACHIEVEMENT, PROGRESS_UPDATE, DISCO
 
 # Notification container
 
-const UIThemeManager = preprepreprepreload("res://ui/panels/UIThemeManager.gd")
+const UIThemeManager = preload("res://ui/panels/UIThemeManager.gd")
 
 # Notification types
 const MAX_NOTIFICATIONS = 5
@@ -73,7 +73,7 @@ var learning_achievements: Dictionary = {
 						}
 						}
 
-var learning_tips: Array = [
+# FIXED: Orphaned code - var learning_tips: Array = [
 	{
 	"title": "💡 Study Tip",
 	"message":
@@ -117,7 +117,7 @@ var random_tip = tips_in_category[randi() % tips_in_category.size()]
 	)
 
 
-var achievement = learning_achievements[achievement_id]
+# FIXED: Orphaned code - var achievement = learning_achievements[achievement_id]
 var title = achievement["title"]
 var message = achievement["message"]
 
@@ -135,7 +135,7 @@ var notification_data = {
 	achievement_unlocked.emit(achievement_id)
 
 
-var title_2 = "📊 Progress Update"
+# FIXED: Orphaned code - var title_2 = "📊 Progress Update"
 var message_2 = ""
 
 "structures_viewed":
@@ -157,11 +157,11 @@ var notification_data_2 = {
 	_process_notification_queue()
 
 
-var notification_data_3 = notification_queue.pop_front()
+# FIXED: Orphaned code - var notification_data_3 = notification_queue.pop_front()
 	_create_notification(notification_data)
 
 
-var notification = _build_notification_ui(data)
+# FIXED: Orphaned code - var notification = _build_notification_ui(data)
 
 # Add to container and track
 	notifications_container.add_child(notification)
@@ -178,7 +178,7 @@ var timer = Timer.new()
 	notification.add_child(timer)
 	timer.start()
 
-var notification_2 = PanelContainer.new()
+# FIXED: Orphaned code - var notification_2 = PanelContainer.new()
 	notification.name = "Notification_" + data["id"]
 	notification.custom_minimum_size = Vector2(320, 0)
 
@@ -188,7 +188,7 @@ var style_variant = _get_notification_style_variant(data["type"])
 
 	# Add colored border for type identification
 var border_color = _get_notification_color(data["type"], data.get("extra_data", {}))
-var panel_style = notification.get_theme_stylebox("panel").duplicate()
+# FIXED: Orphaned code - var panel_style = notification.get_theme_stylebox("panel").duplicate()
 	panel_style.border_color = border_color
 	panel_style.border_width_left = 4
 	notification.add_theme_stylebox_override("panel", panel_style)
@@ -201,7 +201,7 @@ var margin = MarginContainer.new()
 	margin.add_theme_constant_override("margin_right", UIThemeManager.MARGIN_MEDIUM)
 	notification.add_child(margin)
 
-var main_container = HBoxContainer.new()
+# FIXED: Orphaned code - var main_container = HBoxContainer.new()
 	main_container.add_theme_constant_override("separation", UIThemeManager.MARGIN_MEDIUM)
 	margin.add_child(main_container)
 
@@ -262,7 +262,7 @@ var tween = notification.create_tween()
 	)
 
 
-var tween_2 = notification.create_tween()
+# FIXED: Orphaned code - var tween_2 = notification.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(notification, "position:x", 400, SLIDE_OUT_DURATION).set_ease(
 	Tween.EASE_IN
@@ -401,85 +401,77 @@ func dispose() -> void:
 	learning_tips.clear()
 
 
-func _fix_orphaned_code():
-	if tip_category != "":
-		tips_in_category = learning_tips.filter(
-		func(tip): return tip.get("category", "") == tip_category
-		)
+if tip_category != "":
+	tips_in_category = learning_tips.filter(
+	func(tip): return tip.get("category", "") == tip_category
+	)
 
-		if tips_in_category.size() == 0:
-			tips_in_category = learning_tips
+	if tips_in_category.size() == 0:
+		tips_in_category = learning_tips
 
-func _fix_orphaned_code():
-	if custom_data.has("count"):
-		message = message % custom_data["count"]
-		elif custom_data.has("score"):
-			message = message % custom_data["score"]
-			elif custom_data.has("days"):
-				message = message % custom_data["days"]
+if custom_data.has("count"):
+	message = message % custom_data["count"]
+	elif custom_data.has("score"):
+		message = message % custom_data["score"]
+		elif custom_data.has("days"):
+			message = message % custom_data["days"]
 
-func _fix_orphaned_code():
-	if target_value > 0:
-		message += "Only %d more to complete this level." % (target_value - current_value)
-		"quizzes_completed":
-			message = "You've completed %d quizzes! Great job staying engaged." % current_value
-			"study_time":
+if target_value > 0:
+	message += "Only %d more to complete this level." % (target_value - current_value)
+	"quizzes_completed":
+		message = "You've completed %d quizzes! Great job staying engaged." % current_value
+		"study_time":
+			message = (
+			"You've spent %d minutes learning today. Excellent dedication!" % current_value
+			)
+			"bookmarks_created":
 				message = (
-				"You've spent %d minutes learning today. Excellent dedication!" % current_value
+				"You've bookmarked %d structures for review. Building a great study collection!"
+				% current_value
 				)
-				"bookmarks_created":
-					message = (
-					"You've bookmarked %d structures for review. Building a great study collection!"
-					% current_value
-					)
-					_:
-						message = "You've made progress in %s: %d" % [milestone_type, current_value]
+				_:
+					message = "You've made progress in %s: %d" % [milestone_type, current_value]
 
-						_queue_notification(NotificationType.PROGRESS_UPDATE, title, message, DEFAULT_DURATION)
-						learning_milestone_reached.emit(milestone_type, current_value)
+					_queue_notification(NotificationType.PROGRESS_UPDATE, title, message, DEFAULT_DURATION)
+					learning_milestone_reached.emit(milestone_type, current_value)
 
 
-func _fix_orphaned_code():
-	if interesting_fact != "":
-		message += "\n💡 Did you know? " + interesting_fact
+if interesting_fact != "":
+	message += "\n💡 Did you know? " + interesting_fact
 
-		_queue_notification(NotificationType.DISCOVERY, title, message, LEARNING_TIP_DURATION)
-
-
-func _fix_orphaned_code():
-	print("[NOTIFICATION_SYSTEM] Showing notification: " + data["title"])
+	_queue_notification(NotificationType.DISCOVERY, title, message, LEARNING_TIP_DURATION)
 
 
-func _fix_orphaned_code():
-	if data["type"] in [NotificationType.ACHIEVEMENT, NotificationType.DISCOVERY]:
-		notification.gui_input.connect(_on_notification_clicked.bind(data))
-		notification.mouse_entered.connect(
-		func(): UIThemeManager.animate_hover_glow(notification, border_color, 0.2)
-		)
-		notification.mouse_exited.connect(
-		func(): UIThemeManager.animate_hover_glow_off(notification)
-		)
-
-		# Store notification data
-		notification.set_meta("notification_data", data)
-
-		return notification
+print("[NOTIFICATION_SYSTEM] Showing notification: " + data["title"])
 
 
-func _fix_orphaned_code():
-	if notification.get_parent():
-		notification.get_parent().remove_child(notification)
-		notification.queue_free()
-		)
+if data["type"] in [NotificationType.ACHIEVEMENT, NotificationType.DISCOVERY]:
+	notification.gui_input.connect(_on_notification_clicked.bind(data))
+	notification.mouse_entered.connect(
+	func(): UIThemeManager.animate_hover_glow(notification, border_color, 0.2)
+	)
+	notification.mouse_exited.connect(
+	func(): UIThemeManager.animate_hover_glow_off(notification)
+	)
+
+	# Store notification data
+	notification.set_meta("notification_data", data)
+
+	return notification
 
 
-func _fix_orphaned_code():
-	if data.get("type", -1) == type:
-		return true
-		return false
+if notification.get_parent():
+	notification.get_parent().remove_child(notification)
+	notification.queue_free()
+	)
 
 
-		# Educational content management
+if data.get("type", -1) == type:
+	return true
+	return false
+
+
+	# Educational content management
 
 func _setup_notification_system() -> void:
 	"""Setup the notification display system"""

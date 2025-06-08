@@ -42,23 +42,20 @@ func bad_performance() -> void:
 func risky_function() -> void:
 func unused_vars() -> void:
 
-func _fix_orphaned_code():
-	return result
+return result
 
 
-	# Wrong naming convention
-func _fix_orphaned_code():
-	for i in range(100):
-		result = result + str(i)
+# Wrong naming convention
+for i in range(100):
+	result = result + str(i)
 
 
-		# Missing error handling
-func _fix_orphaned_code():
-	print(used)
+	# Missing error handling
+print(used)
 
 
-	# TODO: This should be flagged
-	# FIXME: This too
+# TODO: This should be flagged
+# FIXME: This too
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

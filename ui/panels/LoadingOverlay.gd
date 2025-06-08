@@ -6,7 +6,7 @@ extends Control
 
 enum LoadingState { HIDDEN, MODELS, KNOWLEDGE_BASE, INITIALIZATION, CUSTOM }
 
-var current_state: LoadingState = LoadingState.HIDDEN
+# FIXED: Orphaned code - var current_state: LoadingState = LoadingState.HIDDEN
 var spinner: Control
 var progress_bar: ProgressBar
 var status_label: Label
@@ -92,40 +92,40 @@ progress_bar.add_theme_stylebox_override("fill", progress_fg)
 content.add_child(progress_bar)
 
 
-var spinner_container = Control.new()
-spinner_container.custom_minimum_size = Vector2(60, 60)
-spinner_container.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+# FIXED: Orphaned code - var spinner_container = Control.new()
+	# ORPHANED REF: spinner_container.custom_minimum_size = Vector2(60, 60)
+	# ORPHANED REF: spinner_container.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 
 # Create multiple rotating rings for a complex effect
 var ring = Control.new()
 ring.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-var ring_draw = SpinnerRing.new()
-ring_draw.radius = 20 + (i * 8)
-ring_draw.thickness = 3
-ring_draw.color = Color("#00D9FF").darkened(i * 0.2)  # Primary cyan darkened
-ring_draw.speed = 1.0 + (i * 0.3)
-ring.add_child(ring_draw)
+# FIXED: Orphaned code - var ring_draw = SpinnerRing.new()
+	# ORPHANED REF: ring_draw.radius = 20 + (i * 8)
+	# ORPHANED REF: ring_draw.thickness = 3
+	# ORPHANED REF: ring_draw.color = Color("#00D9FF").darkened(i * 0.2)  # Primary cyan darkened
+	# ORPHANED REF: ring_draw.speed = 1.0 + (i * 0.3)
+	# ORPHANED REF: ring.add_child(ring_draw)
 
-spinner_container.add_child(ring)
+	# ORPHANED REF: spinner_container.add_child(ring)
 
-var tween = create_tween()
-tween.set_parallel(true)
-tween.tween_property(self, "modulate:a", 1.0, 0.3)
-tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK)
-
-
-var tween_2 = status_label.create_tween()
-tween.tween_property(status_label, "modulate:a", 0.0, 0.1)
-tween.tween_callback(func(): status_label.text = message)
-tween.tween_property(status_label, "modulate:a", 1.0, 0.1)
+# FIXED: Orphaned code - var tween = create_tween()
+	# ORPHANED REF: tween.set_parallel(true)
+	# ORPHANED REF: tween.tween_property(self, "modulate:a", 1.0, 0.3)
+	# ORPHANED REF: tween.tween_property(self, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_BACK)
 
 
-var tween_3 = create_tween()
-tween.set_parallel(true)
-tween.tween_property(self, "modulate:a", 0.0, 0.3)
-tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.3)
-tween.tween_callback(func(): visible = false)
+# FIXED: Orphaned code - var tween_2 = status_label.create_tween()
+	# ORPHANED REF: tween.tween_property(status_label, "modulate:a", 0.0, 0.1)
+	# ORPHANED REF: tween.tween_callback(func(): status_label.text = message)
+	# ORPHANED REF: tween.tween_property(status_label, "modulate:a", 1.0, 0.1)
+
+
+# FIXED: Orphaned code - var tween_3 = create_tween()
+	# ORPHANED REF: tween.set_parallel(true)
+	# ORPHANED REF: tween.tween_property(self, "modulate:a", 0.0, 0.3)
+	# ORPHANED REF: tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.3)
+	# ORPHANED REF: tween.tween_callback(func(): visible = false)
 
 
 # Custom spinner ring class for modern animation
@@ -141,10 +141,10 @@ var start_angle = rotation_angle
 var end_angle = start_angle + PI * 1.5  # 3/4 circle
 
 # Draw the arc
-	_draw_arc_line(center, radius, start_angle, end_angle, color, thickness)
+_draw_arc_line(center, radius, start_angle, end_angle, color, thickness)
 
-var steps = 32
-var angle_step = (end_angle - start_angle) / steps
+# FIXED: Orphaned code - var steps = 32
+	# ORPHANED REF: var angle_step = (end_angle - start_angle) / steps
 
 var angle1 = start_angle + i * angle_step
 var angle2 = start_angle + (i + 1) * angle_step
@@ -152,7 +152,7 @@ var angle2 = start_angle + (i + 1) * angle_step
 var point1 = center + Vector2(cos(angle1), sin(angle1)) * arc_radius
 var point2 = center + Vector2(cos(angle2), sin(angle2)) * arc_radius
 
-	draw_line(point1, point2, arc_color, width, true)
+draw_line(point1, point2, arc_color, width, true)
 
 func _ready() -> void:
 	# Set up full screen overlay
@@ -173,30 +173,30 @@ func _process(delta: float) -> void:
 
 func show_loading(state: LoadingState, custom_message: String = "") -> void:
 	"""Show loading overlay with specific state"""
-	current_state = state
+	# ORPHANED REF: current_state = state
 	visible = true
 
 	# Update status message based on state
 	match state:
 		LoadingState.MODELS:
-			status_label.text = "Loading 3D brain models..."
-			progress_bar.value = 25
-			LoadingState.KNOWLEDGE_BASE:
-				status_label.text = "Loading anatomical knowledge base..."
-				progress_bar.value = 50
-				LoadingState.INITIALIZATION:
-					status_label.text = "Initializing NeuroVis systems..."
-					progress_bar.value = 75
-					LoadingState.CUSTOM:
-						status_label.text = custom_message if not custom_message.is_empty() else "Loading..."
-						progress_bar.value = 0
-						_:
-							status_label.text = "Loading..."
-							progress_bar.value = 0
+		status_label.text = "Loading 3D brain models..."
+		progress_bar.value = 25
+		LoadingState.KNOWLEDGE_BASE:
+		status_label.text = "Loading anatomical knowledge base..."
+		progress_bar.value = 50
+		LoadingState.INITIALIZATION:
+		status_label.text = "Initializing NeuroVis systems..."
+		progress_bar.value = 75
+		LoadingState.CUSTOM:
+		status_label.text = custom_message if not custom_message.is_empty() else "Loading..."
+		progress_bar.value = 0
+	_:
+		status_label.text = "Loading..."
+		progress_bar.value = 0
 
 							# Animate entrance
-							modulate.a = 0
-							scale = Vector2(0.9, 0.9)
+		modulate.a = 0
+		scale = Vector2(0.9, 0.9)
 
 func update_progress(percentage: float, message: String = "") -> void:
 	"""Update loading progress"""
@@ -207,14 +207,11 @@ func update_progress(percentage: float, message: String = "") -> void:
 func hide_loading() -> void:
 	"""Hide loading overlay with smooth animation"""
 
-func _fix_orphaned_code():
 	for i in range(3):
-func _fix_orphaned_code():
-	return spinner_container
+	# ORPHANED REF: return spinner_container
 
 
-func _fix_orphaned_code():
-	for i in range(steps):
+	# ORPHANED REF: for i in range(steps):
 func _create_loading_ui() -> void:
 	"""Create the modern loading interface with glass morphism"""
 
@@ -228,11 +225,13 @@ func _create_loading_ui() -> void:
 func _create_modern_spinner() -> Control:
 	"""Create a modern animated spinner"""
 func _draw() -> void:
-func _draw_arc_line(
-	center: Vector2,
-	arc_radius: float,
-	start_angle: float,
-	end_angle: float,
-	arc_color: Color,
-	width: float
+	func _draw_arc_line(
+center: Vector2,
+arc_radius: float,
+start_angle: float,
+end_angle: float,
+arc_color: Color,
+width: float
 	) -> void:
+
+	pass

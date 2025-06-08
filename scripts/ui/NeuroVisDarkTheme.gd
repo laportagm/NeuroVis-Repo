@@ -85,7 +85,7 @@ var button_pressed = button_normal.duplicate()
 	theme.set_color("font_color", "Button", colors.text_primary)
 	theme.set_color("font_hover_color", "Button", colors.accent)
 	theme.set_color("font_pressed_color", "Button", colors.accent)
-var accent_button_normal = button_normal.duplicate()
+# FIXED: Orphaned code - var accent_button_normal = button_normal.duplicate()
 	accent_button_normal.bg_color = colors.accent
 	accent_button_normal.border_color = colors.accent
 
@@ -94,7 +94,7 @@ var accent_button_hover = accent_button_normal.duplicate()
 
 	# Label Styles
 	theme.set_color("font_color", "Label", colors.text_primary)
-var line_edit_normal = StyleBoxFlat.new()
+# FIXED: Orphaned code - var line_edit_normal = StyleBoxFlat.new()
 	line_edit_normal.bg_color = colors.panel_header
 	line_edit_normal.border_width_left = 1
 	line_edit_normal.border_width_right = 1
@@ -121,7 +121,7 @@ var line_edit_focus = line_edit_normal.duplicate()
 	theme.set_stylebox("focus", "LineEdit", line_edit_focus)
 	theme.set_color("font_color", "LineEdit", colors.text_primary)
 	theme.set_color("font_placeholder_color", "LineEdit", colors.text_disabled)
-var tree_bg = StyleBoxFlat.new()
+# FIXED: Orphaned code - var tree_bg = StyleBoxFlat.new()
 	tree_bg.bg_color = Color.TRANSPARENT
 
 var tree_selected = StyleBoxFlat.new()
@@ -255,55 +255,48 @@ var header_font = font_bold.duplicate()
 	theme.set_font_size("section_header_size", "Label", font_sizes.small)
 	theme.set_color("section_header_color", "Label", colors.text_secondary)
 
-var theme_2 = create_theme()
+# FIXED: Orphaned code - var theme_2 = create_theme()
 
-func _fix_orphaned_code():
-	if ResourceLoader.exists("res://assets/fonts/Inter-Regular.ttf"):
-		font_regular = load("res://assets/fonts/Inter-Regular.ttf")
-		elif ResourceLoader.exists("res://assets/fonts/Inter-Regular.tres"):
-			font_regular = load("res://assets/fonts/Inter-Regular.tres")
+if ResourceLoader.exists("res://assets/fonts/Inter-Regular.ttf"):
+	font_regular = load("res://assets/fonts/Inter-Regular.ttf")
+	elif ResourceLoader.exists("res://assets/fonts/Inter-Regular.tres"):
+		font_regular = load("res://assets/fonts/Inter-Regular.tres")
 
-			if ResourceLoader.exists("res://assets/fonts/Inter-Bold.ttf"):
-				font_bold = load("res://assets/fonts/Inter-Bold.ttf")
-				elif ResourceLoader.exists("res://assets/fonts/Inter-Bold.tres"):
-					font_bold = load("res://assets/fonts/Inter-Bold.tres")
+		if ResourceLoader.exists("res://assets/fonts/Inter-Bold.ttf"):
+			font_bold = load("res://assets/fonts/Inter-Bold.ttf")
+			elif ResourceLoader.exists("res://assets/fonts/Inter-Bold.tres"):
+				font_bold = load("res://assets/fonts/Inter-Bold.tres")
 
-					if ResourceLoader.exists("res://assets/fonts/JetBrainsMono-Regular.ttf"):
-						font_mono = load("res://assets/fonts/JetBrainsMono-Regular.ttf")
-						elif ResourceLoader.exists("res://assets/fonts/JetBrainsMono-Regular.tres"):
-							font_mono = load("res://assets/fonts/JetBrainsMono-Regular.tres")
+				if ResourceLoader.exists("res://assets/fonts/JetBrainsMono-Regular.ttf"):
+					font_mono = load("res://assets/fonts/JetBrainsMono-Regular.ttf")
+					elif ResourceLoader.exists("res://assets/fonts/JetBrainsMono-Regular.tres"):
+						font_mono = load("res://assets/fonts/JetBrainsMono-Regular.tres")
 
-							# Font Sizes
-func _fix_orphaned_code():
-	if font_regular:
-		theme.set_font("font", "Button", font_regular)
-		theme.set_font_size("font_size", "Button", font_sizes.body)
+						# Font Sizes
+if font_regular:
+	theme.set_font("font", "Button", font_regular)
+	theme.set_font_size("font_size", "Button", font_sizes.body)
 
-		# Accent Button (like "Live" button)
-func _fix_orphaned_code():
-	if font_regular:
-		theme.set_font("font", "Label", font_regular)
-		theme.set_font_size("font_size", "Label", font_sizes.body)
+	# Accent Button (like "Live" button)
+if font_regular:
+	theme.set_font("font", "Label", font_regular)
+	theme.set_font_size("font_size", "Label", font_sizes.body)
 
-		# LineEdit Styles
-func _fix_orphaned_code():
-	if font_regular:
-		theme.set_font("font", "LineEdit", font_regular)
-		theme.set_font_size("font_size", "LineEdit", font_sizes.body)
+	# LineEdit Styles
+if font_regular:
+	theme.set_font("font", "LineEdit", font_regular)
+	theme.set_font_size("font_size", "LineEdit", font_sizes.body)
 
-		# Tree/ItemList Styles (for navigation)
-func _fix_orphaned_code():
-	if font_bold:
-func _fix_orphaned_code():
-	return theme
+	# Tree/ItemList Styles (for navigation)
+if font_bold:
+return theme
 
 
-	# Helper function to apply the theme to a node and its children
-	static func apply_to_node(node: Node) -> void:
-func _fix_orphaned_code():
-	if node is Control:
-		node.theme = theme
+# Helper function to apply the theme to a node and its children
+static func apply_to_node(node: Node) -> void:
+if node is Control:
+	node.theme = theme
 
-		# Also apply to all child controls
-		for child in node.get_children():
-			apply_to_node(child)
+	# Also apply to all child controls
+	for child in node.get_children():
+		apply_to_node(child)

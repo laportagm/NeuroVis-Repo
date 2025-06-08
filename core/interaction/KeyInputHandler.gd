@@ -25,7 +25,7 @@ var main_scene: Node  # Reference to main scene for selection handling
 
 
 var parent = get_parent()
-var handled = true
+# FIXED: Orphaned code - var handled = true
 
 # Camera rotation
 KEY_LEFT, KEY_A:  # Rotate camera left
@@ -79,10 +79,10 @@ camera_3d.look_at(target_position, Vector3.UP)
 # Added missing selection handling function
 var space_state = get_viewport().world_3d.direct_space_state
 var from = camera_3d.project_ray_origin(mouse_position)
-var to = from + camera_3d.project_ray_normal(mouse_position) * 1000.0
+# FIXED: Orphaned code - var to = from + camera_3d.project_ray_normal(mouse_position) * 1000.0
 
 var query = PhysicsRayQueryParameters3D.create(from, to)
-var result = space_state.intersect_ray(query)
+# FIXED: Orphaned code - var result = space_state.intersect_ray(query)
 
 func _ready() -> void:
 	# Find required nodes in the scene tree
@@ -114,65 +114,62 @@ func get_camera_rotation() -> Vector2:
 	# Getter for current camera rotation
 	return Vector2(camera_rotation_x, camera_rotation_y)
 
-func _fix_orphaned_code():
-	if parent:
-		camera_3d = parent.find_child("Camera3D", true, false)
-		structure_labeler = parent.find_child("StructureLabeler", true, false)
-		main_scene = parent
+if parent:
+	camera_3d = parent.find_child("Camera3D", true, false)
+	structure_labeler = parent.find_child("StructureLabeler", true, false)
+	main_scene = parent
 
 
-func _fix_orphaned_code():
-	if structure_labeler and structure_labeler.has_method("toggle_labels_visibility"):
-		structure_labeler.toggle_labels_visibility()
+if structure_labeler and structure_labeler.has_method("toggle_labels_visibility"):
+	structure_labeler.toggle_labels_visibility()
 
-		_:  # If no match, mark as not handled
-		handled = false
+	_:  # If no match, mark as not handled
+	handled = false
 
-		# If we handled a key, update camera and mark as handled
-		if handled:
-			# Clamp vertical rotation to prevent camera flipping
-			camera_rotation_x = clamp(camera_rotation_x, -1.2, 1.2)
-			_update_camera_transform()  # Fixed: removed extra parenthesis
-			get_viewport().set_input_as_handled()
-			return
+	# If we handled a key, update camera and mark as handled
+	if handled:
+		# Clamp vertical rotation to prevent camera flipping
+		camera_rotation_x = clamp(camera_rotation_x, -1.2, 1.2)
+		_update_camera_transform()  # Fixed: removed extra parenthesis
+		get_viewport().set_input_as_handled()
+		return
 
-			# Handle mouse buttons (selection, rotation)
-			if event is InputEventMouseButton:
-				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-					# Zoom in
-					camera_distance = max(camera_distance - CAMERA_ZOOM_SPEED, CAMERA_MIN_DISTANCE)
+		# Handle mouse buttons (selection, rotation)
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				# Zoom in
+				camera_distance = max(camera_distance - CAMERA_ZOOM_SPEED, CAMERA_MIN_DISTANCE)
+				_update_camera_transform()
+				get_viewport().set_input_as_handled()
+
+				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+					# Zoom out
+					camera_distance = min(camera_distance + CAMERA_ZOOM_SPEED, CAMERA_MAX_DISTANCE)
 					_update_camera_transform()
 					get_viewport().set_input_as_handled()
 
-					elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-						# Zoom out
-						camera_distance = min(camera_distance + CAMERA_ZOOM_SPEED, CAMERA_MAX_DISTANCE)
-						_update_camera_transform()
+					# Handle middle mouse button for camera rotation
+					elif event.button_index == MOUSE_BUTTON_MIDDLE:
+						is_rotating = event.pressed
+						last_mouse_position = event.position
 						get_viewport().set_input_as_handled()
 
-						# Handle middle mouse button for camera rotation
-						elif event.button_index == MOUSE_BUTTON_MIDDLE:
-							is_rotating = event.pressed
-							last_mouse_position = event.position
+						# Handle left mouse click for selection
+						elif event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+							_handle_selection(event.position)
 							get_viewport().set_input_as_handled()
 
-							# Handle left mouse click for selection
-							elif event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-								_handle_selection(event.position)
-								get_viewport().set_input_as_handled()
-
-								# Handle mouse motion for camera rotation
-								elif event is InputEventMouseMotion and is_rotating:
-func _fix_orphaned_code():
-	if result:
-		# Delegate selection handling to main scene if it has the method
-		if main_scene and main_scene.has_method("_on_structure_selected"):
-			main_scene._on_structure_selected(result.collider)
-			else:
-				print("Selected object: ", result.collider.name)
+							# Handle mouse motion for camera rotation
+							elif event is InputEventMouseMotion and is_rotating:
+if result:
+	# Delegate selection handling to main scene if it has the method
+	if main_scene and main_scene.has_method("_on_structure_selected"):
+		main_scene._on_structure_selected(result.collider)
+		else:
+			print("Selected object: ", result.collider.name)
 
 
-				# Public methods for external camera control
+			# Public methods for external camera control
 
 func _find_required_nodes() -> void:
 	# Try to find camera in parent scene

@@ -16,14 +16,14 @@ var nav_items = {
 	"icon":
 		(
 		preload("res://assets/icons/brain.svg")
-var current_nav_selection: String = "brain_regions"
+# FIXED: Orphaned code - var current_nav_selection: String = "brain_regions"
 var nav_item_nodes: Dictionary = {}
 
 # Recent projects (mock data for now)
-var recent_projects = ["Default Mode Network", "Visual Cortex Mapping", "Hippocampal Study"]
+# FIXED: Orphaned code - var recent_projects = ["Default Mode Network", "Visual Cortex Mapping", "Hippocampal Study"]
 
 # All projects (mock data for now)
-var all_projects = ["Cortical Analysis", "Network Modeling"]
+# FIXED: Orphaned code - var all_projects = ["Cortical Analysis", "Network Modeling"]
 
 
 var panel_style = StyleBoxFlat.new()
@@ -36,7 +36,7 @@ var panel_style = StyleBoxFlat.new()
 	_build_ui()
 
 
-var main_container = VBoxContainer.new()
+# FIXED: Orphaned code - var main_container = VBoxContainer.new()
 	main_container.name = "MainContainer"
 	main_container.add_theme_constant_override("separation", 24)
 	main_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -69,7 +69,7 @@ var spacer = Control.new()
 	main_container.add_child(spacer)
 
 
-var nav_section = VBoxContainer.new()
+# FIXED: Orphaned code - var nav_section = VBoxContainer.new()
 	nav_section.add_theme_constant_override("separation", 4)
 	parent.add_child(nav_section)
 
@@ -119,7 +119,7 @@ var icon_rect = TextureRect.new()
 	icon_rect.custom_minimum_size = Vector2(20, 20)
 	icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon_rect.modulate = Color("#a0a0a0")
-var label = Label.new()
+# FIXED: Orphaned code - var label = Label.new()
 	label.text = text
 	label.add_theme_font_size_override("font_size", 14)
 	hbox.add_child(label)
@@ -135,7 +135,7 @@ var label = Label.new()
 	container.mouse_entered.connect(_on_nav_item_mouse_entered.bind(container))
 	container.mouse_exited.connect(_on_nav_item_mouse_exited.bind(container))
 
-var projects_section = VBoxContainer.new()
+# FIXED: Orphaned code - var projects_section = VBoxContainer.new()
 	projects_section.add_theme_constant_override("separation", 4)
 	parent.add_child(projects_section)
 
@@ -143,7 +143,7 @@ var projects_section = VBoxContainer.new()
 var header_container = HBoxContainer.new()
 	projects_section.add_child(header_container)
 
-var header_3 = Label.new()
+# FIXED: Orphaned code - var header_3 = Label.new()
 	header.text = "PROJECTS"
 	header.add_theme_font_size_override("font_size", 12)
 	header.add_theme_color_override("font_color", Color("#a0a0a0"))
@@ -187,7 +187,7 @@ var project_item_2 = _create_project_item(project)
 	projects_section.add_child(project_item)
 
 
-var item = Button.new()
+# FIXED: Orphaned code - var item = Button.new()
 	item.text = project_name
 	item.flat = true
 	item.alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -198,7 +198,7 @@ var item = Button.new()
 
 	# Custom style to remove button appearance
 var normal_style = StyleBoxEmpty.new()
-var hover_style = StyleBoxFlat.new()
+# FIXED: Orphaned code - var hover_style = StyleBoxFlat.new()
 	hover_style.bg_color = Color("#2a2a2a")
 	hover_style.corner_radius_top_left = 4
 	hover_style.corner_radius_top_right = 4
@@ -221,7 +221,7 @@ var margin_container = MarginContainer.new()
 
 	item.pressed.connect(_on_project_selected.bind(project_name))
 
-var layers_section = VBoxContainer.new()
+# FIXED: Orphaned code - var layers_section = VBoxContainer.new()
 	layers_section.add_theme_constant_override("separation", 4)
 	parent.add_child(layers_section)
 
@@ -229,7 +229,7 @@ var layers_section = VBoxContainer.new()
 var header_container_2 = HBoxContainer.new()
 	layers_section.add_child(header_container)
 
-var header_4 = Label.new()
+# FIXED: Orphaned code - var header_4 = Label.new()
 	header.text = "DATA LAYERS"
 	header.add_theme_font_size_override("font_size", 12)
 	header.add_theme_color_override("font_color", Color("#a0a0a0"))
@@ -248,11 +248,11 @@ var item_id = item.get_meta("id")
 	_select_nav_item(item_id)
 
 
-var style_2 = item.get_meta("style") as StyleBoxFlat
+# FIXED: Orphaned code - var style_2 = item.get_meta("style") as StyleBoxFlat
 	style.bg_color = Color("#2a2a2a")
 	item.add_theme_stylebox_override("panel", style)
 
-var label_2 = item.get_meta("label") as Label
+# FIXED: Orphaned code - var label_2 = item.get_meta("label") as Label
 var icon = item.get_meta("icon") as TextureRect
 	label.modulate = Color("#e5e5e5")
 	icon.modulate = Color("#e5e5e5")
@@ -265,19 +265,19 @@ var style_3 = item.get_meta("style") as StyleBoxFlat
 	style.border_width_left = 0
 	item.add_theme_stylebox_override("panel", style)
 
-var label_3 = item.get_meta("label") as Label
+# FIXED: Orphaned code - var label_3 = item.get_meta("label") as Label
 var icon_2 = item.get_meta("icon") as TextureRect
 	label.modulate = Color("#e5e5e5")
 	icon.modulate = Color("#a0a0a0")
 
 
-var prev_item = nav_item_nodes[current_nav_selection]
+# FIXED: Orphaned code - var prev_item = nav_item_nodes[current_nav_selection]
 var prev_style = prev_item.get_meta("style") as StyleBoxFlat
 	prev_style.bg_color = Color.TRANSPARENT
 	prev_style.border_width_left = 0
 	prev_item.add_theme_stylebox_override("panel", prev_style)
 
-var prev_label = prev_item.get_meta("label") as Label
+# FIXED: Orphaned code - var prev_label = prev_item.get_meta("label") as Label
 var prev_icon = prev_item.get_meta("icon") as TextureRect
 	prev_label.modulate = Color("#e5e5e5")
 	prev_icon.modulate = Color("#a0a0a0")
@@ -292,7 +292,7 @@ var style_4 = item.get_meta("style") as StyleBoxFlat
 	style.content_margin_left = 9  # Compensate for border
 	item.add_theme_stylebox_override("panel", style)
 
-var label_4 = item.get_meta("label") as Label
+# FIXED: Orphaned code - var label_4 = item.get_meta("label") as Label
 var icon_3 = item.get_meta("icon") as TextureRect
 	label.modulate = Color("#26d0ce")
 	icon.modulate = Color("#26d0ce")
@@ -310,70 +310,61 @@ func set_selected_item(item_id: String):
 	if item_id in nav_items:
 		_select_nav_item(item_id)
 
-func _fix_orphaned_code():
-	if ResourceLoader.exists("res://assets/icons/brain.svg")
-	else null
-	)
-	},
-	"neural_networks":
-		{
-		"text": "Neural Networks",
-		"icon":
-			(
-			preload("res://assets/icons/network.svg")
-			if ResourceLoader.exists("res://assets/icons/network.svg")
-			else null
-			)
-			},
-			"connectivity_maps":
-				{
-				"text": "Connectivity Maps",
-				"icon":
-					(
-					preload("res://assets/icons/connections.svg")
-					if ResourceLoader.exists("res://assets/icons/connections.svg")
-					else null
-					)
-					},
-					"time_series":
-						{
-						"text": "Time Series",
-						"icon":
-							(
-							preload("res://assets/icons/chart.svg")
-							if ResourceLoader.exists("res://assets/icons/chart.svg")
-							else null
-							)
-							}
-							}
+if ResourceLoader.exists("res://assets/icons/brain.svg")
+else null
+)
+},
+"neural_networks":
+	{
+	"text": "Neural Networks",
+	"icon":
+		(
+		preload("res://assets/icons/network.svg")
+		if ResourceLoader.exists("res://assets/icons/network.svg")
+		else null
+		)
+		},
+		"connectivity_maps":
+			{
+			"text": "Connectivity Maps",
+			"icon":
+				(
+				preload("res://assets/icons/connections.svg")
+				if ResourceLoader.exists("res://assets/icons/connections.svg")
+				else null
+				)
+				},
+				"time_series":
+					{
+					"text": "Time Series",
+					"icon":
+						(
+						preload("res://assets/icons/chart.svg")
+						if ResourceLoader.exists("res://assets/icons/chart.svg")
+						else null
+						)
+						}
+						}
 
-func _fix_orphaned_code():
-	for key in nav_items:
-func _fix_orphaned_code():
-	if key == current_nav_selection:
-		nav_item.set_selected(true)
+for key in nav_items:
+if key == current_nav_selection:
+	nav_item.set_selected(true)
 
 
-func _fix_orphaned_code():
-	if icon:
-		icon_rect.texture = icon
-		hbox.add_child(icon_rect)
+if icon:
+	icon_rect.texture = icon
+	hbox.add_child(icon_rect)
 
-		# Label
-func _fix_orphaned_code():
-	return container
+	# Label
+return container
 
 
-func _fix_orphaned_code():
-	for project in recent_projects:
-func _fix_orphaned_code():
-	for project in all_projects:
-func _fix_orphaned_code():
-	return margin_container
+for project in recent_projects:
+for project in all_projects:
+return margin_container
 
 
-func _fix_orphaned_code():
-	if item_id in nav_item_nodes:
+if item_id in nav_item_nodes:
 func _build_ui():
 func _create_navigation_section(parent: Container):
 func _create_nav_item(id: String, text: String, icon: Texture2D) -> Control:

@@ -14,7 +14,7 @@ extends Node
 # Map of service names to service instances
 
 var instance = _create_service_from_factory(service_name)
-var services = []
+# FIXED: Orphaned code - var services = []
 
 # Add primary services
 var status = "Available"
@@ -110,68 +110,64 @@ func print_service_status() -> void:
 
 	for service_name in get_available_services():
 
-func _fix_orphaned_code():
+if instance:
+	return instance
+
+	# Try fallback service
+	if _fallback_services.has(service_name):
+		print("[ServiceLocator] Using fallback for: %s" % service_name)
+		return _fallback_services[service_name]
+
+		# Service not found
+		push_warning("[ServiceLocator] Service not found: %s" % service_name)
+		return null
+
+
+		## Check if a service is registered
+		## @param service_name: Name of the service to check
+		## @returns: true if service exists (including fallbacks), false otherwise
+for service_name in _services.keys():
+	services.append(service_name)
+
+	# Add factories that don't have an instance yet
+	for factory_name in _factories.keys():
+		if not _services.has(factory_name):
+			services.append(factory_name + " (factory)")
+
+			# Add fallbacks that don't have a primary
+			for fallback_name in _fallback_services.keys():
+				if not _services.has(fallback_name) and not _factories.has(fallback_name):
+					services.append(fallback_name + " (fallback)")
+
+					return services
+
+
+					# === DEBUGGING ===
+					## Print the status of all registered services
+if service_name.ends_with(" (factory)"):
+	status = "Not initialized (factory available)"
+	elif service_name.ends_with(" (fallback)"):
+		status = "Using fallback"
+
+		print("- %s: %s" % [service_name.split(" ")[0], status])
+
+		print("=============================\n")
+
+
+		# === PRIVATE METHODS ===
+if factory.is_valid():
+	instance = factory.call()
+
+	# Cache created instance
 	if instance:
-		return instance
-
-		# Try fallback service
-		if _fallback_services.has(service_name):
-			print("[ServiceLocator] Using fallback for: %s" % service_name)
-			return _fallback_services[service_name]
-
-			# Service not found
-			push_warning("[ServiceLocator] Service not found: %s" % service_name)
-			return null
-
-
-			## Check if a service is registered
-			## @param service_name: Name of the service to check
-			## @returns: true if service exists (including fallbacks), false otherwise
-func _fix_orphaned_code():
-	for service_name in _services.keys():
-		services.append(service_name)
-
-		# Add factories that don't have an instance yet
-		for factory_name in _factories.keys():
-			if not _services.has(factory_name):
-				services.append(factory_name + " (factory)")
-
-				# Add fallbacks that don't have a primary
-				for fallback_name in _fallback_services.keys():
-					if not _services.has(fallback_name) and not _factories.has(fallback_name):
-						services.append(fallback_name + " (fallback)")
-
-						return services
-
-
-						# === DEBUGGING ===
-						## Print the status of all registered services
-func _fix_orphaned_code():
-	if service_name.ends_with(" (factory)"):
-		status = "Not initialized (factory available)"
-		elif service_name.ends_with(" (fallback)"):
-			status = "Using fallback"
-
-			print("- %s: %s" % [service_name.split(" ")[0], status])
-
-			print("=============================\n")
-
-
-			# === PRIVATE METHODS ===
-func _fix_orphaned_code():
-	if factory.is_valid():
-		instance = factory.call()
-
-		# Cache created instance
-		if instance:
-			_services[service_name] = instance
-			print("[ServiceLocator] Service created successfully: %s" % service_name)
+		_services[service_name] = instance
+		print("[ServiceLocator] Service created successfully: %s" % service_name)
+		else:
+			push_error("[ServiceLocator] Factory returned null for: %s" % service_name)
 			else:
-				push_error("[ServiceLocator] Factory returned null for: %s" % service_name)
-				else:
-					push_error("[ServiceLocator] Invalid factory for: %s" % service_name)
+				push_error("[ServiceLocator] Invalid factory for: %s" % service_name)
 
-					return instance
+				return instance
 
 func _create_service_from_factory(service_name: String):
 	"""Create service instance from registered factory"""

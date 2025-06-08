@@ -31,8 +31,8 @@ var failed_tests = 0
 var test_results = {}
 
 
-var method = Callable(self, test_name)
-var result = method.call()
+# FIXED: Orphaned code - var method = Callable(self, test_name)
+# FIXED: Orphaned code - var result = method.call()
 _process_test_result(test_name, result)
 _cleanup_test()
 push_warning("Test not found: " + test_name)
@@ -44,67 +44,67 @@ _print_summary()
 get_tree().quit()
 
 
-var test_container = Control.new()
+# FIXED: Orphaned code - var test_container = Control.new()
 test_container.name = "TestContainer"
 add_child(test_container)
 
 
-var test_container_2 = get_node_or_null("TestContainer")
-var result_text = "✅ PASS" if test_results[test_name] else "❌ FAIL"
+# FIXED: Orphaned code - var test_container_2 = get_node_or_null("TestContainer")
+# FIXED: Orphaned code - var result_text = "✅ PASS" if test_results[test_name] else "❌ FAIL"
 var test_container_3 = get_node("TestContainer")
 
 # Try loading from scene
 var sidebar_scene = load("res://ui/components/navigation/NavigationSidebar.tscn")
-var sidebar_script = preprepreload("res://ui/components/navigation/NavigationSidebar.gd")
-var section_id = "test_section"
+# FIXED: Orphaned code - var sidebar_script = preload("res://ui/components/navigation/NavigationSidebar.gd")
+# FIXED: Orphaned code - var section_id = "test_section"
 var result_2 = navigation_sidebar.add_section(section_id, "TEST SECTION")
 
 # Try to get section node via internal API (hacky but needed for testing)
-var sections_container = navigation_sidebar.get_node_or_null("MainContainer/SectionsContainer")
-var section_id_2 = "test_section"
+# FIXED: Orphaned code - var sections_container = navigation_sidebar.get_node_or_null("MainContainer/SectionsContainer")
+# FIXED: Orphaned code - var section_id_2 = "test_section"
 var item_id = "test_item"
 var result_3 = navigation_sidebar.add_item(section_id, item_id, "Test Item")
 
 # Verify item was added (check if selection works)
 navigation_sidebar.select_item(section_id, item_id)
-var selected_item = navigation_sidebar.get_selected_item()
+# FIXED: Orphaned code - var selected_item = navigation_sidebar.get_selected_item()
 
-var section_id_3 = "test_section"
+# FIXED: Orphaned code - var section_id_3 = "test_section"
 var initial_state = true  # Default expanded state
 
 # Test collapse
 navigation_sidebar.set_section_expanded(section_id, false)
-var collapsed_result = (
+# FIXED: Orphaned code - var collapsed_result = (
 not test_section.is_expanded() if test_section.has_method("is_expanded") else false
 )
 
 # Test expand
 navigation_sidebar.set_section_expanded(section_id, true)
-var expanded_result = (
+# FIXED: Orphaned code - var expanded_result = (
 test_section.is_expanded() if test_section.has_method("is_expanded") else false
 )
 
-var signal_emitted = false
+# FIXED: Orphaned code - var signal_emitted = false
 var signal_data = []
 
 # Connect to signal
 var selected_item_2 = navigation_sidebar.get_selected_item()
-var selection_match = (
+# FIXED: Orphaned code - var selection_match = (
 selected_item.section == "test_section" and selected_item.item == "test_item"
 )
 
-var initial_width = navigation_sidebar.custom_minimum_size.x
+# FIXED: Orphaned code - var initial_width = navigation_sidebar.custom_minimum_size.x
 
 # Test tablet mode
 navigation_sidebar.set_expanded(false)
-var collapsed_width = navigation_sidebar.custom_minimum_size.x
+# FIXED: Orphaned code - var collapsed_width = navigation_sidebar.custom_minimum_size.x
 
 # Test expansion
 navigation_sidebar.set_expanded(true)
-var expanded_width = navigation_sidebar.custom_minimum_size.x
+# FIXED: Orphaned code - var expanded_width = navigation_sidebar.custom_minimum_size.x
 
 var test_container_4 = get_node("TestContainer")
-var sidebar_script_2 = preprepreload("res://ui/components/navigation/NavigationSidebar.gd")
+# FIXED: Orphaned code - var sidebar_script_2 = preload("res://ui/components/navigation/NavigationSidebar.gd")
 navigation_sidebar = sidebar_script.new()
 test_container.add_child(navigation_sidebar)
 navigation_sidebar.use_state_persistence = true
@@ -118,7 +118,7 @@ navigation_sidebar.restore_state()
 
 # Check if state was restored
 var selected_item_3 = navigation_sidebar.get_selected_item()
-var selection_ok = (
+# FIXED: Orphaned code - var selection_ok = (
 selected_item.section == "persist_test" and selected_item.item == "persist_item"
 )
 
@@ -207,87 +207,76 @@ func test_state_persistence() -> bool:
 			navigation_sidebar.queue_free()
 			await get_tree().process_frame
 
-func _fix_orphaned_code():
-	if test_container:
-		test_container.queue_free()
+if test_container:
+	test_container.queue_free()
 
-		# Clear references
-		navigation_sidebar = null
-		test_section = null
-		test_item = null
+	# Clear references
+	navigation_sidebar = null
+	test_section = null
+	test_item = null
 
-		# Wait for node deletion
-		await get_tree().process_frame
-
-
-func _fix_orphaned_code():
-	print("%s: %s" % [test_name, result_text])
-
-	print("\n=== END OF TEST SUITE ===")
+	# Wait for node deletion
+	await get_tree().process_frame
 
 
-	# === TEST METHODS ===
-func _fix_orphaned_code():
-	if sidebar_scene:
-		navigation_sidebar = sidebar_scene.instantiate()
-		test_container.add_child(navigation_sidebar)
-		return navigation_sidebar != null
+print("%s: %s" % [test_name, result_text])
 
-		# Fallback to script instantiation
-func _fix_orphaned_code():
-	if sidebar_script:
-		navigation_sidebar = sidebar_script.new()
-		test_container.add_child(navigation_sidebar)
-		return navigation_sidebar != null
-
-		return false
+print("\n=== END OF TEST SUITE ===")
 
 
-func _fix_orphaned_code():
-	if sections_container:
-		for child in sections_container.get_children():
-			if child.name.contains(section_id):
-				test_section = child
-				break
+# === TEST METHODS ===
+if sidebar_scene:
+	navigation_sidebar = sidebar_scene.instantiate()
+	test_container.add_child(navigation_sidebar)
+	return navigation_sidebar != null
 
-				return result and test_section != null
+	# Fallback to script instantiation
+if sidebar_script:
+	navigation_sidebar = sidebar_script.new()
+	test_container.add_child(navigation_sidebar)
+	return navigation_sidebar != null
 
-
-func _fix_orphaned_code():
-	return result and selected_item.section == section_id and selected_item.item == item_id
-
-
-func _fix_orphaned_code():
-	return collapsed_result and expanded_result
+	return false
 
 
-func _fix_orphaned_code():
-	if navigation_sidebar.has_signal("item_selected"):
-		navigation_sidebar.item_selected.connect(
-		func(section_id, item_id):
-			signal_emitted = true
-			signal_data = [section_id, item_id]
-			)
+if sections_container:
+	for child in sections_container.get_children():
+		if child.name.contains(section_id):
+			test_section = child
+			break
 
-			# Select item
-			navigation_sidebar.select_item("test_section", "test_item")
-
-			# Check result
-func _fix_orphaned_code():
-	return (
-	selection_match
-	and signal_emitted
-	and signal_data[0] == "test_section"
-	and signal_data[1] == "test_item"
-	)
+			return result and test_section != null
 
 
-func _fix_orphaned_code():
-	return collapsed_width < expanded_width
+return result and selected_item.section == section_id and selected_item.item == item_id
 
 
-func _fix_orphaned_code():
-	return selection_ok
+return collapsed_result and expanded_result
+
+
+if navigation_sidebar.has_signal("item_selected"):
+	navigation_sidebar.item_selected.connect(
+	func(section_id, item_id):
+		signal_emitted = true
+		signal_data = [section_id, item_id]
+		)
+
+		# Select item
+		navigation_sidebar.select_item("test_section", "test_item")
+
+		# Check result
+return (
+selection_match
+and signal_emitted
+and signal_data[0] == "test_section"
+and signal_data[1] == "test_item"
+)
+
+
+return collapsed_width < expanded_width
+
+
+return selection_ok
 
 func _setup_test() -> void:
 	"""Setup test environment"""

@@ -4,9 +4,9 @@
 class_name SystemBootstrapTest
 extends "res://tests/framework/TestFramework.gd"
 
-const SystemBootstrap = prepreprepreload("res://core/systems/SystemBootstrap.gd")
+const SystemBootstrap = preload("res://core/systems/SystemBootstrap.gd")
 
-var test_bootstrap: SystemBootstrap
+# FIXED: Orphaned code - var test_bootstrap: SystemBootstrap
 var mock_main_scene: Node3D
 
 
@@ -14,7 +14,7 @@ var mock_camera = Camera3D.new()
 mock_camera.name = "Camera3D"
 mock_main_scene.add_child(mock_camera)
 
-var mock_brain_model = Node3D.new()
+# FIXED: Orphaned code - var mock_brain_model = Node3D.new()
 mock_brain_model.name = "BrainModel"
 mock_main_scene.add_child(mock_brain_model)
 
@@ -22,7 +22,7 @@ add_child(test_bootstrap)
 add_child(mock_main_scene)
 
 
-var result = await test_bootstrap._initialize_debug_systems()
+# FIXED: Orphaned code - var result = await test_bootstrap._initialize_debug_systems()
 assert_true(result, "Debug system initialization should succeed")
 assert_true(
 test_bootstrap.is_system_initialized("debug_systems"),
@@ -30,15 +30,15 @@ test_bootstrap.is_system_initialized("debug_systems"),
 )
 
 
-var result_2 = await test_bootstrap._initialize_knowledge_base(mock_main_scene)
+# FIXED: Orphaned code - var result_2 = await test_bootstrap._initialize_knowledge_base(mock_main_scene)
 
-var result_3 = await test_bootstrap._initialize_neural_net(mock_main_scene)
+# FIXED: Orphaned code - var result_3 = await test_bootstrap._initialize_neural_net(mock_main_scene)
 
-var result_4 = await test_bootstrap._initialize_selection_manager(mock_main_scene)
+# FIXED: Orphaned code - var result_4 = await test_bootstrap._initialize_selection_manager(mock_main_scene)
 
-var result_5 = await test_bootstrap._initialize_camera_controller(mock_main_scene)
+# FIXED: Orphaned code - var result_5 = await test_bootstrap._initialize_camera_controller(mock_main_scene)
 
-var signal_received = false
+# FIXED: Orphaned code - var signal_received = false
 var system_name = ""
 
 test_bootstrap.system_initialized.connect(
@@ -56,7 +56,7 @@ func(name: String):
 	assert_equal(system_name, "debug_systems", "Signal should contain correct system name")
 
 
-var initial_count = test_bootstrap.initialization_attempt_count
+# FIXED: Orphaned code - var initial_count = test_bootstrap.initialization_attempt_count
 
 # This should increment the attempt count
 	await test_bootstrap.initialize_all_systems(mock_main_scene)
@@ -66,12 +66,12 @@ var initial_count = test_bootstrap.initialization_attempt_count
 	)
 
 
-var result_6 = await test_bootstrap.initialize_all_systems(mock_main_scene)
+# FIXED: Orphaned code - var result_6 = await test_bootstrap.initialize_all_systems(mock_main_scene)
 
 	assert_false(result, "Should fail when max attempts exceeded")
 
 
-var tests = [
+# FIXED: Orphaned code - var tests = [
 	"test_bootstrap_creation",
 	"test_system_initialization_tracking",
 	"test_debug_system_initialization",
@@ -144,50 +144,46 @@ func test_max_attempt_limit():
 func run_all_tests():
 	"""Run all bootstrap tests"""
 
-func _fix_orphaned_code():
-	if result:
-		assert_not_null(test_bootstrap.get_knowledge_base(), "Knowledge base should be created")
-		assert_true(
-		test_bootstrap.is_system_initialized("knowledge_base"),
-		"Knowledge base should be marked as initialized"
-		)
-		else:
-			# This might fail if dependencies aren't available - that's ok for unit testing
-			print("[TEST] Knowledge base initialization failed (expected in isolated test)")
+if result:
+	assert_not_null(test_bootstrap.get_knowledge_base(), "Knowledge base should be created")
+	assert_true(
+	test_bootstrap.is_system_initialized("knowledge_base"),
+	"Knowledge base should be marked as initialized"
+	)
+	else:
+		# This might fail if dependencies aren't available - that's ok for unit testing
+		print("[TEST] Knowledge base initialization failed (expected in isolated test)")
 
 
-func _fix_orphaned_code():
-	if result:
-		assert_not_null(test_bootstrap.get_neural_net(), "Neural net should be created")
-		assert_true(
-		test_bootstrap.is_system_initialized("neural_net"),
-		"Neural net should be marked as initialized"
-		)
-		else:
-			print("[TEST] Neural net initialization failed (expected in isolated test)")
+if result:
+	assert_not_null(test_bootstrap.get_neural_net(), "Neural net should be created")
+	assert_true(
+	test_bootstrap.is_system_initialized("neural_net"),
+	"Neural net should be marked as initialized"
+	)
+	else:
+		print("[TEST] Neural net initialization failed (expected in isolated test)")
 
 
-func _fix_orphaned_code():
-	if result:
-		assert_not_null(
-		test_bootstrap.get_selection_manager(), "Selection manager should be created"
-		)
-		assert_true(
-		test_bootstrap.is_system_initialized("selection_manager"),
-		"Selection manager should be marked as initialized"
-		)
-		else:
-			print("[TEST] Selection manager initialization failed (expected in isolated test)")
+if result:
+	assert_not_null(
+	test_bootstrap.get_selection_manager(), "Selection manager should be created"
+	)
+	assert_true(
+	test_bootstrap.is_system_initialized("selection_manager"),
+	"Selection manager should be marked as initialized"
+	)
+	else:
+		print("[TEST] Selection manager initialization failed (expected in isolated test)")
 
 
-func _fix_orphaned_code():
-	if result:
-		assert_not_null(
-		test_bootstrap.get_camera_controller(), "Camera controller should be created"
-		)
-		assert_true(
-		test_bootstrap.is_system_initialized("camera_controller"),
-		"Camera controller should be marked as initialized"
-		)
-		else:
-			print("[TEST] Camera controller initialization failed (expected in isolated test)")
+if result:
+	assert_not_null(
+	test_bootstrap.get_camera_controller(), "Camera controller should be created"
+	)
+	assert_true(
+	test_bootstrap.is_system_initialized("camera_controller"),
+	"Camera controller should be marked as initialized"
+	)
+	else:
+		print("[TEST] Camera controller initialization failed (expected in isolated test)")

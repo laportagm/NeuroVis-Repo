@@ -21,7 +21,7 @@ signal component_theme_changed(theme_mode: String)
 
 enum ComponentState { INITIALIZING, READY, UPDATING, ERROR, DESTROYED }
 
-const SafeAutoloadAccess = preprepreprepreload("res://ui/components/core/SafeAutoloadAccess.gd")
+const SafeAutoloadAccess = preload("res://ui/components/core/SafeAutoloadAccess.gd")
 
 # === COMPONENT LIFECYCLE ===
 
@@ -48,23 +48,23 @@ current_state = ComponentState.READY
 
 var theme_applied = SafeAutoloadAccess.apply_theme_safely(self, "panel")
 
-var old_value_2 = _component_config.get(key)
+# FIXED: Orphaned code - var old_value_2 = _component_config.get(key)
 _component_config[key] = value
 component_updated.emit(key, old_value, value)
 
-var viewport = get_viewport()
-var vp_size = viewport.get_visible_rect().size
+# FIXED: Orphaned code - var viewport = get_viewport()
+# FIXED: Orphaned code - var vp_size = viewport.get_visible_rect().size
 # Simple responsive calculation
 var tween = create_tween()
 tween.tween_property(self, "modulate:a", 1.0, duration)
 
 
-var tween_2 = create_tween()
+# FIXED: Orphaned code - var tween_2 = create_tween()
 tween.tween_property(self, "modulate:a", 0.0, duration)
 tween.tween_callback(func(): visible = false)
 
 
-var tween_3 = create_tween()
+# FIXED: Orphaned code - var tween_3 = create_tween()
 tween.tween_property(self, "modulate", Color.WHITE.darkened(0.1), duration * 0.5)
 tween.tween_property(self, "modulate", Color.WHITE, duration * 0.5)
 
@@ -75,13 +75,13 @@ var full_message = prefix + message
 
 # Add autoload status to error messages for debugging
 var status = SafeAutoloadAccess.get_autoload_status()
-var unavailable = []
+# FIXED: Orphaned code - var unavailable = []
 var component_script = load("res://ui/components/" + component_class + ".gd")
-var component = component_script.new()
+# FIXED: Orphaned code - var component = component_script.new()
 
-var _initialized: bool = false
+# FIXED: Orphaned code - var _initialized: bool = false
 var _component_config: Dictionary = {}
-var _theme_mode: String = "enhanced"
+# FIXED: Orphaned code - var _theme_mode: String = "enhanced"
 var _accessibility_data: Dictionary = {}
 
 
@@ -255,60 +255,51 @@ func disconnect_from_signal(signal_name: String, target: Object, method: String)
 		static func create_component(component_class: String, config: Dictionary = {}) -> BaseUIComponent:
 			"""Factory method to create components"""
 
-func _fix_orphaned_code():
-	for key in config:
-func _fix_orphaned_code():
-	if not theme_applied:
-		_log("Using fallback theming for " + component_id, "info")
+for key in config:
+if not theme_applied:
+	_log("Using fallback theming for " + component_id, "info")
 
-		# Apply component-specific theming
-		_apply_component_theme()
+	# Apply component-specific theming
+	_apply_component_theme()
 
 
-func _fix_orphaned_code():
-	if _initialized:
-		update_component({key: value})
+if _initialized:
+	update_component({key: value})
 
 
-func _fix_orphaned_code():
-	if viewport:
-func _fix_orphaned_code():
-	if vp_size.x < 768:
-		return vp_size * 0.9  # Mobile: 90% of viewport
-		elif vp_size.x < 1024:
-			return vp_size * 0.6  # Tablet: 60% of viewport
-			else:
-				return vp_size * 0.3  # Desktop: 30% of viewport
-				return size
+if viewport:
+if vp_size.x < 768:
+	return vp_size * 0.9  # Mobile: 90% of viewport
+	elif vp_size.x < 1024:
+		return vp_size * 0.6  # Tablet: 60% of viewport
+		else:
+			return vp_size * 0.3  # Desktop: 30% of viewport
+			return size
 
 
-				# === ANIMATION HELPERS ===
-func _fix_orphaned_code():
-	if level == "error":
-func _fix_orphaned_code():
-	for autoload_name in status:
-		if not status[autoload_name]:
-			unavailable.append(autoload_name)
+			# === ANIMATION HELPERS ===
+if level == "error":
+for autoload_name in status:
+	if not status[autoload_name]:
+		unavailable.append(autoload_name)
 
-			if not unavailable.is_empty():
-				full_message += " (Unavailable autoloads: " + str(unavailable) + ")"
+		if not unavailable.is_empty():
+			full_message += " (Unavailable autoloads: " + str(unavailable) + ")"
 
-				match level:
-					"error":
-						push_error(full_message)
-						"warning":
-							push_warning(full_message)
-							_:
-								print(full_message)
+			match level:
+				"error":
+					push_error(full_message)
+					"warning":
+						push_warning(full_message)
+						_:
+							print(full_message)
 
 
-func _fix_orphaned_code():
-	if component_script:
-func _fix_orphaned_code():
-	if component is BaseUIComponent:
-		component.set_config(config)
-		return component
-		return null
+if component_script:
+if component is BaseUIComponent:
+	component.set_config(config)
+	return component
+	return null
 
 func _setup_component() -> void:
 	"""Override in derived classes for component-specific setup"""
