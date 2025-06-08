@@ -1,7 +1,7 @@
 # Updated Main Scene with Improved AI Integration
 # This updated version uses the new AIIntegrationManager instead of direct AI integration
 
-class_name NeuroVisMainSceneUpdated
+# class_name NeuroVisMainSceneUpdated  # Backup file - class name commented to avoid conflicts
 extends Node3D
 
 # Essential preloads - use regular load to avoid parser issues

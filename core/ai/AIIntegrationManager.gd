@@ -8,7 +8,6 @@
 ## @tutorial: AI Integration Guide
 ## @version: 1.1 - Fixed syntax errors and orphaned code
 
-class_name AIIntegrationManager
 extends Node
 
 # === SIGNALS ===
@@ -24,8 +23,8 @@ signal ai_error_occurred(error_message: String)
 @export var default_provider_id: String = "gemini"
 
 # === PRIVATE VARIABLES ===
-var _registry: AIProviderRegistry
-var _config_manager: AIConfigurationManager
+var _registry  # AIProviderRegistry
+var _config_manager  # AIConfigurationManager
 var _setup_dialog: Control
 var _current_setup_provider_id: String = ""
 
@@ -49,13 +48,15 @@ func initialize() -> void:
 	print("[AIIntegration] Initializing AI Integration Manager...")
 
 	# Get references to required services
-	_registry = get_node_or_null("/root/AIRegistry") as AIProviderRegistry
-	_config_manager = get_node_or_null("/root/AIConfig") as AIConfigurationManager
+	_registry = get_node_or_null("/root/AIRegistry")
+	_config_manager = get_node_or_null("/root/AIConfig")
 
 	if not _registry:
 		push_warning("[AIIntegration] AIProviderRegistry not found, creating local instance")
-		_registry = AIProviderRegistry.new()
-		add_child(_registry)
+		var registry_script = load("res://core/ai/AIProviderRegistry.gd")
+		if registry_script:
+			_registry = registry_script.new()
+			add_child(_registry)
 
 	if not _config_manager:
 		push_warning(
@@ -253,7 +254,7 @@ func _show_gemini_setup_dialog() -> void:
 	print("[AIIntegration] Gemini setup dialog shown")
 
 
-func _connect_provider_signals(provider: AIProviderInterface) -> void:
+func _connect_provider_signals(provider) -> void:
 	"""Connect to provider signals"""
 	if not provider:
 		return
@@ -286,7 +287,7 @@ func _on_active_provider_changed(provider_id: String) -> void:
 	ai_provider_changed.emit(provider_id)
 
 
-func _on_gemini_setup_completed(successful: bool, api_key: String) -> void:
+func _on_gemini_setup_completed(successful: bool, _api_key: String) -> void:
 	"""Handle successful Gemini setup completion"""
 	print("[AIIntegration] Gemini setup completed successfully: %s" % str(successful))
 

@@ -7,14 +7,13 @@
 ## @tutorial: See node_3d_config.gd for configuration options
 ## @version: 5.1 - Fixed syntax errors and orphaned code
 
-class_name NeuroVisMainScene
 extends Node3D
 
 # ===== SIGNALS =====
 ## Selection events
 signal structure_selected(structure_name: String)
 signal structure_deselected
-signal multi_selection_changed(selections: Array)
+# signal multi_selection_changed(selections: Array)  # Unused - commented out
 
 ## System initialization events
 signal system_initialized(system_name: String)
@@ -26,10 +25,10 @@ signal models_loaded(model_names: Array)
 signal model_load_failed(model_name: String, error: String)
 
 # ===== CONSTANTS =====
-## Essential scripts preloaded for initialization
-const SAFE_AUTOLOAD_ACCESS = preload("res://ui/components/core/SafeAutoloadAccess.gd")
-const UI_COMPONENT_FACTORY_SCRIPT = preload("res://ui/components/core/UIComponentFactory.gd")
-const AI_INTEGRATION_MANAGER_SCRIPT = preload("res://core/ai/AIIntegrationManager.gd")
+## Essential script paths for dynamic loading
+const SAFE_AUTOLOAD_ACCESS_PATH = "res://ui/components/core/SafeAutoloadAccess.gd"
+const UI_COMPONENT_FACTORY_PATH = "res://ui/components/core/UIComponentFactory.gd"
+const AI_INTEGRATION_MANAGER_PATH = "res://core/ai/AIIntegrationManager.gd"
 
 # ===== EXPORTS =====
 @export_group("Visual Settings")
@@ -55,23 +54,17 @@ const AI_INTEGRATION_MANAGER_SCRIPT = preload("res://core/ai/AIIntegrationManage
 @onready var model_control_panel: Control = $UI_Layer/ModelControlPanel
 
 # ===== VARIABLES =====
+# gdlint: disable=class-definitions-order
 var initialization_complete: bool = false
-
-## System components
 var selection_manager: Node
 var camera_controller: Node
 var model_coordinator: Node
 var ai_integration: Node
 var enhanced_model_loader: Node
-
-## UI components
 var comparative_panel: Control
 var loading_progress: Control
 var visual_feedback: Node
-
-## State tracking
 var _selected_structure: String = ""
-var _selected_structures: Array = []
 
 
 # ===== LIFECYCLE METHODS =====
@@ -131,16 +124,20 @@ func _initialize_ui_safety() -> void:
 	"""Initialize UI safety framework"""
 	print("[INIT] Initializing UI safety framework...")
 
-	if SAFE_AUTOLOAD_ACCESS:
-		# Log autoload status for debugging
-		SAFE_AUTOLOAD_ACCESS.log_autoload_status()
+	var safe_autoload_script = load(SAFE_AUTOLOAD_ACCESS_PATH)
+	if safe_autoload_script:
+		var safe_autoload = safe_autoload_script.new()
+		if safe_autoload.has_method("log_autoload_status"):
+			# Log autoload status for debugging
+			safe_autoload.log_autoload_status()
 
 		# Test structure retrieval
-		var test_structure = SAFE_AUTOLOAD_ACCESS.get_structure_safely("Test")
-		if test_structure.has("id"):
-			print("[INIT] ✓ UI safety framework operational")
-		else:
-			print("[INIT] ⚠ UI safety framework has issues - proceeding with caution")
+		if safe_autoload.has_method("get_structure_safely"):
+			var test_structure = safe_autoload.get_structure_safely("Test")
+			if test_structure.has("id"):
+				print("[INIT] ✓ UI safety framework operational")
+			else:
+				print("[INIT] ⚠ UI safety framework has issues - proceeding with caution")
 
 
 func _initialize_selection_system() -> void:
@@ -148,7 +145,7 @@ func _initialize_selection_system() -> void:
 	print("[INIT] Initializing selection system...")
 
 	# Load selection manager script
-	var SelectionManagerScript = preload("res://core/interaction/BrainStructureSelectionManager.gd")
+	var SelectionManagerScript = load("res://core/interaction/BrainStructureSelectionManager.gd")
 	if not SelectionManagerScript:
 		_log_error("Failed to load BrainStructureSelectionManager.gd")
 		initialization_failed.emit("Selection system initialization failed")
@@ -184,9 +181,7 @@ func _initialize_camera_system() -> void:
 	"""Initialize camera behavior controller"""
 	print("[INIT] Initializing camera system...")
 
-	var CameraBehaviorControllerScript = preload(
-		"res://core/interaction/CameraBehaviorController.gd"
-	)
+	var CameraBehaviorControllerScript = load("res://core/interaction/CameraBehaviorController.gd")
 	if not CameraBehaviorControllerScript:
 		_log_error("Failed to load CameraBehaviorController.gd")
 		initialization_failed.emit("Camera system initialization failed")
@@ -216,7 +211,7 @@ func _initialize_model_system() -> void:
 	_create_loading_progress()
 
 	# Try enhanced model loader first
-	var EnhancedModelLoaderScript = preload("res://core/models/EnhancedModelLoader.gd")
+	var EnhancedModelLoaderScript = load("res://core/models/EnhancedModelLoader.gd")
 	if EnhancedModelLoaderScript:
 		enhanced_model_loader = EnhancedModelLoaderScript.new()
 		enhanced_model_loader.name = "EnhancedModelLoader"
@@ -271,12 +266,13 @@ func _initialize_ai_integration() -> void:
 	"""Initialize AI integration with the new architecture"""
 	print("[INIT] Initializing AI integration...")
 
-	if not AI_INTEGRATION_MANAGER_SCRIPT:
+	var ai_integration_script = load(AI_INTEGRATION_MANAGER_PATH)
+	if not ai_integration_script:
 		print("[INIT] AI integration script not available")
 		return
 
 	# Create AI integration manager
-	ai_integration = AI_INTEGRATION_MANAGER_SCRIPT.new()
+	ai_integration = ai_integration_script.new()
 	ai_integration.name = "AIIntegration"
 	add_child(ai_integration)
 
@@ -395,7 +391,7 @@ func _create_loading_progress() -> void:
 
 func _create_comparative_panel() -> void:
 	"""Create comparative info panel"""
-	var ComparativeInfoPanelScript = preload("res://ui/panels/ComparativeInfoPanel.gd")
+	var ComparativeInfoPanelScript = load("res://ui/panels/ComparativeInfoPanel.gd")
 	if ComparativeInfoPanelScript:
 		comparative_panel = ComparativeInfoPanelScript.new()
 		comparative_panel.name = "ComparativeInfoPanel"

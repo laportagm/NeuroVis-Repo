@@ -9,7 +9,6 @@
 ## @tutorial: AI Provider Integration Guide
 ## @version: 1.1 - Fixed syntax errors and orphaned code
 
-class_name AIProviderRegistry
 extends Node
 
 # === SIGNALS ===
@@ -24,7 +23,7 @@ const DEFAULT_PROVIDER_ID = "mock_provider"
 # === PROPERTIES ===
 var _providers: Dictionary = {}  # Maps provider_id to provider instance
 var _active_provider_id: String = ""
-var _config_manager: AIConfigurationManager
+var _config_manager  # AIConfigurationManager
 var _is_initialized: bool = false
 
 
@@ -46,10 +45,13 @@ func initialize() -> void:
 	_is_initialized = true
 
 	# Get reference to configuration manager
-	_config_manager = get_node_or_null("/root/AIConfig") as AIConfigurationManager
+	_config_manager = get_node_or_null("/root/AIConfig")
 	if not _config_manager:
 		push_warning("[AIRegistry] AIConfigurationManager not found, creating local instance")
-		_config_manager = AIConfigurationManager.new()
+		# Create local instance (will work once class is loaded)
+		var config_script = load("res://core/ai/config/AIConfigurationManager.gd")
+		if config_script:
+			_config_manager = config_script.new()
 		add_child(_config_manager)
 
 	# Connect to configuration manager signals
@@ -75,7 +77,7 @@ func initialize() -> void:
 
 
 # === PUBLIC METHODS ===
-func register_provider(provider_id: String, provider: AIProviderInterface) -> bool:
+func register_provider(provider_id: String, provider) -> bool:
 	"""Register a new AI provider"""
 	# Don't call initialize() here to avoid potential recursion
 
@@ -128,7 +130,7 @@ func unregister_provider(provider_id: String) -> bool:
 	return true
 
 
-func get_provider(provider_id: String) -> AIProviderInterface:
+func get_provider(provider_id: String):
 	"""Get a specific AI provider by ID"""
 	# Skip initialization check to avoid recursion
 
@@ -139,7 +141,7 @@ func get_provider(provider_id: String) -> AIProviderInterface:
 	return _providers[provider_id]
 
 
-func get_active_provider() -> AIProviderInterface:
+func get_active_provider():
 	"""Get the currently active AI provider"""
 	# Skip initialization check to avoid recursion
 
@@ -245,7 +247,12 @@ func _register_gemini_provider() -> void:
 		return
 
 	# Try to create the Gemini provider instance
-	var gemini_provider = GeminiAIProvider.new()
+	var gemini_script = load("res://core/ai/providers/GeminiAIProvider.gd")
+	if not gemini_script:
+		print("[AIRegistry] GeminiAIProvider script not found")
+		return
+
+	var gemini_provider = gemini_script.new()
 	if not gemini_provider:
 		print("[AIRegistry] Failed to create GeminiAIProvider instance")
 		return
@@ -271,9 +278,9 @@ func _register_gemini_provider() -> void:
 	provider_registered.emit("gemini")
 
 
-func _create_mock_provider() -> AIProviderInterface:
+func _create_mock_provider():
 	"""Create a basic mock provider implementation"""
-	var MockProvider = preload("res://core/ai/providers/MockAIProvider.gd")
+	var MockProvider = load("res://core/ai/providers/MockAIProvider.gd")
 	if MockProvider:
 		return MockProvider.new()
 
@@ -336,9 +343,9 @@ func reset_settings() -> bool:
 
 	script.reload()
 
-	var MockProviderClass = GDScript.new()
-	MockProviderClass.source_code = script.source_code
-	return MockProviderClass.new()
+	var mock_provider_class = GDScript.new()
+	mock_provider_class.source_code = script.source_code
+	return mock_provider_class.new()
 
 
 # === SIGNAL HANDLERS ===

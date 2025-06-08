@@ -130,10 +130,10 @@ func _create_visual_settings() -> void:
 	font_container.add_child(font_label)
 
 	_font_size_slider = HSlider.new()
-	_font_size_slider.min_value = AccessibilityManager.MIN_FONT_SIZE
-	_font_size_slider.max_value = AccessibilityManager.MAX_FONT_SIZE
+	_font_size_slider.min_value = AccessibilityHelper.MIN_FONT_SIZE
+	_font_size_slider.max_value = AccessibilityHelper.MAX_FONT_SIZE
 	_font_size_slider.step = 1
-	_font_size_slider.value = AccessibilityManager.DEFAULT_FONT_SIZE
+	_font_size_slider.value = AccessibilityHelper.DEFAULT_FONT_SIZE
 	_font_size_slider.custom_minimum_size.x = 200
 	_font_size_slider.tooltip_text = "Adjust text size throughout the application"
 	_font_size_slider.focus_mode = Control.FOCUS_ALL
@@ -141,7 +141,7 @@ func _create_visual_settings() -> void:
 	font_container.add_child(_font_size_slider)
 
 	_font_size_label = Label.new()
-	_font_size_label.text = "%d px" % AccessibilityManager.DEFAULT_FONT_SIZE
+	_font_size_label.text = "%d px" % AccessibilityHelper.DEFAULT_FONT_SIZE
 	_font_size_label.custom_minimum_size.x = 50
 	_font_size_label.add_to_group("accessible_text")
 	font_container.add_child(_font_size_label)
@@ -376,7 +376,7 @@ func _apply_settings() -> void:
 func _reset_settings() -> void:
 	"""Reset all settings to defaults"""
 	# Visual
-	_font_size_slider.value = AccessibilityManager.DEFAULT_FONT_SIZE
+	_font_size_slider.value = AccessibilityHelper.DEFAULT_FONT_SIZE
 	_contrast_options.selected = 0
 	_focus_indicator_check.button_pressed = true
 

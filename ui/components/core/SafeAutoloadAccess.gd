@@ -2,82 +2,32 @@
 ## Utility for safely accessing autoloads with fallbacks
 ## Prevents crashes when autoloads are missing or not ready
 
+class_name SafeAutoloadAccess
 extends RefCounted
+
+# === CONSTANTS ===
+const CHECK_INTERVAL: float = 1.0  # Recheck every second
 
 # === SINGLETON INSTANCE ===
 static var _instance
 
+# === INSTANCE VARIABLES ===
+var _autoload_status: Dictionary = {}
+var _last_check_time: Dictionary = {}
 
+
+# === SINGLETON ACCESS ===
 static func instance():
+	if not _instance:
+		_instance = SafeAutoloadAccess.new()
+	return _instance
 
-	const CHECK_INTERVAL: float = 1.0  # Recheck every second
 
 # === SAFE AUTOLOAD ACCESS METHODS ===
 
 
 ## Safely access UIThemeManager
 static func get_theme_manager() -> Node:
-
-	var inst = instance()
-	# FIXED: Orphaned code - var current_time = Time.get_ticks_msec() / 1000.0
-
-# Check if we need to revalidate
-	# ORPHANED REF: var last_check = inst._last_check_time.get(autoload_name)
-	# FIXED: Orphaned code - var tree = Engine.get_main_loop() as SceneTree
-	var node = null
-
-# Access autoload via scene tree (avoids Engine.get_singleton warnings)
-	# FIXED: Orphaned code - var tree_2 = Engine.get_main_loop() as SceneTree
-	var is_valid = false
-
-	var style_box = StyleBoxFlat.new()
-	style_box.bg_color = Color(0.2, 0.2, 0.2, 0.8)
-	style_box.corner_radius_top_left = 8
-	style_box.corner_radius_top_right = 8
-	style_box.corner_radius_bottom_left = 8
-	style_box.corner_radius_bottom_right = 8
-	style_box.border_width_left = 1
-	style_box.border_width_right = 1
-	style_box.border_width_top = 1
-	style_box.border_width_bottom = 1
-	style_box.border_color = Color(0.4, 0.4, 0.4, 0.6)
-	control.add_theme_stylebox_override("panel", style_box)
-
-"button":
-	var style_box_2 = StyleBoxFlat.new()
-	style_box.bg_color = Color(0.3, 0.3, 0.3, 0.9)
-	style_box.corner_radius_top_left = 4
-	style_box.corner_radius_top_right = 4
-	style_box.corner_radius_bottom_left = 4
-	style_box.corner_radius_bottom_right = 4
-	control.add_theme_stylebox_override("normal", style_box)
-
-"label":
-	var knowledge_service = get_knowledge_service()
-	# FIXED: Orphaned code - var kb = _safe_get_autoload("KB")
-	# FIXED: Orphaned code - var ai_assistant = get_ai_assistant()
-	# FIXED: Orphaned code - var inst_2 = instance()
-	inst._validate_autoload(autoload_name)
-	# FIXED: Orphaned code - var inst_3 = instance()
-	# FIXED: Orphaned code - var status = {}
-	# FIXED: Orphaned code - var autoloads = [
-	"UIThemeManager", "KnowledgeService", "AIAssistant", "ModelSwitcherGlobal", "DebugCmd"
-	]
-
-	var status_2 = get_autoload_status()
-	# FIXED: Orphaned code - var status_text = "✓ Available" if status[autoload_name] else "✗ Unavailable"
-
-	var _autoload_status: Dictionary = {}
-	# FIXED: Orphaned code - var _last_check_time: Dictionary = {}  # Used for caching validation timing
-
-
-	if not _instance:
-	_instance = new()
-	return _instance
-
-
-	# === AUTOLOAD STATUS CACHE ===
-
 	return _safe_get_autoload("UIThemeManager")
 
 
@@ -86,169 +36,212 @@ static func get_knowledge_service() -> Node:
 	return _safe_get_autoload("KnowledgeService")
 
 
-	## Safely access AIAssistant
+## Safely access AIAssistant
 static func get_ai_assistant() -> Node:
 	return _safe_get_autoload("AIAssistant")
 
 
-		## Safely access ModelSwitcherGlobal
+## Safely access ModelSwitcherGlobal
 static func get_model_switcher() -> Node:
 	return _safe_get_autoload("ModelSwitcherGlobal")
 
 
-			## Safely access DebugCmd
+## Safely access DebugCmd
 static func get_debug_cmd() -> Node:
 	return _safe_get_autoload("DebugCmd")
 
 
-				## Safely get any autoload by name
+## Safely get any autoload by name
 static func get_autoload(autoload_name: String) -> Node:
 	"""Public method to safely get any autoload by name"""
 	return _safe_get_autoload(autoload_name)
 
 
-					# === CORE SAFE ACCESS METHOD ===
+# === CORE SAFE ACCESS METHOD ===
 static func _safe_get_autoload(autoload_name: String) -> Node:
 	"""Safely get an autoload with caching and validation"""
+	var inst = instance()
+	var current_time = Time.get_ticks_msec() / 1000.0
 
-	if last_check == null:
-	last_check = 0.0
-	# ORPHANED REF: if current_time - last_check > CHECK_INTERVAL:
-	inst._validate_autoload(autoload_name)
-	# ORPHANED REF: inst._last_check_time[autoload_name] = current_time
+	# Check if we need to revalidate
+	var last_check = inst._last_check_time.get(autoload_name, 0.0)
+	if current_time - last_check > CHECK_INTERVAL:
+		inst.validate_autoload(autoload_name)
+		inst._last_check_time[autoload_name] = current_time
 
-		# Return cached result or null
-	if inst._autoload_status.get(autoload_name) or false:
-			# Access autoload via scene tree (avoids Engine.get_singleton warnings)
-	# ORPHANED REF: if tree and tree.root:
-	# ORPHANED REF: return tree.root.get_node_or_null(autoload_name)
+	# Return cached result or null
+	if inst._autoload_status.get(autoload_name, false):
+		# Access autoload via scene tree (avoids Engine.get_singleton warnings)
+		var tree = Engine.get_main_loop() as SceneTree
+		if tree and tree.root:
+			return tree.root.get_node_or_null("/root/" + autoload_name)
+
 	return null
-else:
-	return null
 
-	# ORPHANED REF: if tree and tree.root:
-	# ORPHANED REF: node = tree.root.get_node_or_null(autoload_name)
+
+# === VALIDATION METHOD ===
+func validate_autoload(autoload_name: String) -> void:
+	"""Validate if an autoload exists and is ready"""
+	var tree = Engine.get_main_loop() as SceneTree
+	if not tree or not tree.root:
+		_autoload_status[autoload_name] = false
+		return
+
+	var node = tree.root.get_node_or_null("/root/" + autoload_name)
+	var is_valid = false
+
 	if node:
-	# Check if the node has expected methods (basic validation)
-	match autoload_name:
-	"UIThemeManager":
-			# UIThemeManager uses static methods, just check if node exists
-		is_valid = true
-	"KnowledgeService":
-		is_valid = node.has_method("get_structure") and node.has_method("is_initialized")
-	"AIAssistant":
-		is_valid = node.has_method("set_current_structure") or node.has_method("initialize")
-	"ModelSwitcherGlobal":
-		is_valid = node.has_method("toggle_model_visibility")
-	"DebugCmd":
-		is_valid = node.has_method("register_command")
-	_:
-	# ORPHANED REF: is_valid = true  # Assume valid for unknown autoloads
+		# Check if the node has expected methods (basic validation)
+		match autoload_name:
+			"UIThemeManager":
+				# UIThemeManager uses static methods, just check if node exists
+				is_valid = true
+			"KnowledgeService":
+				is_valid = node.has_method("get_structure") and node.has_method("is_initialized")
+			"AIAssistant":
+				is_valid = node.has_method("set_current_structure") or node.has_method("initialize")
+			"ModelSwitcherGlobal":
+				is_valid = node.has_method("toggle_model_visibility")
+			"DebugCmd":
+				is_valid = node.has_method("register_command")
+			_:
+				is_valid = true  # Assume valid for unknown autoloads
 
-		_autoload_status[autoload_name] = is_valid
-
-
-								# === FALLBACK METHODS ===
+	_autoload_status[autoload_name] = is_valid
 
 
-								## Apply theme styling with fallback
+# === FALLBACK METHODS ===
+
+
+## Apply theme styling with fallback
 static func apply_theme_safely(control: Control, style_type: String = "panel") -> bool:
 	"""Apply theme styling with fallback to basic styling"""
 	if not control:
-	return false
-
-										# UIThemeManager uses static methods, so we can call them directly
-										# Check if UIThemeManager class is available
-	if is_autoload_available("UIThemeManager"):
-	match style_type:
-	"panel":
-		UIThemeManager.apply_glass_panel(control)
-		return true
-	"button":
-		UIThemeManager.apply_modern_button(control, Color.WHITE, "default")
-		return true
-	"label":
-		UIThemeManager.apply_modern_label(control, 14, Color.WHITE)
-		return true
-
-															# Fallback styling
-		_apply_fallback_styling(control, style_type)
 		return false
+
+	# Check if UIThemeManager class is available
+	if is_autoload_available("UIThemeManager"):
+		var theme_manager = get_theme_manager()
+		if theme_manager:
+			match style_type:
+				"panel":
+					if theme_manager.has_method("apply_glass_panel"):
+						theme_manager.apply_glass_panel(control)
+						return true
+				"button":
+					if theme_manager.has_method("apply_modern_button"):
+						theme_manager.apply_modern_button(control, Color.WHITE, "default")
+						return true
+				"label":
+					if theme_manager.has_method("apply_modern_label"):
+						theme_manager.apply_modern_label(control, 14, Color.WHITE)
+						return true
+
+	# Fallback styling
+	_apply_fallback_styling(control, style_type)
+	return false
 
 
 static func _apply_fallback_styling(control: Control, style_type: String) -> void:
 	"""Apply basic fallback styling when UIThemeManager is unavailable"""
 	if not control:
-	return
+		return
 
 	match style_type:
-	"panel":
-		if control is PanelContainer:
-		if control is Button:
-		if control is Label:
-		control.add_theme_color_override("font_color", Color.WHITE)
+		"panel":
+			if control is PanelContainer:
+				var style_box = StyleBoxFlat.new()
+				style_box.bg_color = Color(0.2, 0.2, 0.2, 0.8)
+				style_box.corner_radius_top_left = 8
+				style_box.corner_radius_top_right = 8
+				style_box.corner_radius_bottom_left = 8
+				style_box.corner_radius_bottom_right = 8
+				style_box.border_width_left = 1
+				style_box.border_width_right = 1
+				style_box.border_width_top = 1
+				style_box.border_width_bottom = 1
+				style_box.border_color = Color(0.4, 0.4, 0.4, 0.6)
+				control.add_theme_stylebox_override("panel", style_box)
+		"button":
+			if control is Button:
+				var style_box = StyleBoxFlat.new()
+				style_box.bg_color = Color(0.3, 0.3, 0.3, 0.9)
+				style_box.corner_radius_top_left = 4
+				style_box.corner_radius_top_right = 4
+				style_box.corner_radius_bottom_left = 4
+				style_box.corner_radius_bottom_right = 4
+				control.add_theme_stylebox_override("normal", style_box)
+		"label":
+			if control is Label:
+				control.add_theme_color_override("font_color", Color.WHITE)
 
 
-	## Get structure data safely
+## Get structure data safely
 static func get_structure_safely(structure_id: String) -> Dictionary:
 	"""Get structure data with fallback to empty dictionary"""
 	if structure_id.is_empty():
-	return {}
+		return {}
 
+	var knowledge_service = get_knowledge_service()
 	if knowledge_service and knowledge_service.has_method("get_structure"):
-	if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
-	return knowledge_service.get_structure(structure_id)
+		if knowledge_service.has_method("is_initialized") and knowledge_service.is_initialized():
+			return knowledge_service.get_structure(structure_id)
 
-		# Fallback: try legacy KB
-	# ORPHANED REF: if kb and kb.has_method("get_structure"):
-	# ORPHANED REF: return kb.get_structure(structure_id)
+	# Fallback: try legacy KB
+	var kb = _safe_get_autoload("KB")
+	if kb and kb.has_method("get_structure"):
+		return kb.get_structure(structure_id)
 
 	# Ultimate fallback
 	return {
-"id": structure_id,
-"displayName": structure_id,
-"shortDescription": "Structure information unavailable - knowledge base not loaded",
-"functions": []
+		"id": structure_id,
+		"displayName": structure_id,
+		"shortDescription": "Structure information unavailable - knowledge base not loaded",
+		"functions": []
 	}
 
 
-	## Set AI context safely
+## Set AI context safely
 static func set_ai_context_safely(context: String) -> bool:
 	"""Set AI assistant context with fallback"""
-	# ORPHANED REF: if ai_assistant and ai_assistant.has_method("set_current_structure"):
-	# ORPHANED REF: ai_assistant.set_current_structure(context)
-	return true
+	var ai_assistant = get_ai_assistant()
+	if ai_assistant and ai_assistant.has_method("set_current_structure"):
+		ai_assistant.set_current_structure(context)
+		return true
 	return false
 
 
-	# === UTILITY METHODS ===
+# === UTILITY METHODS ===
 
 
-	## Check if specific autoload is available
+## Check if specific autoload is available
 static func is_autoload_available(autoload_name: String) -> bool:
 	"""Check if a specific autoload is available and functional"""
-	return inst._autoload_status.get(autoload_name) or false
+	var inst = instance()
+	return inst._autoload_status.get(autoload_name, false)
 
 
 ## Get status of all autoloads
 static func get_autoload_status() -> Dictionary:
-	# ORPHANED REF: """Get the status of all tracked autoloads"""
-	# ORPHANED REF: for autoload_name in autoloads:
-	inst._validate_autoload(autoload_name)
-	# ORPHANED REF: status[autoload_name] = inst._autoload_status.get(autoload_name) or false
+	"""Get the status of all tracked autoloads"""
+	var inst = instance()
+	var status = {}
+	var autoloads = [
+		"UIThemeManager", "KnowledgeService", "AIAssistant", "ModelSwitcherGlobal", "DebugCmd"
+	]
 
-	# ORPHANED REF: return status
+	for autoload_name in autoloads:
+		inst.validate_autoload(autoload_name)
+		status[autoload_name] = inst._autoload_status.get(autoload_name, false)
+
+	return status
 
 
-	## Log autoload status for debugging
+## Log autoload status for debugging
 static func log_autoload_status() -> void:
-	# ORPHANED REF: """Log the status of all autoloads for debugging"""
+	"""Log the status of all autoloads for debugging"""
 	print("[SafeAutoloadAccess] Autoload Status:")
-	# ORPHANED REF: for autoload_name in status:
-	# ORPHANED REF: print("  %s: %s" % [autoload_name, status_text])
-
-
-func _validate_autoload(autoload_name: String) -> void:
-	"""Validate if an autoload exists and is ready"""
-
-	pass
+	var status = get_autoload_status()
+	for autoload_name in status:
+		var status_text = "✓ Available" if status[autoload_name] else "✗ Unavailable"
+		print("  %s: %s" % [autoload_name, status_text])

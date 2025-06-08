@@ -8,7 +8,8 @@
 ## @tutorial: AI Provider Implementation Guide
 ## @version: 1.0
 
-class_name AIProviderInterface
+# Duplicate interface - class_name removed to avoid conflicts
+# class_name AIProviderInterface
 extends Node
 
 # === SIGNALS ===
