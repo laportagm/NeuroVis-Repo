@@ -49,6 +49,7 @@ static func get_knowledge_service() -> Node:
 
 ## Get structure data with automatic service selection
 static func get_structure_data(identifier: String) -> Dictionary:
+	var service = get_knowledge_service()
 	if not service:
 		return {}
 
@@ -106,39 +107,40 @@ static func initialize() -> void:
 	_initialization_errors.clear()
 
 	# Get autoload references safely
-	# ORPHANED REF: if not tree:
-	_initialization_errors.append("No SceneTree available")
-	return
+	var tree = Engine.get_main_loop()
+	if not tree or not tree is SceneTree:
+		_initialization_errors.append("No SceneTree available")
+		return
 
 	# Educational services
-	# ORPHANED REF: knowledge_service = tree.root.get_node_or_null("/root/KnowledgeService")
+	knowledge_service = tree.root.get_node_or_null("/root/KnowledgeService")
 	if not knowledge_service:
 		_initialization_errors.append("KnowledgeService not found")
 
-	# ORPHANED REF: kb_legacy = tree.root.get_node_or_null("/root/KB")
+	kb_legacy = tree.root.get_node_or_null("/root/KB")
 	if not kb_legacy:
 		_initialization_errors.append("Legacy KB not found")
 
-	# ORPHANED REF: ai_assistant = tree.root.get_node_or_null("/root/AIAssistant")
+	ai_assistant = tree.root.get_node_or_null("/root/AIAssistant")
 	if not ai_assistant:
 		_initialization_errors.append("AIAssistant not found")
 
 	# UI services
-	# ORPHANED REF: ui_theme_manager = tree.root.get_node_or_null("/root/UIThemeManager")
+	ui_theme_manager = tree.root.get_node_or_null("/root/UIThemeManager")
 	if not ui_theme_manager:
 		_initialization_errors.append("UIThemeManager not found")
 
 	# Model management
-	# ORPHANED REF: model_switcher = tree.root.get_node_or_null("/root/ModelSwitcherGlobal")
+	model_switcher = tree.root.get_node_or_null("/root/ModelSwitcherGlobal")
 	if not model_switcher:
 		_initialization_errors.append("ModelSwitcherGlobal not found")
 
 	# Debug services
-	# ORPHANED REF: debug_cmd = tree.root.get_node_or_null("/root/DebugCmd")
+	debug_cmd = tree.root.get_node_or_null("/root/DebugCmd")
 	if not debug_cmd:
 		_initialization_errors.append("DebugCmd not found")
 
-	# ORPHANED REF: structure_analysis = tree.root.get_node_or_null("/root/StructureAnalysisManager")
+	structure_analysis = tree.root.get_node_or_null("/root/StructureAnalysisManager")
 	if not structure_analysis:
 		_initialization_errors.append("StructureAnalysisManager not found")
 
@@ -208,5 +210,3 @@ static func analyze_structure(structure_name: String) -> Dictionary:
 
 func _deferred_init() -> void:
 	AutoloadHelper.initialize()
-
-	pass

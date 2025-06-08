@@ -7,7 +7,7 @@
 ## @version: 1.0
 
 class_name MockAIProvider
-extends AIProviderInterface
+extends "res://core/ai/interfaces/AIProviderInterface.gd"
 
 # === CONFIGURATION ===
 
