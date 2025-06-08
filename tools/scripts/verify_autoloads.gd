@@ -58,7 +58,7 @@ func _test_autoload(autoload_info: Dictionary) -> void:
 	results[autoload_name] = {"exists": false, "methods": {}, "status": "FAIL", "error": ""}
 
 	# Check if autoload exists
-	var autoload = get_node_or_null("/root/" + autoload_name)
+	var autoload = root.get_node_or_null(autoload_name)
 	if not autoload:
 		results[autoload_name].error = "Autoload not found"
 		print("  ❌ Not found in /root/")

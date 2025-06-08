@@ -31,6 +31,7 @@ FeatureFlags="*res://core/features/FeatureFlags.gd"
 AIConfig="*res://core/ai/config/AIConfigurationManager.gd"
 AIRegistry="*res://core/ai/AIProviderRegistry.gd"
 AIIntegration="*res://core/ai/AIIntegrationManager.gd"
+DynamicQuality="*res://core/systems/DynamicQualityManager.gd"
 
 [debug]
 
@@ -64,6 +65,28 @@ select_structure={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=2
-anti_aliasing/quality/msaa_3d=2
-anti_aliasing/quality/screen_space_aa=1
+renderer/rendering_method="mobile"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+lights_and_shadows/directional_shadow/size=1024
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+global_illumination/gi/use_half_resolution=true
+shading/overrides/force_lambert_over_burley=true
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/anisotropic_filtering_level=0
+scaling_3d/mode=1
+scaling_3d/scale=0.75
+textures/default_filters/texture_mipmap_bias=0.5
+occlusion_culling/occlusion_rays_per_thread=256
+limits/cluster_builder/max_clustered_elements=32
+occlusion_culling/use_occlusion_culling=true
+mesh_lod/lod_change/threshold_pixels=20.0
+lights_and_shadows/positional_shadow/atlas_size=1024
 driver/driver_name="Forward+"
+lights_and_shadows/max_lights_per_object=4
+environment/screen_space_reflections/enabled=false
+environment/ssao/enabled=false
+environment/ssil/enabled=false
+environment/glow/enabled=false
+environment/volumetric_fog/enabled=false
+shading/overrides/force_vertex_shading.mobile=true

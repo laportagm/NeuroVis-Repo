@@ -189,10 +189,10 @@ func _test_memory_usage() -> void:
 
 	# Get initial memory
 	var initial_static = OS.get_static_memory_usage()
-	var initial_dynamic = Performance.get_monitor(Performance.MEMORY_DYNAMIC)
+	var initial_dynamic = Performance.get_monitor(Performance.OBJECT_COUNT)
 
 	test_results[current_test]["initial_static_mb"] = initial_static / 1048576.0
-	test_results[current_test]["initial_dynamic_mb"] = initial_dynamic / 1048576.0
+	test_results[current_test]["initial_objects"] = initial_dynamic
 
 	# Load and unload resources
 	var resources = []
@@ -203,10 +203,10 @@ func _test_memory_usage() -> void:
 
 	# Check peak memory
 	var peak_static = OS.get_static_memory_usage()
-	var peak_dynamic = Performance.get_monitor(Performance.MEMORY_DYNAMIC)
+	var peak_dynamic = Performance.get_monitor(Performance.OBJECT_COUNT)
 
 	test_results[current_test]["peak_static_mb"] = peak_static / 1048576.0
-	test_results[current_test]["peak_dynamic_mb"] = peak_dynamic / 1048576.0
+	test_results[current_test]["peak_objects"] = peak_dynamic
 
 	# Clear resources
 	resources.clear()
@@ -216,17 +216,17 @@ func _test_memory_usage() -> void:
 
 	# Check final memory
 	var final_static = OS.get_static_memory_usage()
-	var final_dynamic = Performance.get_monitor(Performance.MEMORY_DYNAMIC)
+	var final_dynamic = Performance.get_monitor(Performance.OBJECT_COUNT)
 
 	test_results[current_test]["final_static_mb"] = final_static / 1048576.0
-	test_results[current_test]["final_dynamic_mb"] = final_dynamic / 1048576.0
+	test_results[current_test]["final_objects"] = final_dynamic
 
 	# Calculate memory leak indicator
 	var static_diff = final_static - initial_static
 	var dynamic_diff = final_dynamic - initial_dynamic
 
 	test_results[current_test]["static_diff_mb"] = static_diff / 1048576.0
-	test_results[current_test]["dynamic_diff_mb"] = dynamic_diff / 1048576.0
+	test_results[current_test]["object_diff"] = dynamic_diff
 	test_results[current_test]["potential_leak"] = static_diff > 10485760  # 10MB threshold
 
 
@@ -353,9 +353,10 @@ func _print_results() -> void:
 	if test_results.has("memory_usage"):
 		var mem = test_results.memory_usage
 		print("Memory Usage:")
-		print("  Initial: %.1fMB" % mem.get("initial_dynamic_mb", 0))
-		print("  Peak: %.1fMB" % mem.get("peak_dynamic_mb", 0))
-		print("  Final: %.1fMB" % mem.get("final_dynamic_mb", 0))
+		print("  Static Memory: %.1fMB" % mem.get("initial_static_mb", 0))
+		print("  Initial Objects: %d" % mem.get("initial_objects", 0))
+		print("  Peak Objects: %d" % mem.get("peak_objects", 0))
+		print("  Final Objects: %d" % mem.get("final_objects", 0))
 		print("  Potential Leak: %s\n" % str(mem.get("potential_leak", false)))
 
 	# Overall Score

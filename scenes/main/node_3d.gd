@@ -74,6 +74,9 @@ func _ready() -> void:
 
 	var start_time = Time.get_ticks_msec()
 
+	# Apply rendering optimizations first
+	_apply_rendering_optimizations()
+
 	# Validate essential nodes
 	if not _validate_essential_nodes():
 		_handle_critical_error("Essential nodes validation failed")
@@ -98,6 +101,28 @@ func _process(_delta: float) -> void:
 
 
 # ===== INITIALIZATION METHODS =====
+func _apply_rendering_optimizations() -> void:
+	"""Apply aggressive rendering optimizations for 60fps"""
+	print("[OPTIMIZE] Applying rendering optimizations...")
+
+	# Add and run optimization script
+	var optimizer = Node3D.new()
+	optimizer.name = "RuntimeOptimizer"
+	optimizer.set_script(load("res://tools/scripts/optimize_brain_models.gd"))
+	add_child(optimizer)
+
+	# Viewport optimizations
+	var viewport = get_viewport()
+	if viewport:
+		viewport.msaa_3d = Viewport.MSAA_DISABLED
+		viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+		viewport.use_debanding = false
+		viewport.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR
+		viewport.scaling_3d_scale = 0.75
+
+	print("[OPTIMIZE] Rendering optimizations applied")
+
+
 func _initialize_all_systems() -> void:
 	"""Initialize all systems in the configured order"""
 	print("[INIT] Initializing core systems...")
