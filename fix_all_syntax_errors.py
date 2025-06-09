@@ -124,7 +124,8 @@ def process_file(filepath):
 
 def main():
     """Main function to process all GDScript files."""
-    project_root = Path("/Users/gagelaporta/Desktop/Neuro/NeuroVis-Repo")
+    # Use current working directory as project root
+    project_root = Path.cwd()
 
     # Files with known issues
     problem_files = [
