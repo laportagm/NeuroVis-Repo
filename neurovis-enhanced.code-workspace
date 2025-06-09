@@ -1,136 +1,137 @@
 {
-	"folders": [
-		{
-			"name": "🧠 NeuroVis Core",
-			"path": "./core"
-		},
-		{
-			"name": "🎨 Educational UI",
-			"path": "./ui"
-		},
-		{
-			"name": "🏗️ Scenes & Workflows",
-			"path": "./scenes"
-		},
-		{
-			"name": "📊 Educational Assets",
-			"path": "./assets"
-		},
-		{
-			"name": "🔧 Development Tools",
-			"path": "./tools"
-		},
-		{
-			"name": "📚 Documentation",
-			"path": "./docs"
-		},
-		{
-			"name": "🤖 Claude & AI Integration",
-			"path": "./.claude"
-		},
-		{
-			"name": "⚙️ VS Code Configuration",
-			"path": "./.vscode"
-		},
-		{
-			"name": "🚀 GitHub Actions",
-			"path": "./.github"
-		},
-		{
-			"name": "📋 Project Root",
-			"path": "."
-		}
-	],
-	"settings": {
-		"// === WORKSPACE SPECIFIC EDUCATIONAL SETTINGS ===": "",
-		"neurovis.workspace.mode": "educational_development",
-		"neurovis.autoload.monitoring": true,
-		"neurovis.performance.target_fps": 60,
-		"neurovis.accessibility.wcag_level": "AA",
-		"neurovis.educational.contentValidation": true,
-		"neurovis.educational.medicalAccuracyCheck": true,
-		"neurovis.educational.learningObjectiveTracking": true,
-		"// === MULTI-FOLDER WORKSPACE OPTIMIZATION ===": "",
-		"explorer.compactFolders": false,
-		"explorer.sortOrder": "type",
-		"breadcrumbs.enabled": true,
-		"breadcrumbs.filePath": "on",
-		"breadcrumbs.symbolPath": "on",
-		"// === SEARCH OPTIMIZATION FOR MULTI-FOLDER ===": "",
-		"search.exclude": {
-			"**/.godot": true,
-			"**/build": true,
-			"**/export": true,
-			"**/.import": true,
-			"**/tmp": true,
-			"**/*.tmp": true,
-			"**/.DS_Store": true,
-			"**/node_modules": true,
-			"**/export_cache": true,
-			"**/performance_logs": true,
-			"**/ai_model_cache": true
-		},
-		"// === WORKSPACE TASK DEFAULTS ===": "",
-		"tasks.autoDetect": "on",
-		"tasks.showDecorations": true,
-		"// === EDUCATIONAL DEVELOPMENT WORKFLOW ===": "",
-		"files.defaultLanguage": "gdscript",
-		"files.insertFinalNewline": true,
-		"files.trimTrailingWhitespace": true,
-		"// === PERFORMANCE OPTIMIZATION ===": "",
-		"files.watcherExclude": {
-			"**/.godot/**": true,
-			"**/export_cache/**": true,
-			"**/performance_logs/**": true,
-			"**/ai_model_cache/**": true
-		},
-		"cSpell.words": [
-			"gdshader"
-		]
-	},
-	"launch": {
-		"version": "0.2.0",
-		"configurations": [
-			{
-				"name": "🧠 Workspace: Launch Educational Mode",
-				"type": "godot",
-				"request": "launch",
-				"scene": "main",
-				"preLaunchTask": "🧠 Smart Context Update"
-			}
-		]
-	},
-	"tasks": {
-		"version": "2.0.0",
-		"tasks": [
-			{
-				"label": "🌟 Workspace: Complete Development Session",
-				"dependsOrder": "sequence",
-				"dependsOn": [
-					"🧠 Smart Context Update",
-					"🛡️ Ultimate Standards + Code Quality",
-					"⚡ Quick Test Suite",
-					"🚀 Quick Launch A1-NeuroVis"
-				],
-				"group": {
-					"kind": "build",
-					"isDefault": true
-				}
-			}
-		]
-	},
-	"extensions": {
-		"recommendations": [
-			"geequlim.godot-tools",
-			"github.copilot",
-			"ms-vscode.errorlens",
-			"redhat.vscode-yaml",
-			"streetsidesoftware.code-spell-checker",
-			"streetsidesoftware.code-spell-checker-medical-terms",
-			"gruntfuggly.todo-tree",
-			"alefragnani.bookmarks",
-			"github.vscode-pull-request-github",
-			"davidanson.vscode-markdownlint"
-		]
-	}
+    "folders": [
+        {
+            "name": "🧠 NeuroVis Core",
+            "path": "./core"
+        },
+        {
+            "name": "🎨 Educational UI",
+            "path": "./ui"
+        },
+        {
+            "name": "🏗️ Scenes & Workflows",
+            "path": "./scenes"
+        },
+        {
+            "name": "📊 Educational Assets",
+            "path": "./assets"
+        },
+        {
+            "name": "🔧 Development Tools",
+            "path": "./tools"
+        },
+        {
+            "name": "📚 Documentation",
+            "path": "./docs"
+        },
+        {
+            "name": "🤖 Claude & AI Integration",
+            "path": "./.claude"
+        },
+        {
+            "name": "⚙️ VS Code Configuration",
+            "path": "./.vscode"
+        },
+        {
+            "name": "🚀 GitHub Actions",
+            "path": "./.github"
+        },
+        {
+            "name": "📋 Project Root",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "// === WORKSPACE SPECIFIC EDUCATIONAL SETTINGS ===": "",
+        "neurovis.workspace.mode": "educational_development",
+        "neurovis.autoload.monitoring": true,
+        "neurovis.performance.target_fps": 60,
+        "neurovis.accessibility.wcag_level": "AA",
+        "neurovis.educational.contentValidation": true,
+        "neurovis.educational.medicalAccuracyCheck": true,
+        "neurovis.educational.learningObjectiveTracking": true,
+        "// === MULTI-FOLDER WORKSPACE OPTIMIZATION ===": "",
+        "explorer.compactFolders": false,
+        "explorer.sortOrder": "type",
+        "breadcrumbs.enabled": true,
+        "breadcrumbs.filePath": "on",
+        "breadcrumbs.symbolPath": "on",
+        "// === SEARCH OPTIMIZATION FOR MULTI-FOLDER ===": "",
+        "search.exclude": {
+            "**/.godot": true,
+            "**/build": true,
+            "**/export": true,
+            "**/.import": true,
+            "**/tmp": true,
+            "**/*.tmp": true,
+            "**/.DS_Store": true,
+            "**/node_modules": true,
+            "**/export_cache": true,
+            "**/performance_logs": true,
+            "**/ai_model_cache": true
+        },
+        "// === WORKSPACE TASK DEFAULTS ===": "",
+        "tasks.autoDetect": "on",
+        "tasks.showDecorations": true,
+        "// === EDUCATIONAL DEVELOPMENT WORKFLOW ===": "",
+        "files.defaultLanguage": "gdscript",
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true,
+        "// === PERFORMANCE OPTIMIZATION ===": "",
+        "files.watcherExclude": {
+            "**/.godot/**": true,
+            "**/export_cache/**": true,
+            "**/performance_logs/**": true,
+            "**/ai_model_cache/**": true
+        },
+        "cSpell.words": [
+            "gdshader"
+        ],
+        "liveServer.settings.multiRootWorkspaceName": "📋 Project Root"
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "🧠 Workspace: Launch Educational Mode",
+                "type": "godot",
+                "request": "launch",
+                "scene": "main",
+                "preLaunchTask": "🧠 Smart Context Update"
+            }
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "🌟 Workspace: Complete Development Session",
+                "dependsOrder": "sequence",
+                "dependsOn": [
+                    "🧠 Smart Context Update",
+                    "🛡️ Ultimate Standards + Code Quality",
+                    "⚡ Quick Test Suite",
+                    "🚀 Quick Launch A1-NeuroVis"
+                ],
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                }
+            }
+        ]
+    },
+    "extensions": {
+        "recommendations": [
+            "geequlim.godot-tools",
+            "github.copilot",
+            "ms-vscode.errorlens",
+            "redhat.vscode-yaml",
+            "streetsidesoftware.code-spell-checker",
+            "streetsidesoftware.code-spell-checker-medical-terms",
+            "gruntfuggly.todo-tree",
+            "alefragnani.bookmarks",
+            "github.vscode-pull-request-github",
+            "davidanson.vscode-markdownlint"
+        ]
+    }
 }

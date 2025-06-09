@@ -40,14 +40,14 @@ func _init():
 	print("\n=== NEUROVIS COMPREHENSIVE TEST SUITE ===\n")
 
 	# Check core development mode
-
-if feature_flags and feature_flags.is_core_development_mode():
-	print("🔧 Running in Core Development Mode")
-	print("   (Complex features disabled for testing)\n")
+	if feature_flags and feature_flags.is_core_development_mode():
+		print("🔧 Running in Core Development Mode")
+		print("   (Complex features disabled for testing)\n")
 
 	# Test 1: Check autoloads
 	print("📋 Test 1: Checking Autoloads...")
-print("\n📋 Test 2: Testing UIThemeManager...")
+
+	print("\n📋 Test 2: Testing UIThemeManager...")
 print("\n📋 Test 3: Testing KnowledgeService...")
 print("\n📋 Test 4: Testing ErrorHandler...")
 print("\n=== TEST SUMMARY ===")

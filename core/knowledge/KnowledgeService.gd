@@ -4,12 +4,12 @@ extends Node
 ## Primary service for anatomical content in NeuroVis
 ## @version: 2.0
 
-# === CONSTANTS ===
-const KNOWLEDGE_BASE_PATH = "res://assets/data/anatomical_data.json"
-
 # === SIGNALS ===
 signal knowledge_loaded
 signal knowledge_load_failed(error: String)
+
+# === CONSTANTS ===
+const KNOWLEDGE_BASE_PATH = "res://assets/data/anatomical_data.json"
 
 # === VARIABLES ===
 var _structures: Dictionary = {}
@@ -118,9 +118,9 @@ func _process_knowledge_data(data: Dictionary) -> void:
 	knowledge_loaded.emit()
 
 
-func _normalize_structure_name(name: String) -> String:
+func _normalize_structure_name(structure_name: String) -> String:
 	"""Normalize structure names for consistent lookup"""
-	var normalized = name.to_lower()
+	var normalized = structure_name.to_lower()
 	normalized = normalized.replace(" (good)", "")
 	normalized = normalized.replace(" (bad)", "")
 	normalized = normalized.replace("_", " ")

@@ -1,7 +1,4 @@
 {
-    "// === NEUROVIS VS CODE CONFIGURATION ===": "Standardized settings for NeuroVis development",
-
-    "// === GODOT INTEGRATION ===": "",
     "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
     "godot_tools.gdscript_lsp_server_port": 6005,
     "godot_tools.gdscript_lsp_server_host": "127.0.0.1",
@@ -11,13 +8,13 @@
     "godot_tools.connection_retry_count": 5,
     "godot_tools.connection_retry_delay": 1000,
     "godot_tools.show_connection_status": true,
-
-    "// === EDITOR BEHAVIOR ===": "",
     "editor.formatOnSave": true,
-    "editor.formatOnType": true,
+    "editor.formatOnType": false,
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
-    "editor.rulers": [100],
+    "editor.rulers": [
+        100
+    ],
     "editor.detectIndentation": false,
     "editor.trimAutoWhitespace": true,
     "editor.minimap.enabled": true,
@@ -27,8 +24,13 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": "explicit"
     },
-
-    "// === FILE HANDLING ===": "",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.acceptSuggestionOnCommitCharacter": false,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
@@ -58,21 +60,6 @@
         "**/.git/subtree-cache/**": true,
         "**/node_modules/**": true
     },
-
-    "// === GDSCRIPT SPECIFIC ===": "",
-    "[gdscript]": {
-        "editor.insertSpaces": true,
-        "editor.detectIndentation": false,
-        "editor.tabSize": 4,
-        "editor.wordWrap": "bounded",
-        "editor.wordWrapColumn": 100,
-        "editor.suggest.showKeywords": true,
-        "editor.suggest.showSnippets": true,
-        "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
-        "editor.defaultFormatter": "geequlim.godot-tools"
-    },
-
-    "// === SEARCH SETTINGS ===": "",
     "search.exclude": {
         "**/.godot": true,
         "**/build": true,
@@ -83,27 +70,12 @@
         "**/.DS_Store": true,
         "**/node_modules": true
     },
-
-    "// === GIT INTEGRATION ===": "",
     "git.autofetch": true,
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "scm.defaultViewMode": "tree",
-
-    "// === INTELLISENSE ===": "",
-    "editor.quickSuggestions": {
-        "other": true,
-        "comments": false,
-        "strings": false
-    },
-    "editor.suggest.insertMode": "replace",
-    "editor.acceptSuggestionOnCommitCharacter": false,
-
-    "// === DEBUGGING ===": "",
     "debug.allowBreakpointsEverywhere": true,
     "debug.showBreakpointsInOverviewRuler": true,
-
-    "// === WORKSPACE ORGANIZATION ===": "",
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
@@ -112,19 +84,24 @@
         "*.tres": "${capture}.tres.remap",
         "project.godot": "*.cfg, *.ini, export_presets.cfg"
     },
-
-    "// === AI ASSISTANCE ===": "",
-    "github.copilot.enable": {
-        "*": true,
-        "gdscript": true,
-        "godot-scene": true,
-        "godot-resource": true,
-        "plaintext": true,
-        "markdown": true,
-        "json": true
+    "terminal.integrated.env.osx": {
+        "GODOT_PATH": "/Applications/Godot.app/Contents/MacOS/Godot",
+        "PYTHONPATH": "${workspaceFolder}/.claude",
+        "NEUROVIS_PROJECT_ROOT": "${workspaceFolder}"
     },
-
-    "// === MARKDOWN SETTINGS ===": "",
+    "errorLens.enabled": true,
+    "errorLens.enabledDiagnosticLevels": [
+        "error",
+        "warning"
+    ],
+    "[gdscript]": {
+        "editor.wordWrap": "bounded",
+        "editor.wordWrapColumn": 100,
+        "editor.suggest.showKeywords": true,
+        "editor.suggest.showSnippets": true,
+        "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+        "editor.defaultFormatter": "geequlim.godot-tools"
+    },
     "[markdown]": {
         "editor.wordWrap": "on",
         "editor.quickSuggestions": {
@@ -133,15 +110,11 @@
             "other": "off"
         }
     },
-
-    "// === JSON SETTINGS ===": "",
     "[json]": {
         "editor.insertSpaces": true,
         "editor.tabSize": 2,
         "editor.detectIndentation": true
     },
-
-    "// === PYTHON SETTINGS FOR VALIDATION ===": "",
     "python.defaultInterpreterPath": "${workspaceFolder}/.claude/.venv/bin/python",
     "python.terminal.activateEnvironment": true,
     "python.linting.enabled": true,
@@ -151,19 +124,9 @@
         "--max-line-length=100",
         "--ignore=E203,W503"
     ],
-
-    "// === TERMINAL ===": "",
-    "terminal.integrated.env.osx": {
-        "GODOT_PATH": "/Applications/Godot.app/Contents/MacOS/Godot",
-        "PYTHONPATH": "${workspaceFolder}/.claude",
-        "NEUROVIS_PROJECT_ROOT": "${workspaceFolder}"
-    },
-
-    "// === ERROR HIGHLIGHTING ===": "",
-    "errorLens.enabled": true,
-    "errorLens.enabledDiagnosticLevels": ["error", "warning"],
-
-    "// === NEUROVIS PROJECT SPECIFIC ===": "",
+    "cSpell.words": [
+        "elif"
+    ],
     "neurovis.project.path": "${workspaceFolder}",
     "neurovis.debug.enabled": true,
     "neurovis.autoload.validate": true,
@@ -172,8 +135,6 @@
     "neurovis.linting.autoFix": true,
     "neurovis.linting.validateOnSave": true,
     "neurovis.linting.medicalTermsValidation": true,
-
-    "// === STRICT CODE QUALITY ENFORCEMENT ===" : "",
     "neurovis.codeQuality.enforceTypeHints": true,
     "neurovis.codeQuality.requireEducationalDocs": true,
     "neurovis.codeQuality.strictNamingConventions": true,
@@ -181,8 +142,5 @@
     "neurovis.codeQuality.performanceOptimization": true,
     "neurovis.codeQuality.accessibilityCompliance": true,
     "neurovis.codeQuality.lintingStandards": "strict",
-    "neurovis.codeQuality.rejectNonCompliantCode": true,
-    "cSpell.words": [
-        "elif"
-    ]
+    "neurovis.codeQuality.rejectNonCompliantCode": true
 }

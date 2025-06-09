@@ -17,6 +17,7 @@ transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -
 shadow_enabled = true
 
 [node name="BrainModel" type="Node3D" parent="."]
+transform = Transform3D(21.726, 0, 0, 0, 21.726, 0, 0, 0, 21.726, 0, 0, 0)
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 

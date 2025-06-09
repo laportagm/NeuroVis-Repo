@@ -43,7 +43,7 @@ const AI_INTEGRATION_MANAGER_PATH = "res://core/ai/AIIntegrationManager.gd"
 @export_group("Feature Toggles")
 @export var enable_multi_selection: bool = true
 @export var enable_ai_assistant: bool = true
-@export var enable_comparative_panel: bool = true
+@export var enable_comparative_panel: bool = false  # Temporarily disabled due to syntax errors
 @export var enable_keyboard_shortcuts: bool = true
 
 # ===== NODE REFERENCES =====
@@ -170,14 +170,20 @@ func _initialize_selection_system() -> void:
 	print("[INIT] Initializing selection system...")
 
 	# Load selection manager script
-	var SelectionManagerScript = load("res://core/interaction/BrainStructureSelectionManager.gd")
+	# Use MinimalSelectionManager as a reliable foundation
+	var SelectionManagerScript = load("res://core/interaction/MinimalSelectionManager.gd")
 	if not SelectionManagerScript:
-		_log_error("Failed to load BrainStructureSelectionManager.gd")
-		initialization_failed.emit("Selection system initialization failed")
-		return
+		# Fallback to enhanced version if minimal not found
+		SelectionManagerScript = load(
+			"res://core/interaction/BrainStructureSelectionManagerEnhanced.gd"
+		)
+		if not SelectionManagerScript:
+			_log_error("Failed to load selection manager scripts")
+			initialization_failed.emit("Selection system initialization failed")
+			return
 
 	selection_manager = SelectionManagerScript.new()
-	selection_manager.name = "BrainStructureSelectionManager"
+	selection_manager.name = "SelectionManager"
 	add_child(selection_manager)
 
 	# Initialize with required nodes
@@ -188,14 +194,20 @@ func _initialize_selection_system() -> void:
 			initialization_failed.emit("Selection manager initialization failed")
 			return
 
-	# Configure visual properties
+	# Configure visual properties (MinimalSelectionManager handles this internally)
 	if selection_manager.has_method("configure_highlight"):
 		selection_manager.configure_highlight(highlight_color, emission_energy)
+	elif selection_manager.has_method("configure_highlight_colors"):
+		# For BrainStructureSelectionManager compatibility
+		selection_manager.configure_highlight_colors(highlight_color, Color(1.0, 0.9, 0.0, 0.7))
 
 	# Connect signals
 	if selection_manager.has_signal("structure_selected"):
 		selection_manager.structure_selected.connect(_on_structure_selected)
-	if selection_manager.has_signal("selection_cleared"):
+	if selection_manager.has_signal("structure_deselected"):
+		selection_manager.structure_deselected.connect(_on_selection_cleared)
+	elif selection_manager.has_signal("selection_cleared"):
+		# For BrainStructureSelectionManager compatibility
 		selection_manager.selection_cleared.connect(_on_selection_cleared)
 
 	print("[INIT] ✓ Selection system initialized")
@@ -206,7 +218,8 @@ func _initialize_camera_system() -> void:
 	"""Initialize camera behavior controller"""
 	print("[INIT] Initializing camera system...")
 
-	var CameraBehaviorControllerScript = load("res://core/interaction/CameraBehaviorController.gd")
+	# Use SimpleCameraController due to syntax errors in the main one
+	var CameraBehaviorControllerScript = load("res://core/interaction/SimpleCameraController.gd")
 	if not CameraBehaviorControllerScript:
 		_log_error("Failed to load CameraBehaviorController.gd")
 		initialization_failed.emit("Camera system initialization failed")
@@ -236,7 +249,8 @@ func _initialize_model_system() -> void:
 	_create_loading_progress()
 
 	# Try enhanced model loader first
-	var EnhancedModelLoaderScript = load("res://core/models/EnhancedModelLoader.gd")
+	# TEMPORARILY DISABLED - EnhancedModelLoader has syntax errors
+	var EnhancedModelLoaderScript = null  # load("res://core/models/EnhancedModelLoader.gd")
 	if EnhancedModelLoaderScript:
 		enhanced_model_loader = EnhancedModelLoaderScript.new()
 		enhanced_model_loader.name = "EnhancedModelLoader"

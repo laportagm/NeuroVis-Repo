@@ -7,7 +7,7 @@
 ## @version: 1.0
 
 class_name MockAIProvider
-extends "res://core/ai/interfaces/AIProviderInterface.gd"
+extends AIProviderInterface
 
 # === CONFIGURATION ===
 
@@ -89,17 +89,19 @@ func ask_question(question: String, context: Dictionary = {}) -> String:
 	if context.has("structure"):
 		current_structure = context.structure
 
-		# Schedule a delayed response
+	# Schedule a delayed response
+	if is_inside_tree():
 		get_tree().create_timer(mock_delay).timeout.connect(func(): _send_mock_response(question))
 
-		# Return empty string since the response will be sent via signal
-		return ""
+	# Return empty string since the response will be sent via signal
+	return ""
 
 
 func generate_content(_prompt: String) -> String:
 	print("[MockAI] Mock generate_content: %s" % _prompt)
 
 	# Generate a simple response based on the prompt
+	return "[Mock AI] Generated content for: " + _prompt
 
 
 func check_setup_status() -> bool:
@@ -214,7 +216,11 @@ func _send_mock_response(question: String) -> void:
 			response = mock_responses.general.default
 
 	# Add mock AI disclaimer
-	response += "\n\n[Note: This is a mock response for testing. Connect to a real AI provider for full functionality.]"
+	var disclaimer = (
+		"\n\n[Note: This is a mock response for testing. "
+		+ "Connect to a real AI provider for full functionality.]"
+	)
+	response += disclaimer
 
 	# Emit the response
 	response_received.emit(response)
