@@ -12,9 +12,9 @@ extends RefCounted
 
 # === DEPENDENCIES ===
 
-enum ThemeMode { ENHANCED, MINIMAL, HIGH_CONTRAST, CUSTOM }  # Student-friendly, engaging, gamified  # Clinical, professional, clean  # Accessibility-focused  # User-defined customizations
+enum ThemeMode {ENHANCED, MINIMAL, HIGH_CONTRAST, CUSTOM} # Student-friendly, engaging, gamified  # Clinical, professional, clean  # Accessibility-focused  # User-defined customizations
 
-enum InteractionMode { EDUCATIONAL, CLINICAL, ACCESSIBILITY, ADVANCED }  # Learning-focused interactions  # Professional workflow  # Accessible input methods  # Power user features
+enum InteractionMode {EDUCATIONAL, CLINICAL, ACCESSIBILITY, ADVANCED} # Learning-focused interactions  # Professional workflow  # Accessible input methods  # Power user features
 
 # === STATIC STATE ===
 static var _current_theme: ThemeMode = ThemeMode.ENHANCED
@@ -30,34 +30,33 @@ static var _initialized: bool = false
 
 
 static func _ensure_initialized() -> void:
-
 	const FeatureFlags = preload("res://core/features/FeatureFlags.gd")
 
 # === STYLE CONSTANTS ===
 	const EDUCATIONAL_COLORS = {
-"primary": Color(0.2, 0.6, 1.0),  # Learning blue
-"secondary": Color(0.4, 0.8, 0.6),  # Success green
-"accent": Color(1.0, 0.6, 0.2),  # Attention orange
-"neutral": Color(0.5, 0.5, 0.5),  # Gray
-"background": Color(0.1, 0.1, 0.15),  # Dark background
-"surface": Color(0.15, 0.15, 0.2),  # Surface
-"text_primary": Color(0.95, 0.95, 0.95),  # Light text
-"text_secondary": Color(0.8, 0.8, 0.8)  # Secondary text
+"primary": Color(0.2, 0.6, 1.0), # Learning blue
+"secondary": Color(0.4, 0.8, 0.6), # Success green
+"accent": Color(1.0, 0.6, 0.2), # Attention orange
+"neutral": Color(0.5, 0.5, 0.5), # Gray
+"background": Color(0.1, 0.1, 0.15), # Dark background
+"surface": Color(0.15, 0.15, 0.2), # Surface
+"text_primary": Color(0.95, 0.95, 0.95), # Light text
+"text_secondary": Color(0.8, 0.8, 0.8) # Secondary text
 	}
 
 	const CLINICAL_COLORS = {
-"primary": Color(0.3, 0.3, 0.4),  # Professional gray
-"secondary": Color(0.2, 0.4, 0.6),  # Medical blue
-"accent": Color(0.6, 0.2, 0.2),  # Alert red
-"neutral": Color(0.4, 0.4, 0.4),  # Neutral gray
-"background": Color(0.98, 0.98, 0.99),  # Clean white
-"surface": Color(0.95, 0.95, 0.96),  # Surface white
-"text_primary": Color(0.1, 0.1, 0.1),  # Dark text
-"text_secondary": Color(0.4, 0.4, 0.4)  # Secondary dark
+"primary": Color(0.3, 0.3, 0.4), # Professional gray
+"secondary": Color(0.2, 0.4, 0.6), # Medical blue
+"accent": Color(0.6, 0.2, 0.2), # Alert red
+"neutral": Color(0.4, 0.4, 0.4), # Neutral gray
+"background": Color(0.98, 0.98, 0.99), # Clean white
+"surface": Color(0.95, 0.95, 0.96), # Surface white
+"text_primary": Color(0.1, 0.1, 0.1), # Dark text
+"text_secondary": Color(0.4, 0.4, 0.4) # Secondary dark
 	}
 
 	const ANIMATION_DURATIONS = {
-"micro": 0.1, "short": 0.2, "medium": 0.4, "long": 0.8, "educational": 1.2  # Button hover, quick feedback  # Panel slide, fade in/out  # Panel transitions, theme switching  # Complex animations, scene transitions  # Learning-focused slower animations
+"micro": 0.1, "short": 0.2, "medium": 0.4, "long": 0.8, "educational": 1.2 # Button hover, quick feedback  # Panel slide, fade in/out  # Panel transitions, theme switching  # Complex animations, scene transitions  # Learning-focused slower animations
 	}
 
 	const RESPONSIVE_BREAKPOINTS = {"mobile": 768, "tablet": 1024, "desktop": 1440, "ultrawide": 2560}
@@ -70,7 +69,7 @@ static func _ensure_initialized() -> void:
 # Calculate responsive scale based on screen size
 	var old_theme = _current_theme
 	_current_theme = mode
-	_style_cache.clear()  # Clear cache when theme changes
+	_style_cache.clear() # Clear cache when theme changes
 
 	var cache_key = "color_%s_%s" % [color_name, _current_theme]
 	var color: Color
@@ -364,7 +363,7 @@ static func get_animation_duration(duration_type: String) -> float:
 	return 0.0
 
 	if _accessibility_enabled:
-	base_duration *= 0.5  # Faster animations for accessibility
+	base_duration *= 0.5 # Faster animations for accessibility
 
 	return base_duration
 

@@ -227,7 +227,7 @@ var count_label = Label.new()
 	header.add_child(count_label)
 
 # FIXED: Orphaned code - var item_2 = Label.new()
-	item.text = "    " + text  # Simple indent instead of bullet
+	item.text = "    " + text # Simple indent instead of bullet
 	item.add_theme_font_size_override("font_size", FONT_SIZES.small)
 	item.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
 
@@ -381,13 +381,13 @@ if content:
 
 
 	# Public API
-if viewport_width < 768:  # Mobile
+if viewport_width < 768: # Mobile
 custom_minimum_size.x = viewport_width * 0.9
 # Adjust padding for mobile
 if container:
 	container.add_theme_constant_override("margin_left", SPACING.lg)
 	container.add_theme_constant_override("margin_right", SPACING.lg)
-	else:  # Desktop/Tablet
+	else: # Desktop/Tablet
 	custom_minimum_size.x = 380
 	# Reset to default padding
 if container:
