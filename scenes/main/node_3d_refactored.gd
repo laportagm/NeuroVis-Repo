@@ -1,6 +1,6 @@
 ## node_3d_refactored.gd
 ## This is the refactored version of node_3d.gd that uses the component architecture
-## 
+##
 ## To use this refactored version:
 ## 1. Backup your current node_3d.gd file
 ## 2. Replace node_3d.gd with this file's content

@@ -34,6 +34,7 @@ static var _initialization_errors: Array = []
 
 # === PUBLIC API ===
 
+
 ## Get KnowledgeService safely with fallback to legacy KB
 static func get_knowledge_service() -> Node:
 	if knowledge_service and knowledge_service.is_initialized():
@@ -45,16 +46,18 @@ static func get_knowledge_service() -> Node:
 		push_error("[AutoloadHelper] No knowledge service available")
 		return null
 
+
 ## Get structure data with automatic service selection
 static func get_structure_data(identifier: String) -> Dictionary:
 	var service = get_knowledge_service()
 	if not service:
 		return {}
-	
+
 	if service == knowledge_service:
 		return service.get_structure(identifier)
 	else:  # Legacy KB
 		return service.get_structure(identifier) if service.has_method("get_structure") else {}
+
 
 ## Get UIThemeManager safely
 static func get_theme_manager() -> Node:
@@ -64,6 +67,7 @@ static func get_theme_manager() -> Node:
 		push_error("[AutoloadHelper] UIThemeManager not available")
 		return null
 
+
 ## Get AI Assistant safely
 static func get_ai_assistant() -> Node:
 	if ai_assistant:
@@ -71,6 +75,7 @@ static func get_ai_assistant() -> Node:
 	else:
 		push_warning("[AutoloadHelper] AI Assistant not available")
 		return null
+
 
 ## Check if a specific autoload is available
 static func is_autoload_available(autoload_name: String) -> bool:
@@ -92,54 +97,55 @@ static func is_autoload_available(autoload_name: String) -> bool:
 		_:
 			return false
 
+
 ## Initialize all autoload references
 static func initialize() -> void:
 	if _is_initialized:
 		return
-	
+
 	print("[AutoloadHelper] Initializing autoload references...")
 	_initialization_errors.clear()
-	
+
 	# Get autoload references safely
 	var tree = Engine.get_main_loop()
-	if not tree:
+	if not tree or not tree is SceneTree:
 		_initialization_errors.append("No SceneTree available")
 		return
-	
+
 	# Educational services
 	knowledge_service = tree.root.get_node_or_null("/root/KnowledgeService")
 	if not knowledge_service:
 		_initialization_errors.append("KnowledgeService not found")
-	
+
 	kb_legacy = tree.root.get_node_or_null("/root/KB")
 	if not kb_legacy:
 		_initialization_errors.append("Legacy KB not found")
-	
+
 	ai_assistant = tree.root.get_node_or_null("/root/AIAssistant")
 	if not ai_assistant:
 		_initialization_errors.append("AIAssistant not found")
-	
+
 	# UI services
 	ui_theme_manager = tree.root.get_node_or_null("/root/UIThemeManager")
 	if not ui_theme_manager:
 		_initialization_errors.append("UIThemeManager not found")
-	
+
 	# Model management
 	model_switcher = tree.root.get_node_or_null("/root/ModelSwitcherGlobal")
 	if not model_switcher:
 		_initialization_errors.append("ModelSwitcherGlobal not found")
-	
+
 	# Debug services
 	debug_cmd = tree.root.get_node_or_null("/root/DebugCmd")
 	if not debug_cmd:
 		_initialization_errors.append("DebugCmd not found")
-	
+
 	structure_analysis = tree.root.get_node_or_null("/root/StructureAnalysisManager")
 	if not structure_analysis:
 		_initialization_errors.append("StructureAnalysisManager not found")
-	
+
 	_is_initialized = true
-	
+
 	# Report initialization status
 	if _initialization_errors.is_empty():
 		print("[AutoloadHelper] ✓ All autoloads initialized successfully")
@@ -148,12 +154,14 @@ static func initialize() -> void:
 		for error in _initialization_errors:
 			print("  - " + error)
 
+
 ## Get initialization status
 static func get_initialization_status() -> Dictionary:
 	return {
 		"initialized": _is_initialized,
 		"errors": _initialization_errors,
-		"available_services": {
+		"available_services":
+		{
 			"knowledge": knowledge_service != null or kb_legacy != null,
 			"ai": ai_assistant != null,
 			"theme": ui_theme_manager != null,
@@ -162,20 +170,23 @@ static func get_initialization_status() -> Dictionary:
 		}
 	}
 
+
 ## Force re-initialization (useful after scene changes)
 static func reinitialize() -> void:
 	_is_initialized = false
 	initialize()
 
-# === CONVENIENCE METHODS ===
+
+## === CONVENIENCE METHODS ===
+
 
 ## Apply theme to a control using available theme manager
 static func apply_theme_to_control(control: Control, style_type: String = "default") -> void:
-	var theme_mgr = get_theme_manager()
-	if theme_mgr and theme_mgr.has_method("apply_enhanced_panel_style"):
-		theme_mgr.apply_enhanced_panel_style(control, style_type)
+	if ui_theme_manager and ui_theme_manager.has_method("apply_enhanced_panel_style"):
+		ui_theme_manager.apply_enhanced_panel_style(control, style_type)
 	else:
 		push_warning("[AutoloadHelper] Cannot apply theme - UIThemeManager not available")
+
 
 ## Log debug message if debug commands are available
 static func debug_log(message: String) -> void:
@@ -183,6 +194,7 @@ static func debug_log(message: String) -> void:
 		debug_cmd.log_message(message)
 	else:
 		print("[DEBUG] " + message)
+
 
 ## Analyze structure if analysis manager is available
 static func analyze_structure(structure_name: String) -> Dictionary:
@@ -192,10 +204,9 @@ static func analyze_structure(structure_name: String) -> Dictionary:
 		push_warning("[AutoloadHelper] Structure analysis not available")
 		return {}
 
-# === INITIALIZATION ===
-func _ready() -> void:
-	# Initialize on first frame to ensure autoloads are ready
-	call_deferred("_deferred_init")
+
+## === INITIALIZATION ===
+
 
 func _deferred_init() -> void:
 	AutoloadHelper.initialize()

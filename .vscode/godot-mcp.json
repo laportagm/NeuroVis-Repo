@@ -13,7 +13,7 @@
     "claudeCode": true,
     "existingServers": {
       "codecmcp": "connected",
-      "fetch": "connected", 
+      "fetch": "connected",
       "filesystem": "connected",
       "github": "connected",
       "memory": "connected",

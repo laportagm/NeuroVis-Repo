@@ -1,0 +1,208 @@
+# GDScript Ignore Configuration for NeuroVis Educational Platform
+# Excludes files from Godot's GDScript parser and language server
+# Optimized for medical visualization and educational content development
+
+# =============================================================================
+# BACKUP AND VERSIONING - Educational Platform History
+# =============================================================================
+
+# Backup directories from development iterations
+backups_*/
+backup_*/
+*_backup/
+*_bak/
+
+# Version control artifacts
+.git/
+.svn/
+.hg/
+
+# =============================================================================
+# DEVELOPMENT AND TESTING - Educational Quality Assurance
+# =============================================================================
+
+# Development tools and scripts
+.claude/
+Development Tools/
+tools/quality/
+tools/git-hooks/
+
+# Test files and reports (exclude from main parsing)
+test_*/
+tests/debug/
+test_logs/
+test_reports/
+*_test.gd
+*_debug.gd
+
+# Temporary development files
+tmp/
+temp/
+temporary/
+*.tmp
+*.temp
+*_temp.gd
+
+# =============================================================================
+# EDUCATIONAL CONTENT - External and Generated
+# =============================================================================
+
+# External educational libraries and dependencies
+Godot-Orbit-Camera-*/
+addons/gut/
+addons/script-ide/
+node_modules/
+godot-mcp/node_modules/
+
+# Generated educational content files
+*_generated.gd
+auto_*.gd
+generated_*/
+
+# =============================================================================
+# MEDICAL DATA AND ASSETS - Performance and Security
+# =============================================================================
+
+# Large medical model files (parsed by ResourceManager instead)
+assets/models/*.glb
+assets/models/*.gltf
+*.glb.import
+*.gltf.import
+
+# Medical image data (handled by specialized loaders)
+assets/textures/medical/
+assets/images/patient_*/
+*.dicom
+*.nii
+
+# Audio files for educational narration
+assets/audio/
+*.wav
+*.mp3
+*.ogg
+
+# =============================================================================
+# CONFIGURATION AND CACHE - Performance Optimization
+# =============================================================================
+
+# IDE and editor configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Platform-specific cache files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Godot cache and generated files
+.godot/
+.import/
+*.translation
+
+# Build and export artifacts
+exports/
+builds/
+*.exe
+*.dmg
+*.apk
+*.pck
+
+# =============================================================================
+# DOCUMENTATION PROCESSING - Build Artifacts
+# =============================================================================
+
+# Generated documentation
+docs/generated/
+*.pdf
+*.docx
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+
+# =============================================================================
+# DATABASE AND LOGS - Educational Analytics
+# =============================================================================
+
+# SQLite databases (handled by specialized services)
+*.db
+*.sqlite
+*.sqlite3
+core/features/sqlite_mcp_server.db
+scenes/main/sqlite_mcp_server.db
+
+# Log files from educational sessions
+*.log
+logs/
+user_sessions/
+
+# Educational analytics data
+analytics/
+user_data/
+session_*/
+
+# =============================================================================
+# SECURITY AND PRIVACY - Medical Compliance
+# =============================================================================
+
+# Environment and secret files
+.env
+.env.local
+.env.production
+secrets/
+keys/
+*.key
+*.pem
+
+# User preference files (privacy protection)
+user://
+user_preferences/
+settings/local_*
+
+# Medical compliance - patient data exclusion
+patient_data/
+hipaa_*/
+medical_records/
+
+# =============================================================================
+# PLATFORM AND DEPLOYMENT - Multi-Platform Support
+# =============================================================================
+
+# Platform-specific builds
+android/
+ios/
+web/
+linux/
+windows/
+macos/
+
+# Deployment configurations
+deployment/
+staging/
+production/
+
+# CI/CD artifacts
+.github/workflows/artifacts/
+coverage/
+reports/
+
+# =============================================================================
+# LEGACY AND DEPRECATED - Educational Platform Evolution
+# =============================================================================
+
+# Deprecated educational components
+deprecated/
+legacy/
+old_*/
+*_deprecated.gd
+*_legacy.gd
+
+# Obsolete test files
+obsolete/
+unused/
+*_obsolete.gd

@@ -14,7 +14,6 @@ NC='\033[0m' # No Color
 # Configuration
 PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 TESTS_DIR="$PROJECT_ROOT/tests"
-TOOLS_DIR="$PROJECT_ROOT/tools"
 REPORTS_DIR="$PROJECT_ROOT/tools/reports"
 GODOT_BINARY="${GODOT_PATH:-godot}"
 
@@ -35,18 +34,18 @@ print_status() {
 # Function to print section headers
 print_section() {
     echo ""
-    print_status $BLUE "=== $1 ==="
+    print_status "$BLUE" "=== $1 ==="
 }
 
 # Function to check if Godot is available
 check_godot() {
     if ! command -v "$GODOT_BINARY" >/dev/null 2>&1; then
-        print_status $RED "❌ Godot not found in PATH"
-        print_status $YELLOW "Set GODOT_PATH environment variable or ensure godot is in PATH"
+        print_status "$RED" "❌ Godot not found in PATH"
+        print_status "$YELLOW" "Set GODOT_PATH environment variable or ensure godot is in PATH"
         exit 1
     fi
     
-    print_status $GREEN "✅ Godot found: $GODOT_BINARY"
+    print_status "$GREEN" "✅ Godot found: $GODOT_BINARY"
 }
 
 # Function to setup test environment
@@ -58,11 +57,11 @@ setup_test_environment() {
     
     # Validate test directory structure
     if [[ ! -d "$TESTS_DIR" ]]; then
-        print_status $RED "❌ Tests directory not found: $TESTS_DIR"
+        print_status "$RED" "❌ Tests directory not found: $TESTS_DIR"
         exit 1
     fi
     
-    print_status $GREEN "✅ Test environment ready"
+    print_status "$GREEN" "✅ Test environment ready"
 }
 
 # Function to run unit tests
@@ -75,13 +74,13 @@ run_unit_tests() {
     
     local unit_tests_dir="$TESTS_DIR/unit"
     if [[ ! -d "$unit_tests_dir" ]]; then
-        print_status $YELLOW "⚠️  Unit tests directory not found: $unit_tests_dir"
+        print_status "$YELLOW" "⚠️  Unit tests directory not found: $unit_tests_dir"
         return 0
     fi
     
     local test_files=$(find "$unit_tests_dir" -name "*Test.gd" -o -name "*_test.gd")
     if [[ -z "$test_files" ]]; then
-        print_status $YELLOW "⚠️  No unit test files found"
+        print_status "$YELLOW" "⚠️  No unit test files found"
         return 0
     fi
     
@@ -89,7 +88,7 @@ run_unit_tests() {
     local passed_tests=0
     local failed_tests=0
     
-    print_status $BLUE "Found unit test files:"
+    print_status "$BLUE" "Found unit test files:"
     for test_file in $test_files; do
         echo "  - $(basename "$test_file")"
         total_tests=$((total_tests + 1))
@@ -99,27 +98,27 @@ run_unit_tests() {
     for test_file in $test_files; do
         local test_name=$(basename "$test_file" .gd)
         echo ""
-        print_status $BLUE "Running: $test_name"
+        print_status "$BLUE" "Running: $test_name"
         
         if run_single_test "$test_file"; then
-            print_status $GREEN "  ✅ PASSED: $test_name"
+            print_status "$GREEN" "  ✅ PASSED: $test_name"
             passed_tests=$((passed_tests + 1))
         else
-            print_status $RED "  ❌ FAILED: $test_name"
+            print_status "$RED" "  ❌ FAILED: $test_name"
             failed_tests=$((failed_tests + 1))
         fi
     done
     
     # Summary
     echo ""
-    print_status $BLUE "Unit Tests Summary:"
-    print_status $GREEN "  Passed: $passed_tests"
+    print_status "$BLUE" "Unit Tests Summary:"
+    print_status "$GREEN" "  Passed: $passed_tests"
     if [[ $failed_tests -gt 0 ]]; then
-        print_status $RED "  Failed: $failed_tests"
+        print_status "$RED" "  Failed: $failed_tests"
     else
-        print_status $GREEN "  Failed: $failed_tests"
+        print_status "$GREEN" "  Failed: $failed_tests"
     fi
-    print_status $BLUE "  Total: $total_tests"
+    print_status "$BLUE" "  Total: $total_tests"
     
     return $failed_tests
 }
@@ -134,17 +133,17 @@ run_integration_tests() {
     
     local integration_tests_dir="$TESTS_DIR/integration"
     if [[ ! -d "$integration_tests_dir" ]]; then
-        print_status $YELLOW "⚠️  Integration tests directory not found: $integration_tests_dir"
+        print_status "$YELLOW" "⚠️  Integration tests directory not found: $integration_tests_dir"
         return 0
     fi
     
     local test_files=$(find "$integration_tests_dir" -name "*Test.gd" -o -name "*_test.gd")
     if [[ -z "$test_files" ]]; then
-        print_status $YELLOW "⚠️  No integration test files found"
+        print_status "$YELLOW" "⚠️  No integration test files found"
         return 0
     fi
     
-    print_status $BLUE "Found integration test files:"
+    print_status "$BLUE" "Found integration test files:"
     for test_file in $test_files; do
         echo "  - $(basename "$test_file")"
     done
@@ -154,12 +153,12 @@ run_integration_tests() {
     for test_file in $test_files; do
         local test_name=$(basename "$test_file" .gd)
         echo ""
-        print_status $BLUE "Running: $test_name"
+        print_status "$BLUE" "Running: $test_name"
         
         if run_single_test "$test_file"; then
-            print_status $GREEN "  ✅ PASSED: $test_name"
+            print_status "$GREEN" "  ✅ PASSED: $test_name"
         else
-            print_status $RED "  ❌ FAILED: $test_name"
+            print_status "$RED" "  ❌ FAILED: $test_name"
             failed_integration=$((failed_integration + 1))
         fi
     done
@@ -177,12 +176,12 @@ run_performance_tests() {
     
     local performance_tests_dir="$TESTS_DIR/performance"
     if [[ ! -d "$performance_tests_dir" ]]; then
-        print_status $YELLOW "⚠️  Performance tests directory not found: $performance_tests_dir"
+        print_status "$YELLOW" "⚠️  Performance tests directory not found: $performance_tests_dir"
         return 0
     fi
     
     # Performance tests implementation
-    print_status $YELLOW "⚠️  Performance tests not yet implemented"
+    print_status "$YELLOW" "⚠️  Performance tests not yet implemented"
     return 0
 }
 
@@ -247,7 +246,7 @@ Individual test logs are available in: \`tools/reports/\`
 - Project: NeuroVis
 EOF
     
-    print_status $GREEN "✅ Test report generated: $report_file"
+    print_status "$GREEN" "✅ Test report generated: $report_file"
 }
 
 # Function to print usage
@@ -305,7 +304,7 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         *)
-            print_status $RED "Unknown option: $1"
+            print_status "$RED" "Unknown option: $1"
             print_usage
             exit 1
             ;;
@@ -314,8 +313,8 @@ done
 
 # Main execution
 main() {
-    print_status $BLUE "🧪 NeuroVis Test Runner"
-    print_status $BLUE "Project: $PROJECT_ROOT"
+    print_status "$BLUE" "🧪 NeuroVis Test Runner"
+    print_status "$BLUE" "Project: $PROJECT_ROOT"
     echo ""
     
     # Validate environment
@@ -345,10 +344,10 @@ main() {
     print_section "Test Execution Complete"
     
     if [[ $total_failures -eq 0 ]]; then
-        print_status $GREEN "🎉 All tests passed!"
+        print_status "$GREEN" "🎉 All tests passed!"
         exit 0
     else
-        print_status $RED "❌ $total_failures test(s) failed"
+        print_status "$RED" "❌ $total_failures test(s) failed"
         exit 1
     fi
 }

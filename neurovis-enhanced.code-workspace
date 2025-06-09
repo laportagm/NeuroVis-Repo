@@ -5,7 +5,7 @@
             "path": "./core"
         },
         {
-            "name": "🎨 Educational UI", 
+            "name": "🎨 Educational UI",
             "path": "./ui"
         },
         {
@@ -50,14 +50,12 @@
         "neurovis.educational.contentValidation": true,
         "neurovis.educational.medicalAccuracyCheck": true,
         "neurovis.educational.learningObjectiveTracking": true,
-        
         "// === MULTI-FOLDER WORKSPACE OPTIMIZATION ===": "",
         "explorer.compactFolders": false,
         "explorer.sortOrder": "type",
         "breadcrumbs.enabled": true,
         "breadcrumbs.filePath": "on",
         "breadcrumbs.symbolPath": "on",
-        
         "// === SEARCH OPTIMIZATION FOR MULTI-FOLDER ===": "",
         "search.exclude": {
             "**/.godot": true,
@@ -72,23 +70,24 @@
             "**/performance_logs": true,
             "**/ai_model_cache": true
         },
-        
         "// === WORKSPACE TASK DEFAULTS ===": "",
         "tasks.autoDetect": "on",
         "tasks.showDecorations": true,
-        
         "// === EDUCATIONAL DEVELOPMENT WORKFLOW ===": "",
         "files.defaultLanguage": "gdscript",
         "files.insertFinalNewline": true,
         "files.trimTrailingWhitespace": true,
-        
         "// === PERFORMANCE OPTIMIZATION ===": "",
         "files.watcherExclude": {
             "**/.godot/**": true,
             "**/export_cache/**": true,
             "**/performance_logs/**": true,
             "**/ai_model_cache/**": true
-        }
+        },
+        "cSpell.words": [
+            "gdshader"
+        ],
+        "liveServer.settings.multiRootWorkspaceName": "📋 Project Root"
     },
     "launch": {
         "version": "0.2.0",

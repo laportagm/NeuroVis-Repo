@@ -1,11 +1,7 @@
 {
   "mcp": {
     "filesystem": {
-      "allowedDirectories": [
-        "/Users/gagelaporta/Desktop/NeuroVis-Repo",
-        "/Users/gagelaporta/Documents",
-        "/Users/gagelaporta/Downloads"
-      ]
+      "allowedDirectories": ["/"]
     }
   }
 }

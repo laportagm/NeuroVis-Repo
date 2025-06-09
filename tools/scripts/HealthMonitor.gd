@@ -5,6 +5,7 @@ extends Node
 
 var monitoring_enabled: bool = false  # Disabled by default
 
+
 func _ready() -> void:
 	print("[HealthMonitor] Placeholder initialized")
 	name = "HealthMonitor"
